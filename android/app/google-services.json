@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "724660922075",
+    "firebase_url": "https://pepup-ecb75.firebaseio.com",
+    "project_id": "pepup-ecb75",
+    "storage_bucket": "pepup-ecb75.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:724660922075:android:3ccefa1f7d41a6ddec4efe",
+        "android_client_info": {
+          "package_name": "com.pepup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "724660922075-mcncak3sfr3trid9ntoo5rdlhlbkb9m7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4s_mbrBB0JuBZvumCadixJfVKgYqh7Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "724660922075-mcncak3sfr3trid9ntoo5rdlhlbkb9m7.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "724660922075-ceo947mnrir11f0rkra03cigmorl0j7o.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.pepup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
