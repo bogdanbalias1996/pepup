@@ -49,6 +49,26 @@
 	<array>
 		<string>armv7</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Allow Pepup to access your calendar</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Allow Pepup to use the camera</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Allow Pepup to access your contacts</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Allow Pepup to use your location</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Allow Pepup to use your location</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Allow Pepup to access your microphone</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Allow Pepup to access your device's accelerometer</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Give Pepup permission to save photos</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Give Pepup permission to access your photos</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>Allow Pepup to access your reminders</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
