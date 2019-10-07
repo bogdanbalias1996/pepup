@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colorTomato, colorBlack, colorInputBackground, defaultFont } from "../../variables";
+import { colorTomato, colorBlack, defaultFont } from "../../variables";
 
 export default StyleSheet.create({
   container: {

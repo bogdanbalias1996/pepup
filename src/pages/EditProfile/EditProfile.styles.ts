@@ -8,11 +8,13 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 16,
-    flex: 1
+    flex: 1,
+    marginTop: 10
   },
   form: {
     marginTop: 20,
-    flexGrow: 0
+    flex: 1,
+    justifyContent: 'space-between'
   },
   formErrorContainer: {
     flexDirection: "row",
@@ -27,9 +29,21 @@ export default StyleSheet.create({
   },
   btnSubmit: {
     width: 120,
-    fontFamily: semiboldFont,
-    alignSelf: 'center',
-    marginTop: 90,
-    marginBottom: 20
-  }
+    fontFamily: semiboldFont
+  },
+  footer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginBottom: 50,
+    paddingHorizontal: 24
+  },
+  btnCancel: {
+    width: 48,
+    height: 48,
+    borderRadius: 30,
+    backgroundColor: colorLightGray,
+    justifyContent: "center",
+    alignItems: "center",
+    marginRight: 16
+  },
 });

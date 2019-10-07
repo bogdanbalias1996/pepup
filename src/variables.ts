@@ -49,6 +49,8 @@ export const colorVioletEnd = "#4c1ba6";
 export const colorVioletGrey = "#6e6688";
 export const colorTextRed = "#e02020";
 export const colorOrange = "#fc9e60";
+export const colorLightGradStart = "#eba9d8";
+export const colorLightGradEnd = "#c39dec"
 export const colorGreen = "#1f9e3e";
 
 export const defaultFont = 'montserrat-medium';

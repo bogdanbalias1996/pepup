@@ -13,16 +13,23 @@ import format from 'date-fns/format';
 import { openContestModal, getContest } from "./actions";
 
 import { ContestItemsProps } from "./";
-import { colorTextGray, colorBlack, defaultFont, semiboldFont } from "../../variables";
+import { colorTextGray, colorBlack, defaultFont, semiboldFont, colorBlueberry } from "../../variables";
+import { IGlobalState } from "../../coreTypes";
+import { Loader } from "../../components/Loader/Loader";
 
 const mapDispatchToProps = dispatch => ({
   openContestModal: () => dispatch(openContestModal()),
   getContest: (contestId: string) => dispatch(getContest(contestId))
 });
 
+const mapStateToProps = (state: IGlobalState) => ({
+  isFetching: state.ContestState.isFetching
+});
+
+
 export class Component extends React.PureComponent<ContestItemsProps> {
   renderItem = ({ item }) => {
-    const { openContestModal, getContest } = this.props;
+    const { openContestModal, getContest, isFetching } = this.props;
 
     const getModal = () => {
       openContestModal();
@@ -30,6 +37,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
     };
 
     return (
+      <Loader size="large" color={colorBlueberry} isDataLoaded={!isFetching}>
       <TouchableOpacity
         onPress={() => getModal()}
         style={styles.card}
@@ -47,6 +55,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
           <Text style={styles.title}>{item.title}</Text>
         </View>
       </TouchableOpacity>
+      </Loader>
     );
   };
 
@@ -64,7 +73,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
 }
 
 export const ContestItems = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Component);
 

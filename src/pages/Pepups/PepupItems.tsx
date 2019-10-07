@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Text,
   FlatList,
@@ -7,15 +7,25 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   View
-} from "react-native";
-import { connect } from "react-redux";
-import { LinearGradient } from "expo-linear-gradient";
+} from 'react-native';
+import { connect } from 'react-redux';
+import { LinearGradient } from 'expo-linear-gradient';
 
-import { openPepupModal, getCelebsByCategory, getCeleb, setCategory } from "./actions";
-import { PepupItemsProps } from "./";
-import { colorLightGray, colorBlueberry, semiboldFont, defaultFont } from "../../variables";
-import { IGlobalState } from "../../coreTypes";
-import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
+import {
+  openPepupModal,
+  getCelebsByCategory,
+  getCeleb,
+  setCategory
+} from './actions';
+import { PepupItemsProps } from './';
+import {
+  colorLightGray,
+  colorBlueberry,
+  semiboldFont,
+  defaultFont
+} from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { Loader } from '../../components/Loader/Loader';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebs: state.PepupState.celebs,
@@ -34,7 +44,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     const { openPepupModal, getCeleb } = this.props;
     const getModal = () => {
       openPepupModal();
-      getCeleb('e22f8bfb-e572-11e9-b127-0242ac110002');
+      getCeleb(item.userInfo.id);
     };
 
     return (
@@ -47,7 +57,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
         <LinearGradient
           start={[0.5, 0.3]}
           end={[0.5, 1]}
-          colors={["rgba(42, 41, 46, 0)", "rgba(42, 41, 46, 0.6)"]}
+          colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
           style={styles.wrapContent}
         >
           <Text style={styles.name}>{item.userInfo.name}</Text>
@@ -68,7 +78,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     const { celebs, isFetching } = this.props;
     return (
       <View style={styles.celebsWrapper}>
-        {celebs.length && !isFetching ? (
+        <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
@@ -76,9 +86,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
             renderItem={this.renderItem}
             keyExtractor={item => item.id}
           />
-        ) : (
-          <ActivityIndicator size="large" color={colorBlueberry} />
-        )}
+        </Loader>
       </View>
     );
   }
@@ -95,9 +103,9 @@ const styles = StyleSheet.create({
     padding: 8,
     marginVertical: 8,
     marginHorizontal: 4,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 24,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
       height: 3
@@ -105,29 +113,29 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    justifyContent: "center",
-    alignItems: "center",
-    position: "relative",
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
     height: 220
   },
   avatar: {
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     borderRadius: 16
   },
   wrapContent: {
-    position: "absolute",
+    position: 'absolute',
     top: 8,
-    width: "100%",
-    height: "100%",
+    width: '100%',
+    height: '100%',
     padding: 12,
-    justifyContent: "flex-end",
+    justifyContent: 'flex-end',
     borderRadius: 16
   },
   name: {
     fontSize: 18,
     fontFamily: semiboldFont,
-    color: "white",
+    color: 'white',
     marginBottom: 10
   },
   status: {

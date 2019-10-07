@@ -16,29 +16,43 @@ import { Video } from 'expo-av';
 import {
   closePepupModal,
   openPepupReqModal,
-  openVideoModal
+  openVideoModal,
+  getAllReviews,
+  openReviewsModal,
+  getCeleb
 } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps } from './';
 import styles from './ModalPepup.styles';
-import { colorBlack, colorTextGray } from '../../variables';
+import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
+import { ModalReviews } from './ModalReviews';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  showModal: state.PepupState.showModal,
+  isModalShown: state.PepupState.isModalShown,
   celebData: state.PepupState.celebData,
-  isFetching: state.PepupState.isFetching
+  isFetching: state.PepupState.isFetching,
+  reviews: state.PepupState.reviews
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
-  openVideoModal: () => dispatch(openVideoModal())
+  openVideoModal: () => dispatch(openVideoModal()),
+  openReviewsModal: () => dispatch(openReviewsModal()),
+  getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
 
 export class Component extends React.PureComponent<ModalPepupProps> {
+  getReviews = () => {
+    const { celebData, openReviewsModal, getAllReviews } = this.props;
+
+    openReviewsModal();
+    getAllReviews(celebData.userInfo.id);
+  };
+
   renderItem = ({ item }) => {
     return (
       <View style={styles.carouselCard}>
@@ -66,16 +80,18 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const {
       closePepupModal,
       openPepupReqModal,
-      showModal,
+      isModalShown,
       celebData,
       openVideoModal
     } = this.props;
 
     if (!celebData) return null;
 
+    const [rating, totalRating] = celebData.weightedRating.split('/');
+
     return (
       <Modal
-        isOpen={showModal}
+        isOpen={isModalShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
@@ -87,9 +103,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
           <View style={styles.swiperLine} />
           <ScrollView style={styles.scrollview}>
             <View>
-              <View
-                style={styles.header}
-              >
+              <View style={styles.header}>
                 <Text style={styles.title}>{celebData.userInfo.name}</Text>
                 <View style={styles.rate}>
                   <Image
@@ -97,8 +111,8 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     source={require('../../../assets/fullStar.png')}
                   />
                   <View style={styles.rateText}>
-                    <Text style={styles.actualR}>{`${celebData.rating.toFixed(1)}/`}</Text>
-                    <Text style={styles.generalR}>5</Text>
+                    <Text style={styles.actualR}>{`${rating}/`}</Text>
+                    <Text style={styles.generalR}>{totalRating}</Text>
                   </View>
                 </View>
               </View>
@@ -143,53 +157,54 @@ export class Component extends React.PureComponent<ModalPepupProps> {
               horizontal={true}
               showsHorizontalScrollIndicator={false}
               data={celebData.media}
+              ListEmptyComponent={() =>
+                !celebData.media ? (
+                  <Text style={styles.nopepups}>No Pepups fulfilled!</Text>
+                ) : null
+              }
               renderItem={this.renderItem}
               keyExtractor={item => item.id}
               style={styles.carousel}
+              contentContainerStyle={{alignItems: 'center', justifyContent: 'center'}}
             />
             <View style={styles.reviews}>
               <View style={styles.rewiewsHeader}>
                 <Text style={[styles.text, styles.numberRewiewsText]}>
-                  {/*celebData.reviews.number +*/ ' reviews'}
+                  {`${celebData.reviews} reviews`}
                 </Text>
-                <TouchableOpacity onPress={() => alert('ok')}>
+                <TouchableOpacity onPress={() => this.getReviews()}>
                   <Text style={[styles.text, styles.allRewiewsButton]}>
                     Check all reviews
                   </Text>
                 </TouchableOpacity>
               </View>
-
-              {/* {celebData.reviews.comments.map((item, i) => {
-                return (
-                  <View key={i} style={styles.commentCard}>
-                    <View style={styles.commentHeader}>
-                      <Text style={[styles.text, styles.commentTitle]}>
-                        {item.name}
-                      </Text>
-                      <StarRating
-                        disabled={true}
-                        starSize={16}
-                        maxStars={5}
-                        emptyStar={require('../../../assets/emptyStar.png')}
-                        fullStar={require('../../../assets/fullStar.png')}
-                        rating={item.rating}
-                      />
-                    </View>
-                    <Text style={[styles.text, styles.commentText]}>
-                      {item.info}
-                    </Text>
-                  </View>
-                );
-              })} */}
+              <View style={styles.commentCard}>
+                <View style={styles.commentHeader}>
+                  <Text style={[styles.text, styles.commentTitle]}>
+                    {celebData.dataInfo.review.submitterUserInfo.name}
+                  </Text>
+                  <StarRating
+                    disabled={true}
+                    starSize={20}
+                    maxStars={+totalRating}
+                    emptyStar={require('../../../assets/emptyStar.png')}
+                    fullStar={require('../../../assets/fullStar.png')}
+                    rating={celebData.dataInfo.review.rating}
+                  />
+                </View>
+                <Text style={[styles.text, styles.commentText]}>
+                  {celebData.dataInfo.review.review}
+                </Text>
+              </View>
             </View>
           </ScrollView>
           <View>
-            <View style={styles.footerText}>
+            <Text style={styles.footerText}>
               <Text style={styles.greenText}>24 Hour</Text>
               <Text style={styles.regularText}>{' Response Time • '}</Text>
               <Text style={styles.greenText}>100%</Text>
               <Text style={styles.regularText}>{' Response Rate'}</Text>
-            </View>
+            </Text>
             <View style={styles.modalFooter}>
               <TouchableOpacity
                 style={styles.btnCancel}
@@ -207,6 +222,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         </View>
         <ModalPepupReq />
         <ModalVideo />
+        <ModalReviews />
       </Modal>
     );
   }

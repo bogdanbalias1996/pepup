@@ -10,7 +10,10 @@ import {
 } from "../../variables";
 
 export default StyleSheet.create({
-  scrollView: { flex: 1, marginBottom: 10 },
+  scrollView: { 
+    flex: 1, 
+    marginBottom: 10 
+  },
   wrapModalContent: {
     backgroundColor: "white",
     borderTopLeftRadius: 32,

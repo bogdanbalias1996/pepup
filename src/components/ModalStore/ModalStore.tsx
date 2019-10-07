@@ -19,7 +19,7 @@ import styles from "./ModalStore.styles";
 import { colorBlack, colorLightGray, boldFont, defaultFont } from "../../variables";
 
 const mapStateToProps = state => ({
-  showModal: state.StoreState.showModal
+  isModalShown: state.StoreState.isModalShown
 });
 const mapDispatchToProps = dispatch => ({
   closeStoreModal: () => dispatch(closeStoreModal())
@@ -110,12 +110,12 @@ export class Component extends React.PureComponent<ModalStoreProps> {
   };
 
   render() {
-    const { closeStoreModal, showModal } = this.props;
+    const { closeStoreModal, isModalShown } = this.props;
     const { value } = this.state;
     return (
       <Modal
         position="bottom"
-        isOpen={showModal}
+        isOpen={isModalShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}

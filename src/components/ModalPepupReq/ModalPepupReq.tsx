@@ -1,13 +1,6 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  ScrollView,
-  Image,
-  Keyboard
-} from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
 import { Formik } from 'formik';
@@ -20,22 +13,22 @@ import {
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { TextInputBorderStyled } from '../../components/TextInputStyled/TextInputBorderStyled';
-import { ModalPepupReqProps, RequestPepupProps } from './';
+import { RequestPepupProps, RequestPepupScreenFromData } from './';
 import styles from './ModalPepupReq.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { CheckboxStyled } from '../CheckboxStyled/CheckboxStyled';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  showModalReq: state.PepupState.showModalReq,
+  isModalReqShown: state.PepupState.isModalReqShown,
   celebData: state.PepupState.celebData,
-  celebId: state.PepupState.celebData.id,
+  userId: state.PepupState.celebData.userInfo.id,
   categoryId: state.PepupState.selectedCategory,
   isFetching: state.PepupState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupReqModal: () => dispatch(closePepupReqModal()),
-  sendRequestForPepup: (data: RequestPepupProps, setErrors: any) =>
+  sendRequestForPepup: (data: RequestPepupScreenFromData, setErrors: any) =>
     dispatch(sendRequestForPepup(data, setErrors) as any)
 });
 
@@ -44,8 +37,8 @@ const RequestSchema = Yup.object().shape({
   text: Yup.string().required("Please type person's name")
 });
 
-export class Component extends React.PureComponent<ModalPepupReqProps> {
-  handleSubmit = (values: RequestPepupProps, { setErrors }: any) => {
+export class Component extends React.PureComponent<RequestPepupProps> {
+  handleSubmit = (values: RequestPepupScreenFromData, { setErrors }: any) => {
     const { sendRequestForPepup } = this.props;
     sendRequestForPepup(values, setErrors);
   };
@@ -53,7 +46,7 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
   render() {
     const {
       closePepupReqModal,
-      showModalReq,
+      isModalReqShown,
       isFetching,
       celebData
     } = this.props;
@@ -62,7 +55,7 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
 
     return (
       <Modal
-        isOpen={showModalReq}
+        isOpen={isModalReqShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
@@ -82,7 +75,13 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
             onSubmit={this.handleSubmit}
           >
             {(props: any) => {
-              const { handleSubmit, errors, touched, setFieldValue, values } = props;
+              const {
+                handleSubmit,
+                errors,
+                touched,
+                setFieldValue,
+                values
+              } = props;
 
               const formattedErrorString = Object.keys(errors)
                 .reduce((acc: Array<string>, key: string) => {
@@ -96,7 +95,7 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
 
               return (
                 <View style={styles.wrap}>
-                  <ScrollView style={styles.scrollview}>
+                  <ScrollView>
                     <View>
                       <View style={styles.reqTitle}>
                         <Image
@@ -147,7 +146,10 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
                             <CheckboxStyled
                               checked={values.shareCheckbox}
                               onPress={() =>
-                               setFieldValue('shareCheckbox', !values.shareCheckbox)
+                                setFieldValue(
+                                  'shareCheckbox',
+                                  !values.shareCheckbox
+                                )
                               }
                             />
                             <Text style={[styles.subTitle, styles.checkText]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
@@ -159,8 +161,8 @@ export class Component extends React.PureComponent<ModalPepupReqProps> {
 
                   <View style={styles.footerWrap}>
                     <Text style={styles.disclaimerText}>
-                      DISCLAIMER: We will issue you a refund, if we are unable
-                      to fulfill your request in 7 days.{' '}
+                      DISCLAIMER: We will only charge you when we fulfill your
+                      request.
                     </Text>
                     <View style={styles.modalFooter}>
                       <TouchableOpacity

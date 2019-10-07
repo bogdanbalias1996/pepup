@@ -14,29 +14,51 @@ import {
   FAILURE_CELEBS_BY_CATEGORY,
   SET_CATEGORY,
   OPEN_VIDEO_MODAL,
-  CLOSE_VIDEO_MODAL
+  CLOSE_VIDEO_MODAL,
+  OPEN_REVIEWS_MODAL,
+  CLOSE_REVIEWS_MODAL,
+  RECEIVE_ALL_REVIEWS,
+  REQUEST_ALL_REVIEWS,
+  FAILURE_ALL_REVIEWS,
+  OPEN_POST_REVIEW_MODAL,
+  CLOSE_POST_REVIEW_MODAL,
+  RECEIVE_REVIEW,
+  REQUEST_REVIEW,
+  FAILURE_REVIEW,
+  REQUEST_ALL_ACTIVE_CATEGORIES,
+  FAILURE_ALL_ACTIVE_CATEGORIES,
+  REQUEST_CELEB,
+  FAILURE_CELEB
 } from "./actions";
-import { Category, Celeb } from ".";
+import { Category, Celeb, Review } from ".";
 
 export class PepupState {
-  showModal: boolean;
-  showModalReq: boolean;
+  isModalShown: boolean;
+  isModalReqShown: boolean;
   isVideoModalShown: boolean;
   categories: Array<Category>;
   celebs: Array<Celeb>;
   celebData: Celeb | null;
   isFetching: boolean;
+  isFetchingCat: boolean;
   selectedCategory: string;
+  isModalReviewShown: boolean;
+  reviews: Array<Review>;
+  isModalPostReviewShown: boolean;
 
   constructor() {
-    this.showModal = false;
-    this.showModalReq = false;
+    this.isModalShown = false;
+    this.isModalReqShown = false;
     this.categories = [];
     this.celebs = [];
     this.celebData = null;
     this.isFetching = false;
+    this.isFetchingCat = false;
     this.selectedCategory = '';
     this.isVideoModalShown = false;
+    this.isModalReviewShown = false;
+    this.reviews = [];
+    this.isModalPostReviewShown = false;
   }
 }
 
@@ -50,27 +72,38 @@ export const PepupReducer = (
     case OPEN_PEPUP_MODAL:
       return {
         ...state,
-        showModal: true
+        isModalShown: true
       };
     case CLOSE_PEPUP_MODAL:
       return {
         ...state,
-        showModal: false
+        isModalShown: false
       };
     case OPEN_PEPUP_REQ_MODAL:
       return {
         ...state,
-        showModalReq: true
+        isModalReqShown: true
       };
     case CLOSE_PEPUP_REQ_MODAL:
       return {
         ...state,
-        showModalReq: false
+        isModalReqShown: false
       };
     case RECEIVE_ALL_ACTIVE_CATEGORIES:
       return {
         ...state,
         categories: action.data,
+        isFetchingCat: false
+      };
+    case REQUEST_ALL_ACTIVE_CATEGORIES:
+      return {
+        ...state,
+        isFetchingCat: true
+      };
+    case FAILURE_ALL_ACTIVE_CATEGORIES:
+      return {
+        ...state,
+        isFetchingCat: false
       };
     case RECEIVE_CELEBS_BY_CATEGORY:
       return {
@@ -91,27 +124,37 @@ export const PepupReducer = (
     case RECEIVE_CELEB:
       return {
         ...state,
-        celebData: action.data
+        celebData: action.data,
+        isFetching: false
+      }
+    case REQUEST_CELEB:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case FAILURE_CELEB:
+      return {
+        ...state,
+        isFetching: false
       }
     case RECEIVE_PEPUP:
       return {
         ...state,
         isFetching: false,
-        showModalReq: false,
-        showModal: false
+        isModalReqShown: false,
+        isModalShown: false
       }
     case REQUEST_PEPUP:
       return {
         ...state,
         isFetching: true
       };
-
     case FAILURE_REQ_PEPUP:
       return {
         ...state,
         isFetching: false
       };
-    case SET_CATEGORY:  
+    case SET_CATEGORY:
       return {
         ...state,
         selectedCategory: action.data
@@ -125,6 +168,59 @@ export const PepupReducer = (
       return {
         ...state,
         isVideoModalShown: false
+      };
+    case OPEN_REVIEWS_MODAL:
+      return {
+        ...state,
+        isModalReviewShown: true
+      };
+    case CLOSE_REVIEWS_MODAL:
+      return {
+        ...state,
+        isModalReviewShown: false
+      };
+    case RECEIVE_ALL_REVIEWS:
+      return {
+        ...state,
+        reviews: action.data,
+        isFetching: false
+      }
+    case REQUEST_ALL_REVIEWS:
+      return {
+        ...state,
+        isFetching: true
+      }
+    case FAILURE_ALL_REVIEWS:
+      return {
+        ...state,
+        isFetching: false
+      }
+    case OPEN_POST_REVIEW_MODAL:
+      return {
+        ...state,
+        isModalPostReviewShown: true
+      };
+    case CLOSE_POST_REVIEW_MODAL:
+      return {
+        ...state,
+        isModalPostReviewShown: false
+      };
+    case RECEIVE_REVIEW:
+      return {
+        ...state,
+        isFetching: false,
+        isModalPostReviewShown: false
+      }
+    case REQUEST_REVIEW:
+      return {
+        ...state,
+        isFetching: true
+      };
+
+    case FAILURE_REVIEW:
+      return {
+        ...state,
+        isFetching: false
       };
     default:
       return state;

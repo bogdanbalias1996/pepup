@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   TouchableOpacity,
   Text,
@@ -6,24 +6,24 @@ import {
   FlatList,
   ScrollView,
   Image
-} from "react-native";
-import { connect } from "react-redux";
-import Modal from "react-native-modalbox";
-import format from "date-fns/format";
+} from 'react-native';
+import { connect } from 'react-redux';
+import Modal from 'react-native-modalbox';
+import format from 'date-fns/format';
 
-import { closeEventModal } from "../../pages/Events/actions";
-import { Icon } from "../../components/Icon/Icon";
-import { ButtonStyled } from "../../components/ButtonStyled/ButtonStyled";
-import { ModalEventsProps } from ".";
-import styles from "./ModalEvents.styles";
-import { colorBlack } from "../../variables";
-import { IGlobalState } from "../../coreTypes";
-import { Dispatch } from "redux";
-import { LoadingScreen } from "../../pages/Loading/Loading";
+import { closeEventModal } from '../../pages/Events/actions';
+import { Icon } from '../../components/Icon/Icon';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import { ModalEventsProps } from '.';
+import styles from './ModalEvents.styles';
+import { colorBlack } from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  showModal: state.EventState.showModal,
-  eventData: state.EventState.eventData
+  isModalShown: state.EventState.isModalShown,
+  eventData: state.EventState.eventData,
+  isFetching: state.EventState.isFetching
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -32,20 +32,20 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const media = [
   {
-    id: "01",
-    avatar: require("../../../assets/mock_avatar.jpg")
+    id: '01',
+    avatar: require('../../../assets/mock_avatar.jpg')
   },
   {
-    id: "02",
-    avatar: require("../../../assets/mock_avatar.jpg")
+    id: '02',
+    avatar: require('../../../assets/mock_avatar.jpg')
   },
   {
-    id: "03",
-    avatar: require("../../../assets/mock_avatar.jpg")
+    id: '03',
+    avatar: require('../../../assets/mock_avatar.jpg')
   },
   {
-    id: "04",
-    avatar: require("../../../assets/mock_avatar.jpg")
+    id: '04',
+    avatar: require('../../../assets/mock_avatar.jpg')
   }
 ];
 
@@ -67,16 +67,16 @@ export class Component extends React.PureComponent<ModalEventsProps> {
   };
 
   render() {
-    const { closeEventModal, showModal, eventData } = this.props;
+    const { closeEventModal, isModalShown, eventData } = this.props;
 
     if (!eventData) return null;
 
-    const parsedContestData = eventData.data ? JSON.parse(eventData.data) : {};
+    const parsedEventData = eventData.data ? JSON.parse(eventData.data) : {};
 
     return (
       <Modal
         position="bottom"
-        isOpen={showModal}
+        isOpen={isModalShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
@@ -86,14 +86,14 @@ export class Component extends React.PureComponent<ModalEventsProps> {
           styles.modal,
           {
             maxHeight: this.state.heightDescription + THRESHOLD,
-            height: "100%",
+            height: '100%',
             marginTop: 50
           }
         ]}
       >
-        {Object.keys(eventData).length !== 0 ? (
-          <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
+        <View style={styles.wrapModalContent}>
+          <View style={styles.swiperLine} />
+          
             <ScrollView style={styles.scrollView}>
               <View
                 style={styles.insidePadding}
@@ -111,13 +111,13 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                   <Text style={styles.title}>{eventData.title}</Text>
                 </View>
                 <Text style={[styles.text, styles.infoText]}>
-                  {parsedContestData.details}
+                  {parsedEventData.details}
                 </Text>
                 <View style={styles.infoBlock}>
                   <View style={styles.infoItem}>
                     <Text style={styles.infoLabel}>Time</Text>
                     <Text style={styles.infoValue}>
-                      {format(eventData.startDate, "H:mm")}
+                      {format(eventData.startDate, 'H:mm')}
                     </Text>
                   </View>
                   <View style={styles.infoItem}>
@@ -144,18 +144,16 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                   </View>
                 </View>
               </View>
-              {media ? (
-                <View style={styles.imgSet}>
-                  <FlatList
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={media}
-                    renderItem={this.renderItem}
-                    keyExtractor={item => item.id}
-                    style={styles.carousel}
-                  />
-                </View>
-              ) : <LoadingScreen />}
+              <View style={styles.imgSet}>
+                <FlatList
+                  horizontal={true}
+                  showsHorizontalScrollIndicator={false}
+                  data={media}
+                  renderItem={this.renderItem}
+                  keyExtractor={item => item.id}
+                  style={styles.carousel}
+                />
+              </View>
             </ScrollView>
             <View style={styles.modalFooter}>
               <TouchableOpacity
@@ -166,12 +164,11 @@ export class Component extends React.PureComponent<ModalEventsProps> {
               </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
-                onPress={() => alert("ok")}
+                onPress={() => alert('ok')}
                 text="Buy Tickets"
               />
             </View>
-          </View>
-        ) : null}
+        </View>
       </Modal>
     );
   }

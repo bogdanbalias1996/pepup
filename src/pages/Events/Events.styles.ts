@@ -8,7 +8,8 @@ export default StyleSheet.create({
     borderTopRightRadius: 32,
     paddingTop: 16,
     paddingHorizontal: 14,
-    flex: 1
+    flex: 1,
+    marginTop: 10
   },
   wrapHeaderRight: {
     flexDirection: "row"

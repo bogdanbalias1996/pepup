@@ -13,6 +13,7 @@ import { navigate } from "../../navigationService";
 import { Dispatch } from "redux";
 import { getProfile } from "./actions";
 import { IGlobalState } from "../../coreTypes";
+import { LoadingScreen } from "../Loading/Loading";
 
 const Header = props => (
   <HeaderRounded
@@ -113,15 +114,19 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
           </TouchableOpacity>
         </View>
         <View style={styles.wrapContent}>
-          <Tabs
-            config={this.tabsConfig}
-            style={{ flex: 1 }}
-            stylesItem={defaultTabsStyles.roundedTabs}
-            stylesTabsContainer={{
-              backgroundColor: "transparent",
-              marginBottom: 10
-            }}
-          />
+          {profileData ? (
+            <Tabs
+              config={this.tabsConfig}
+              style={{ flex: 1 }}
+              stylesItem={defaultTabsStyles.roundedTabs}
+              stylesTabsContainer={{
+                backgroundColor: "transparent",
+                marginBottom: 10
+              }}
+            />
+          ) : (
+            <LoadingScreen />
+          )}
         </View>
       </PepupBackground>
     );

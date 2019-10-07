@@ -2,7 +2,7 @@ import { Celeb } from "../../pages/Pepups";
 
 export type ModalPepupReqProps = {
   closePepupReqModal: () => void;
-  showModalReq: boolean;
+  isModalReqShown: boolean;
   isFetching?: boolean;
   celebData: Celeb;
   sendRequestForPepup: (req: any, reqFor: string) => Promise<any>;
@@ -15,8 +15,8 @@ export type RequestPepupScreenFromData = {
 }
 
 export type RequestPepupScreenFromProps = {
-  celebId: string;
+  userId: string;
   categoryId: string;
 }
 
-export type RequestPepupProps = RequestPepupScreenFromData & RequestPepupScreenFromProps & ModalPepupReqProps;
+export type RequestPepupProps = RequestPepupScreenFromProps & ModalPepupReqProps;

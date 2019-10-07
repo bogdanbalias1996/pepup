@@ -4,18 +4,19 @@ import {
   colorTextGray,
   colorLightGray,
   colorSwipeLine,
+  colorTomato,
   boldFont,
   semiboldFont,
   defaultFont
 } from "../../variables";
 
 export default StyleSheet.create({
-  scrollView: { flex: 1, marginBottom: 10 },
   wrapModalContent: {
     backgroundColor: "white",
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    flex: 1
+    flexGrow: 1,
+    paddingHorizontal: 24
   },
   swiperLine: {
     width: 64,
@@ -25,7 +26,9 @@ export default StyleSheet.create({
     alignSelf: "center"
   },
   modal: {
+    marginTop: 40,
     zIndex: 100,
+    flex: 1,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32
   },
@@ -72,8 +75,10 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 15,
-    marginBottom: 70,
-    marginHorizontal: 24
+    marginBottom: 90
+  },
+  modalFooterContest: {
+    marginBottom: 50
   },
   btnCancel: {
     width: 48,
@@ -95,5 +100,44 @@ export default StyleSheet.create({
     fontSize: 14,
     fontFamily: defaultFont
   },
-  insidePadding: { paddingHorizontal: 24 }
+  avatar: {
+    width: 76,
+    height: 76,
+    borderRadius: 15,
+    marginRight: 10
+  },
+  conTitle: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  form: {
+    marginTop: 20,
+    flexGrow: 1,
+    justifyContent: 'space-between'
+  },
+  formErrorContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+  formError: {
+    color: colorTomato,
+    textAlign: "center",
+    paddingLeft: 40,
+    fontSize: 14
+  },
+  itemWrap: {
+    marginTop: 25
+  },
+  wrap: {
+    flex: 1, 
+    marginBottom: 10
+  },
+  subTitle: {
+    fontSize: 16,
+    fontFamily: semiboldFont,
+    color: colorBlack,
+    marginBottom: 10
+  }
 });

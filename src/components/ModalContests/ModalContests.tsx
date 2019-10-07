@@ -3,23 +3,29 @@ import { TouchableOpacity, Text, View, ScrollView, Image } from "react-native";
 import { connect } from "react-redux";
 import Modal from "react-native-modalbox";
 import format from "date-fns/format";
+import { Dispatch } from "redux";
 
-import { closeContestModal } from "../../pages/Contests/actions";
+import {
+  closeContestModal,
+  openContestTestModal
+} from "../../pages/Contests/actions";
 import { Icon } from "../../components/Icon/Icon";
 import { ButtonStyled } from "../../components/ButtonStyled/ButtonStyled";
 import { ModalContestsProps } from "./";
 import styles from "./ModalContests.styles";
 import { colorBlack } from "../../variables";
 import { IGlobalState } from "../../coreTypes";
-import { Dispatch } from "redux";
+import { ModalContestTest } from "./ModalContestTest";
+import { ModalContestDesign } from "./ModalContestDesign";
 
 const mapStateToProps = (state: IGlobalState) => ({
-  showModal: state.ContestState.showModal,
+  isModalShown: state.ContestState.isModalShown,
   contestData: state.ContestState.contestData
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestModal: () => dispatch(closeContestModal())
+  closeContestModal: () => dispatch(closeContestModal()),
+  openContestTestModal: () => dispatch(openContestTestModal())
 });
 
 const media = [
@@ -37,7 +43,12 @@ export class Component extends React.PureComponent<ModalContestsProps> {
   };
 
   render() {
-    const { closeContestModal, showModal, contestData } = this.props;
+    const {
+      closeContestModal,
+      isModalShown,
+      contestData,
+      openContestTestModal
+    } = this.props;
 
     if (!contestData) return null;
 
@@ -48,7 +59,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
     return (
       <Modal
         position="bottom"
-        isOpen={showModal}
+        isOpen={isModalShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
@@ -66,9 +77,8 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         {Object.keys(contestData).length !== 0 ? (
           <View style={styles.wrapModalContent}>
             <View style={styles.swiperLine} />
-            <ScrollView style={styles.scrollView}>
+            <ScrollView>
               <View
-                style={styles.insidePadding}
                 onLayout={event => {
                   const { height } = event.nativeEvent.layout;
                   Object.keys(contestData).length !== 0 &&
@@ -116,12 +126,13 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
-                onPress={() => alert("ok")}
-                text="Submission Link"
+                onPress={() => openContestTestModal()}
+                text="Enter contest"
               />
             </View>
           </View>
         ) : null}
+        {contestData.type === 'QNA' ? <ModalContestTest /> : <ModalContestDesign />}
       </Modal>
     );
   }

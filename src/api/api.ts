@@ -23,7 +23,9 @@ export enum ApiOperation {
   GetActiveCategory,
   GetCelebsByCategory,
   GetCelebById,
-  RequestPepup
+  RequestPepup,
+  GetAllReviews,
+  PostReview
 }
 
 export interface INetwork<C> {
@@ -110,9 +112,13 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetCelebsByCategory:
         return ApiMethod.GET
       case ApiOperation.GetCelebById:
-        return ApiMethod.GET 
+        return ApiMethod.GET
       case ApiOperation.RequestPepup:
-        return ApiMethod.POST   
+        return ApiMethod.POST
+      case ApiOperation.GetAllReviews:
+        return ApiMethod.GET
+      case ApiOperation.PostReview:
+        return ApiMethod.POST
       default:
         return ApiMethod.UNKNOWN
     }
@@ -121,7 +127,7 @@ export class CitiznApi implements IApi<ApiOperation> {
   getUrl(): string {
     const host = 'http://dev.pepupyo.com/mz'
     const {
-      userId, eventId, contestId, categoryId, celebId
+      userId, eventId, contestId, categoryId
     } = (this.getParams() || {}) as any
 
     switch (this.operation) {
@@ -148,9 +154,13 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetCelebsByCategory:
         return `${host}/pepup/celeb/category/${categoryId}`
       case ApiOperation.GetCelebById:
-        return `${host}/pepup/celeb/${celebId}`  
+        return `${host}/pepup/celeb/${userId}`
       case ApiOperation.RequestPepup:
         return `${host}/pepup/create`
+      case ApiOperation.GetAllReviews:
+        return `${host}/pepup/celeb/reviews/${userId}`
+      case ApiOperation.PostReview:
+        return `${host}/pepup/celeb/post-review`  
       default:
         return ''
     }
@@ -182,9 +192,11 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetContest:
       case ApiOperation.GetAllActiveCategories:
       case ApiOperation.GetActiveCategory:
-      case ApiOperation.GetCelebsByCategory:  
+      case ApiOperation.GetCelebsByCategory:
       case ApiOperation.GetCelebById:
-      case ApiOperation.RequestPepup:  
+      case ApiOperation.RequestPepup:
+      case ApiOperation.GetAllReviews:
+      case ApiOperation.PostReview: 
         return true
       default:
         return false

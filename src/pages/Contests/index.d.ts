@@ -23,7 +23,8 @@ export type Contest = {
 
 export type ContestsScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
-  contests: Array<Contest>
+  contests: Array<Contest>,
+  isFetching: boolean
 }
 
 export type ContestsScreenDispatchProps = {
@@ -34,6 +35,7 @@ export type ContestItemsProps = {
   data: any;
   openContestModal: () => void;
   getContest: (contestId: string) => Promise<any>;
+  isFetching: boolean
 };
 
 export type ContestsScreenProps = ContestsScreenStateProps &

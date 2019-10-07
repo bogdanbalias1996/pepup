@@ -46,6 +46,7 @@ export default StyleSheet.create({
     disclaimerText: {
         color: colorTextGray,
         lineHeight: 22,
+        alignSelf: 'flex-start',
         fontFamily: defaultFont
     },
     modal: {
@@ -106,7 +107,6 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    scrollview: { flexGrow: 1 },
     wrap: { flex: 1, marginBottom: 10 },
     checkboxWrap: {
         flexDirection: 'row',

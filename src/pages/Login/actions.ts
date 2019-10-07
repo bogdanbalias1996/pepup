@@ -98,6 +98,6 @@ export const SET_USER_ID = 'SET_USER_ID';
 export const setUserId = (data): IAction<string> => {
   return {
     type: SET_USER_ID,
-    data: data
+    data
   };
 };

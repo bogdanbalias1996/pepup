@@ -7,6 +7,7 @@ import {
   colorVioletGrey,
   colorSwipeLine,
   colorGreen,
+  colorTomato,
   semiboldFont,
   defaultFont
 } from '../../variables';
@@ -34,6 +35,14 @@ export default StyleSheet.create({
     fontSize: 12,
     color: colorTextGray,
     marginTop: 3
+  },
+  nopepups:{
+    textAlign: 'center',
+    width: '100%',
+    marginVertical: 30,
+    fontSize: 16,
+    color: colorTomato,
+    fontFamily: defaultFont
   },
   swiperLine: {
     width: 64,
@@ -71,8 +80,8 @@ export default StyleSheet.create({
     color: colorTextGray
   },
   carousel: {
-    marginVertical: 24,
-    marginLeft: 24
+    margin: 24,
+    alignSelf: 'center'
   },
   reviews: {
     paddingHorizontal: 24
@@ -80,7 +89,7 @@ export default StyleSheet.create({
   rewiewsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 15
   },
   numberRewiewsText: {
     fontSize: 12,
@@ -93,6 +102,9 @@ export default StyleSheet.create({
     padding: 16,
     backgroundColor: colorLightGray,
     borderRadius: 8
+  },
+  commentCardOnModal: {
+    marginVertical: 8
   },
   commentHeader: {
     flexDirection: 'row',
@@ -111,8 +123,10 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     marginTop: 15,
     marginBottom: 50,
-    marginHorizontal: 24,
     backgroundColor: 'transparent'
+  },
+  modalFooterReviews: {
+    justifyContent: 'center'
   },
   btnCancel: {
     width: 48,
@@ -157,26 +171,32 @@ export default StyleSheet.create({
     marginHorizontal: 3
   },
   footerText: {
-    flexDirection: 'row',
-    alignItems: "center",
-    justifyContent: 'flex-end',
-    marginRight: 24,
+    textAlign: 'right',
+    fontSize: 11,
+    fontFamily: defaultFont
   },
   greenText: {
     color: colorGreen,
-    fontSize: 11,
-    fontFamily: defaultFont
   },
   regularText: {
     color: colorTextGray,
-    fontSize: 11,
-    fontFamily: defaultFont
   },
-  scrollview: { flex: 1, marginBottom: 10 },
+  scrollview: { 
+    flex: 1, 
+    marginBottom: 10 
+  },
   header: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center'
+  },
+  headerReviews: {
+    marginBottom: 35,
+    marginTop: 15
+  },
+  rewiewsNumber: {
+    justifyContent: 'flex-start',
+    marginBottom: 8
   }
 });

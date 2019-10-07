@@ -1,20 +1,23 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { View } from "react-native";
-import { Dispatch } from "redux";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
+import { Dispatch } from 'redux';
 
-import { ModalEvents } from "../../components/ModalEvents/ModalEvents";
-import { PepupBackground } from "../../components/PepupBackground/PepupBackground";
-import { EventsScreenProps } from ".";
-import { EventItems } from "./EventItems";
-import { HeaderRounded } from "../../components/HeaderRounded/HeaderRounded";
-import { Tabs, defaultTabsStyles } from "../../components/Tabs/Tabs";
-import styles from "./Events.styles";
-import { getAllEvents } from "./actions";
-import { IGlobalState } from "../../coreTypes";
+import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { EventsScreenProps } from '.';
+import { EventItems } from './EventItems';
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
+import styles from './Events.styles';
+import { getAllEvents } from './actions';
+import { IGlobalState } from '../../coreTypes';
+import { LoadingScreen } from '../Loading/Loading';
+import { Loader } from '../../components/Loader/Loader';
+import { colorBlueberry } from '../../variables';
 
 const Header = props => (
-  <HeaderRounded {...props} title={"Events".toUpperCase()} />
+  <HeaderRounded {...props} title={'Events'.toUpperCase()} />
 );
 
 const ConnectedHeader = connect(
@@ -23,7 +26,8 @@ const ConnectedHeader = connect(
 )(Header);
 
 const mapStateToProps = (state: IGlobalState) => ({
-  events: state.EventState.events
+  events: state.EventState.events,
+  isFetching: state.EventState.isFetching
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -49,30 +53,30 @@ export class Component extends React.PureComponent<EventsScreenProps> {
   };
 
   render() {
-    const { events, getAllEvents } = this.props;
+    const { events, getAllEvents, isFetching } = this.props;
     const tabsConfig = [
       {
-        title: "Past",
+        title: 'Past',
         component: () => <EventItems data={events} />,
         onPress: () => getAllEvents()
       },
       {
-        title: "Today",
+        title: 'Today',
         component: () => <EventItems data={events} />,
         onPress: () => getAllEvents()
       },
       {
-        title: "Featured",
+        title: 'Featured',
         component: () => <EventItems data={events} />,
         onPress: () => getAllEvents()
       },
       {
-        title: "Upcoming",
+        title: 'Upcoming',
         component: () => <EventItems data={events} />,
         onPress: () => getAllEvents()
       },
       {
-        title: "Deals",
+        title: 'Deals',
         component: () => <EventItems data={events} />,
         onPress: () => getAllEvents()
       }
@@ -81,15 +85,21 @@ export class Component extends React.PureComponent<EventsScreenProps> {
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-          <Tabs
-            config={tabsConfig}
-            style={{ flex: 1 }}
-            stylesItem={defaultTabsStyles.roundedTabs}
-            stylesTabsContainer={{
-              backgroundColor: "transparent",
-              marginBottom: 5
-            }}
-          />
+          <Loader
+            isDataLoaded={!isFetching}
+            color={colorBlueberry}
+            size="large"
+          >
+            <Tabs
+              config={tabsConfig}
+              style={{ flex: 1 }}
+              stylesItem={defaultTabsStyles.roundedTabs}
+              stylesTabsContainer={{
+                backgroundColor: 'transparent',
+                marginBottom: 5
+              }}
+            />
+          </Loader>
         </View>
         <ModalEvents />
       </PepupBackground>

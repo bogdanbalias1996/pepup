@@ -6,11 +6,11 @@ import {
 } from "./actions";
 
 export class StoreState {
-  showModal: boolean;
+  isModalShown: boolean;
   filterValue: any;
 
   constructor() {
-    this.showModal = false;
+    this.isModalShown = false;
     this.filterValue = { key: "1", text: "All" };
   }
 }
@@ -25,12 +25,12 @@ export const StoreReducer = (
     case OPEN_STORE_MODAL:
       return {
         ...state,
-        showModal: true
+        isModalShown: true
       };
     case CLOSE_STORE_MODAL:
       return {
         ...state,
-        showModal: false
+        isModalShown: false
       };
     case SET_FILTER_VALUE:
       return {

@@ -26,6 +26,7 @@ export type Event = {
 export type EventsScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   events: Array<Event>;
+  isFetching: boolean;
 }
 
 export type EventsScreenDispatchProps = {
@@ -36,6 +37,7 @@ export type EventItemsProps = {
   data: any;
   openEventModal: () => void;
   getEvent: (eventId: string) => Promise<any>;
+  isFetching: boolean;
 };
 
 export type EventsScreenProps = EventsScreenStateProps &

@@ -4,7 +4,7 @@ import { request } from '../../api/network'
 import { IAction } from '../../coreTypes'
 
 export const RECEIVE_USER_PROFILE = "RECEIVE_USER_PROFILE";
-export const receiveUserProfile = (data): IAction<any> => {
+export const receiveUserProfile = (data): IAction<string> => {
   return {
     type: RECEIVE_USER_PROFILE,
     data
