@@ -1,13 +1,28 @@
-import { Dispatch } from 'redux'
-import { ApiOperation } from '../../api/api'
-import { request } from '../../api/network'
-import { IAction } from '../../coreTypes'
+import {Dispatch} from 'redux';
+import {ApiOperation} from '../../api/api';
+import {request} from '../../api/network';
+import {IAction} from '../../coreTypes';
 
-export const RECEIVE_USER_PROFILE = "RECEIVE_USER_PROFILE";
+export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data): IAction<string> => {
   return {
     type: RECEIVE_USER_PROFILE,
-    data
+    data,
+  };
+};
+
+export const OPEN_VIDEO_RECORD_MODAL = 'OPEN_VIDEO_RECORD_MODAL';
+export const CLOSE_VIDEO_RECORD_MODAL = 'CLOSE_VIDEO_RECORD_MODAL';
+export const openVideoRecordModal = (): IAction<undefined> => {
+  return {
+    type: OPEN_VIDEO_RECORD_MODAL,
+    data: undefined,
+  };
+};
+export const closeVideoRecordModal = (): IAction<undefined> => {
+  return {
+    type: CLOSE_VIDEO_RECORD_MODAL,
+    data: undefined,
   };
 };
 
@@ -16,8 +31,8 @@ export const getProfile = (userId: string) => {
     request({
       operation: ApiOperation.GetProfile,
       params: {
-        userId
-      }
+        userId,
+      },
     })
       .then(res => {
         dispatch(receiveUserProfile(res));
