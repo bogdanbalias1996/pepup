@@ -378,3 +378,18 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       })
   }
 }
+
+export const OPEN_NOTIFY_MODAL = 'OPEN_NOTIFY_MODAL';
+export const CLOSE_NOTIFY_MODAL = 'CLOSE_NOTIFY_MODAL';
+export const openNotifyModal = (): IAction<undefined> => {
+  return {
+    type: OPEN_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+export const closeNotifyModal = (): IAction<undefined> => {
+  return {
+    type: CLOSE_NOTIFY_MODAL,
+    data: undefined
+  };
+};

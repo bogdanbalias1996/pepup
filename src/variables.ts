@@ -47,12 +47,16 @@ export const colorOrangeEnd = "#ea3d34";
 export const colorVioletStart = "#bd359c";
 export const colorVioletEnd = "#4c1ba6";
 export const colorVioletGrey = "#6e6688";
-export const colorTextRed = "#e02020";
 export const colorOrange = "#fc9e60";
 export const colorLightGradStart = "#eba9d8";
 export const colorLightGradEnd = "#c39dec"
+export const colorTextRed = "#e02020";
 export const colorGreen = "#1f9e3e";
+export const colorOrangeStatus = '#fa6400';
+export const colorCompletedStatus = "#b620e0";
+export const colorItalic = "#212121";
 
 export const defaultFont = 'montserrat-medium';
 export const semiboldFont = 'montserrat-semibold';
 export const boldFont = 'montserrat-bold';
+export const italicFont = 'montserrat-italic';

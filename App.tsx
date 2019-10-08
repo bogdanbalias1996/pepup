@@ -63,6 +63,7 @@ export default class App extends Component {
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
       'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
       'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
+      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
     });
 
     getStore().dispatch({

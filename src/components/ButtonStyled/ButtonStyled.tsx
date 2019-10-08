@@ -27,6 +27,8 @@ const getTypeButton = type => {
       return [styles.shadowBlue, styles.btnShadow];
     case 'orange':
       return [styles.shadowOrange, styles.btnShadow];
+    case 'grey': 
+      return [styles.shadowGrey, styles.btnShadow]  
   }
 };
 

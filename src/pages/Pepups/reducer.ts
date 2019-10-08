@@ -28,7 +28,9 @@ import {
   REQUEST_ALL_ACTIVE_CATEGORIES,
   FAILURE_ALL_ACTIVE_CATEGORIES,
   REQUEST_CELEB,
-  FAILURE_CELEB
+  FAILURE_CELEB,
+  OPEN_NOTIFY_MODAL,
+  CLOSE_NOTIFY_MODAL
 } from "./actions";
 import { Category, Celeb, Review } from ".";
 
@@ -45,6 +47,7 @@ export class PepupState {
   isModalReviewShown: boolean;
   reviews: Array<Review>;
   isModalPostReviewShown: boolean;
+  isModalNotifyShown: boolean;
 
   constructor() {
     this.isModalShown = false;
@@ -59,6 +62,7 @@ export class PepupState {
     this.isModalReviewShown = false;
     this.reviews = [];
     this.isModalPostReviewShown = false;
+    this.isModalNotifyShown = false;
   }
 }
 
@@ -221,6 +225,16 @@ export const PepupReducer = (
       return {
         ...state,
         isFetching: false
+      };
+    case OPEN_NOTIFY_MODAL:
+      return {
+        ...state,
+        isModalNotifyShown: true
+      };
+    case CLOSE_NOTIFY_MODAL:
+      return {
+        ...state,
+        isModalNotifyShown: false
       };
     default:
       return state;

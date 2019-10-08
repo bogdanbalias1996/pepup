@@ -6,7 +6,9 @@ import {
     colorSwipeLine,
     colorTomato,
     semiboldFont,
-    defaultFont
+    defaultFont,
+    colorItalic,
+    italicFont
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -43,12 +45,6 @@ export default StyleSheet.create({
         marginVertical: 20,
         alignSelf: "center"
     },
-    disclaimerText: {
-        color: colorTextGray,
-        lineHeight: 22,
-        alignSelf: 'flex-start',
-        fontFamily: defaultFont
-    },
     modal: {
         marginTop: 20,
         zIndex: 100,
@@ -75,31 +71,9 @@ export default StyleSheet.create({
     btnSubmit: {
         flex: 1
     },
-    text: {
-        fontSize: 14,
-        fontFamily: defaultFont
-    },
     reqTitle: {
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    form: {
-        flexGrow: 1,
-        justifyContent: 'space-between'
-    },
-    formErrorContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center"
-    },
-    formError: {
-        color: colorTomato,
-        textAlign: "center",
-        paddingLeft: 40,
-        fontSize: 14
-    },
-    inputWrap: {
-        marginTop: 50
     },
     footerWrap: {
         justifyContent: "flex-end",
@@ -111,12 +85,12 @@ export default StyleSheet.create({
         flex: 1,
         marginBottom: 10
     },
-    checkboxWrap: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginVertical: 30
+    textBlock: {
+        marginVertical: 10
     },
-    checkText: {
-        marginLeft: 10
+    reqData: {
+        color: colorItalic,
+        fontFamily: italicFont,
+        fontSize: 18
     }
 });

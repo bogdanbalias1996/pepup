@@ -32,6 +32,7 @@ export type ProfileScreenDispatchProps = {
 
 export type NotificationItemsProps = {
   data: any;
+  getStatus: () => void;
 };
 
 export type ProfileScreenProps = ProfileScreenStateProps &
