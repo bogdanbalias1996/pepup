@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 
@@ -24,28 +24,30 @@ import {IGlobalState} from './src/coreTypes';
 import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
 import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
+import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
 
 const AppNavigator = createSwitchNavigator(
   {
+    Onboarding: OnboardingNavigator,
     Pages: PagesNavigator,
     Auth: AuthenticationNavigator,
     Main: MainNavigator,
   },
   {
-    initialRouteName: 'Pages',
+    initialRouteName: 'Onboarding',
   },
 );
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const AppWithFontLoadedComponent = ({isFontLoaded}) => {
+const AppWithFontLoadedComponent = ({isFontLoaded}:any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
       <AppContainer
         ref={(navigatorRef: any) => {
           setTopLevelNavigator(navigatorRef);
-          authenticate();
+          // authenticate();
         }}
       />
     </Loader>

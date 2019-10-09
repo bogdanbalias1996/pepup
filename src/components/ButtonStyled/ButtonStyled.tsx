@@ -42,6 +42,8 @@ const getColorButton = type => {
       return [colorOrangeStart, colorOrangeEnd];
     case 'border':
       return [colorVioletStart, colorVioletEnd];
+    case 'white':
+      return ['white', 'white'];
   }
 };
 
@@ -64,7 +66,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 }
+          type === 'border' && { padding: 1 },
         ]}
       >
         <TouchableOpacity
@@ -86,6 +88,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
               style={[
                 styles.btnText,
                 { color: type === 'border' ? colorBlack : 'white' },
+                { color: type === 'white' ? colorVioletEnd : 'white' },
                 {
                   fontFamily: textBold ? boldFont : defaultFont
                 }

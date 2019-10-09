@@ -55,6 +55,7 @@ export const colorGreen = "#1f9e3e";
 export const colorOrangeStatus = '#fa6400';
 export const colorCompletedStatus = "#b620e0";
 export const colorItalic = "#212121";
+export const colorDots = '#a1a8b5';
 
 export const defaultFont = 'montserrat-medium';
 export const semiboldFont = 'montserrat-semibold';
