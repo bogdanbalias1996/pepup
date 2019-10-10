@@ -47,7 +47,7 @@ export class Component extends React.PureComponent<ErrorStateProps> {
         <Header />
         <View style={styles.wrapContent}>
             <Image
-                source={requ}
+                source={}
                 style={styles.image}
             />
 
