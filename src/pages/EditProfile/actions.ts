@@ -5,6 +5,7 @@ import { EditProfileScreenFromData } from './'
 import { navigate } from '../../navigationService'
 import { IAction } from "../../coreTypes";
 import { AuthResponse } from '../Login';
+import { openAlert, closeAlert } from '../Alert/actions'
 
 export const REQUEST_EDIT_USER = "REQUEST_EDIT_USER";
 export const requestEditUser = (): IAction<undefined> => {
@@ -31,38 +32,45 @@ export const failureEditUser = (): IAction<undefined> => {
 };
 
 export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) => {
-    return (dispatch: Dispatch) => {
-        const { email, newPasswd, name, dob, userId, profileInfo } = payload;
+  return (dispatch: Dispatch) => {
+    const { email, newPasswd, name, dob, userId, profileInfo } = payload;
 
-        // Temporary solution for tracking error states
-        const headers = email ? null : { 'Prefer': 'status=400' }
-        dispatch(requestEditUser());
-        request({
-            operation: ApiOperation.EditProfile,
-            variables: {
-                email,
-                newPasswd,
-                name,
-                dob, 
-                userId,
-                profileInfo
-            },
-            headers: {
-                ...headers,
-                'Content-Type': 'multipart/form-data'
-            }
+    // Temporary solution for tracking error states
+    const headers = email ? null : { 'Prefer': 'status=400' }
+    dispatch(requestEditUser());
+    request({
+      operation: ApiOperation.EditProfile,
+      variables: {
+        email,
+        newPasswd,
+        name,
+        dob,
+        userId,
+        profileInfo
+      },
+      headers: {
+        ...headers,
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+      .then((res) => {
+        dispatch(receiveEditUser(res));
+        dispatch(openAlert({
+          title: 'Changes Saved',
+          text: 'Updates to your profile have been saved.',
+          onPress: () => {
+            dispatch(closeAlert());
+            navigate({ routeName: 'Profile' })
+          }
+        }));
+      })
+      .catch((err) => {
+        dispatch(failureEditUser());
+        const { error = 'These fields are not valid' } = err.response.body
+        setErrors({
+          'email': error,
+          'name': error
         })
-            .then((res) => {
-                dispatch(receiveEditUser(res));
-                navigate({ routeName: 'Profile' });
-            })
-            .catch((err) => {
-                dispatch(failureEditUser());
-                const { error = 'These fields are not valid' } = err.response.body
-                setErrors({
-                    'email': error,
-                    'name': error
-                })
-            })
-    }
+      })
+  }
 }

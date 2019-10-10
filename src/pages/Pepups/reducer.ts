@@ -145,8 +145,8 @@ export const PepupReducer = (
       return {
         ...state,
         isFetching: false,
-        isModalReqShown: false,
-        isModalShown: false
+        // isModalReqShown: false,
+        // isModalShown: false
       }
     case REQUEST_PEPUP:
       return {
@@ -236,6 +236,7 @@ export const PepupReducer = (
         ...state,
         isModalNotifyShown: false
       };
+    
     default:
       return state;
   }

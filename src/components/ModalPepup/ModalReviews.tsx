@@ -41,12 +41,12 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
       <Modal
         isOpen={isModalReviewShown}
         swipeToClose={true}
-        coverScreen={true}
+        coverScreen={false}
         useNativeDriver={false}
         swipeArea={100}
         onClosed={() => closeReviewsModal()}
         style={styles.modal}
-      >
+        >
         <View style={styles.wrapModalContent}>
           <View style={styles.swiperLine} />
           <ScrollView style={styles.scrollview}>

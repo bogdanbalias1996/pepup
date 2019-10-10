@@ -1,7 +1,6 @@
 import { createStore, combineReducers, applyMiddleware, Store } from "redux";
 import { IGlobalState, IAction } from "./coreTypes";
 import thunk from "redux-thunk";
-import logger from "redux-logger";
 
 import { FontReducer } from "./common/font.reducer";
 import { LoginReducer } from "./pages/Login/reducer";
@@ -10,6 +9,7 @@ import { EventReducer } from "./pages/Events/reducer";
 import { ContestReducer } from "./pages/Contests/reducer";
 import { StoreReducer } from "./pages/Store/reducer";
 import { ProfileReducer } from './pages/Profile/reducer';
+import { AlertReducer } from './pages/Alert/reducer';
 
 const getReducerObject = () => ({
   FontState: FontReducer,
@@ -18,7 +18,8 @@ const getReducerObject = () => ({
   EventState: EventReducer,
   ContestState: ContestReducer,
   StoreState: StoreReducer,
-  ProfileState: ProfileReducer
+  ProfileState: ProfileReducer,
+  AlertState: AlertReducer
 });
 
 const configureReducers = () =>

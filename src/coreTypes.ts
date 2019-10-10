@@ -4,6 +4,7 @@ import { ContestState } from "./pages/Contests/reducer";
 import { EventState } from "./pages/Events/reducer";
 import { ProfileState } from "./pages/Profile/reducer";
 import { PepupState } from './pages/Pepups/reducer';
+import { AlertState } from "./pages/Alert/reducer";
 
 export interface IGlobalState {
   LoginState: LoginState;
@@ -12,6 +13,7 @@ export interface IGlobalState {
   EventState: EventState;
   ProfileState: ProfileState;
   PepupState: PepupState;
+  AlertState: AlertState;
 }
 
 export interface IAction<T> {

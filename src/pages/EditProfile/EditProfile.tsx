@@ -11,7 +11,11 @@ import {Formik} from 'formik';
 import * as Yup from 'yup';
 import {TextInputStyledForEdit} from '../../components/TextInputStyled/TextInputStyledForEdit';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {EditProfileScreenProps, EditProfileScreenFromData} from '.';
+import {
+  EditProfileScreenProps,
+  EditProfileScreenFromData,
+  EditProfileScreenFromFormik,
+} from '.';
 import {editProfile} from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
@@ -36,7 +40,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
-    dispatch(editProfile(data, setErrors) as any),
+    dispatch(editProfile(data, setErrors) as any)
 });
 
 const EditSchema = Yup.object().shape({
@@ -46,7 +50,7 @@ const EditSchema = Yup.object().shape({
 });
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
-  static navigationOptions = ({navigation}) => ({
+  static navigationOptions = ({navigation}: any) => ({
     header: props => <ConnectedHeader {...props} navigation={navigation} />,
   });
 
@@ -54,7 +58,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
     birthdayDatePickerVisible: false,
   };
 
-  handleSubmit = (values: EditProfileScreenFromData, {setErrors}: any) => {
+  handleSubmit = (values: EditProfileScreenFromFormik, {setErrors}: any) => {
     const {editProfile, userId} = this.props;
 
     editProfile(
@@ -64,6 +68,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
       },
       setErrors,
     );
+
     Keyboard.dismiss();
   };
 

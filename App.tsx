@@ -26,6 +26,8 @@ import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
 import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
+import SuccessfulAlertStyles from './src/components/SuccessfulAlert/SuccessfulAlert.styles';
+import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -47,7 +49,6 @@ const AppWithFontLoadedComponent = ({isFontLoaded}:any) => {
       <AppContainer
         ref={(navigatorRef: any) => {
           setTopLevelNavigator(navigatorRef);
-          // authenticate();
         }}
       />
     </Loader>
@@ -150,6 +151,7 @@ export default class App extends Component {
     return (
       <Provider store={getStore()}>
         <AppWithFontLoaded />
+        <SuccessfulAlert />
       </Provider>
     );
   }

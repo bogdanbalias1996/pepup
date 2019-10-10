@@ -1065,6 +1065,22 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-modalbox@^1.4.8":
+  version "1.4.8"
+  resolved "https://registry.yarnpkg.com/@types/react-native-modalbox/-/react-native-modalbox-1.4.8.tgz#e0cdd9e6ab08dcc9f330a9cf418e35298018fb58"
+  integrity sha512-UnkVPFCt4NbloIWpGh+guomHRo3TezzS4vRkjDMZxxFX+PPdFfHHzT/bzw3HZ8Colg6ciaGA3eBwdp+7kFQNkQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
+"@types/react-native-star-rating@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@types/react-native-star-rating/-/react-native-star-rating-1.1.0.tgz#6794949f4a3279157c75eadf1c82b62e17938170"
+  integrity sha512-fGZG5kmduQrh+9T3RTUR8bGJ5HUNwGpP7Yv946qjdPsdtibiI6hfKCEfQOO398BOZEZD7XefkDX73NcF9NdaAw==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+
 "@types/react-native@*", "@types/react-native@^0.60.18":
   version "0.60.18"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.18.tgz#00cee391af17f2f1c0936c2143ffbd97c65fddfb"
@@ -1130,6 +1146,11 @@
   integrity sha512-K8/LfZq2duW33XW/tFwEAfnZlqIfVsoyRB3kfXdPXYhl0nfM8mmh7GS0jg7WrX2Dgq/0Ha/pR1PaR+BvmWwjiQ==
   dependencies:
     "@types/yargs-parser" "*"
+
+"@types/yup@^0.26.24":
+  version "0.26.24"
+  resolved "https://registry.yarnpkg.com/@types/yup/-/yup-0.26.24.tgz#c24170b3a5c867b4fabd49fcc42fe45f780cb153"
+  integrity sha512-x0bhHnYjH5mZit4HivUYbTMO4LouOTGwp/LLxSL1mbJYVwNJtHYESH0ed2bwM1lkI2yDmsoCDYJnWEgHeJDACg==
 
 "@typescript-eslint/eslint-plugin@^1.5.0":
   version "1.13.0"

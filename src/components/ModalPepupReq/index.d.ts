@@ -6,6 +6,7 @@ export type ModalPepupReqProps = {
   isFetching?: boolean;
   celebData: Celeb;
   sendRequestForPepup: (req: any, reqFor: string) => Promise<any>;
+  openAlert: (data: any) => Promise<any>;
 };
 
 export type RequestPepupScreenFromData = {
