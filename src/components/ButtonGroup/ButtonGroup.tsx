@@ -8,7 +8,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     selectedItem: ButtonGroupItem;
   };
 
-  constructor(props) {
+  constructor(props: ButtonGroupProps) {
     super(props);
 
     this.state = {

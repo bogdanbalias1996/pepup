@@ -1,5 +1,4 @@
 import { IAction } from "../../coreTypes";
-import { AlertProps } from "../../components/SuccessfulAlert/index";
 
 export const OPEN_ALERT = 'OPEN_ALERT';
 export const CLOSE_ALERT = 'CLOSE_ALERT';

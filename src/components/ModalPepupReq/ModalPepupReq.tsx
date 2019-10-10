@@ -21,6 +21,7 @@ import {CheckboxStyled} from '../CheckboxStyled/CheckboxStyled';
 import {openAlert} from '../../pages/Alert/actions';
 import {AlertProps} from '../SuccessfulAlert';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -192,6 +193,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
           </Formik>
         </View>
         <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }

@@ -28,6 +28,7 @@ import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
 import SuccessfulAlertStyles from './src/components/SuccessfulAlert/SuccessfulAlert.styles';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from './src/components/ErrorState/ErrorState';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -152,6 +153,7 @@ export default class App extends Component {
       <Provider store={getStore()}>
         <AppWithFontLoaded />
         <SuccessfulAlert />
+        <ErrorModal />
       </Provider>
     );
   }

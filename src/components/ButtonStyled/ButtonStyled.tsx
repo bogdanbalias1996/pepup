@@ -19,7 +19,7 @@ import {
 import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { Loader } from '../Loader/Loader';
 
-const getTypeButton = type => {
+const getTypeButton = (type: string) => {
   switch (type) {
     case 'violet':
       return [styles.shadowViolet, styles.btnShadow];
@@ -32,7 +32,7 @@ const getTypeButton = type => {
   }
 };
 
-const getColorButton = type => {
+const getColorButton = (type: string) => {
   switch (type) {
     case 'violet':
       return [colorVioletStart, colorVioletEnd];

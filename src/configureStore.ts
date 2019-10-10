@@ -10,6 +10,7 @@ import { ContestReducer } from "./pages/Contests/reducer";
 import { StoreReducer } from "./pages/Store/reducer";
 import { ProfileReducer } from './pages/Profile/reducer';
 import { AlertReducer } from './pages/Alert/reducer';
+import { ErrorReducer } from './pages/ErrorModal/reducer';
 
 const getReducerObject = () => ({
   FontState: FontReducer,
@@ -19,7 +20,8 @@ const getReducerObject = () => ({
   ContestState: ContestReducer,
   StoreState: StoreReducer,
   ProfileState: ProfileReducer,
-  AlertState: AlertReducer
+  AlertState: AlertReducer,
+  ErrorState: ErrorReducer
 });
 
 const configureReducers = () =>

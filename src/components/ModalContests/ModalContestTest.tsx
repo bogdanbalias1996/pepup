@@ -78,8 +78,8 @@ const testData = [
 export class Component extends React.PureComponent<ModalContestTestProps> {
   handleSubmit = () => {};
 
-  getInitValues = arr => {
-    arr.reduce(el => {
+  getInitValues = (arr: { reduce: (arg0: (el: any) => string) => void; }) => {
+    arr.reduce((el: { id: any; }) => {
       return [el.id] = '';
     });
   };
@@ -147,7 +147,7 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
                             return (
                               <RadioButtonsContest
                                 options={val.options}
-                                onPress={item => {
+                                onPress={(item: { key: any; }) => {
                                   setFieldValue(val.id, item.key);
                                 }}
                                 question={val.question}
