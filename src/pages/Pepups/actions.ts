@@ -225,12 +225,11 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
       })
       .catch((err) => {
         dispatch(failureReqPepup());
-        dispatch(openError({ 
-          title: 'Oh My Science!', 
-          text: 'Unknown unknown. We are crunching a ton at the back. Please try again.', 
-          buttonText: 'TRY AGAIN', 
-          imgSource: require('../../../assets/unknown.png'),
-          onPress: () => dispatch(requestPepup())
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(sendRequestForPepup(payload, setErrors) as any)
+          }
         }));
         const { error = 'Please fill the fields correctly' } = err.response.body
         setErrors({

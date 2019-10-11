@@ -6,7 +6,7 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     width: '100%',
     paddingLeft: 40,
-    paddingVertical: 10, 
+    paddingVertical: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
     borderColor: colorBorderDarker
@@ -14,6 +14,10 @@ export default StyleSheet.create({
   containerWithLabel: {
     flexDirection: 'column',
     alignItems: 'flex-start',
+  },
+  inputWrap: {
+    flexDirection: 'row',
+    alignItems: 'center'
   },
   error: {
     borderBottomWidth: 1,

@@ -96,9 +96,9 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
                           <TextInputBorderStyled
                             name="text"
                             label="Type your description here"
-                            inputStyle={{ height: 180 }}
+                            inputStyle={{ height: 100 }}
                             multiline={true}
-                            numberOfLines={5}
+                            numberOfLines={3}
                             formProps={props}
                           />
                         </View>

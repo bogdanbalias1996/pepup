@@ -49,6 +49,7 @@ export class TextInputBorderStyled extends React.PureComponent<TextInputStyledPr
             autoCapitalize="none"
             placeholder={label}
             multiline={multiline}
+            numberOfLines={numberOfLines}
             placeholderTextColor={colorTextGray}
             value={value}
             onChangeText={handleChange(name)}

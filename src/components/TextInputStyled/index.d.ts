@@ -13,4 +13,5 @@ export interface TextInputStyledProps extends TextInputProps {
   multiline?: boolean;
   numberOfLines?: number;
   inputStyle?: any;
+  iconColor?: string;
 }

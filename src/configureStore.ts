@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, Store } from "redux";
 import { IGlobalState, IAction } from "./coreTypes";
 import thunk from "redux-thunk";
+import {trackConnection} from '../src/middlewares/trackInternetConnection';
 
 import { FontReducer } from "./common/font.reducer";
 import { LoginReducer } from "./pages/Login/reducer";
@@ -11,6 +12,7 @@ import { StoreReducer } from "./pages/Store/reducer";
 import { ProfileReducer } from './pages/Profile/reducer';
 import { AlertReducer } from './pages/Alert/reducer';
 import { ErrorReducer } from './pages/ErrorModal/reducer';
+import { ConnectionReducer } from "./utils/connectionCheck/reducer";
 
 const getReducerObject = () => ({
   FontState: FontReducer,
@@ -21,7 +23,8 @@ const getReducerObject = () => ({
   StoreState: StoreReducer,
   ProfileState: ProfileReducer,
   AlertState: AlertReducer,
-  ErrorState: ErrorReducer
+  ErrorState: ErrorReducer,
+  ConnectionState: ConnectionReducer
 });
 
 const configureReducers = () =>
@@ -36,7 +39,7 @@ const rootReducer = (
 
 const store = createStore<IGlobalState, any, any, any>(
   rootReducer as any,
-  applyMiddleware(thunk)
+  applyMiddleware(trackConnection, thunk)
 );
 
 export const getStore = (): Store<IGlobalState> => {

@@ -10,13 +10,11 @@ import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
-
-import {connect} from 'react-redux';
+import NetInfo from "@react-native-community/netinfo";
 import * as Font from 'expo-font';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Provider} from 'react-redux';
+import {Provider, connect} from 'react-redux';
 import {getStore} from './src/configureStore';
-import {authenticate} from './src/common/utils/session';
 import {setTopLevelNavigator} from './src/navigationService';
 import {Loader} from './src/components/Loader/Loader';
 import {IGlobalState} from './src/coreTypes';
@@ -26,9 +24,10 @@ import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
 import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
-import SuccessfulAlertStyles from './src/components/SuccessfulAlert/SuccessfulAlert.styles';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from './src/components/ErrorState/ErrorState';
+import { setInternetConnection } from './src/utils/connectionCheck/actions';
+import { Dispatch } from 'redux';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -62,6 +61,11 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 
 export default class App extends Component {
   async componentDidMount() {
+    await NetInfo.addEventListener(state => {
+      console.log('isConnectedListener', state.isConnected);
+      getStore().dispatch(setInternetConnection(state.isConnected));
+    });
+
     await Font.loadAsync({
       'brackit-font': require('./assets/fonts/icon-font/brackit_icons.ttf'),
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
@@ -76,6 +80,11 @@ export default class App extends Component {
 
     this.checkPermission();
     this.createNotificationListeners();
+
+    // NetInfo.fetch().then(state => {
+    //   console.log('isConnectedFetch', state.isConnected);
+    //   getStore().dispatch(setInternetConnection(state.isConnected));
+    // });
   }
 
   componentWillUnmount() {
@@ -158,3 +167,5 @@ export default class App extends Component {
     );
   }
 }
+
+

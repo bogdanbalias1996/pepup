@@ -29,6 +29,15 @@ export default StyleSheet.create({
         width: 155,
         alignSelf: 'center',
     },
+    btnCancel: {
+        width: 48,
+        height: 48,
+        borderRadius: 30,
+        backgroundColor: colorLightGray,
+        justifyContent: "center",
+        alignItems: "center",
+        marginRight: 16
+    },
     text: {
         fontSize: 18,
         fontFamily: defaultFont,
@@ -44,5 +53,12 @@ export default StyleSheet.create({
         flex: 1,
         width: undefined,
         height: undefined
-    }
+    },
+    modalFooter: {
+        flexDirection: "row",
+        marginTop: 15,
+        marginBottom: 50,
+        backgroundColor: "transparent",
+        alignItems: 'flex-end'
+    },
 });

@@ -21,11 +21,16 @@ import DateTimePicker from 'react-native-modal-datetime-picker';
 import {format} from 'date-fns';
 import {navigate} from '../../navigationService';
 import {Icon} from '../../components/Icon/Icon';
-import {colorBlack} from '../../variables';
+import {colorBlack, colorTextGray} from '../../variables';
 
-const Header = props => (
-  <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
-);
+const Header = (
+  props: JSX.IntrinsicAttributes & {
+    navigation: any;
+    title: any;
+    getLeftComponent?: (() => null) | undefined;
+    getRightComponent?: (() => null) | undefined;
+  },
+) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
 
 const ConnectedHeader = connect(
   null,
@@ -51,7 +56,9 @@ const EditSchema = Yup.object().shape({
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({navigation}: any) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />,
+    header: (
+      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>,
+    ) => <ConnectedHeader {...props} navigation={navigation} />,
   });
 
   state = {
@@ -85,10 +92,12 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
               newPasswd: '',
               dob: '',
               profileInfo: {
+                address: '',
                 country: '',
                 city: '',
                 phoneNumber: '',
-                address: '',
+                intro: '',
+                bio: '',
                 introVideo: '',
               },
             }}
@@ -123,79 +132,106 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                         label="full name"
                         formProps={props}
                       />
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.setState({birthdayDatePickerVisible: true})
-                        }>
+                      <TextInputStyledForEdit
+                        name="profileInfo.intro"
+                        label="intro"
+                        formProps={props}
+                      />
+                      <TextInputStyledForEdit
+                        name="profileInfo.bio"
+                        label="bio"
+                        formProps={props}
+                        multiline={true}
+                        numberOfLines={3}
+                        inputStyle={{height: 120}}
+                      />
+                      <TouchableOpacity onPress={() => alert('Upload video!')}>
                         <TextInputStyledForEdit
-                          name="dob"
+                          name="profileInfo.introVideo"
                           pointerEvents="none"
                           editable={false}
-                          label="birthday"
+                          label="click to record intro video"
                           formProps={props}
+                          iconName="video-camera"
+                          iconColor={colorTextGray}
                         />
                       </TouchableOpacity>
-                      <DateTimePicker
-                        mode="date"
-                        isVisible={this.state.birthdayDatePickerVisible}
-                        onConfirm={date => {
-                          this.setState({birthdayDatePickerVisible: false});
-                          setFieldValue(
-                            'dob',
-                            format(date, 'd MMM yyyy').toString(),
-                          );
-                        }}
-                        onCancel={() =>
-                          this.setState({birthdayDatePickerVisible: false})
-                        }
-                      />
-                      <TextInputStyledForEdit
-                        name="profileInfo.address"
-                        label="address"
-                        formProps={props}
-                      />
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          width: '100%',
-                        }}>
-                        <View style={{width: '50%'}}>
+                      <View style={styles.private}>
+                          <Text style={styles.privateTitle}>PRIVATE INFORMATION</Text>
+                        <TouchableOpacity
+                          onPress={() =>
+                            this.setState({birthdayDatePickerVisible: true})
+                          }>
                           <TextInputStyledForEdit
-                            name="profileInfo.city"
-                            label="city"
+                            name="dob"
+                            pointerEvents="none"
+                            editable={false}
+                            label="birthday"
                             formProps={props}
                           />
+                        </TouchableOpacity>
+                        <DateTimePicker
+                          mode="date"
+                          isVisible={this.state.birthdayDatePickerVisible}
+                          onConfirm={date => {
+                            this.setState({birthdayDatePickerVisible: false});
+                            setFieldValue(
+                              'dob',
+                              format(date, 'd MMM yyyy').toString(),
+                            );
+                          }}
+                          onCancel={() =>
+                            this.setState({birthdayDatePickerVisible: false})
+                          }
+                        />
+                        <TextInputStyledForEdit
+                          name="profileInfo.address"
+                          label="address"
+                          formProps={props}
+                        />
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            width: '100%',
+                          }}>
+                          <View style={{width: '50%'}}>
+                            <TextInputStyledForEdit
+                              name="profileInfo.city"
+                              label="city"
+                              formProps={props}
+                            />
+                          </View>
+                          <View style={{width: '50%'}}>
+                            <TextInputStyledForEdit
+                              name="profileInfo.country"
+                              label="country"
+                              formProps={props}
+                            />
+                          </View>
                         </View>
-                        <View style={{width: '50%'}}>
-                          <TextInputStyledForEdit
-                            name="profileInfo.country"
-                            label="country"
-                            formProps={props}
-                          />
-                        </View>
+
+                        <TextInputStyledForEdit
+                          name="email"
+                          label="email"
+                          keyboardType="email-address"
+                          formProps={props}
+                        />
+
+                        <TextInputStyledForEdit
+                          name="profileInfo.phoneNumber"
+                          label="phone"
+                          keyboardType="phone-pad"
+                          formProps={props}
+                        />
+
+                        <TextInputStyledForEdit
+                          name="newPasswd"
+                          label="new password"
+                          keyboardType="numeric"
+                          secure={true}
+                          formProps={props}
+                        />
                       </View>
-
-                      <TextInputStyledForEdit
-                        name="email"
-                        label="email"
-                        keyboardType="email-address"
-                        formProps={props}
-                      />
-
-                      <TextInputStyledForEdit
-                        name="profileInfo.phoneNumber"
-                        label="phone"
-                        keyboardType="phone-pad"
-                        formProps={props}
-                      />
-
-                      <TextInputStyledForEdit
-                        name="newPasswd"
-                        label="new password"
-                        keyboardType="numeric"
-                        secure={true}
-                        formProps={props}
-                      />
                     </ScrollView>
                   </View>
                   <View style={styles.footer}>
@@ -222,7 +258,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   }
 }
 
-export const EditProfileScreen = connect(
+export const EditProfileCelebScreen = connect(
   mapStateToProps,
   mapDispatchToProps,
 )(Component);

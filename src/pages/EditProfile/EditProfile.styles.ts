@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { colorLightGray, colorTomato, semiboldFont } from "../../variables";
+import { colorLightGray, colorTomato, semiboldFont, colorItalic } from "../../variables";
 
 export default StyleSheet.create({
   wrapContent: {
@@ -46,4 +46,14 @@ export default StyleSheet.create({
     alignItems: "center",
     marginRight: 16
   },
+  private: {
+    marginTop: 55
+  },
+  privateTitle: {
+    color: colorItalic,
+    fontFamily: semiboldFont,
+    fontSize: 16,
+    paddingLeft: 40,
+    marginBottom: 25
+  }
 });
