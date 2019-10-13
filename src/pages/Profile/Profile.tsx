@@ -5,18 +5,18 @@ import {View, Image, Text, TouchableOpacity} from 'react-native';
 import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
 import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
 import {Icon} from '../../components/Icon/Icon';
-import {ProfileScreenProps} from '.';
+import {ProfileScreenProps, HeaderProps} from '.';
 import {NotificationItems} from './NotificationItems';
 import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
 import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
 import styles from './Profile.styles';
 import {navigate} from '../../navigationService';
 import {Dispatch} from 'redux';
-import {getProfile, openVideoRecordModal} from './actions';
+import {getProfile, openVideoRecordModal, fulfillPopupRequest} from './actions';
 import {IGlobalState} from '../../coreTypes';
 import {LoadingScreen} from '../Loading/Loading';
 
-const Header = props => (
+const Header = (props: HeaderProps) => (
   <HeaderRounded
     {...props}
     title={'Profile'.toUpperCase()}
@@ -38,6 +38,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (id: string) => dispatch(getProfile(id) as any),
   openVideoRecordModal: () => dispatch(openVideoRecordModal()),
+  fulfillPopupRequest: (video: any) => dispatch(fulfillPopupRequest(video) as any)
 });
 
 const ConnectedHeader = connect(
@@ -47,7 +48,7 @@ const ConnectedHeader = connect(
 
 export class Component extends React.PureComponent<ProfileScreenProps> {
   static navigationOptions = ({navigation}) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />,
+    header: props => <ConnectedHeader {...props} navigation={navigation} />
   });
 
   state = {
@@ -77,6 +78,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         'Awadhe Warriors - Fan Meet n Greet started today. Get ready to be one of the participants!',
     },
   ];
+
   tabsConfig = [
     {
       title: 'Notifications',
@@ -94,11 +96,12 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
   componentDidMount = () => {
     const {userId} = this.props;
+
     userId && this.props.getProfile(userId);
   };
 
   render() {
-    const {profileData, openVideoRecordModal} = this.props;
+    const {profileData, openVideoRecordModal, fulfillPopupRequest} = this.props;
 
     return (
       <PepupBackground>
@@ -114,9 +117,11 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
             <Icon name="edit" />
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity onPress={() => openVideoRecordModal()}>
-          <Text style={styles.title}>MODAL</Text>
+          <Text style={styles.title}>MODAL  222</Text>
         </TouchableOpacity>
+
         <View style={styles.wrapContent}>
           {profileData ? (
             <Tabs
@@ -132,7 +137,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
             <LoadingScreen />
           )}
         </View>
-        <ModalRecordVideo />
+        <ModalRecordVideo onVideoSave={fulfillPopupRequest} />
       </PepupBackground>
     );
   }

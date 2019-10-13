@@ -43,7 +43,7 @@ export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) 
                 email,
                 newPasswd,
                 name,
-                dob, 
+                dob,
                 userId,
                 profileInfo
             },

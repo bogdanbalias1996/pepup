@@ -1,170 +1,83 @@
 import { StyleSheet } from "react-native";
-import {
-  colorBlack,
-  colorTextGray,
-  colorLightGray,
-  colorTextViolet,
-  colorOrange,
-  colorSwipeLine,
-  semiboldFont,
-  defaultFont
-} from "../../variables";
+import { colorTextRed } from "../../variables";
 
 export default StyleSheet.create({
-  scrollView: { 
-    flex: 1, 
-    marginBottom: 10 
-  },
-  wrapModalContent: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    flex: 1
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: "center"
-  },
   modal: {
-    zIndex: 100,
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32
+    maxHeight: '100%',
+    height: '100%'
   },
-  title: {
-    flex: 1,
-    fontSize: 18,
-    fontFamily: semiboldFont,
-    color: colorBlack,
-    lineHeight: 24
+  wrapper: {
+    height: `100%`,
+    backgroundColor: 'black'
   },
-  imagesWrap:{ flexDirection: "row", flex: 1 },
-  carousel: {
-    marginVertical: 24
+  cameraView: {
+    height: '100%'
   },
-  imageCarousel: {
-    width: 180,
-    flex: 1,
-    height: 200,
-    marginRight: 8,
-    borderRadius: 8
+  videoControlsContainer: {
+    position: 'absolute',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: '100%',
+    top: 12,
+    left: 22,
+    bottom: 5,
+    right: 22
   },
-  infoBlock: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 24
+  videoControlsTop: {
+    marginTop: 10
   },
-  infoItem: {
-    paddingRight: 10
+  videoControlsBottom: {
+    marginBottom: 60,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
-  infoLocation: {
-    width: "67%"
+  btnRecordWrapper: {
+    borderWidth: 5,
+    borderColor: 'white',
+    borderRadius: 36,
+    width: 72,
+    height: 72,
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
-  infoLabel: {
-    fontSize: 12,
-    fontFamily: defaultFont,
-    color: colorTextGray,
-    marginBottom: 8
+  btnRecord: {
+    width: 56,
+    height: 56,
+    backgroundColor: colorTextRed,
+    borderRadius: 28
   },
-  infoValue: {
-    fontSize: 16,
-    fontFamily: defaultFont,
-    color: colorBlack
+  btnRecordInProcess: {
+    width: 32,
+    height: 32,
+    backgroundColor: colorTextRed,
+    borderRadius: 4
   },
-  infoLocationValue: {
-    fontSize: 16,
-    fontFamily: defaultFont,
-    color: colorTextViolet
+  time: {
+    color: 'white',
+    flexGrow: 1,
+    textAlign: 'center'
   },
-  modalFooter: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 15,
-    marginBottom: 70,
-    marginHorizontal: 24
-  },
-  btnCancel: {
-    width: 48,
+  btnCancelVideo: {
     height: 48,
-    borderRadius: 30,
-    backgroundColor: colorLightGray,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 16
+    width: 48,
+    borderRadius: 24,
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  infoText: {
-    color: colorTextGray,
-    lineHeight: 22
+  btnAcceptVideo: {
+    height: 48,
+    width: 48,
+    borderRadius: 24,
+    backgroundColor: colorTextRed,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  btnSubmit: {
-    flex: 1
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont
-  },
-  wrapSale: {
-    backgroundColor: colorOrange,
-    borderRadius: 2,
-    paddingVertical: 2,
-    paddingHorizontal: 4,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  saleText: {
-    color: "#c5672a",
-    fontSize: 14,
-    fontFamily: defaultFont
-  },
-  wrapChanging: {
-    flexDirection: "row",
-    width: "100%",
-    marginTop: 16
-  },
-  changeItem: {
-    width: "50%"
-  },
-  sizeWrap: {
-    flexDirection: "row"
-  },
-  sizeItem: {
-    width: 30,
-    height: 30,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 10
-  },
-  sizeItemText: {
-    color: colorBlack,
-    fontSize: 14
-  },
-  modalCancelStyle: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    paddingVertical: 15
-  },
-  modalOverlayStyle: {
-    backgroundColor: "rgba(0,0,0,0.4)",
-    padding: 10,
-    paddingTop: 300,
-    justifyContent: "flex-end"
-  },
-  modalCancelTextStyle: {
-    color: "#1d7ee2",
-    fontFamily: semiboldFont,
-    fontSize: 20
-  },
-  modalOptionContainer: {
-    backgroundColor: "white",
-    borderRadius: 12,
-    paddingHorizontal: 0
-  },
-  modalOptionTextStyle: {
-    color: colorBlack,
-    fontSize: 20
-  },
-  insidePadding: { paddingHorizontal: 24 }
+  videoButtonWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });

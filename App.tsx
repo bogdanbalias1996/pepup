@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, Alert, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 
@@ -146,6 +146,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={getStore()}>
+        <StatusBar barStyle="light-content" />
         <AppWithFontLoaded />
       </Provider>
     );

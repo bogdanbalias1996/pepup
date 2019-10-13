@@ -26,6 +26,7 @@ export type ProfileScreenStateProps = {
 export type ProfileScreenDispatchProps = {
   getProfile: (id: string) => Promise<any>;
   openVideoRecordModal: () => void;
+  fulfillPopupRequest: (video: any) => void;
 };
 
 export type NotificationItemsProps = {
@@ -34,3 +35,10 @@ export type NotificationItemsProps = {
 
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
+
+export type HeaderProps = {
+  userId: string;
+  profileData: Profile;
+  getProfile: (id: string) => void;
+  openVideoRecordModal: () => void;
+}

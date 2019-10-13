@@ -1,122 +1,159 @@
 import * as React from 'react';
-import {
-  TouchableOpacity,
-  Text,
-  View,
-  FlatList,
-  ScrollView,
-  Image,
-} from 'react-native';
-import {connect} from 'react-redux';
+import { TouchableOpacity, View, Text } from 'react-native';
+import { SafeAreaView } from 'react-navigation';
+import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
-import ModalSelector from 'react-native-modal-selector';
-
-import {closeVideoRecordModal} from '../../pages/Profile/actions';
-import {Icon} from '../Icon/Icon';
-import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
-import {ModalRecordVideoProps} from '.';
+import { Countdown } from '../Countdown/Countdown'
+import { closeVideoRecordModal } from '../../pages/Profile/actions';
+import { Icon } from '../Icon/Icon';
+import { ModalRecordVideoProps, ModalRecordVideoState } from '.';
 import styles from './ModalRecordVideo.styles';
-import {
-  colorBlack,
-  colorLightGray,
-  boldFont,
-  defaultFont,
-} from '../../variables';
+import { RNCamera } from 'react-native-camera';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
+import { ProgressBar } from '../ProgressBar/ProgressBar'
+import { Video } from 'expo-av';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled'
 
-const mapStateToProps = state => ({
+const minAcceptableVideoDuration = 5;
+const maxAcceptableVideoDuration = 10;
+
+const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ProfileState.isModalShown,
-});
-const mapDispatchToProps = dispatch => ({
-  closeVideoRecordModal: () => dispatch(closeVideoRecordModal()),
+  durationInSeconds: maxAcceptableVideoDuration
 });
 
-const storeData = {
-  title: 'Sindhu Signed Olympics 2016 pic',
-  description:
-    'Sindhu received silver medal at Olympic 2016 in Rio. Personally autographed pic in color.  Free shipping with eligible orders.',
-  salePrize: '1550',
-  prize: '5,000',
-  sale: '15',
-  media: [
-    {
-      id: '01',
-      avatar: require('../../../assets/mock_avatar.jpg'),
-    },
-    {
-      id: '02',
-      avatar: require('../../../assets/mock_avatar.jpg'),
-    },
-    {
-      id: '03',
-      avatar: require('../../../assets/mock_avatar.jpg'),
-    },
-    {
-      id: '04',
-      avatar: require('../../../assets/mock_avatar.jpg'),
-    },
-  ],
-};
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  closeVideoRecordModal: () => dispatch(closeVideoRecordModal())
+});
 
-const sizeOptions = [
-  {
-    key: '1',
-    text: 'S',
-  },
-  {
-    key: '2',
-    text: 'M',
-  },
-  {
-    key: '3',
-    text: 'L',
-  },
-];
-
-const quantityOptions = [
-  {key: 1, label: '1'},
-  {key: 2, label: '2'},
-  {key: 3, label: '3'},
-  {key: 4, label: '4'},
-  {key: 5, label: '5'},
-  {key: 6, label: '6'},
-  {key: 7, label: '7'},
-  {key: 8, label: '8'},
-  {key: 9, label: '9'},
-  {key: 10, label: '10'},
-  {key: 11, label: '11'},
-  {key: 12, label: '12'},
-  {key: 13, label: '13'},
-  {key: 14, label: '14'},
-  {key: 15, label: '15'},
-  {key: 16, label: '16'},
-  {key: 17, label: '17'},
-  {key: 18, label: '18'},
-];
-
-const THRESHOLD = 200;
-
-export class Component extends React.PureComponent<ModalRecordVideoProps> {
+export class Component extends React.PureComponent<ModalRecordVideoProps, ModalRecordVideoState> {
   state = {
-    heightDescription: 0,
-    value: {
-      key: '2',
-      text: 'M',
+    isRecording: false,
+    durationInSeconds: maxAcceptableVideoDuration,
+    isVideoDurationAceptable: false,
+    recordOptions: {
+      mirrorVideo: true
     },
-    quantity: '',
+    videoData: undefined,
+    isReadyForPost: false
+  }
+  camera = React.createRef<RNCamera>();
+  video = React.createRef<Video>();
+
+  stopRecording = () => {
+    this.setState({ isRecording: false })
+
+    if (this.camera.current) {
+      this.camera.current.stopRecording();
+    }
+  }
+
+  rejectVideo = () => {
+    this.setState({
+      videoData: undefined,
+      isVideoDurationAceptable: false
+    })
+  }
+
+  postVideo = () => {
+    this.props.onVideoSave(this.state.videoData)
+  }
+
+  acceptVideo = () => {
+    this.stopRecording();
+    this.setState({
+      isReadyForPost: true
+    })
+  }
+
+  startRecording = async () => {
+    if (this.camera.current) {
+      const { recordOptions } = this.state;
+
+      try {
+        const promise = this.camera.current.recordAsync(recordOptions);
+
+        if (promise) {
+          this.setState({ isRecording: true });
+          const data = await promise;
+
+          this.setState({
+            isRecording: false,
+            videoData: data
+          });
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
   };
-  renderItem = ({item}) => {
+
+  getButtonRejectVideo = () => {
+    const { videoData, isRecording } = this.state;
+
     return (
-      <Image
-        style={styles.imageCarousel}
-        source={item.avatar}
-        resizeMode="cover"
-      />
-    );
-  };
+      <TouchableOpacity
+        style={[
+          styles.btnCancelVideo,
+          videoData && !isRecording ? {} : { opacity: 0 }
+        ]}
+        disabled={!videoData}
+        onPress={this.rejectVideo}
+      >
+        <Icon name="cancel" color="black" size={16} />
+      </TouchableOpacity>
+    )
+  }
+
+  getButtonRecordVideo = () => {
+    const { videoData, isVideoDurationAceptable, isRecording } = this.state;
+
+    return (
+      <View style={[
+        styles.btnRecordWrapper,
+        videoData && !isRecording && isVideoDurationAceptable ? { opacity: 0 } : {}
+      ]} >
+        <TouchableOpacity
+          style={isRecording ? styles.btnRecordInProcess : styles.btnRecord}
+          disabled={!isRecording && isVideoDurationAceptable}
+          onPress={() => {
+            isRecording ? this.stopRecording() : this.startRecording()
+          }}
+        ></TouchableOpacity>
+      </View>
+    )
+  }
+
+  getButtonAcceptVideo = () => {
+    const { isVideoDurationAceptable } = this.state;
+
+    return (
+      (
+        <TouchableOpacity
+          style={[
+            styles.btnAcceptVideo,
+            isVideoDurationAceptable ? {} : { opacity: 0 }
+          ]}
+          onPress={this.acceptVideo}
+          disabled={!isVideoDurationAceptable}
+        >
+          <Icon name="check" />
+        </TouchableOpacity>
+      )
+    )
+  }
 
   render() {
-    const {closeVideoRecordModal, isModalShown} = this.props;
-    const {value} = this.state;
+    const { closeVideoRecordModal, isModalShown } = this.props;
+    const {
+      isRecording,
+      durationInSeconds,
+      isVideoDurationAceptable,
+      videoData,
+      isReadyForPost
+    } = this.state;
+
     return (
       <Modal
         position="bottom"
@@ -126,135 +163,118 @@ export class Component extends React.PureComponent<ModalRecordVideoProps> {
         useNativeDriver={false}
         swipeArea={100}
         onClosed={() => closeVideoRecordModal()}
-        style={[
-          styles.modal,
-          {
-            marginTop: 50,
-            maxHeight: this.state.heightDescription + THRESHOLD,
-            height: '100%',
-          },
-        ]}>
-        {Object.keys(storeData).length !== 0 ? (
-          <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
-            <ScrollView style={styles.scrollView}>
-              <View
-                onLayout={event => {
-                  const {height} = event.nativeEvent.layout;
-                  this.setState({heightDescription: height});
-                }}
-                style={styles.insidePadding}>
-                <Text style={styles.title}>{storeData.title}</Text>
-                {storeData.media ? (
-                  <View style={styles.imagesWrap}>
-                    <FlatList
-                      horizontal={true}
-                      showsHorizontalScrollIndicator={false}
-                      data={storeData.media}
-                      renderItem={this.renderItem}
-                      keyExtractor={item => item.id}
-                      style={styles.carousel}
-                    />
-                  </View>
-                ) : null}
-                <Text style={[styles.text, styles.infoText]}>
-                  {storeData.description}
-                </Text>
-                <View style={styles.infoBlock}>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Discounted Price</Text>
-                    <Text style={styles.infoValue}>
-                      {`${storeData.salePrize} INR`}
-                    </Text>
-                  </View>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Regular Price</Text>
-                    <Text style={styles.infoValue}>
-                      {`${storeData.prize} INR`}
-                    </Text>
-                  </View>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Discount</Text>
-                    <View style={styles.wrapSale}>
-                      <Text style={styles.saleText}>
-                        {`${storeData.sale}% OFF`}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.wrapChanging}>
-                  <View style={styles.changeItem}>
-                    <Text style={styles.infoLabel}>Choose a size</Text>
-                    <View style={styles.sizeWrap}>
-                      {sizeOptions.map(item => {
-                        return (
-                          <TouchableOpacity
-                            key={item.key}
-                            style={[
-                              styles.sizeItem,
-                              {
-                                backgroundColor:
-                                  value.key === item.key
-                                    ? '#d8d8d8'
-                                    : colorLightGray,
-                              },
-                            ]}
-                            onPress={() => {
-                              this.setState({
-                                value: item,
-                              });
-                            }}>
-                            <Text
-                              style={[
-                                styles.sizeItemText,
-                                {
-                                  fontFamily:
-                                    value.key === item.key
-                                      ? boldFont
-                                      : defaultFont,
-                                },
-                              ]}>
-                              {item.text}
-                            </Text>
+        style={styles.modal}>
+
+        <View style={styles.wrapper}>
+          <SafeAreaView>
+            {
+              videoData
+                ? (
+                  <Video
+                    ref={this.video}
+                    source={videoData}
+                    rate={1.0}
+                    volume={1.0}
+                    isMuted={false}
+                    isLooping={true}
+                    resizeMode="cover"
+                    useNativeControls={false}
+                    shouldPlay={true}
+                    style={styles.cameraView}
+                  />
+                )
+                : (
+                  <RNCamera
+                    ref={this.camera}
+                    style={styles.cameraView}
+                    type={RNCamera.Constants.Type.front}
+                    androidCameraPermissionOptions={{
+                      title: 'Permission to use camera',
+                      message: 'We need your permission to use your camera',
+                      buttonPositive: 'Ok',
+                      buttonNegative: 'Cancel',
+                    }}
+                    androidRecordAudioPermissionOptions={{
+                      title: 'Permission to use audio recording',
+                      message: 'We need your permission to use your audio',
+                      buttonPositive: 'Ok',
+                      buttonNegative: 'Cancel',
+                    }}
+                  />
+                )
+            }
+
+            <View style={styles.videoControlsContainer}>
+              <View style={styles.videoControlsTop}>
+                <ProgressBar
+                  seconds={durationInSeconds}
+                  isRunning={isRecording}
+                  style={isReadyForPost ? { opacity: 0 } : {}}
+                />
+                {
+                  isReadyForPost
+                    ? (
+                      <View>
+                        <TouchableOpacity onPress={() => {
+                          this.setState({ isReadyForPost: false })
+                        }}>
+                          <Icon name="left" />
+                        </TouchableOpacity>
+                      </View>
+                    )
+                    : (
+                      <>
+                        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                          <TouchableOpacity onPress={() => closeVideoRecordModal()}>
+                            <Icon name="cancel" />
                           </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                  </View>
-                  <View style={styles.changeItem}>
-                    <Text style={styles.infoLabel}>Choose quantity</Text>
-                    <ModalSelector
-                      data={quantityOptions}
-                      initValue={'0'}
-                      onChange={option => {
-                        this.setState({quantity: option.label});
-                      }}
-                      cancelStyle={styles.modalCancelStyle}
-                      overlayStyle={styles.modalOverlayStyle}
-                      cancelTextStyle={styles.modalCancelTextStyle}
-                      optionContainerStyle={styles.modalOptionContainer}
-                      optionTextStyle={styles.modalOptionTextStyle}
-                      selectStyle={{borderRadius: 30, width: 100, padding: 5}}
-                      cancelText="Cancel"
-                    />
-                  </View>
-                </View>
+
+                          <Countdown
+                            timeInSeconds={durationInSeconds}
+                            isRunning={isRecording}
+                            onFinish={this.stopRecording}
+                            onTick={(currentValue) => {
+                              if (currentValue <= minAcceptableVideoDuration && !isVideoDurationAceptable) {
+                                this.setState({ isVideoDurationAceptable: true })
+                              }
+                            }}
+                          />
+                        </View>
+                      </>
+                    )
+                }
               </View>
-            </ScrollView>
-            <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closeVideoRecordModal()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
-              <ButtonStyled
-                style={styles.btnSubmit}
-                onPress={() => alert('ok')}
-                text="Buy Now"
-              />
+
+              <View style={styles.videoControlsBottom}>
+                {
+                  isReadyForPost
+                    ? (
+                      <ButtonStyled
+                        type="border"
+                        text="POST"
+                        textBold={true}
+                        style={{ width: 128 }}
+                        onPress={this.postVideo}
+                      />
+                    )
+                    : (
+                      <>
+                        <View style={[styles.videoButtonWrapper, { justifyContent: 'flex-start', marginLeft: 22 }]}>
+                          {this.getButtonRejectVideo()}
+                        </View>
+                        <View style={styles.videoButtonWrapper}>
+                          {this.getButtonRecordVideo()}
+                        </View>
+                        <View style={[styles.videoButtonWrapper, { justifyContent: 'flex-end', marginRight: 22 }]}>
+                          {this.getButtonAcceptVideo()}
+                        </View>
+                      </>
+                    )
+                }
+              </View>
             </View>
-          </View>
-        ) : null}
+          </SafeAreaView>
+        </View>
       </Modal>
     );
   }
