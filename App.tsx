@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Alert} from 'react-native';
+import {View, Text, Alert, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
@@ -60,7 +60,7 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 }))(AppWithFontLoadedComponent);
 
 export default class App extends Component {
-  messageListener: () => any;
+  messageListener!: () => any;
   async componentDidMount():Promise<any> {
     await NetInfo.fetch().then(state => {
       getStore().dispatch(setInternetConnection(state.isConnected));
@@ -175,6 +175,7 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={getStore()}>
+        <StatusBar barStyle="light-content" />
         <AppWithFontLoaded />
         <SuccessfulAlert />
         <ErrorModal />

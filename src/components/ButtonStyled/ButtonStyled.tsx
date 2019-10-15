@@ -21,21 +21,19 @@ import { Loader } from '../Loader/Loader';
 
 const getTypeButton = (type: string) => {
   switch (type) {
-    case 'violet':
-      return [styles.shadowViolet, styles.btnShadow];
     case 'blue':
       return [styles.shadowBlue, styles.btnShadow];
     case 'orange':
       return [styles.shadowOrange, styles.btnShadow];
     case 'grey': 
       return [styles.shadowGrey, styles.btnShadow]  
+    default:
+      return [styles.shadowViolet, styles.btnShadow];
   }
 };
 
 const getColorButton = (type: string) => {
   switch (type) {
-    case 'violet':
-      return [colorVioletStart, colorVioletEnd];
     case 'blue':
       return [colorBlueStart, colorBlueEnd];
     case 'orange':
@@ -44,6 +42,8 @@ const getColorButton = (type: string) => {
       return [colorVioletStart, colorVioletEnd];
     case 'white':
       return ['white', 'white'];
+    default:
+      return [colorVioletStart, colorVioletEnd];
   }
 };
 

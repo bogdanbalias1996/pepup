@@ -279,7 +279,15 @@ PODS:
     - React-cxxreact (= 0.61.0)
     - React-jsi (= 0.61.0)
   - React-jsinspector (0.61.0)
-  - react-native-netinfo (4.3.3):
+  - react-native-camera (3.6.0):
+    - React
+    - react-native-camera/RCT (= 3.6.0)
+    - react-native-camera/RN (= 3.6.0)
+  - react-native-camera/RCT (3.6.0):
+    - React
+  - react-native-camera/RN (3.6.0):
+    - React
+  - react-native-netinfo (4.4.0):
     - React
   - React-RCTActionSheet (0.61.0):
     - React-Core/RCTActionSheetHeaders (= 0.61.0)
@@ -376,6 +384,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -477,6 +486,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-camera:
+    :path: "../node_modules/react-native-camera"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
   React-RCTActionSheet:
@@ -552,13 +563,13 @@ SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   Crashlytics: 540b7e5f5da5a042647227a5e3ac51d85eed06df
   DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
-  EXAppLoaderProvider: 5d348813a9cf09b03bbe5b8b55437bc1bfbddbd1
-  EXAV: 97912c6002e7d7934843f50c9080f1d7f8b99a4f
-  EXConstants: 31e5318521be6175009af6ccd3e97dedf39da96a
-  EXFileSystem: 7e53a2c30a2eb6987ba6d5158ab908f947523228
-  EXFont: 71d07dc5d2153db7d1a23f1e0cc1b6341d55c432
-  EXLinearGradient: ebfd46cb98a46330213e4945b96227d98f624054
-  EXPermissions: df10ad83df2f6b647aec304619354f8ab48d5f63
+  EXAppLoaderProvider: 98f3e889fa48b441b19c64f19193c82ebb1c15ca
+  EXAV: 290cae61e5a2000848d9399a651d6974bb33df61
+  EXConstants: 11210104ab59ee1cdfb79b0466add077f59c9218
+  EXFileSystem: 217d1480b63c595d0620e64d6a6845dc52229bbd
+  EXFont: ce93c38bb43624eac43d283ca42e6e09496342b6
+  EXLinearGradient: 31c43522ab53d432907e0aacac445d6f4e5b1275
+  EXPermissions: b4e5d6e134317bfb29bed37998b7c0deab318e6d
   Fabric: 706c8b8098fff96c33c0db69cbf81f9c551d0d74
   FBLazyVector: 815d415da87ffb4308b229ffe4b531799d118c6c
   FBReactNativeSpec: a43dfecd1f9e31d5729a38adafba1790c4c6c950
@@ -587,7 +598,8 @@ SPEC CHECKSUMS:
   React-jsi: 4b5e521350c455b5eb4be50ea98c02de25b44fad
   React-jsiexecutor: 5532ab4389aabbbf1b87904de04c8ddd7dda7036
   React-jsinspector: 99b82aeb51d67d9025ab4eb8ccb8132f8dcebf69
-  react-native-netinfo: bd9b833f23ee1165b7e90c1b2c96731636fa9257
+  react-native-camera: 4f614d2da6526be735ecbe658c3f57eebfb0686a
+  react-native-netinfo: 892a5130be97ff8bb69c523739c424a2ffc296d1
   React-RCTActionSheet: 5f9a1733ec8e380aae8a97877f1166cb058733ae
   React-RCTAnimation: 3e0a55305b70b1eb5a5e34230ed8198d4a782da9
   React-RCTBlob: a6ff2220ed7ef4b06e559ec61a0b0f4e80a3716a
@@ -598,25 +610,25 @@ SPEC CHECKSUMS:
   React-RCTText: beb19a6c50072a1a2f617490ea967237c98d1dfc
   React-RCTVibration: c8e67f140a83a14a1ad9042950cca08ab29423fd
   ReactCommon: 584ef683c340894c1c82be43ce760390493ae8bf
-  RNCAsyncStorage: 60a80e72d95bf02a01cace55d3697d9724f0d77f
+  RNCAsyncStorage: 5ae4d57458804e99f73d427214442a6b10a53856
   RNFirebase: b627e5991bb10bf34cea84806819f98f95f39f8b
   RNGestureHandler: 4cb47a93019c1a201df2644413a0a1569a51c8aa
   RNReanimated: 6abbbae2e5e72609d85aabd92a982a94566885f1
   RNScreens: f28b48b8345f2f5f39ed6195518291515032a788
-  UMBarCodeScannerInterface: d5a6fdc98ed6241225b0a8432a7f4e2b397668bc
-  UMCameraInterface: 68870a3197fee85bd5afca5609ba4a5b7257d19d
-  UMConstantsInterface: d25b8e8887ca7aaf568c06caf08f4d40734ee4ef
-  UMCore: 402cee150324974974f5c32b5404d8af65e4cff5
-  UMFaceDetectorInterface: 7b4f1a92f0c726b58b086296048efe193b570678
-  UMFileSystemInterface: aadb9a67aa6470d7ebc06cf04dc54fee6781ac48
-  UMFontInterface: 2d3c128285086bbed3d2a650f1d698323ef3b25a
-  UMImageLoaderInterface: 2829a7571a12d2e754c73c55ffe7e327d8402c7d
-  UMPermissionsInterface: b6a6e96db0f4011a25aaca14e6022529dd3d6e4e
-  UMReactNativeAdapter: e93109c6de5ea830d4a78d08f3a65b8d33a143a3
-  UMSensorsInterface: cf59dd7602764a2419e00167429be3e4be39c61d
-  UMTaskManagerInterface: 1e70fe58b872355f0ecb44fb81bb1a16484047f0
+  UMBarCodeScannerInterface: 07047b4faa779e7963efa3d2c5951a71a0a807bf
+  UMCameraInterface: f6a3e71ddd928617637084bfd67db2daec3b1927
+  UMConstantsInterface: 20e6caaba4ddac70d0b50827d6cf35a202ac988f
+  UMCore: 01d7ed248e2d4789105292a71ce1385ff4315c53
+  UMFaceDetectorInterface: 623ca9703dc664d13edf315ec930df9d2246b7d0
+  UMFileSystemInterface: c7dc550ff72d2b38258f218b086b32b3de536957
+  UMFontInterface: a1ec983801daad298617d00dabbfdb609325665c
+  UMImageLoaderInterface: f7b69ad8dfcae00c87d70a2081af78293e445fee
+  UMPermissionsInterface: 0d060960ebb35d905d74a52461a3e6ab2d43b53b
+  UMReactNativeAdapter: 539ec2ac16839ad4e3b52bb8f9ccc58d9bf9e146
+  UMSensorsInterface: 1d276f7fdf781a09715091bad7873c27da271e9b
+  UMTaskManagerInterface: 8f2117979aacb688fe304f834ff8800fadc320bb
   Yoga: 3f70bbd9aa01e04eefec36e2a085b2fc0ff1dd98
 
-PODFILE CHECKSUM: b1dda73e55aad5eb6e1908f0888ac4223fa43dd2
+PODFILE CHECKSUM: 4b9da6f4eda97d02674e6f22cc5da4c401e80c5c
 
 COCOAPODS: 1.8.3
