@@ -10,24 +10,24 @@ import React, {Component} from 'react';
 import {Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
-import NetInfo from "@react-native-community/netinfo";
+import NetInfo from '@react-native-community/netinfo';
 import * as Font from 'expo-font';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {Provider, connect} from 'react-redux';
 import {getStore} from './src/configureStore';
-import {setTopLevelNavigator} from './src/navigationService';
+import {setTopLevelNavigator, navigate} from './src/navigationService';
 import {Loader} from './src/components/Loader/Loader';
 import {IGlobalState} from './src/coreTypes';
 
 import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
 import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
-import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
+import {OnboardingNavigator} from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
-import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
-import { ErrorModal } from './src/components/ErrorState/ErrorState';
-import { setInternetConnection } from './src/utils/connectionCheck/actions';
-import { Dispatch } from 'redux';
+import {SuccessfulAlert} from './src/components/SuccessfulAlert/SuccessfulAlert';
+import {ErrorModal} from './src/components/ErrorState/ErrorState';
+import {setInternetConnection} from './src/utils/connectionCheck/actions';
+import {openError, closeError} from './src/pages/ErrorModal/actions';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -43,7 +43,7 @@ const AppNavigator = createSwitchNavigator(
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const AppWithFontLoadedComponent = ({isFontLoaded}:any) => {
+const AppWithFontLoadedComponent = ({isFontLoaded}: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
       <AppContainer
@@ -60,10 +60,24 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 }))(AppWithFontLoadedComponent);
 
 export default class App extends Component {
-  async componentDidMount() {
-    await NetInfo.addEventListener(state => {
-      console.log('isConnectedListener', state.isConnected);
+  messageListener: () => any;
+  async componentDidMount():Promise<any> {
+    await NetInfo.fetch().then(state => {
       getStore().dispatch(setInternetConnection(state.isConnected));
+    });
+
+    await NetInfo.addEventListener(state => {
+      if (!state.isConnected) {
+        getStore().dispatch(
+          openError({
+            type: 'connectionFail',
+            onPress: () => {
+              getStore().dispatch(closeError());
+              navigate({routeName: 'Login'});
+            },
+          }),
+        );
+      }
     });
 
     await Font.loadAsync({
@@ -80,16 +94,17 @@ export default class App extends Component {
 
     this.checkPermission();
     this.createNotificationListeners();
-
-    // NetInfo.fetch().then(state => {
-    //   console.log('isConnectedFetch', state.isConnected);
-    //   getStore().dispatch(setInternetConnection(state.isConnected));
-    // });
   }
 
   componentWillUnmount() {
     this.notificationListener();
     this.notificationOpenedListener();
+  }
+  notificationListener() {
+    throw new Error("Method not implemented.");
+  }
+  notificationOpenedListener() {
+    throw new Error("Method not implemented.");
   }
 
   async createNotificationListeners() {
@@ -167,5 +182,3 @@ export default class App extends Component {
     );
   }
 }
-
-

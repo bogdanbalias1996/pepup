@@ -57,7 +57,7 @@ export const getAllContests = () => {
       })
       .catch(err => {
         dispatch(failureAllContests());
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
@@ -100,7 +100,7 @@ export const getContest = (contestId: string) => {
       })
       .catch(err => {
         dispatch(failureContest());
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };

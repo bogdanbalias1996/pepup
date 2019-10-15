@@ -71,7 +71,7 @@ export const getAllActiveCategories = () => {
       })
       .catch(err => {
         dispatch(failureAllActiveCategories());
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
@@ -114,7 +114,7 @@ export const getCelebsByCategory = (categoryId: string) => {
       })
       .catch(err => {
         dispatch(failureCelebsByCategory());
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
@@ -157,7 +157,7 @@ export const getCeleb = (userId: string) => {
       })
       .catch(err => {
         dispatch(failureCeleb())
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
@@ -316,7 +316,7 @@ export const getAllReviews = (userId: string) => {
       })
       .catch(err => {
         dispatch(failureAllReviews())
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };

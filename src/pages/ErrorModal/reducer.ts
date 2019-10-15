@@ -28,7 +28,6 @@ export const ErrorReducer = (
 ): ErrorState => {
     switch (action.type) {
         case OPEN_ERROR:
-            console.log('OPEN_ERROR: ', action.data)
             return {
                 ...state,
                 isErrorShown: true,

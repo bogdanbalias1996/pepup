@@ -55,7 +55,7 @@ export const getAllEvents = () => {
       })
       .catch(err => {
         dispatch(failureAllEvents());
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
@@ -98,7 +98,7 @@ export const getEvent = (eventId: string) => {
       })
       .catch(err => {
         dispatch(failureEvent())
-        console.log(JSON.stringify(err, null, 2));
+         
       });
   };
 };
