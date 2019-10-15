@@ -26,7 +26,7 @@ export type ProfileScreenStateProps = {
 export type ProfileScreenDispatchProps = {
   getProfile: (id: string) => Promise<any>;
   openVideoRecordModal: () => void;
-  fulfillPopupRequest: (video: any) => void;
+  fulfillPepupRequest: (video: any) => void;
 };
 
 export type NotificationItemsProps = {

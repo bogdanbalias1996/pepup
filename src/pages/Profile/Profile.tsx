@@ -12,7 +12,7 @@ import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
 import styles from './Profile.styles';
 import {navigate} from '../../navigationService';
 import {Dispatch} from 'redux';
-import {getProfile, openVideoRecordModal, fulfillPopupRequest} from './actions';
+import {getProfile, openVideoRecordModal, fulfillPepupRequest} from './actions';
 import {IGlobalState} from '../../coreTypes';
 
 const Header = (props: HeaderProps) => (
@@ -37,8 +37,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (id: string) => dispatch(getProfile(id) as any),
   openVideoRecordModal: () => dispatch(openVideoRecordModal()),
-  fulfillPopupRequest: (video: any) =>
-    dispatch(fulfillPopupRequest(video) as any),
+  fulfillPepupRequest: (video: any) =>
+    dispatch(fulfillPepupRequest(video) as any),
 });
 
 const ConnectedHeader = connect(
@@ -121,7 +121,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     const {
       profileData,
       openVideoRecordModal,
-      fulfillPopupRequest,
+      fulfillPepupRequest,
       celebData,
     } = this.props;
 
@@ -167,7 +167,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
             />
           )}
         </View>
-        <ModalRecordVideo onVideoSave={fulfillPopupRequest} />
+        <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
       </PepupBackground>
     );
   }

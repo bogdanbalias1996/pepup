@@ -67,7 +67,7 @@ export default class App extends Component {
     });
 
     await NetInfo.addEventListener(state => {
-      if (!state.isConnected) {
+      if (state.isConnected === false) {
         getStore().dispatch(
           openError({
             type: 'connectionFail',

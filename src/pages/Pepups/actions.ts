@@ -7,7 +7,8 @@ import { getStore } from '../../configureStore';
 import { Review, Category, Celeb } from ".";
 import { PostReviewFormProps } from "../../components/ModalReviewForm";
 import { openAlert, closeAlert } from "../Alert/actions";
-import { openError } from "../ErrorModal/actions";
+import { openError, closeError } from "../ErrorModal/actions";
+import { navigate } from "../../navigationService";
 
 export const OPEN_PEPUP_MODAL = "OPEN_PEPUP_MODAL";
 export const CLOSE_PEPUP_MODAL = "CLOSE_PEPUP_MODAL";
@@ -71,7 +72,7 @@ export const getAllActiveCategories = () => {
       })
       .catch(err => {
         dispatch(failureAllActiveCategories());
-         
+
       });
   };
 };
@@ -111,10 +112,19 @@ export const getCelebsByCategory = (categoryId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebsByCategory(res));
+        if (res = []) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+          }));
+        }
       })
       .catch(err => {
         dispatch(failureCelebsByCategory());
-         
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+        }))
       });
   };
 };
@@ -154,10 +164,23 @@ export const getCeleb = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveCeleb(res));
+        if (res = {}) {
+          dispatch(openError({
+            type: 'itemUnavailable',
+            onPress: () => { dispatch(getCeleb(userId) as any) }
+          }))
+        }
       })
       .catch(err => {
         dispatch(failureCeleb())
-         
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(closeError());
+            dispatch(closePepupModal());
+            navigate({ routeName: 'Main' });
+          }
+        }))
       });
   };
 };
@@ -313,10 +336,22 @@ export const getAllReviews = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveAllReviews(res));
+        if (res = []) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getAllReviews(userId) as any) }
+          }
+          ))
+        }
       })
       .catch(err => {
         dispatch(failureAllReviews())
-         
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(getAllReviews(userId) as any)
+          }
+        }));
       });
   };
 };
@@ -394,8 +429,8 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
         }));
       })
       .catch((err) => {
-        console.log(JSON.stringify(err, null, 2))
         dispatch(failureReview());
+        dispatch(postReview(payload, setErrors) as any)
         const { error = 'Please fill review form and rate celebrity' } = err.response.body
         setErrors({
           'review': error,

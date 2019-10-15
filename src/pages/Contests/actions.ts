@@ -3,6 +3,8 @@ import { ApiOperation } from '../../api/api'
 import { request } from '../../api/network'
 import { IAction } from '../../coreTypes'
 import { Contest } from '.';
+import { openError, closeError } from '../ErrorModal/actions';
+import { navigate } from '../../navigationService';
 
 export const OPEN_CONTEST_MODAL = "OPEN_CONTEST_MODAL";
 export const CLOSE_CONTEST_MODAL = "CLOSE_CONTEST_MODAL";
@@ -23,7 +25,7 @@ export const closeContestModal = (): IAction<undefined> => {
 };
 
 export const RECEIVE_ALL_CONTESTS = "RECEIVE_ALL_CONTESTS";
-export const receiveAllContests = (data): IAction<Array<Contest>> => {
+export const receiveAllContests = (data:Array<Contest>): IAction<Array<Contest>> => {
   return {
     type: RECEIVE_ALL_CONTESTS,
     data
@@ -54,16 +56,25 @@ export const getAllContests = () => {
     })
       .then(res => {
         dispatch(receiveAllContests(res));
+        if (res = []) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getAllContests() as any) }
+          }))
+        }
       })
       .catch(err => {
         dispatch(failureAllContests());
-         
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getAllContests() as any) }
+        }))
       });
   };
 };
 
 export const RECEIVE_CONTEST = "RECEIVE_CONTEST";
-export const receiveContest = (data): IAction<Contest> => {
+export const receiveContest = (data: Contest): IAction<Contest> => {
   return {
     type: RECEIVE_CONTEST,
     data
@@ -97,10 +108,23 @@ export const getContest = (contestId: string) => {
     })
       .then(res => {
         dispatch(receiveContest(res));
+        if (res = {}) {
+          dispatch(openError({
+            type: 'itemUnavailable',
+            onPress: () => { dispatch(getContest(contestId) as any) }
+          }))
+        }
       })
       .catch(err => {
         dispatch(failureContest());
-         
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(closeError());
+            dispatch(closeContestModal());
+            navigate({ routeName: 'Main' });
+          }
+        }))
       });
   };
 };

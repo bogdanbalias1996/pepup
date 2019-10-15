@@ -44,7 +44,7 @@ export const getProfile = (userId: string) => {
   };
 };
 
-export const fulfillPopupRequest = (video: any) => {
+export const fulfillPepupRequest = (video: any) => {
   return (dispatch: Dispatch) => {
     const { uri, codec = 'mp4' } = video;
 
