@@ -39,7 +39,7 @@ const rootReducer = (
 
 const store = createStore<IGlobalState, any, any, any>(
   rootReducer as any,
-  applyMiddleware(trackConnection, thunk)
+  applyMiddleware(thunk)
 );
 
 export const getStore = (): Store<IGlobalState> => {

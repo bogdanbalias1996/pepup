@@ -7,7 +7,6 @@ import { IAction } from '../coreTypes';
 export const trackConnection: TrackConnectionMiddleware = (store: Store) => (
   next: any,
 ) => (action: any) => {
-  console.log('ACTION: ', action);
   const lastApiAction: any = typeof action === 'function' ? action : null;
   const isOnline =
     action.type === SET_INTERNET_CONNECTION
@@ -23,7 +22,6 @@ export const trackConnection: TrackConnectionMiddleware = (store: Store) => (
       openError({
         type: 'connectionFail',
         onPress: () => {
-          console.log('ONPRESS: ', lastApiAction)
           lastApiAction ? store.dispatch((() => lastApiAction) as any) : null;
         },
       }),
