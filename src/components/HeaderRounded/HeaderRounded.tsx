@@ -6,10 +6,10 @@ import {goBack} from '../../navigationService';
 import {deviceInfoCheck} from '../../helpers';
 
 export const HeaderRounded = (props: {
-  navigation: any;
+  navigation?: any;
   title: any;
-  getLeftComponent?: (() => null) | undefined;
-  getRightComponent?: (() => null) | undefined;
+  getLeftComponent?: (() => any) | undefined;
+  getRightComponent?: (() => any) | undefined;
 }) => {
   const {
     navigation,
