@@ -112,7 +112,7 @@ export const getCelebsByCategory = (categoryId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebsByCategory(res));
-        if (res = []) {
+        if (!res.length) {
           dispatch(openError({
             type: 'noResults',
             onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
@@ -336,7 +336,7 @@ export const getAllReviews = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveAllReviews(res));
-        if (res = []) {
+        if (!res.length) {
           dispatch(openError({
             type: 'noResults',
             onPress: () => { dispatch(getAllReviews(userId) as any) }

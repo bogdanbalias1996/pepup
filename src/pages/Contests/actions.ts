@@ -56,7 +56,7 @@ export const getAllContests = () => {
     })
       .then(res => {
         dispatch(receiveAllContests(res));
-        if (res = []) {
+        if (!res.length) {
           dispatch(openError({
             type: 'noResults',
             onPress: () => { dispatch(getAllContests() as any) }

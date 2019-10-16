@@ -54,7 +54,7 @@ export const getAllEvents = () => {
     })
       .then(res => {
         dispatch(receiveAllEvents(res));
-        if (res = []) {
+        if (!res.length) {
           dispatch(openError({
             type: 'noResults',
             onPress: () => { dispatch(getAllEvents() as any) }
