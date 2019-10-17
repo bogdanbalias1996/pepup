@@ -1,19 +1,22 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
+import {Dispatch} from 'redux';
 
+import {IGlobalState} from '../../coreTypes';
 import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
 import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
 import {Icon} from '../../components/Icon/Icon';
+import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
+import {navigate} from '../../navigationService';
+
+import styles from './Profile.styles';
+import {getProfile, openVideoRecordModal, fulfillPepupRequest} from './actions';
 import {ProfileScreenProps, HeaderProps} from '.';
 import {NotificationItems} from './NotificationItems';
-import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
-import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
-import styles from './Profile.styles';
-import {navigate} from '../../navigationService';
-import {Dispatch} from 'redux';
-import {getProfile, openVideoRecordModal, fulfillPepupRequest} from './actions';
-import {IGlobalState} from '../../coreTypes';
+import { History } from './History';
+import { FanRequests } from './FanRequests';
 
 const Header = (props: HeaderProps) => (
   <HeaderRounded
@@ -48,9 +51,9 @@ const ConnectedHeader = connect(
 
 export class Component extends React.PureComponent<ProfileScreenProps> {
   static navigationOptions = ({navigation}: any) => ({
-    header: (
-      props: any,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+    header: (props: any) => (
+      <ConnectedHeader {...props} navigation={navigation} />
+    ),
   });
 
   state = {
@@ -82,6 +85,31 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     },
   ];
 
+  dataPepups = [
+    {
+      id: '1',
+      date: '01 Oct 2009',
+      who: 'Michael Jordan',
+      toWhom: 'Sofia',
+      pepup: 'Please make me a pepup wishing my sister a happy birthday.',
+    },
+    {
+      id: '2',
+      date: '01 Oct 2009',
+      who: 'Lionel Messi',
+      toWhom: 'Sofia',
+      pepup:
+        'Awadhe Warriors - Fan Meet n Greet started today. Get ready to be one of the participants!',
+    },
+    {
+      id: '3',
+      date: '01 Oct 2009',
+      who: 'Jonh Hopkins',
+      toWhom: 'Sofia',
+      pepup: 'Please make me a pepup wishing my sister a happy birthday.',
+    },
+  ];
+
   tabsConfig = [
     {
       title: 'My Requests',
@@ -104,7 +132,11 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     },
     {
       title: 'Fan Requests',
-      component: () => <NotificationItems data={this.dataNotifications} />,
+      component: () => <FanRequests data={this.dataNotifications} />,
+    },
+    {
+      title: 'History',
+      component: () => <History data={this.dataPepups} />,
     },
   ];
 
@@ -118,13 +150,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
   };
 
   render() {
-    const {
-      profileData,
-      openVideoRecordModal,
-      fulfillPepupRequest,
-      celebData,
-    } = this.props;
-
+    const {profileData, openVideoRecordModal, fulfillPepupRequest} = this.props;
     return (
       <PepupBackground>
         <Image
@@ -145,7 +171,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         </TouchableOpacity>
 
         <View style={styles.wrapContent}>
-          {profileData && !celebData ? (
+          {profileData.role === 'D' ? (
             <Tabs
               config={this.tabsConfig}
               style={{flex: 1}}

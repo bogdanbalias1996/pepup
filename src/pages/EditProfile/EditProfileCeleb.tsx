@@ -22,11 +22,13 @@ import {format} from 'date-fns';
 import {navigate} from '../../navigationService';
 import {Icon} from '../../components/Icon/Icon';
 import {colorBlack, colorTextGray} from '../../variables';
+import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
+import { openVideoRecordModal } from '../Profile/actions';
 
 const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation: any;
-    title: any;
+    title?: any;
     getLeftComponent?: (() => null) | undefined;
     getRightComponent?: (() => null) | undefined;
   },
@@ -46,6 +48,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
     dispatch(editProfile(data, setErrors) as any),
+  openVideoRecordModal: () => dispatch(openVideoRecordModal()),
 });
 
 const EditSchema = Yup.object().shape({
@@ -80,7 +83,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   };
 
   render() {
-    const {profileData, isFetching} = this.props;
+    const {profileData, isFetching, openVideoRecordModal} = this.props;
     return (
       <PepupBackground>
         <Header />
@@ -145,7 +148,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                         numberOfLines={3}
                         inputStyle={{height: 120}}
                       />
-                      <TouchableOpacity onPress={() => alert('Upload video!')}>
+                      <TouchableOpacity onPress={() => openVideoRecordModal()}>
                         <TextInputStyledForEdit
                           name="profileInfo.introVideo"
                           pointerEvents="none"
@@ -157,7 +160,9 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                         />
                       </TouchableOpacity>
                       <View style={styles.private}>
-                          <Text style={styles.privateTitle}>PRIVATE INFORMATION</Text>
+                        <Text style={styles.privateTitle}>
+                          PRIVATE INFORMATION
+                        </Text>
                         <TouchableOpacity
                           onPress={() =>
                             this.setState({birthdayDatePickerVisible: true})
@@ -253,6 +258,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
             }}
           </Formik>
         </View>
+        <ModalRecordVideo onVideoSave={onVideoSave} />
       </PepupBackground>
     );
   }

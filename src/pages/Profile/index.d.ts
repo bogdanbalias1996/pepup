@@ -11,7 +11,7 @@ export type Profile = {
   id: string;
   name: string;
   profileInfo: Object;
-  rode: string;
+  role: string;
   status: string;
   twitterConnected: boolean;
   verified: boolean;
@@ -31,8 +31,17 @@ export type ProfileScreenDispatchProps = {
 
 export type NotificationItemsProps = {
   data: any;
-  getStatus?: () => void;
+  getStatusUser?: () => void;
 };
+
+export type FanRequestsProps = {
+  data: any;
+  getStatusCeleb?: () => void;
+};
+
+export type HistoryItemsProps = {
+  data: any;
+}
 
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
