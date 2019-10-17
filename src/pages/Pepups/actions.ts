@@ -164,7 +164,7 @@ export const getCeleb = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveCeleb(res));
-        if (res = {}) {
+        if (Object.keys(res).length === 0) {
           dispatch(openError({
             type: 'itemUnavailable',
             onPress: () => { dispatch(getCeleb(userId) as any) }

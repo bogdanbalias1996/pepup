@@ -108,7 +108,7 @@ export const getContest = (contestId: string) => {
     })
       .then(res => {
         dispatch(receiveContest(res));
-        if (res = {}) {
+        if (Object.keys(res).length === 0) {
           dispatch(openError({
             type: 'itemUnavailable',
             onPress: () => { dispatch(getContest(contestId) as any) }

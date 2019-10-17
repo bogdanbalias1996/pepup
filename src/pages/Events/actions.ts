@@ -106,7 +106,7 @@ export const getEvent = (eventId: string) => {
     })
       .then(res => {
         dispatch(receiveEvent(res));
-        if (res = {}) {
+        if (Object.keys(res).length === 0) {
           dispatch(openError({
             type: 'itemUnavailable',
             onPress: () => { dispatch(getEvent(eventId) as any) }

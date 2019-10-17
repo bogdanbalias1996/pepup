@@ -61,16 +61,14 @@ export class Component extends React.PureComponent<ErrorStateProps> {
               <Text style={styles.text}>{text}</Text>
             </View>
             <View style={styles.modalFooter}>
-              {buttonText === 'TRY AGAIN' ? (
-                <TouchableOpacity
-                  style={styles.btnCancel}
-                  onPress={() => closeError()}>
-                  <Icon size={24} name="cancel" color={colorBlack} />
-                </TouchableOpacity>
-              ) : null}
+              <TouchableOpacity
+                style={styles.btnCancel}
+                onPress={() => closeError()}>
+                <Icon size={24} name="cancel" color={colorBlack} />
+              </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
-                onPress={onPress ? () => onPress() : () => closeError()}
+                onPress={() => onPress()}
                 text={buttonText}
                 loader={isFetching}
               />
