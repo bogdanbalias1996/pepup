@@ -61,7 +61,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
           style={styles.wrapContent}
         >
           <Text style={styles.name}>{item.userInfo.name}</Text>
-          <Text style={styles.status}>{item.dataInfo.intro}</Text>
+          <Text style={styles.status}  numberOfLines={2} ellipsizeMode="tail">{item.dataInfo.intro}</Text>
         </LinearGradient>
       </TouchableOpacity>
     );
