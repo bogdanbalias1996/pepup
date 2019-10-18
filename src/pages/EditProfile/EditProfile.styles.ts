@@ -35,6 +35,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     marginBottom: 50,
+    flexGrow: 1,
     paddingHorizontal: 24
   },
   btnCancel: {
@@ -55,5 +56,6 @@ export default StyleSheet.create({
     fontSize: 16,
     paddingLeft: 40,
     marginBottom: 25
-  }
+  },
+  scrollview: { flexShrink: 1 }
 });

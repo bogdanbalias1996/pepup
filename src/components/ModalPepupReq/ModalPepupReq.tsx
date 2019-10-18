@@ -26,7 +26,6 @@ import { ErrorModal } from '../ErrorState/ErrorState';
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
   celebData: state.PepupState.celebData,
-  userId: state.PepupState.celebData.userInfo.id,
   categoryId: state.PepupState.selectedCategory,
   isFetching: state.PepupState.isFetching,
 });

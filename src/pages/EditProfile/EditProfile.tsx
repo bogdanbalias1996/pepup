@@ -76,7 +76,6 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
     const {profileData, isFetching} = this.props;
     return (
       <PepupBackground>
-        <Header />
         <View style={styles.wrapContent}>
           <Formik
             initialValues={{
@@ -89,7 +88,6 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 city: '',
                 phoneNumber: '',
                 address: '',
-                introVideo: '',
               },
             }}
             validationSchema={EditSchema}
@@ -116,7 +114,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       </Text>
                     </View>
                   )}
-                  <View style={{flexGrow: 1}}>
+                  <View style={styles.scrollview}>
                     <ScrollView>
                       <TextInputStyledForEdit
                         name="name"

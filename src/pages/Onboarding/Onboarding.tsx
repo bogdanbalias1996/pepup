@@ -68,7 +68,6 @@ export class OnboardingScreen extends React.Component {
       </View>
     );
   };
-  /**/
 
   _onDone = () => {
     navigate({routeName: 'Main'});

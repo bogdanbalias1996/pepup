@@ -15,8 +15,8 @@ import styles from './Profile.styles';
 import {getProfile, openVideoRecordModal, fulfillPepupRequest} from './actions';
 import {ProfileScreenProps, HeaderProps} from '.';
 import {NotificationItems} from './NotificationItems';
-import { History } from './History';
-import { FanRequests } from './FanRequests';
+import {History} from './History';
+import {FanRequests} from './FanRequests';
 
 const Header = (props: HeaderProps) => (
   <HeaderRounded
@@ -161,7 +161,11 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         <View style={styles.titleWrap}>
           <Text style={styles.title}>{profileData.name || ''}</Text>
           <TouchableOpacity
-            onPress={() => navigate({routeName: 'EditProfile'})}>
+            onPress={
+              profileData.role === 'REGULAR,CELEBRITY'
+                ? () => navigate({routeName: 'EditProfileCeleb'})
+                : () => navigate({routeName: 'EditProfile'})
+            }>
             <Icon name="edit" />
           </TouchableOpacity>
         </View>
@@ -171,7 +175,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         </TouchableOpacity>
 
         <View style={styles.wrapContent}>
-          {profileData.role === 'D' ? (
+          {profileData.role === 'REGULAR,CELEBRITY' ? (
             <Tabs
               config={this.tabsConfig}
               style={{flex: 1}}

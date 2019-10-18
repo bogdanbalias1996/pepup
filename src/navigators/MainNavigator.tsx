@@ -15,6 +15,7 @@ import {ProfileScreen} from '../pages/Profile/Profile';
 import {SettingsScreen} from '../pages/Settings/Settings';
 import {StoreScreen} from '../pages/Store/Store';
 import {EditProfileScreen} from '../pages/EditProfile/EditProfile';
+import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 
 // Icons for BottomTabNavigator
 const Pepups = require('../../assets/pepups.png');
@@ -121,5 +122,6 @@ export const MainNavigator = createStackNavigator({
     },
   },
   Settings: SettingsScreen,
-  EditProfile: EditProfileScreen
+  EditProfile: EditProfileScreen,
+  EditProfileCeleb: EditProfileCelebScreen
 });
