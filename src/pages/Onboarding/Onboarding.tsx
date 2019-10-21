@@ -70,7 +70,7 @@ export class OnboardingScreen extends React.Component {
   };
 
   _onDone = () => {
-    navigate({routeName: 'Main'});
+    navigate({routeName: 'Auth'});
   };
 
   onChange = (index: number) => {

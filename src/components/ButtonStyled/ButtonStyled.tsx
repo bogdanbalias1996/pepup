@@ -87,8 +87,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
             <Text
               style={[
                 styles.btnText,
-                { color: type === 'border' ? colorBlack : 'white' },
-                { color: type === 'white' ? colorVioletEnd : 'white' },
+                { color: type === 'border' ? colorBlack: type === 'white' ? colorVioletEnd : 'white' },
                 {
                   fontFamily: textBold ? boldFont : defaultFont
                 }

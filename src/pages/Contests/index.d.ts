@@ -28,14 +28,15 @@ export type ContestsScreenStateProps = {
 }
 
 export type ContestsScreenDispatchProps = {
-  getAllContests: () => Promise<any>;
+  
 };
 
 export type ContestItemsProps = {
-  data: any;
+  getAllContests: () => Promise<any>;
+  contests: Array<Contest>;
   openContestModal: () => void;
   getContest: (contestId: string) => Promise<any>;
-  isFetching: boolean
+  isFetching: boolean;
 };
 
 export type ContestsScreenProps = ContestsScreenStateProps &

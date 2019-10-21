@@ -77,7 +77,6 @@ export class Component extends React.PureComponent<EventItemsProps> {
 
   render() {
     const {isFetching, events} = this.props;
-    console.log(events)
     return (
       <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
         <FlatList

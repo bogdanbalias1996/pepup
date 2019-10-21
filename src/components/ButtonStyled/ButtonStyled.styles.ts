@@ -45,7 +45,6 @@ export default StyleSheet.create({
   },
   btnText: {
     textAlign: "center",
-    color: "white",
     fontSize: 16,
     letterSpacing: 1,
     marginHorizontal: 10

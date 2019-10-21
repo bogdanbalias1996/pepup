@@ -10,11 +10,7 @@ import { EventItems } from './EventItems';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
-import { getAllEvents } from './actions';
 import { IGlobalState } from '../../coreTypes';
-import { LoadingScreen } from '../Loading/Loading';
-import { Loader } from '../../components/Loader/Loader';
-import { colorBlueberry } from '../../variables';
 
 const Header = props => (
   <HeaderRounded {...props} title={'Events'.toUpperCase()} />

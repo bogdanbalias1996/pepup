@@ -37,7 +37,6 @@ export const getProfile = (handle: string) => {
       },
     })
       .then(res => {
-        console.log(res);
         dispatch(receiveUserProfile(res));
       })
       .catch(err => {
