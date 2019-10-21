@@ -57,7 +57,8 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
   }
 
   postVideo = () => {
-    this.props.onVideoSave(this.state.videoData)
+    //this.props.onVideoSave(this.state.videoData)
+    alert('Action!');
   }
 
   acceptVideo = () => {

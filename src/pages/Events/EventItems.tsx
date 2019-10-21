@@ -1,33 +1,41 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { Text, View, FlatList, StyleSheet, Image } from 'react-native';
+import { Dispatch } from 'redux';
+import {connect} from 'react-redux';
+import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 import format from 'date-fns/format';
 
-import { openEventModal, getEvent } from './actions';
-import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { EventItemsProps } from './';
+import {openEventModal, getEvent, getAllEvents} from './actions';
+import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
+import {EventItemsProps} from './';
 import {
   colorTextGray,
   colorBlack,
   defaultFont,
   semiboldFont,
-  colorBlueberry
+  colorBlueberry,
 } from '../../variables';
-import { IGlobalState } from '../../coreTypes';
-import { Loader } from '../../components/Loader/Loader';
+import {IGlobalState} from '../../coreTypes';
+import {Loader} from '../../components/Loader/Loader';
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
-  getEvent: (val: string) => dispatch(getEvent(val))
+  getAllEvents: () => dispatch(getAllEvents() as any),
+  getEvent: (val: string) => dispatch(getEvent(val) as any),
 });
 
 const mapStateToProps = (state: IGlobalState) => ({
-  isFetching: state.EventState.isFetching
+  isFetching: state.EventState.isFetching,
+  events: state.EventState.events
 });
 
 export class Component extends React.PureComponent<EventItemsProps> {
-  renderItem = ({ item }) => {
-    const { openEventModal, getEvent, isFetching } = this.props;
+  componentDidMount() {
+    const {getAllEvents} = this.props;
+    getAllEvents();
+  }
+
+  renderItem = ({item}: any) => {
+    const {openEventModal, getEvent, isFetching} = this.props;
     const getModal = () => {
       openEventModal();
       getEvent(item.id);
@@ -45,7 +53,7 @@ export class Component extends React.PureComponent<EventItemsProps> {
           <View style={styles.wrapTitle}>
             <Image
               style={styles.imageLogo}
-              source={item.imageLogo}
+              source={{uri: item.creatorInfo.icon}}
               resizeMode="contain"
             />
             <Text style={styles.title}>{item.title}</Text>
@@ -68,21 +76,25 @@ export class Component extends React.PureComponent<EventItemsProps> {
   };
 
   render() {
+    const {isFetching, events} = this.props;
+    console.log(events)
     return (
-      <FlatList
-        style={{ flex: 1 }}
-        showsVerticalScrollIndicator={false}
-        data={this.props.data}
-        renderItem={this.renderItem}
-        keyExtractor={item => item.id}
-      />
+      <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
+        <FlatList
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}
+          data={events}
+          renderItem={this.renderItem}
+          keyExtractor={item => item.id}
+        />
+      </Loader>
     );
   }
 }
 
 export const EventItems = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);
 
 const styles = StyleSheet.create({
@@ -95,44 +107,44 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
   },
   cardHeader: {
     flexDirection: 'row',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   text: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGray,
   },
   wrapTitle: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'flex-start',
     marginVertical: 24,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   imageLogo: {
     width: 72,
     height: '100%',
-    marginRight: 16
+    marginRight: 16,
   },
   title: {
     flex: 1,
     fontSize: 18,
     fontFamily: semiboldFont,
     color: colorBlack,
-    lineHeight: 24
+    lineHeight: 24,
   },
   avatar: {
     width: '100%',
     height: 190,
     borderRadius: 8,
-    marginBottom: 16
-  }
+    marginBottom: 16,
+  },
 });

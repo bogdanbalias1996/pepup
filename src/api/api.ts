@@ -136,7 +136,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProfile:
         return `${host}/user/profile/${handle}`
       case ApiOperation.GetAllEvents:
-        return `${host}/pepup/event/al`
+        return `${host}/pepup/event/all`
       case ApiOperation.GetEvent:
         return `${host}/pepup/event/${eventId}`
       case ApiOperation.GetAllContests:

@@ -53,6 +53,7 @@ export const getAllEvents = () => {
       operation: ApiOperation.GetAllEvents
     })
       .then(res => {
+        console.log('RES', res)
         dispatch(receiveAllEvents(res));
         if (!res.length) {
           dispatch(openError({
@@ -62,6 +63,7 @@ export const getAllEvents = () => {
         }
       })
       .catch(err => {
+        console.log(JSON.stringify(err,2,null))
         dispatch(failureAllEvents());
         dispatch(openError({
           type: 'unknown',

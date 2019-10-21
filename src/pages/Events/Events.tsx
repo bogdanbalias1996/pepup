@@ -26,12 +26,9 @@ const ConnectedHeader = connect(
 )(Header);
 
 const mapStateToProps = (state: IGlobalState) => ({
-  events: state.EventState.events,
-  isFetching: state.EventState.isFetching
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getAllEvents: () => dispatch(getAllEvents() as any)
 });
 
 export class Component extends React.PureComponent<EventsScreenProps> {
@@ -47,49 +44,34 @@ export class Component extends React.PureComponent<EventsScreenProps> {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  componentDidMount = () => {
-    const { getAllEvents } = this.props;
-    getAllEvents();
-  };
-
   render() {
-    const { events, getAllEvents, isFetching } = this.props;
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <EventItems data={events} />,
-        onPress: () => getAllEvents()
+        component: () => <EventItems />,
+        
       },
       {
         title: 'Today',
-        component: () => <EventItems data={events} />,
-        onPress: () => getAllEvents()
+        component: () => <EventItems />,
       },
       {
         title: 'Featured',
-        component: () => <EventItems data={events} />,
-        onPress: () => getAllEvents()
+        component: () => <EventItems />,
       },
       {
         title: 'Upcoming',
-        component: () => <EventItems data={events} />,
-        onPress: () => getAllEvents()
+        component: () => <EventItems />,
       },
       {
         title: 'Deals',
-        component: () => <EventItems data={events} />,
-        onPress: () => getAllEvents()
+        component: () => <EventItems />,
       }
     ];
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-          <Loader
-            isDataLoaded={!isFetching}
-            color={colorBlueberry}
-            size="large"
-          >
             <Tabs
               config={tabsConfig}
               style={{ flex: 1 }}
@@ -99,7 +81,6 @@ export class Component extends React.PureComponent<EventsScreenProps> {
                 marginBottom: 5
               }}
             />
-          </Loader>
         </View>
         <ModalEvents />
       </PepupBackground>
