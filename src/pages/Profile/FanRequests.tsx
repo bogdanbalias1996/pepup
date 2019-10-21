@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {Text, View, FlatList, StyleSheet} from 'react-native';
+import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 
 import {FanRequestsProps} from './';
 import {
@@ -14,46 +14,63 @@ import {
   colorCompletedStatus,
   italicFont,
   semiboldFont,
+  colorBlueberry,
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {Dispatch} from 'redux';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import { Loader } from '../../components/Loader/Loader';
+import { getCelebPepups } from './actions';
 
-const mapStateToProps = (state: IGlobalState) => ({});
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
+const mapStateToProps = (state: IGlobalState) => ({
+  celebPepups: state.ProfileState.celebPepups,
+  userId: state.LoginState.userId,
+  isFetching: state.ProfileState.isFetching
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
+});
 
 export class Component extends React.PureComponent<FanRequestsProps> {
+  componentDidMount() {
+    const {getCelebPepups, userId} = this.props;
+    
+    getCelebPepups(userId);
+  }
+
   getStatusCeleb = (type: string, name: string) => {
     switch (type) {
       case 'Pending':
         return {
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => alert('Pend')
+          onPress: () => alert('Pend'),
         };
       case 'Accepted':
         return {
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc')
+          onPress: () => alert('Acc'),
         };
       case 'Unavailable':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => alert('Unav')
+          onPress: () => alert('Unav'),
         };
       case 'Completed':
         return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl')
+          onPress: () => alert('Compl'),
         };
     }
   };
 
   renderItemCeleb = ({item}: any) => {
-    const {msg, statusColor, onPress} = this.getStatusCeleb(item.type, item.name);
+    const {msg, statusColor, onPress} = this.getStatusCeleb(
+      item.type,
+      item.name,
+    );
 
     return (
       <TouchableOpacity onPress={() => onPress()}>
@@ -87,15 +104,20 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   };
 
   render() {
+    const { isFetching, celebPepups } = this.props;
     return (
-      
-      <FlatList
-        style={{flex: 1}}
-        showsVerticalScrollIndicator={false}
-        data={this.props.data}
-        renderItem={this.renderItemCeleb}
-        keyExtractor={(item: any) => item.id}
-      />
+      <Loader
+        isDataLoaded={!isFetching}
+        size="large"
+        color={colorBlueberry}>
+        <FlatList
+          style={{flex: 1}}
+          showsVerticalScrollIndicator={false}
+          data={celebPepups}
+          renderItem={this.renderItemCeleb}
+          keyExtractor={(item: any) => item.id}
+        />
+      </Loader>
     );
   }
 }

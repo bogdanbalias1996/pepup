@@ -103,7 +103,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <View style={styles.reqTitle}>
                         <Image
                           style={styles.avatar}
-                          source={require('../../../assets/mock_avatar.jpg')}
+                          source={{uri: celebData.userInfo.icon}}
                           resizeMode="cover"
                         />
                         <Text style={[styles.title, {textAlign: 'center'}]}>

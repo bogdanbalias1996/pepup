@@ -1,11 +1,20 @@
-import {IAction} from '../../coreTypes';
+import { IAction } from '../../coreTypes';
 
 import {
   RECEIVE_USER_PROFILE,
   OPEN_VIDEO_RECORD_MODAL,
   CLOSE_VIDEO_RECORD_MODAL,
+  RECEIVE_USER_PEPUPS,
+  REQUEST_USER_PEPUPS,
+  FAILURE_USER_PEPUPS,
+  RECEIVE_CELEB_PEPUPS,
+  REQUEST_CELEB_PEPUPS,
+  FAILURE_CELEB_PEPUPS,
+  RECEIVE_ALL_PEPUPS,
+  REQUEST_ALL_PEPUPS,
+  FAILURE_ALL_PEPUPS,
 } from './actions';
-import {Profile} from '.';
+import { Profile, Pepup } from '.';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,
@@ -16,6 +25,9 @@ export class ProfileState {
   profileData: Profile;
   isFetching: boolean;
   isModalShown: boolean;
+  userPepups: Array<Pepup>;
+  celebPepups: Array<Pepup>;
+  pepups: Array<Pepup>;
 
   constructor() {
     this.profileData = {
@@ -29,12 +41,17 @@ export class ProfileState {
       id: '',
       name: '',
       profileInfo: {},
-      rode: '',
+      role: '',
       status: '',
+      icon: '',
       twitterConnected: false,
       verified: false,
-    };
-    (this.isFetching = false), (this.isModalShown = false);
+    },
+      this.isFetching = false,
+      this.isModalShown = false,
+      this.userPepups = [],
+      this.celebPepups = [],
+      this.pepups = []
   }
 }
 
@@ -77,6 +94,59 @@ export const ProfileReducer = (
       return {
         ...state,
         isModalShown: false,
+      };
+    case RECEIVE_USER_PEPUPS:
+      return {
+        ...state,
+        userPepups: action.data,
+        isFetching: false,
+      };
+
+    case REQUEST_USER_PEPUPS:
+      return {
+        ...state,
+        isFetching: true,
+      };
+
+    case FAILURE_USER_PEPUPS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+
+    case RECEIVE_CELEB_PEPUPS:
+      return {
+        ...state,
+        celebPepups: action.data,
+        isFetching: false,
+      };
+
+    case REQUEST_CELEB_PEPUPS:
+      return {
+        ...state,
+        isFetching: true,
+      };
+
+    case FAILURE_CELEB_PEPUPS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case RECEIVE_ALL_PEPUPS:
+      return {
+        ...state,
+        pepups: action.data,
+        isFetching: false,
+      };
+    case REQUEST_ALL_PEPUPS:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case FAILURE_ALL_PEPUPS:
+      return {
+        ...state,
+        isFetching: false,
       };
     default:
       return state;

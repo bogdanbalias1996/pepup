@@ -22,7 +22,7 @@ export default StyleSheet.create({
         height: 76,
         borderRadius: 15,
         marginRight: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     title: {
         fontSize: 18,

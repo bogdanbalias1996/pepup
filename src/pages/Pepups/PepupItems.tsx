@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Dispatch } from 'redux';
 
 import {
   openPepupModal,
@@ -17,7 +18,7 @@ import {
   getCeleb,
   setCategory
 } from './actions';
-import { PepupItemsProps } from './';
+import { PepupItemsProps, Celeb, Category } from './';
 import {
   colorLightGray,
   colorBlueberry,
@@ -32,15 +33,15 @@ const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.PepupState.isFetching
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch:Dispatch) => ({
   openPepupModal: () => dispatch(openPepupModal()),
   getCelebsByCategory: (id: string) => dispatch(getCelebsByCategory(id) as any),
   getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  setCategory: (cat: string) => dispatch(setCategory(cat))
+  setCategory: (cat: Category) => dispatch(setCategory(cat) as any)
 });
 
 export class Component extends React.PureComponent<PepupItemsProps> {
-  renderItem = ({ item }) => {
+  renderItem = ({ item }: any) => {
     const { openPepupModal, getCeleb } = this.props;
     const getModal = () => {
       openPepupModal();

@@ -9,6 +9,7 @@ export type Profile = {
   followingCnt: number;
   handle: string;
   id: string;
+  icon: string;
   name: string;
   profileInfo: Object;
   role: string;
@@ -17,38 +18,53 @@ export type Profile = {
   verified: boolean;
 };
 
+export type Pepup = {
+  
+}
+
 export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
+  handle: string;
   profileData: Profile;
+  userPepups: Array<Pepup>;
+  celebPepups: Array<Pepup>;
+  pepups: Array<Pepup>;
+  isFetching: boolean;
 };
 
 export type ProfileScreenDispatchProps = {
-  getProfile: (id: string) => Promise<any>;
+  getProfile: (handle: string) => Promise<any>;
   openVideoRecordModal: () => void;
   fulfillPepupRequest: (video: any) => void;
+  getUserPepups: (id: string) => Promise<any>;
 };
 
 export type NotificationItemsProps = {
-  data: any;
+  userPepups: Array<Pepup>;
   getStatusUser?: () => void;
+  isFetching: boolean,
+  userId: string,
+  getUserPepups: (id: string) => Promise<any>;
 };
 
 export type FanRequestsProps = {
-  data: any;
+  celebPepups: Array<Pepup>
   getStatusCeleb?: () => void;
+  isFetching: boolean,
+  userId: string,
+  getCelebPepups: (id: string) => Promise<any>;
 };
 
 export type HistoryItemsProps = {
-  data: any;
+  pepups: Array<Pepup>;
+  profileData: Profile;
+  isFetching: boolean,
+  getAllPepups: () => Promise<any>;
 }
 
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
 
 export type HeaderProps = {
-  userId: string;
-  profileData: Profile;
-  getProfile: (id: string) => void;
-  openVideoRecordModal: () => void;
 }

@@ -214,7 +214,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
     const { name, text, shareCheckbox } = payload;
     const store = getStore().getState().PepupState;
     const { selectedCategory } = store;
-    const userId = store.celebData.userInfo.id;
+    const userId = store.celebData.mappedUserId;
 
     // Temporary solution for tracking error states
     const headers = name ? null : { 'Prefer': 'status=400' }
@@ -234,7 +234,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
       }
     })
       .then((res) => {
-        dispatch(receivePepup());
+        dispatch(receivePepup(res));
         dispatch(openAlert({
           title: 'Request Submitted',
           text:

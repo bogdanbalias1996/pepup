@@ -11,11 +11,11 @@ import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
-import { getAllActiveCategories, getCelebsByCategory } from './actions';
+import { getAllActiveCategories } from './actions';
 import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
 import { colorBlueberry } from '../../variables';
-const Header = props => (
+const Header = (props: JSX.IntrinsicAttributes & { navigation?: any; title: any; getLeftComponent?: (() => any) | undefined; getRightComponent?: (() => any) | undefined; }) => (
   <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />
 );
 
@@ -29,14 +29,12 @@ const mapStateToProps = (state: IGlobalState) => ({
   isFetchingCat: state.PepupState.isFetchingCat
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getAllActiveCategories: () => dispatch(getAllActiveCategories() as any),
-  getCelebsByCategory: (categoryid: string) =>
-    dispatch(getCelebsByCategory(categoryid) as any)
+  getAllActiveCategories: () => dispatch(getAllActiveCategories() as any)
 });
 
 export class Component extends React.PureComponent<PepupsScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (props: JSX.IntrinsicAttributes & Pick<JSX.IntrinsicAttributes & { navigation?: any; title: any; getLeftComponent?: (() => any) | undefined; getRightComponent?: (() => any) | undefined; }, "navigation" | "title" | "key" | "getLeftComponent" | "getRightComponent">) => <ConnectedHeader {...props} navigation={navigation} />
   });
 
   state = {
