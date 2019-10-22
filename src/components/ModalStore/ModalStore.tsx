@@ -90,6 +90,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
 
   render() {
     const { closeStoreModal, isModalShown, prodData } = this.props;
+    console.log(prodData)
     const { value } = this.state;
     return (
       <Modal

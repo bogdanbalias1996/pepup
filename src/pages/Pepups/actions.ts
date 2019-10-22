@@ -115,12 +115,12 @@ export const getCelebsByCategory = (categoryId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebsByCategory(res));
-        if (!res.length) {
-          dispatch(openError({
-            type: 'noResults',
-            onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
-          }));
-        }
+        // if (!res.length) {
+        //   dispatch(openError({
+        //     type: 'noResults',
+        //     onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+        //   }));
+        // }
       })
       .catch(err => {
         dispatch(failureCelebsByCategory());

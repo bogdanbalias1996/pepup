@@ -81,9 +81,9 @@ export class Component extends React.PureComponent<PepupItemsProps> {
 
     getCelebsByCategory(categoryId);
     setCategory(categoryId);
-    // categoryId === 'Featured'
-    //   ? getFeaturedCelebs()
-    //   : getCelebsByCategory(categoryId);
+    categoryId === 'Featured'
+      ? getFeaturedCelebs()
+      : getCelebsByCategory(categoryId);
   }
 
   render() {
