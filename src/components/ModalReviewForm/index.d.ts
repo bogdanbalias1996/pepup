@@ -2,7 +2,7 @@ import { Celeb } from "../../pages/Pepups";
 
 export type ModalPostReviewProps = {
     isFetching?: boolean,
-    celebData: Celeb,
+    celebData: Celeb | null,
     closePostReviewModal: () => void;
     isModalPostReviewShown: boolean;
     postReview: (formData: PostReviewFormProps, setErrors: any) => Promise<any>

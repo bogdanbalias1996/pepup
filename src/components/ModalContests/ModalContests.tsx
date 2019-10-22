@@ -132,7 +132,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
             </View>
           </View>
         ) : null}
-        {contestData.type === 'QNA' ? <ModalContestTest /> : <ModalContestDesign />}
+        {contestData.type === 'QUIZ' ? <ModalContestTest /> : <ModalContestDesign />}
       </Modal>
     );
   }

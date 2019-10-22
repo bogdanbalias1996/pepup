@@ -19,26 +19,30 @@ import {
 import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { Loader } from '../Loader/Loader';
 
-const getTypeButton = type => {
+const getTypeButton = (type: string) => {
   switch (type) {
-    case 'violet':
-      return [styles.shadowViolet, styles.btnShadow];
     case 'blue':
       return [styles.shadowBlue, styles.btnShadow];
     case 'orange':
       return [styles.shadowOrange, styles.btnShadow];
+    case 'grey': 
+      return [styles.shadowGrey, styles.btnShadow]  
+    default:
+      return [styles.shadowViolet, styles.btnShadow];
   }
 };
 
-const getColorButton = type => {
+const getColorButton = (type: string) => {
   switch (type) {
-    case 'violet':
-      return [colorVioletStart, colorVioletEnd];
     case 'blue':
       return [colorBlueStart, colorBlueEnd];
     case 'orange':
       return [colorOrangeStart, colorOrangeEnd];
     case 'border':
+      return [colorVioletStart, colorVioletEnd];
+    case 'white':
+      return ['white', 'white'];
+    default:
       return [colorVioletStart, colorVioletEnd];
   }
 };
@@ -62,7 +66,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 }
+          type === 'border' && { padding: 1 },
         ]}
       >
         <TouchableOpacity
@@ -83,7 +87,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
             <Text
               style={[
                 styles.btnText,
-                { color: type === 'border' ? colorBlack : 'white' },
+                { color: type === 'border' ? colorBlack: type === 'white' ? colorVioletEnd : 'white' },
                 {
                   fontFamily: textBold ? boldFont : defaultFont
                 }

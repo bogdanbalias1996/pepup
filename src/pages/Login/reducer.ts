@@ -29,11 +29,13 @@ export class LoginState {
   accessToken: string;
   isFetching: boolean;
   userId: string;
+  handle: string;
 
   constructor() {
     this.accessToken = '';
     this.isFetching = false;
     this.userId = '';
+    this.handle ='';
   }
 }
 
@@ -51,7 +53,8 @@ export const LoginReducer = (
         ...state,
         accessToken: action.data.accessToken,
         userId: action.data.id,
-        isFetching: false
+        isFetching: false,
+        handle: action.data.handle,
       };
 
     case REQUEST_LOGIN_USER:

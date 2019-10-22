@@ -7,45 +7,48 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, Alert} from 'react-native';
+import {View, Text, Alert, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
-
-import {connect} from 'react-redux';
+import NetInfo from '@react-native-community/netinfo';
 import * as Font from 'expo-font';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Provider} from 'react-redux';
+import {Provider, connect} from 'react-redux';
 import {getStore} from './src/configureStore';
-import {authenticate} from './src/common/utils/session';
-import {setTopLevelNavigator} from './src/navigationService';
+import {setTopLevelNavigator, navigate} from './src/navigationService';
 import {Loader} from './src/components/Loader/Loader';
 import {IGlobalState} from './src/coreTypes';
 
 import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
 import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
+import {OnboardingNavigator} from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
+import {SuccessfulAlert} from './src/components/SuccessfulAlert/SuccessfulAlert';
+import {ErrorModal} from './src/components/ErrorState/ErrorState';
+import {setInternetConnection} from './src/utils/connectionCheck/actions';
+import {openError, closeError} from './src/pages/ErrorModal/actions';
 
 const AppNavigator = createSwitchNavigator(
   {
+    Onboarding: OnboardingNavigator,
     Pages: PagesNavigator,
     Auth: AuthenticationNavigator,
     Main: MainNavigator,
   },
   {
-    initialRouteName: 'Pages',
+    initialRouteName: 'Onboarding',
   },
 );
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const AppWithFontLoadedComponent = ({isFontLoaded}) => {
+const AppWithFontLoadedComponent = ({isFontLoaded}: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
       <AppContainer
         ref={(navigatorRef: any) => {
           setTopLevelNavigator(navigatorRef);
-          authenticate();
         }}
       />
     </Loader>
@@ -57,12 +60,32 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 }))(AppWithFontLoadedComponent);
 
 export default class App extends Component {
-  async componentDidMount() {
+  messageListener!: () => any;
+  async componentDidMount():Promise<any> {
+    await NetInfo.fetch().then(state => {
+      getStore().dispatch(setInternetConnection(state.isConnected));
+    });
+
+    await NetInfo.addEventListener(state => {
+      if (state.isConnected === false) {
+        getStore().dispatch(
+          openError({
+            type: 'connectionFail',
+            onPress: () => {
+              getStore().dispatch(closeError());
+              navigate({routeName: 'Login'});
+            },
+          }),
+        );
+      }
+    });
+
     await Font.loadAsync({
       'brackit-font': require('./assets/fonts/icon-font/brackit_icons.ttf'),
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
       'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
       'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
+      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
     });
 
     getStore().dispatch({
@@ -76,6 +99,12 @@ export default class App extends Component {
   componentWillUnmount() {
     this.notificationListener();
     this.notificationOpenedListener();
+  }
+  notificationListener() {
+    throw new Error("Method not implemented.");
+  }
+  notificationOpenedListener() {
+    throw new Error("Method not implemented.");
   }
 
   async createNotificationListeners() {
@@ -146,7 +175,10 @@ export default class App extends Component {
   render() {
     return (
       <Provider store={getStore()}>
+        <StatusBar barStyle="light-content" />
         <AppWithFontLoaded />
+        <SuccessfulAlert />
+        <ErrorModal />
       </Provider>
     );
   }

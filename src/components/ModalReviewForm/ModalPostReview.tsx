@@ -20,6 +20,7 @@ import { ModalPostReviewProps, PostReviewFormProps } from './';
 import styles from './ModalPostReview.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalPostReviewShown: state.PepupState.isModalPostReviewShown,
@@ -178,6 +179,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
             }}
           </Formik>
         </View>
+        <SuccessfulAlert />
       </Modal>
     );
   }

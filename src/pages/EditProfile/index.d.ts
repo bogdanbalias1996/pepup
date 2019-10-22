@@ -3,6 +3,7 @@ import {
     NavigationScreenOptions
 } from "react-navigation";
 import { Profile } from "../Profile";
+import { AlertProps } from "../../components/SuccessfulAlert";
 
 
 export type EditProfileScreenStateProps = {
@@ -16,20 +17,21 @@ export type EditProfileScreenFromData = EditProfileScreenStateProps & EditProfil
 
 export type EditProfileScreenDispatchProps = {
     editProfile: (data: EditProfileScreenFromData, setErrors: any) => Promise<any>;
+    openAlert: (data: AlertProps) => Promise<any>;
 };
 
 export type profileInfo = {
-    country: string;
-    city: string;
-    phoneNumber: string;
+    country?: string;
+    city?: string;
+    phoneNumber?: string;
 }
 
 export type EditProfileScreenFromFormik = {
     name: string;
     email: string;
     newPasswd: string;
-    dob: string;    
-    profileInfo: profileInfo;
+    dob?: string;    
+    profileInfo?: profileInfo;
 }
 
 

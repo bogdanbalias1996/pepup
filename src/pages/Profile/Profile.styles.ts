@@ -7,7 +7,8 @@ export default StyleSheet.create({
     height: 64,
     borderRadius: 8,
     alignSelf: "center",
-    marginVertical: 24
+    marginVertical: 24,
+    marginHorizontal: 5
   },
   titleWrap: {
     flexDirection: "row",
@@ -46,5 +47,8 @@ export default StyleSheet.create({
   rateIcon: {
     width: 20,
     height: 20
+  },
+  imageWrap: {
+    flexDirection: 'row'
   }
 });

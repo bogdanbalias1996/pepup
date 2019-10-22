@@ -22,7 +22,7 @@ export default StyleSheet.create({
         height: 76,
         borderRadius: 15,
         marginRight: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
     title: {
         fontSize: 18,
@@ -107,7 +107,10 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    wrap: { flex: 1, marginBottom: 10 },
+    wrap: {
+        flex: 1,
+        marginBottom: 10
+    },
     checkboxWrap: {
         flexDirection: 'row',
         alignItems: 'center',

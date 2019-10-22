@@ -11,7 +11,7 @@ const mapStateToProps = (state: IGlobalState, ownProps: IconProps) => ({
 });
 
 export const Component = (props: IconComponentProps) => {
-  const Icon = createIconSetFromFontello(fontelloConfig, "brackit-font");
+  const Icon = createIconSetFromFontello(fontelloConfig, "brackit-font", null);
   const { isFontLoaded, size = 24, name, color = "white" } = props;
 
   return isFontLoaded && name ? (

@@ -6,6 +6,9 @@ import { RequestPepupScreenFromData } from "../../components/ModalPepupReq";
 import { getStore } from '../../configureStore';
 import { Review, Category, Celeb } from ".";
 import { PostReviewFormProps } from "../../components/ModalReviewForm";
+import { openAlert, closeAlert } from "../Alert/actions";
+import { openError, closeError } from "../ErrorModal/actions";
+import { navigate } from "../../navigationService";
 
 export const OPEN_PEPUP_MODAL = "OPEN_PEPUP_MODAL";
 export const CLOSE_PEPUP_MODAL = "CLOSE_PEPUP_MODAL";
@@ -37,7 +40,7 @@ export const closePepupReqModal = (): IAction<undefined> => {
   };
 };
 export const RECEIVE_ALL_ACTIVE_CATEGORIES = "RECEIVE_ALL_ACTIVE_CATEGORIES";
-export const receiveAllActiveCategories = (data): IAction<Array<Category>> => {
+export const receiveAllActiveCategories = (data: Array<Category>): IAction<Array<Category>> => {
   return {
     type: RECEIVE_ALL_ACTIVE_CATEGORIES,
     data
@@ -69,13 +72,13 @@ export const getAllActiveCategories = () => {
       })
       .catch(err => {
         dispatch(failureAllActiveCategories());
-        console.log(JSON.stringify(err, null, 2));
+
       });
   };
 };
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';
-export const receiveCelebsByCategory = (data): IAction<Array<Celeb>> => {
+export const receiveCelebsByCategory = (data: Array<Celeb>): IAction<Array<Celeb>> => {
   return {
     type: RECEIVE_CELEBS_BY_CATEGORY,
     data
@@ -109,16 +112,25 @@ export const getCelebsByCategory = (categoryId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebsByCategory(res));
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+          }));
+        }
       })
       .catch(err => {
         dispatch(failureCelebsByCategory());
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+        }))
       });
   };
 };
 
 export const RECEIVE_CELEB = "RECEIVE_CELEB";
-export const receiveCeleb = (data): IAction<Celeb> => {
+export const receiveCeleb = (data: Celeb): IAction<Celeb> => {
   return {
     type: RECEIVE_CELEB,
     data
@@ -152,10 +164,23 @@ export const getCeleb = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveCeleb(res));
+        if (Object.keys(res).length === 0) {
+          dispatch(openError({
+            type: 'itemUnavailable',
+            onPress: () => { dispatch(getCeleb(userId) as any) }
+          }))
+        }
       })
       .catch(err => {
-      dispatch(failureCeleb())
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(failureCeleb())
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(closeError());
+            dispatch(closePepupModal());
+            navigate({ routeName: 'Main' });
+          }
+        }))
       });
   };
 };
@@ -189,7 +214,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
     const { name, text, shareCheckbox } = payload;
     const store = getStore().getState().PepupState;
     const { selectedCategory } = store;
-    const userId = store.celebData.userInfo.id;
+    const userId = store.celebData.mappedUserId;
 
     // Temporary solution for tracking error states
     const headers = name ? null : { 'Prefer': 'status=400' }
@@ -209,11 +234,26 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
       }
     })
       .then((res) => {
-        dispatch(receivePepup());
+        dispatch(receivePepup(res));
+        dispatch(openAlert({
+          title: 'Request Submitted',
+          text:
+            'Awesome! Your Pepup should be ready in less than 7 days. Track status in your Profile, under My Requests.',
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closePepupReqModal());
+            dispatch(closePepupModal());
+          }
+        }));
       })
       .catch((err) => {
         dispatch(failureReqPepup());
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(sendRequestForPepup(payload, setErrors) as any)
+          }
+        }));
         const { error = 'Please fill the fields correctly' } = err.response.body
         setErrors({
           'request': error,
@@ -224,7 +264,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
 }
 
 export const SET_CATEGORY = "SET_CATEGORY";
-export const setCategory = (data): IAction<Category> => {
+export const setCategory = (data: Category): IAction<Category> => {
   return {
     type: SET_CATEGORY,
     data
@@ -262,7 +302,7 @@ export const closeReviewsModal = (): IAction<undefined> => {
 };
 
 export const RECEIVE_ALL_REVIEWS = 'RECEIVE_ALL_REVIEWS';
-export const receiveAllReviews = (data): IAction<Review> => {
+export const receiveAllReviews = (data: Review): IAction<Review> => {
   return {
     type: RECEIVE_ALL_REVIEWS,
     data
@@ -296,10 +336,22 @@ export const getAllReviews = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveAllReviews(res));
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getAllReviews(userId) as any) }
+          }
+          ))
+        }
       })
       .catch(err => {
         dispatch(failureAllReviews())
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(getAllReviews(userId) as any)
+          }
+        }));
       });
   };
 };
@@ -366,10 +418,19 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
     })
       .then((res) => {
         dispatch(receiveReview());
+        dispatch(openAlert({
+          title: 'Review Submitted',
+          text:
+            'Thanks for your review. Your review will be featured on PV Sindhu’s page. How exciting!',
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closePostReviewModal());
+          }
+        }));
       })
       .catch((err) => {
-        console.log(JSON.stringify(err, null, 2))
         dispatch(failureReview());
+        dispatch(postReview(payload, setErrors) as any)
         const { error = 'Please fill review form and rate celebrity' } = err.response.body
         setErrors({
           'review': error,
@@ -378,3 +439,18 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       })
   }
 }
+
+export const OPEN_NOTIFY_MODAL = 'OPEN_NOTIFY_MODAL';
+export const CLOSE_NOTIFY_MODAL = 'CLOSE_NOTIFY_MODAL';
+export const openNotifyModal = (): IAction<undefined> => {
+  return {
+    type: OPEN_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+export const closeNotifyModal = (): IAction<undefined> => {
+  return {
+    type: CLOSE_NOTIFY_MODAL,
+    data: undefined
+  };
+};

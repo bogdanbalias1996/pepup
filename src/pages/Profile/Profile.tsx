@@ -1,27 +1,36 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import * as React from 'react';
+import {connect} from 'react-redux';
+import {View, Image, Text, TouchableOpacity} from 'react-native';
+import { Dispatch } from 'redux';
 
-import { PepupBackground } from "../../components/PepupBackground/PepupBackground";
-import { Icon } from "../../components/Icon/Icon";
-import { ProfileScreenProps } from ".";
-import { NotificationItems } from "./NotificationItems";
-import { HeaderRounded } from "../../components/HeaderRounded/HeaderRounded";
-import { Tabs, defaultTabsStyles } from "../../components/Tabs/Tabs";
-import styles from "./Profile.styles";
-import { navigate } from "../../navigationService";
-import { Dispatch } from "redux";
-import { getProfile } from "./actions";
-import { IGlobalState } from "../../coreTypes";
-import { LoadingScreen } from "../Loading/Loading";
+import {IGlobalState} from '../../coreTypes';
+import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
+import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
+import {Icon} from '../../components/Icon/Icon';
+import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
+import {navigate} from '../../navigationService';
 
-const Header = props => (
+import styles from './Profile.styles';
+import {
+  getProfile,
+  openVideoRecordModal,
+  fulfillPepupRequest,
+  getUserPepups,
+} from './actions';
+import {ProfileScreenProps, HeaderProps} from '.';
+import {NotificationItems} from './NotificationItems';
+import {History} from './History';
+import {FanRequests} from './FanRequests';
+import { ContestItems } from '../Contests/ContestItems';
+
+const Header = (props: HeaderProps) => (
   <HeaderRounded
     {...props}
-    title={"Profile".toUpperCase()}
+    title={'Profile'.toUpperCase()}
     getRightComponent={() => {
       return (
-        <TouchableOpacity onPress={() => navigate({ routeName: "Settings" })}>
+        <TouchableOpacity onPress={() => navigate({routeName: 'Settings'})}>
           <Icon name="nut-icon" />
         </TouchableOpacity>
       );
@@ -31,103 +40,125 @@ const Header = props => (
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
-  profileData: state.ProfileState.profileData
+  handle: state.LoginState.handle,
+  profileData: state.ProfileState.profileData,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getProfile: (id: string) => dispatch(getProfile(id) as any)
+  getProfile: (handle: string) => dispatch(getProfile(handle) as any),
+  openVideoRecordModal: () => dispatch(openVideoRecordModal()),
+  fulfillPepupRequest: (video: any) =>
+    dispatch(fulfillPepupRequest(video) as any),
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)  
 });
 
 const ConnectedHeader = connect(
   mapStateToProps,
-  null
+  null,
 )(Header);
 
 export class Component extends React.PureComponent<ProfileScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({navigation}: any) => ({
+    header: (props: any) => (
+      <ConnectedHeader {...props} navigation={navigation} />
+    ),
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
   };
 
-  dataNotifications = [
-    {
-      id: "1",
-      date: "Today",
-      title: "New Event Started",
-      text:
-        "Awadhe Warriors - Fan Meet n Greet started today. Get ready to be one of the participants!"
-    },
-    {
-      id: "2",
-      date: "Today",
-      title: "New Event Started",
-      text:
-        "Awadhe Warriors - Fan Meet n Greet started today. Get ready to be one of the participants!"
-    },
-    {
-      id: "3",
-      date: "Today",
-      title: "New Event Started",
-      text:
-        "Awadhe Warriors - Fan Meet n Greet started today. Get ready to be one of the participants!"
-    }
-  ];
   tabsConfig = [
     {
-      title: "Notifications",
-      component: () => <NotificationItems data={this.dataNotifications} />
+      title: 'My Requests',
+      component: () => <NotificationItems />,
     },
     {
-      title: "Purchases",
-      component: () => <NotificationItems data={this.dataNotifications} />
-    }
+      title: 'Notifications',
+      component: () => <NotificationItems />,
+    },
+  ];
+
+  tabsConfigCeleb = [
+    {
+      title: 'My Requests',
+      component: () => <NotificationItems />,
+    },
+    {
+      title: 'Notifications',
+      component: () => <NotificationItems />,
+    },
+    {
+      title: 'Fan Requests',
+      component: () => <FanRequests />,
+    },
+    {
+      title: 'History',
+      component: () => <History />,
+    },
   ];
 
   toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   componentDidMount = () => {
-    const { userId } = this.props;
-    userId && this.props.getProfile(userId);
+    const {userId, handle} = this.props;
+    handle && this.props.getProfile(handle);
+    userId && this.props.getUserPepups(userId);
   };
 
   render() {
-    const { profileData } = this.props;
-
+    const {profileData, openVideoRecordModal, fulfillPepupRequest} = this.props;
     return (
       <PepupBackground>
         <Image
           style={styles.avatar}
-          source={require("../../../assets/mock_avatar.jpg")}
+          source={{uri: profileData.icon}}
           resizeMode="cover"
         />
         <View style={styles.titleWrap}>
-          <Text style={styles.title}>{profileData.name || ""}</Text>
+          <Text style={styles.title}>{profileData.name || ''}</Text>
           <TouchableOpacity
-            onPress={() => navigate({ routeName: "EditProfile" })}
-          >
+            onPress={
+              // profileData.role === 'REGULAR,CELEBRITY'
+              profileData.role === 'DF'
+                ? () => navigate({routeName: 'EditProfileCeleb'})
+                : () => navigate({routeName: 'EditProfile'})
+            }>
             <Icon name="edit" />
           </TouchableOpacity>
         </View>
+
+        <TouchableOpacity onPress={() => openVideoRecordModal()}>
+          <Text style={styles.title}>MODAL 222</Text>
+        </TouchableOpacity>
+
         <View style={styles.wrapContent}>
-          {profileData ? (
-            <Tabs
-              config={this.tabsConfig}
-              style={{ flex: 1 }}
-              stylesItem={defaultTabsStyles.roundedTabs}
-              stylesTabsContainer={{
-                backgroundColor: "transparent",
-                marginBottom: 10
-              }}
-            />
+          {// profileData.role === 'REGULAR,CELEBRITY'
+          profileData.role === 'DF' ? (
+              <Tabs
+                config={this.tabsConfigCeleb}
+                style={{flex: 1}}
+                stylesItem={defaultTabsStyles.roundedTabs}
+                stylesTabsContainer={{
+                  backgroundColor: 'transparent',
+                  marginBottom: 10,
+                }}
+              />
           ) : (
-            <LoadingScreen />
+              <Tabs
+                config={this.tabsConfig}
+                style={{flex: 1}}
+                stylesItem={defaultTabsStyles.roundedTabs}
+                stylesTabsContainer={{
+                  backgroundColor: 'transparent',
+                  marginBottom: 10,
+                }}
+              />
           )}
         </View>
+        <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
       </PepupBackground>
     );
   }
@@ -135,5 +166,5 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
 export const ProfileScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);

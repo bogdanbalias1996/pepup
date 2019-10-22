@@ -25,7 +25,11 @@ export enum ApiOperation {
   GetCelebById,
   RequestPepup,
   GetAllReviews,
-  PostReview
+  PostReview,
+  FulfillRequestPepup,
+  GetUserPepups,
+  GetCelebPepups,
+  GetAllPepups
 }
 
 export interface INetwork<C> {
@@ -88,37 +92,29 @@ export class CitiznApi implements IApi<ApiOperation> {
   getMethod(): ApiMethod {
     switch (this.operation) {
       case ApiOperation.LogIn:
-        return ApiMethod.POST
       case ApiOperation.SignUp:
-        return ApiMethod.POST
       case ApiOperation.ResetPass:
-        return ApiMethod.POST
-      case ApiOperation.GetProfile:
-        return ApiMethod.GET
-      case ApiOperation.GetAllEvents:
-        return ApiMethod.GET
-      case ApiOperation.GetEvent:
-        return ApiMethod.GET
-      case ApiOperation.GetAllContests:
-        return ApiMethod.GET
-      case ApiOperation.GetContest:
-        return ApiMethod.GET
       case ApiOperation.EditProfile:
-        return ApiMethod.POST
-      case ApiOperation.GetAllActiveCategories:
-        return ApiMethod.GET
-      case ApiOperation.GetActiveCategory:
-        return ApiMethod.GET
-      case ApiOperation.GetCelebsByCategory:
-        return ApiMethod.GET
-      case ApiOperation.GetCelebById:
-        return ApiMethod.GET
       case ApiOperation.RequestPepup:
-        return ApiMethod.POST
-      case ApiOperation.GetAllReviews:
-        return ApiMethod.GET
       case ApiOperation.PostReview:
+      case ApiOperation.FulfillRequestPepup:
         return ApiMethod.POST
+
+      case ApiOperation.GetProfile:
+      case ApiOperation.GetAllEvents:
+      case ApiOperation.GetEvent:
+      case ApiOperation.GetAllContests:
+      case ApiOperation.GetContest:
+      case ApiOperation.GetAllActiveCategories:
+      case ApiOperation.GetActiveCategory:
+      case ApiOperation.GetCelebsByCategory:
+      case ApiOperation.GetCelebById:
+      case ApiOperation.GetAllReviews:
+      case ApiOperation.GetUserPepups:
+      case ApiOperation.GetCelebPepups:
+      case ApiOperation.GetAllPepups:  
+        return ApiMethod.GET
+
       default:
         return ApiMethod.UNKNOWN
     }
@@ -127,7 +123,7 @@ export class CitiznApi implements IApi<ApiOperation> {
   getUrl(): string {
     const host = 'http://dev.pepupyo.com/mz'
     const {
-      userId, eventId, contestId, categoryId
+      userId, eventId, contestId, categoryId, handle
     } = (this.getParams() || {}) as any
 
     switch (this.operation) {
@@ -138,7 +134,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.ResetPass:
         return `${host}/user/reset-password`
       case ApiOperation.GetProfile:
-        return `${host}/user/${userId}`
+        return `${host}/user/profile/${handle}`
       case ApiOperation.GetAllEvents:
         return `${host}/pepup/event/all`
       case ApiOperation.GetEvent:
@@ -160,7 +156,15 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetAllReviews:
         return `${host}/pepup/celeb/reviews/${userId}`
       case ApiOperation.PostReview:
-        return `${host}/pepup/celeb/post-review`  
+        return `${host}/pepup/celeb/post-review`
+      case ApiOperation.FulfillRequestPepup:
+        return `${host}/pepup/celeb/fulfill-pepup-request`
+      case ApiOperation.GetUserPepups:
+        return `${host}/pepup/user-requests/${userId}`
+      case ApiOperation.GetCelebPepups:
+        return `${host}/pepup/celeb-requests/${userId}`
+      case ApiOperation.GetAllPepups:
+        return `${host}/pepup/all` 
       default:
         return ''
     }
@@ -184,6 +188,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.SignUp:
       case ApiOperation.ResetPass:
         return false
+
       case ApiOperation.EditProfile:
       case ApiOperation.GetProfile:
       case ApiOperation.GetAllEvents:
@@ -196,8 +201,13 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetCelebById:
       case ApiOperation.RequestPepup:
       case ApiOperation.GetAllReviews:
-      case ApiOperation.PostReview: 
+      case ApiOperation.PostReview:
+      case ApiOperation.FulfillRequestPepup:
+      case ApiOperation.GetUserPepups:
+      case ApiOperation.GetCelebPepups:
+      case ApiOperation.GetAllPepups:  
         return true
+
       default:
         return false
     }

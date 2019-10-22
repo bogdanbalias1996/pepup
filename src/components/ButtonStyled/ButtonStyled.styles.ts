@@ -2,7 +2,8 @@ import { StyleSheet } from "react-native";
 import {
   colorBlueStart,
   colorVioletStart,
-  colorOrangeStart
+  colorOrangeStart,
+  colorCoolGrey
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -25,6 +26,9 @@ export default StyleSheet.create({
   shadowViolet: {
     shadowColor: colorVioletStart
   },
+  shadowGrey: {
+    shadowColor: colorCoolGrey
+  },
   shadowBlue: {
     shadowColor: colorBlueStart
   },
@@ -41,7 +45,6 @@ export default StyleSheet.create({
   },
   btnText: {
     textAlign: "center",
-    color: "white",
     fontSize: 16,
     letterSpacing: 1,
     marginHorizontal: 10

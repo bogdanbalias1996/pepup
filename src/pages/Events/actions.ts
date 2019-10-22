@@ -3,6 +3,8 @@ import { ApiOperation } from "../../api/api";
 import { request } from "../../api/network";
 import { IAction } from "../../coreTypes";
 import { Event } from ".";
+import { openError, closeError } from "../ErrorModal/actions";
+import { navigate } from "../../navigationService";
 
 export const OPEN_EVENT_MODAL = "OPEN_EVENT_MODAL";
 export const CLOSE_EVENT_MODAL = "CLOSE_EVENT_MODAL";
@@ -21,7 +23,7 @@ export const closeEventModal = (): IAction<undefined> => {
 };
 
 export const RECEIVE_ALL_EVENTS = "RECEIVE_ALL_EVENTS";
-export const receiveAllEvents = (data): IAction<Array<Event>> => {
+export const receiveAllEvents = (data: Array<Event>): IAction<Array<Event>> => {
   return {
     type: RECEIVE_ALL_EVENTS,
     data
@@ -52,16 +54,25 @@ export const getAllEvents = () => {
     })
       .then(res => {
         dispatch(receiveAllEvents(res));
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getAllEvents() as any) }
+          }))
+        }
       })
       .catch(err => {
         dispatch(failureAllEvents());
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getAllEvents() as any) }
+        }))
       });
   };
 };
 
 export const RECEIVE_EVENT = "RECEIVE_EVENT";
-export const receiveEvent = (data): IAction<Event> => {
+export const receiveEvent = (data: Event): IAction<Event> => {
   return {
     type: RECEIVE_EVENT,
     data
@@ -95,10 +106,23 @@ export const getEvent = (eventId: string) => {
     })
       .then(res => {
         dispatch(receiveEvent(res));
+        if (Object.keys(res).length === 0) {
+          dispatch(openError({
+            type: 'itemUnavailable',
+            onPress: () => { dispatch(getEvent(eventId) as any) }
+          }))
+        }
       })
       .catch(err => {
         dispatch(failureEvent())
-        console.log(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(closeError());
+            dispatch(closeEventModal());
+            navigate({ routeName: 'Main' });
+          }
+        }))
       });
   };
 };

@@ -1,45 +1,50 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
-import { connect } from 'react-redux';
+import {Dispatch} from 'redux';
+import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
+import {connect} from 'react-redux';
 import Modal from 'react-native-modalbox';
-import { Formik } from 'formik';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 
 import {
   closePepupReqModal,
-  sendRequestForPepup
+  sendRequestForPepup,
 } from '../../pages/Pepups/actions';
-import { Icon } from '../../components/Icon/Icon';
-import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { TextInputBorderStyled } from '../../components/TextInputStyled/TextInputBorderStyled';
-import { RequestPepupProps, RequestPepupScreenFromData } from './';
+import {Icon} from '../../components/Icon/Icon';
+import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
+import {TextInputBorderStyled} from '../../components/TextInputStyled/TextInputBorderStyled';
+import {RequestPepupProps, RequestPepupScreenFromData} from './';
 import styles from './ModalPepupReq.styles';
-import { colorBlack } from '../../variables';
-import { IGlobalState } from '../../coreTypes';
-import { CheckboxStyled } from '../CheckboxStyled/CheckboxStyled';
+import {colorBlack} from '../../variables';
+import {IGlobalState} from '../../coreTypes';
+import {CheckboxStyled} from '../CheckboxStyled/CheckboxStyled';
+import {openAlert} from '../../pages/Alert/actions';
+import {AlertProps} from '../SuccessfulAlert';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
   celebData: state.PepupState.celebData,
-  userId: state.PepupState.celebData.userInfo.id,
   categoryId: state.PepupState.selectedCategory,
-  isFetching: state.PepupState.isFetching
+  isFetching: state.PepupState.isFetching,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupReqModal: () => dispatch(closePepupReqModal()),
   sendRequestForPepup: (data: RequestPepupScreenFromData, setErrors: any) =>
-    dispatch(sendRequestForPepup(data, setErrors) as any)
+    dispatch(sendRequestForPepup(data, setErrors) as any),
+  openAlert: (data: AlertProps) => dispatch(openAlert(data)),
 });
 
 const RequestSchema = Yup.object().shape({
   name: Yup.string().required('Please type your request'),
-  text: Yup.string().required("Please type person's name")
+  text: Yup.string().required("Please type person's name"),
 });
 
 export class Component extends React.PureComponent<RequestPepupProps> {
-  handleSubmit = (values: RequestPepupScreenFromData, { setErrors }: any) => {
-    const { sendRequestForPepup } = this.props;
+  handleSubmit = (values: RequestPepupScreenFromData, {setErrors}: any) => {
+    const {sendRequestForPepup} = this.props;
+
     sendRequestForPepup(values, setErrors);
   };
 
@@ -48,7 +53,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
       closePepupReqModal,
       isModalReqShown,
       isFetching,
-      celebData
+      celebData,
     } = this.props;
 
     const fullName = celebData.userInfo.name.split(' ');
@@ -61,26 +66,24 @@ export class Component extends React.PureComponent<RequestPepupProps> {
         useNativeDriver={false}
         swipeArea={100}
         onClosed={() => closePepupReqModal()}
-        style={styles.modal}
-      >
+        style={styles.modal}>
         <View style={styles.wrapModalContent}>
           <View style={styles.swiperLine} />
           <Formik
             initialValues={{
               name: '',
               text: '',
-              shareCheckbox: false
+              shareCheckbox: false,
             }}
             validationSchema={RequestSchema}
-            onSubmit={this.handleSubmit}
-          >
+            onSubmit={this.handleSubmit}>
             {(props: any) => {
               const {
                 handleSubmit,
                 errors,
                 touched,
                 setFieldValue,
-                values
+                values,
               } = props;
 
               const formattedErrorString = Object.keys(errors)
@@ -100,12 +103,12 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <View style={styles.reqTitle}>
                         <Image
                           style={styles.avatar}
-                          source={require('../../../assets/mock_avatar.jpg')}
+                          source={{uri: celebData.userInfo.icon}}
                           resizeMode="cover"
                         />
-                        <Text style={[styles.title, { textAlign: 'center' }]}>
+                        <Text style={[styles.title, {textAlign: 'center'}]}>
                           Book{' '}
-                          <Text style={[styles.title, { textAlign: 'center' }]}>
+                          <Text style={[styles.title, {textAlign: 'center'}]}>
                             {'\n'}
                             {celebData.userInfo.name}
                           </Text>
@@ -120,14 +123,14 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                           </Text>
                         </View>
                       )}
-                      <View style={{ justifyContent: 'space-between' }}>
+                      <View style={{justifyContent: 'space-between'}}>
                         <View style={styles.inputWrap}>
                           <Text style={styles.subTitle}>This Pepup is for</Text>
                           <TextInputBorderStyled
                             name="name"
                             label="Requested for..."
                             formProps={props}
-                            inputStyle={{ height: 42 }}
+                            inputStyle={{height: 42}}
                           />
                         </View>
                         <View style={styles.inputWrap}>
@@ -137,7 +140,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                           <TextInputBorderStyled
                             name="text"
                             label="Type your request here"
-                            inputStyle={{ height: 180 }}
+                            inputStyle={{height: 180}}
                             multiline={true}
                             numberOfLines={5}
                             formProps={props}
@@ -148,11 +151,15 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               onPress={() =>
                                 setFieldValue(
                                   'shareCheckbox',
-                                  !values.shareCheckbox
+                                  !values.shareCheckbox,
                                 )
                               }
                             />
-                            <Text style={[styles.subTitle, styles.checkText]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
+                            <Text
+                              style={[
+                                styles.subTitle,
+                                styles.checkText,
+                              ]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
                           </View>
                         </View>
                       </View>
@@ -167,8 +174,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                     <View style={styles.modalFooter}>
                       <TouchableOpacity
                         style={styles.btnCancel}
-                        onPress={() => closePepupReqModal()}
-                      >
+                        onPress={() => closePepupReqModal()}>
                         <Icon size={24} name="cancel" color={colorBlack} />
                       </TouchableOpacity>
                       <ButtonStyled
@@ -177,7 +183,6 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                         text={`Request for ${celebData.billRate} INR`}
                         loader={isFetching}
                         iconSource={require('../../../assets/coins.png')}
-                        width="250"
                       />
                     </View>
                   </View>
@@ -186,6 +191,8 @@ export class Component extends React.PureComponent<RequestPepupProps> {
             }}
           </Formik>
         </View>
+        <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }
@@ -193,5 +200,5 @@ export class Component extends React.PureComponent<RequestPepupProps> {
 
 export const ModalPepupReq = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);
