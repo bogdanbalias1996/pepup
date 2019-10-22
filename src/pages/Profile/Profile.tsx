@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
 import {View, Image, Text, TouchableOpacity} from 'react-native';
-import { Dispatch } from 'redux';
+import {Dispatch} from 'redux';
 
 import {IGlobalState} from '../../coreTypes';
 import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
@@ -22,7 +22,6 @@ import {ProfileScreenProps, HeaderProps} from '.';
 import {NotificationItems} from './NotificationItems';
 import {History} from './History';
 import {FanRequests} from './FanRequests';
-import { ContestItems } from '../Contests/ContestItems';
 
 const Header = (props: HeaderProps) => (
   <HeaderRounded
@@ -49,7 +48,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   openVideoRecordModal: () => dispatch(openVideoRecordModal()),
   fulfillPepupRequest: (video: any) =>
     dispatch(fulfillPepupRequest(video) as any),
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)  
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
 });
 
 const ConnectedHeader = connect(
@@ -104,17 +103,23 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
   componentDidMount = () => {
     const {userId, handle} = this.props;
+
     handle && this.props.getProfile(handle);
     userId && this.props.getUserPepups(userId);
   };
 
   render() {
     const {profileData, openVideoRecordModal, fulfillPepupRequest} = this.props;
+    console.log(profileData);
     return (
       <PepupBackground>
         <Image
           style={styles.avatar}
-          source={{uri: profileData.icon}}
+          source={
+            profileData.icon
+              ? {uri: profileData.icon}
+              : require('../../../assets/avatarPlaceholder.png')
+          }
           resizeMode="cover"
         />
         <View style={styles.titleWrap}>
@@ -137,25 +142,25 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         <View style={styles.wrapContent}>
           {// profileData.role === 'REGULAR,CELEBRITY'
           profileData.role === 'DF' ? (
-              <Tabs
-                config={this.tabsConfigCeleb}
-                style={{flex: 1}}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={{
-                  backgroundColor: 'transparent',
-                  marginBottom: 10,
-                }}
-              />
+            <Tabs
+              config={this.tabsConfigCeleb}
+              style={{flex: 1}}
+              stylesItem={defaultTabsStyles.roundedTabs}
+              stylesTabsContainer={{
+                backgroundColor: 'transparent',
+                marginBottom: 10,
+              }}
+            />
           ) : (
-              <Tabs
-                config={this.tabsConfig}
-                style={{flex: 1}}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={{
-                  backgroundColor: 'transparent',
-                  marginBottom: 10,
-                }}
-              />
+            <Tabs
+              config={this.tabsConfig}
+              style={{flex: 1}}
+              stylesItem={defaultTabsStyles.roundedTabs}
+              stylesTabsContainer={{
+                backgroundColor: 'transparent',
+                marginBottom: 10,
+              }}
+            />
           )}
         </View>
         <ModalRecordVideo onVideoSave={fulfillPepupRequest} />

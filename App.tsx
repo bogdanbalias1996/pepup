@@ -28,6 +28,7 @@ import {SuccessfulAlert} from './src/components/SuccessfulAlert/SuccessfulAlert'
 import {ErrorModal} from './src/components/ErrorState/ErrorState';
 import {setInternetConnection} from './src/utils/connectionCheck/actions';
 import {openError, closeError} from './src/pages/ErrorModal/actions';
+import {authenticate} from './src/common/utils/session';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -49,6 +50,7 @@ const AppWithFontLoadedComponent = ({isFontLoaded}: any) => {
       <AppContainer
         ref={(navigatorRef: any) => {
           setTopLevelNavigator(navigatorRef);
+          authenticate();
         }}
       />
     </Loader>
@@ -61,7 +63,7 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 
 export default class App extends Component {
   messageListener!: () => any;
-  async componentDidMount():Promise<any> {
+  async componentDidMount(): Promise<any> {
     await NetInfo.fetch().then(state => {
       getStore().dispatch(setInternetConnection(state.isConnected));
     });
@@ -101,10 +103,10 @@ export default class App extends Component {
     this.notificationOpenedListener();
   }
   notificationListener() {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
   notificationOpenedListener() {
-    throw new Error("Method not implemented.");
+    throw new Error('Method not implemented.');
   }
 
   async createNotificationListeners() {

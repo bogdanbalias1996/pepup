@@ -1,8 +1,8 @@
-import { Dispatch } from 'redux';
-import { ApiOperation } from '../../api/api';
-import { request } from '../../api/network';
-import { IAction } from '../../coreTypes';
-import { openError } from '../ErrorModal/actions';
+import {Dispatch} from 'redux';
+import {ApiOperation} from '../../api/api';
+import {request} from '../../api/network';
+import {IAction} from '../../coreTypes';
+import {openError} from '../ErrorModal/actions';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -37,6 +37,7 @@ export const getProfile = (handle: string) => {
       },
     })
       .then(res => {
+        console.log('RES', res);
         dispatch(receiveUserProfile(res));
       })
       .catch(err => {
@@ -47,7 +48,7 @@ export const getProfile = (handle: string) => {
 
 export const fulfillPepupRequest = (video: any) => {
   return (dispatch: Dispatch) => {
-    const { uri, codec = 'mp4' } = video;
+    const {uri, codec = 'mp4'} = video;
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
@@ -55,22 +56,22 @@ export const fulfillPepupRequest = (video: any) => {
         video: {
           name: 'videoForPepupRequest',
           type: `video/${codec}`,
-          uri
-        }
+          uri,
+        },
       },
       headers: {
-        'Content-Type': 'multipart/form-data'
-      }
+        'Content-Type': 'multipart/form-data',
+      },
     })
       .then(res => {
-        console.log(`SUCCESS VIDEO`)
+        console.log(`SUCCESS VIDEO`);
       })
       .catch(err => {
-        console.log(`ERROR VIDEO: `, err)
+        console.log(`ERROR VIDEO: `, err);
         console.error(JSON.stringify(err, null, 2));
       });
-  }
-}
+  };
+};
 
 export const RECEIVE_USER_PEPUPS = 'RECEIVE_USER_PEPUPS';
 export const receiveUserPepups = (data: Array<any>): IAction<Array<any>> => {
@@ -107,19 +108,27 @@ export const getUserPepups = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveUserPepups(res));
-        if(!res.length) {
-          dispatch(openError({
-            type: 'noResults',
-            onPress: () => { dispatch(getAllPepups() as any) }
-          }))
+        if (!res.length) {
+          dispatch(
+            openError({
+              type: 'noResults',
+              onPress: () => {
+                dispatch(getAllPepups() as any);
+              },
+            }),
+          );
         }
       })
       .catch(err => {
         dispatch(failureUserPepups());
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(getUserPepups(userId) as any) }
-        }))
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getUserPepups(userId) as any);
+            },
+          }),
+        );
       });
   };
 };
@@ -159,19 +168,27 @@ export const getCelebPepups = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebPepups(res));
-        if(!res.length) {
-          dispatch(openError({
-            type: 'noResults',
-            onPress: () => { dispatch(getAllPepups() as any) }
-          }))
+        if (!res.length) {
+          dispatch(
+            openError({
+              type: 'noResults',
+              onPress: () => {
+                dispatch(getAllPepups() as any);
+              },
+            }),
+          );
         }
       })
       .catch(err => {
         dispatch(failureCelebPepups());
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(getCelebPepups(userId) as any) }
-        }))
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getCelebPepups(userId) as any);
+            },
+          }),
+        );
       });
   };
 };
@@ -204,23 +221,31 @@ export const getAllPepups = () => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllPepups());
     request({
-      operation: ApiOperation.GetAllPepups
+      operation: ApiOperation.GetAllPepups,
     })
       .then(res => {
         dispatch(receiveAllPepups(res));
-        if(!res.length) {
-          dispatch(openError({
-            type: 'noResults',
-            onPress: () => { dispatch(getAllPepups() as any) }
-          }))
+        if (!res.length) {
+          dispatch(
+            openError({
+              type: 'noResults',
+              onPress: () => {
+                dispatch(getAllPepups() as any);
+              },
+            }),
+          );
         }
       })
       .catch(err => {
         dispatch(failureAllPepups());
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(getAllPepups() as any) }
-        }))
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getAllPepups() as any);
+            },
+          }),
+        );
       });
   };
 };

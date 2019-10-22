@@ -1,8 +1,8 @@
-import { getStore } from '../../configureStore';
-import { AsyncStorage } from 'react-native';
-import { removeSession } from '../../pages/Login/actions';
-import { navigate } from '../../navigationService';
-import { setUserId } from '../../pages/Login/actions';
+import {getStore} from '../../configureStore';
+import AsyncStorage from '@react-native-community/async-storage';
+import {removeSession} from '../../pages/Login/actions';
+import {navigate} from '../../navigationService';
+import {setUserId, setHandleName} from '../../pages/Login/actions';
 
 export const ACCESS_TOKEN_NAME = 'access_token';
 const jwtDecode = require('jwt-decode');
@@ -40,10 +40,12 @@ const isTokenExpired = (expiresAt: number): boolean => {
 export const getToken = async () => {
   let accessToken: string | null = '';
   let userId: string | null = '';
+  let handle: string | null = '';
 
   try {
     accessToken = getStore().getState().LoginState.accessToken;
     userId = getStore().getState().LoginState.userId;
+    handle = getStore().getState().LoginState.handle;
 
     if (!accessToken) {
       const token = await getLocalStorage(ACCESS_TOKEN_NAME);
@@ -51,11 +53,17 @@ export const getToken = async () => {
     }
     if (!userId) {
       let decoded = jwtDecode(accessToken);
+
       getStore().dispatch(setUserId(decoded.id));
+    }
+    if (!handle) {
+      const handleStorage = await getLocalStorage('handle_name');
+
+      getStore().dispatch(setHandleName(handleStorage));
     }
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(
-      ACCESS_TOKEN_NAME
+      ACCESS_TOKEN_NAME,
     );
 
     accessToken = accessTokenFromLocaleStorage
@@ -70,9 +78,9 @@ export const authenticate = async () => {
 
   if (!token) {
     getStore().dispatch(removeSession());
-    navigate({ routeName: 'Auth' });
+    navigate({routeName: 'Auth'});
     return;
   } else {
-    navigate({ routeName: 'Main' });
+    navigate({routeName: 'Main'});
   }
 };

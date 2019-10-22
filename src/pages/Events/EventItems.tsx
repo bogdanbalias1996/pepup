@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
+import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 import format from 'date-fns/format';
@@ -25,7 +25,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.EventState.isFetching,
-  events: state.EventState.events
+  events: state.EventState.events,
 });
 
 export class Component extends React.PureComponent<EventItemsProps> {
@@ -48,7 +48,8 @@ export class Component extends React.PureComponent<EventItemsProps> {
             <Text style={styles.text}>
               {`${item.soldSeats} going • ${item.remainingSeats} spots left`}
             </Text>
-            <Text style={styles.text}>{format(item.startDate, 'H:mm')}</Text>
+            {/* <Text style={styles.text}>{format(item.startDate, 'H:mm')}</Text> */}
+            <Text style={styles.text}>{item.startDt}</Text>
           </View>
           <View style={styles.wrapTitle}>
             <Image
