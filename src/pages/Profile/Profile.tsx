@@ -110,7 +110,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
   render() {
     const {profileData, openVideoRecordModal, fulfillPepupRequest} = this.props;
-    console.log(profileData);
+
     return (
       <PepupBackground>
         <Image

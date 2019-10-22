@@ -54,15 +54,12 @@ export class Component extends React.PureComponent<ContestItemsProps> {
         <TouchableOpacity onPress={() => getModal()} style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.text}>{`${item.entries} entries`}</Text>
-            <Text style={styles.text}>{`Ends: ${format(
-              item.endDate,
-              'd MMM y',
-            )}`}</Text>
+            <Text style={styles.text}>{item.endDt}</Text>
           </View>
           <View style={styles.wrapTitle}>
             <Image
               style={styles.imageLogo}
-              source={{uri: item.creatorInfo.logo}}
+              source={{uri: item.mediaBasePath + item.organizerLogo}}
               resizeMode="cover"
             />
             <Text style={styles.title}>{item.title}</Text>
