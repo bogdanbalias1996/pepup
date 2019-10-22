@@ -18,8 +18,8 @@
 		316C39A54A5232597EB7135F /* libPods-pepup-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 2552C95A48780272F2FE035C /* libPods-pepup-tvOS.a */; };
 		78CC9405AFB2E4E66EBF2FB2 /* libPods-pepupTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 324372883365022573807619 /* libPods-pepupTests.a */; };
 		8455E3188262DF19D26D31C8 /* libPods-pepup-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FA4811676D35DD7726A04B15 /* libPods-pepup-tvOSTests.a */; };
+		8869B112235749D10051C2A4 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8869B111235749D10051C2A4 /* GoogleService-Info.plist */; };
 		E03F36572343810000ABE51F /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E03F36562343810000ABE51F /* UserNotifications.framework */; };
-		E086729423462B5D0000CA11 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E086729323462B5D0000CA11 /* GoogleService-Info.plist */; };
 		FDE21E3A96438648E639D781 /* libPods-pepup.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CC02293D9044DDF19BF476B /* libPods-pepup.a */; };
 /* End PBXBuildFile section */
 
@@ -62,11 +62,11 @@
 		3EB206FFFA53C1FFD35E8DB9 /* Pods-pepupTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepupTests.release.xcconfig"; path = "Target Support Files/Pods-pepupTests/Pods-pepupTests.release.xcconfig"; sourceTree = "<group>"; };
 		41AC8B71B049F6FF8DB9C107 /* Pods-pepup-tvOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepup-tvOS.release.xcconfig"; path = "Target Support Files/Pods-pepup-tvOS/Pods-pepup-tvOS.release.xcconfig"; sourceTree = "<group>"; };
 		4D748C0952588027EC379FFF /* Pods-pepupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepupTests.debug.xcconfig"; path = "Target Support Files/Pods-pepupTests/Pods-pepupTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8869B111235749D10051C2A4 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "pepup/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		930BA12D951EACAA8AF85ACB /* Pods-pepup-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepup-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-pepup-tvOSTests/Pods-pepup-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A841F3606840366ADED91542 /* Pods-pepup.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepup.debug.xcconfig"; path = "Target Support Files/Pods-pepup/Pods-pepup.debug.xcconfig"; sourceTree = "<group>"; };
 		E03F364F23437D6100ABE51F /* pepup.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = pepup.entitlements; path = pepup/pepup.entitlements; sourceTree = "<group>"; };
 		E03F36562343810000ABE51F /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
-		E086729323462B5D0000CA11 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F5E66B7EBF7DE6F1DE94A824 /* Pods-pepup-tvOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-pepup-tvOS.debug.xcconfig"; path = "Target Support Files/Pods-pepup-tvOS/Pods-pepup-tvOS.debug.xcconfig"; sourceTree = "<group>"; };
@@ -130,7 +130,7 @@
 		13B07FAE1A68108700A75B9A /* pepup */ = {
 			isa = PBXGroup;
 			children = (
-				E086729323462B5D0000CA11 /* GoogleService-Info.plist */,
+				8869B111235749D10051C2A4 /* GoogleService-Info.plist */,
 				E03F364F23437D6100ABE51F /* pepup.entitlements */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -352,7 +352,7 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
-				E086729423462B5D0000CA11 /* GoogleService-Info.plist in Resources */,
+				8869B112235749D10051C2A4 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
