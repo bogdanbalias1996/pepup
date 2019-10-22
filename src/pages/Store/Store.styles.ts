@@ -7,7 +7,6 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 16,
-    paddingHorizontal: 14,
     flex: 1,
     marginTop: 10
   },

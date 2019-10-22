@@ -72,7 +72,10 @@ export const getAllActiveCategories = () => {
       })
       .catch(err => {
         dispatch(failureAllActiveCategories());
-
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getAllActiveCategories() as any) }
+        }))
       });
   };
 };
@@ -452,5 +455,54 @@ export const closeNotifyModal = (): IAction<undefined> => {
   return {
     type: CLOSE_NOTIFY_MODAL,
     data: undefined
+  };
+};
+
+export const RECEIVE_FEATURED_CELEBS = 'RECEIVE_FEATURED_CELEBS';
+export const receiveFeaturedCelebs = (data: Array<Celeb>): IAction<Array<Celeb>> => {
+  return {
+    type: RECEIVE_FEATURED_CELEBS,
+    data
+  };
+};
+
+export const REQUEST_FEATURED_CELEBS = 'REQUEST_FEATURED_CELEBS';
+export const requestFeaturedCelebs = (): IAction<undefined> => {
+  return {
+    type: REQUEST_FEATURED_CELEBS,
+    data: undefined
+  };
+};
+
+export const FAILURE_FEATURED_CELEBS = 'FAILURE_FEATURED_CELEBS';
+export const failureFeaturedCelebs = (): IAction<any> => {
+  return {
+    type: FAILURE_FEATURED_CELEBS,
+    data: undefined
+  };
+};
+
+export const getFeaturedCelebs = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestFeaturedCelebs());
+    request({
+      operation: ApiOperation.GetFeaturedCelebs
+    })
+      .then(res => {
+        dispatch(receiveFeaturedCelebs(res));
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getFeaturedCelebs() as any) }
+          }));
+        }
+      })
+      .catch(err => {
+        dispatch(failureFeaturedCelebs());
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getFeaturedCelebs() as any) }
+        }))
+      });
   };
 };

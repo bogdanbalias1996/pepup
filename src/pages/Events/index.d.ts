@@ -14,13 +14,17 @@ export type Event = {
   featured: boolean,
   id: string,
   markedForDelete: boolean,
+  mediaBasePath: string,
   organizerLogo: string,
   pricePerSeat: number,
   remainingSeats: number,
   soldSeats: number,
-  startDate: number,
+  startDt: number,
   title: string,
   totalSeats: number,
+  dataInfo: any,
+  creatorInfo: any,
+  createdOnDt: string
 }
 
 export type EventsScreenStateProps = {

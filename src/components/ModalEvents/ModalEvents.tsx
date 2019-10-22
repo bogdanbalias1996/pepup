@@ -56,11 +56,12 @@ export class Component extends React.PureComponent<ModalEventsProps> {
     heightDescription: 0
   };
 
-  renderItem = ({ item }) => {
+  renderItem = ({ item }: any) => {
+    const {eventData} = this.props;
     return (
       <Image
         style={styles.imageCarousel}
-        source={item.avatar}
+        source={{uri: eventData.mediaBasePath + item.link}}
         resizeMode="cover"
       />
     );
@@ -70,8 +71,6 @@ export class Component extends React.PureComponent<ModalEventsProps> {
     const { closeEventModal, isModalShown, eventData } = this.props;
 
     if (!eventData) return null;
-
-    const parsedEventData = eventData.data ? JSON.parse(eventData.data) : {};
 
     return (
       <Modal
@@ -105,19 +104,19 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                 <View style={styles.wrapTitle}>
                   <Image
                     style={styles.imageLogo}
-                    source={media[0].avatar}
+                    source={{uri: eventData.mediaBasePath + eventData.organizerLogo}}
                     resizeMode="contain"
                   />
                   <Text style={styles.title}>{eventData.title}</Text>
                 </View>
                 <Text style={[styles.text, styles.infoText]}>
-                  {parsedEventData.details}
+                  {eventData.dataInfo.details}
                 </Text>
                 <View style={styles.infoBlock}>
                   <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Time</Text>
+                    <Text style={styles.infoLabel}>Date</Text>
                     <Text style={styles.infoValue}>
-                      {format(eventData.startDate, 'H:mm')}
+                      {eventData.startDt}
                     </Text>
                   </View>
                   <View style={styles.infoItem}>
@@ -148,7 +147,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                 <FlatList
                   horizontal={true}
                   showsHorizontalScrollIndicator={false}
-                  data={media}
+                  data={eventData.dataInfo.images}
                   renderItem={this.renderItem}
                   keyExtractor={item => item.id}
                   style={styles.carousel}

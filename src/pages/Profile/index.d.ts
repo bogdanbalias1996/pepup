@@ -38,6 +38,8 @@ export type ProfileScreenDispatchProps = {
   openVideoRecordModal: () => void;
   fulfillPepupRequest: (video: any) => void;
   getUserPepups: (id: string) => Promise<any>;
+  openPepupModal: () => void;
+  getCeleb: (id: string) => Promise<any>;
 };
 
 export type NotificationItemsProps = {

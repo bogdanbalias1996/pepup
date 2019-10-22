@@ -61,7 +61,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
           <Text style={styles.title}>Sign In</Text>
           <Formik
             initialValues={{
-              email: 'prashanth238@gmail.com',
+              email: 'sindhu@pupuyo.com',
               password: 'testing'
             }}
             validationSchema={LoginSchema}

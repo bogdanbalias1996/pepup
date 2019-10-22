@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { connect } from "react-redux";
 import Modal from "react-native-modalbox";
+import { Dispatch } from "redux";
 import ModalSelector from "react-native-modal-selector";
 
 import { closeStoreModal } from "../../pages/Store/actions";
@@ -17,40 +18,17 @@ import { ButtonStyled } from "../ButtonStyled/ButtonStyled";
 import { ModalStoreProps } from ".";
 import styles from "./ModalStore.styles";
 import { colorBlack, colorLightGray, boldFont, defaultFont } from "../../variables";
+import { IGlobalState } from "../../coreTypes";
 
-const mapStateToProps = state => ({
-  isModalShown: state.StoreState.isModalShown
+const mapStateToProps = (state:IGlobalState) => ({
+  isModalShown: state.StoreState.isModalShown,
+  prodData: state.StoreState.prodData,
+  isFetching: state.StoreState.isFetching,
 });
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch:Dispatch) => ({
   closeStoreModal: () => dispatch(closeStoreModal())
 });
 
-const storeData = {
-  title: "Sindhu Signed Olympics 2016 pic",
-  description:
-    "Sindhu received silver medal at Olympic 2016 in Rio. Personally autographed pic in color.  Free shipping with eligible orders.",
-  salePrize: "1550",
-  prize: "5,000",
-  sale: "15",
-  media: [
-    {
-      id: "01",
-      avatar: require("../../../assets/mock_avatar.jpg")
-    },
-    {
-      id: "02",
-      avatar: require("../../../assets/mock_avatar.jpg")
-    },
-    {
-      id: "03",
-      avatar: require("../../../assets/mock_avatar.jpg")
-    },
-    {
-      id: "04",
-      avatar: require("../../../assets/mock_avatar.jpg")
-    }
-  ]
-};
 
 const sizeOptions = [
   {
@@ -99,18 +77,19 @@ export class Component extends React.PureComponent<ModalStoreProps> {
     },
     quantity: ""
   };
-  renderItem = ({ item }) => {
+  renderItem = ({ item }:any) => {
+    const {prodData} = this.props;
     return (
       <Image
         style={styles.imageCarousel}
-        source={item.avatar}
+        source={{uri: prodData.mediaBasePath + item.link}}
         resizeMode="cover"
       />
     );
   };
 
   render() {
-    const { closeStoreModal, isModalShown } = this.props;
+    const { closeStoreModal, isModalShown, prodData } = this.props;
     const { value } = this.state;
     return (
       <Modal
@@ -130,7 +109,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
           }
         ]}
       >
-        {Object.keys(storeData).length !== 0 ? (
+        {Object.keys(prodData).length !== 0 ? (
         <View style={styles.wrapModalContent}>
           <View style={styles.swiperLine} />
           <ScrollView style={styles.scrollView}>
@@ -141,13 +120,13 @@ export class Component extends React.PureComponent<ModalStoreProps> {
               }}
               style={styles.insidePadding}
             >
-              <Text style={styles.title}>{storeData.title}</Text>
-              {storeData.media ? (
+              <Text style={styles.title}>{prodData.name}</Text>
+              {prodData.dataInfo.images ? (
                 <View style={styles.imagesWrap}>
                   <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
-                    data={storeData.media}
+                    data={prodData.dataInfo.images}
                     renderItem={this.renderItem}
                     keyExtractor={item => item.id}
                     style={styles.carousel}
@@ -155,26 +134,26 @@ export class Component extends React.PureComponent<ModalStoreProps> {
                 </View>
               ) : null}
               <Text style={[styles.text, styles.infoText]}>
-                {storeData.description}
+                {prodData.description}
               </Text>
               <View style={styles.infoBlock}>
                 <View style={styles.infoItem}>
                   <Text style={styles.infoLabel}>Discounted Price</Text>
                   <Text style={styles.infoValue}>
-                    {`${storeData.salePrize} INR`}
+                    {`${prodData.sellingPrice} ${prodData.defaultCurrency}`}
                   </Text>
                 </View>
                 <View style={styles.infoItem}>
                   <Text style={styles.infoLabel}>Regular Price</Text>
                   <Text style={styles.infoValue}>
-                    {`${storeData.prize} INR`}
+                    {`${prodData.markedPrice} ${prodData.defaultCurrency}`}
                   </Text>
                 </View>
                 <View style={styles.infoItem}>
                   <Text style={styles.infoLabel}>Discount</Text>
                   <View style={styles.wrapSale}>
                     <Text style={styles.saleText}>
-                      {`${storeData.sale}% OFF`}
+                      {`${prodData.discount}% OFF`}
                     </Text>
                   </View>
                 </View>

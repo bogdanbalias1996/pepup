@@ -20,6 +20,7 @@ export enum ApiOperation {
   GetContest,
   EditProfile,
   GetAllActiveCategories,
+  GetProductCategories,
   GetActiveCategory,
   GetCelebsByCategory,
   GetCelebById,
@@ -29,7 +30,10 @@ export enum ApiOperation {
   FulfillRequestPepup,
   GetUserPepups,
   GetCelebPepups,
-  GetAllPepups
+  GetAllPepups,
+  GetFeaturedCelebs,
+  GetProdCategoryByType,
+  GetProductById
 }
 
 export interface INetwork<C> {
@@ -106,6 +110,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetAllContests:
       case ApiOperation.GetContest:
       case ApiOperation.GetAllActiveCategories:
+      case ApiOperation.GetProductCategories:  
       case ApiOperation.GetActiveCategory:
       case ApiOperation.GetCelebsByCategory:
       case ApiOperation.GetCelebById:
@@ -113,6 +118,9 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetUserPepups:
       case ApiOperation.GetCelebPepups:
       case ApiOperation.GetAllPepups:  
+      case ApiOperation.GetFeaturedCelebs:
+      case ApiOperation.GetProdCategoryByType:  
+      case ApiOperation.GetProductById:
         return ApiMethod.GET
 
       default:
@@ -123,7 +131,7 @@ export class CitiznApi implements IApi<ApiOperation> {
   getUrl(): string {
     const host = 'http://dev.pepupyo.com/mz'
     const {
-      userId, eventId, contestId, categoryId, handle
+      userId, eventId, contestId, categoryId, handle, prodCatType, productId
     } = (this.getParams() || {}) as any
 
     switch (this.operation) {
@@ -147,6 +155,8 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/user/update-details`
       case ApiOperation.GetAllActiveCategories:
         return `${host}/pepup/celeb/categories/active`
+      case ApiOperation.GetProductCategories:
+        return `${host}/products/group/list`  
       case ApiOperation.GetCelebsByCategory:
         return `${host}/pepup/celeb/category/${categoryId}`
       case ApiOperation.GetCelebById:
@@ -165,6 +175,12 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/pepup/celeb-requests/${userId}`
       case ApiOperation.GetAllPepups:
         return `${host}/pepup/all` 
+      case ApiOperation.GetFeaturedCelebs:
+        return `${host}/pepup/celeb/featured`  
+      case ApiOperation.GetProdCategoryByType:
+        return `${host}/products/group/type/${prodCatType}`  
+      case ApiOperation.GetProductById:
+        return `${host}/products/item/${productId}`  
       default:
         return ''
     }
@@ -196,6 +212,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetAllContests:
       case ApiOperation.GetContest:
       case ApiOperation.GetAllActiveCategories:
+      case ApiOperation.GetProductCategories:  
       case ApiOperation.GetActiveCategory:
       case ApiOperation.GetCelebsByCategory:
       case ApiOperation.GetCelebById:
@@ -206,6 +223,9 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetUserPepups:
       case ApiOperation.GetCelebPepups:
       case ApiOperation.GetAllPepups:  
+      case ApiOperation.GetFeaturedCelebs:
+      case ApiOperation.GetProdCategoryByType:  
+      case ApiOperation.GetProductById:
         return true
 
       default:

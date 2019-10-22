@@ -52,7 +52,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     getAllReviews(celebData.userInfo.id);
   };
 
-  renderItem = ({item}) => {
+  renderItem = ({item}:any) => {
     return (
       <View style={styles.carouselCard}>
         <View style={styles.carouselAvatar}>

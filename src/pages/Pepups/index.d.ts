@@ -49,10 +49,11 @@ export type PepupsScreenStateProps = {
 
 export type PepupsScreenDispatchProps = {
   getAllActiveCategories: () => Promise<any>;
-  getCelebsByCategory: (categoryid: string) => Promise<any>;
+  //getCelebsByCategory: (categoryid: string) => Promise<any>;
 };
 
 export type PepupItemsProps = {
+  getFeaturedCelebs: () => Promise<any>
   setCategory: (categoryid: string) => void;
   celebs: Array<Celeb>;
   openPepupModal: () => void;

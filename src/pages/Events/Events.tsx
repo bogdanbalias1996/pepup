@@ -12,7 +12,7 @@ import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
 import { IGlobalState } from '../../coreTypes';
 
-const Header = props => (
+const Header = (props: JSX.IntrinsicAttributes & { navigation?: any; title?: any; getLeftComponent?: (() => any) | undefined; getRightComponent?: (() => any) | undefined; }) => (
   <HeaderRounded {...props} title={'Events'.toUpperCase()} />
 );
 
@@ -28,8 +28,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export class Component extends React.PureComponent<EventsScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>) => <ConnectedHeader {...props} navigation={navigation} />
   });
 
   state = {

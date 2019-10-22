@@ -9,7 +9,7 @@ export type ModalPepupProps = {
   celebData: Celeb | null;
   openReviewsModal: () => void;
   getAllReviews: (id: string) => Promise<any>;
-  getCeleb: (id: string) => Promise<any>;
+  getCeleb?: (id: string) => Promise<any>;
 };
 
 export type ModalReviewsProps = {
