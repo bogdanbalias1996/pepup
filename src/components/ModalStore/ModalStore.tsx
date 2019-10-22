@@ -90,8 +90,10 @@ export class Component extends React.PureComponent<ModalStoreProps> {
 
   render() {
     const { closeStoreModal, isModalShown, prodData } = this.props;
-    console.log(prodData)
     const { value } = this.state;
+
+    if (!prodData) return null;
+
     return (
       <Modal
         position="bottom"
