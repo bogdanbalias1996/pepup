@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
+import {connect, MapStateToProps} from 'react-redux';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Dispatch} from 'redux';
 
@@ -19,7 +19,7 @@ import {
   setCategory,
   getFeaturedCelebs,
 } from './actions';
-import {PepupItemsProps, Celeb, Category} from './';
+import {PepupItemsProps, Celeb, Category, PepupsScreenDispatchProps} from './';
 import {
   colorLightGray,
   colorBlueberry,
@@ -79,7 +79,6 @@ export class Component extends React.PureComponent<PepupItemsProps> {
       getFeaturedCelebs,
     } = this.props;
 
-    getCelebsByCategory(categoryId);
     setCategory(categoryId);
     categoryId === 'Featured'
       ? getFeaturedCelebs()

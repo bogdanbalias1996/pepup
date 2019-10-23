@@ -20,6 +20,8 @@ import styles from './ModalContests.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { RadioButtonsContest } from '../../components/RadioButtons/RadioButtonsContest';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -177,6 +179,8 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
             }}
           </Formik>
         </View>
+        <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }

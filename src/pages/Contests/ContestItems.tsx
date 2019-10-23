@@ -23,6 +23,7 @@ import {
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {Loader} from '../../components/Loader/Loader';
+import {ErrorModal} from '../../components/ErrorState/ErrorState';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openContestModal: () => dispatch(openContestModal()),

@@ -29,6 +29,7 @@ import {IGlobalState} from '../../coreTypes';
 import {ModalVideo} from '../ModalVideo/ModalVideo';
 import {ModalPepupReq} from '../ModalPepupReq/ModalPepupReq';
 import {ModalReviews} from './ModalReviews';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -223,6 +224,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         <ModalPepupReq />
         <ModalVideo />
         <ModalReviews />
+        <ErrorModal />
       </Modal>
     );
   }

@@ -2,7 +2,10 @@ import {Dispatch} from 'redux';
 import {ApiOperation} from '../../api/api';
 import {request} from '../../api/network';
 import {IAction} from '../../coreTypes';
-import {openError} from '../ErrorModal/actions';
+import {openError, closeError} from '../ErrorModal/actions';
+import { openAlert, closeAlert } from '../Alert/actions';
+import { closeVideoModal } from '../Pepups/actions';
+import { navigate } from '../../navigationService';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -40,7 +43,10 @@ export const getProfile = (handle: string) => {
         dispatch(receiveUserProfile(res));
       })
       .catch(err => {
-        console.error(JSON.stringify(err, null, 2));
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(closeError()); navigate({routeName: 'Login'}) }
+        }))
       });
   };
 };
@@ -63,10 +69,21 @@ export const fulfillPepupRequest = (video: any) => {
       },
     })
       .then(res => {
-        console.log(`SUCCESS VIDEO`);
+        dispatch(openAlert({
+          title: 'Pepup Sent',
+          text:
+            'This Pepup is now on it’s way to its requestor. It may also be featured on your page.',
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeVideoModal());
+          }
+        }));
       })
       .catch(err => {
-        console.log(`ERROR VIDEO: `, err);
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
+        }))
         console.error(JSON.stringify(err, null, 2));
       });
   };

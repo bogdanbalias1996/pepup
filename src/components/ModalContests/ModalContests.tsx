@@ -17,6 +17,8 @@ import { colorBlack } from "../../variables";
 import { IGlobalState } from "../../coreTypes";
 import { ModalContestTest } from "./ModalContestTest";
 import { ModalContestDesign } from "./ModalContestDesign";
+import { SuccessfulAlert } from "../SuccessfulAlert/SuccessfulAlert";
+import { ErrorModal } from "../ErrorState/ErrorState";
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ContestState.isModalShown,
@@ -133,6 +135,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
           </View>
         ) : null}
         {contestData.type === 'QUIZ' ? <ModalContestTest /> : <ModalContestDesign />}
+        <ErrorModal />
       </Modal>
     );
   }

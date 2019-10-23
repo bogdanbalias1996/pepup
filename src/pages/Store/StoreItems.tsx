@@ -63,9 +63,9 @@ const options = [
 
 export class Component extends React.PureComponent<StoreItemsProps> {
   componentDidMount() {
-    const {getProductsCategoryType, prodCatType, goods} = this.props;
+    const {getProductsCategoryType, prodCatType } = this.props;
 
-    !goods.length && getProductsCategoryType(prodCatType);
+    getProductsCategoryType(prodCatType);
   }
 
   renderItem = ({item}: any) => {
@@ -74,12 +74,11 @@ export class Component extends React.PureComponent<StoreItemsProps> {
       openStoreModal();
       getProduct(item.id);
     };
-
     return (
       <TouchableOpacity onPress={() => getModal()} style={styles.card}>
         <Image
           style={styles.avatar}
-          source={{uri: dataType.mediaBasePath + dataType.icon}}
+          source={{uri: dataType.mediaBasePath + item.icon}}
           resizeMode="cover"
         />
         <View style={styles.wrapInfo}>
@@ -115,7 +114,6 @@ export class Component extends React.PureComponent<StoreItemsProps> {
 
   render() {
     const {filterValue, setFilterValue, goods, isFetching} = this.props;
-    console.log("isFetchingCat", isFetching);
     return (
       <View style={{flex: 1}}>
         {/* <RadioButtons

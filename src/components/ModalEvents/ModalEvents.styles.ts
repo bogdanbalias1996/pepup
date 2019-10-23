@@ -81,6 +81,12 @@ export default StyleSheet.create({
     color: colorTextGray,
     marginBottom: 8
   },
+  infoLabelQnt: {
+    position: 'absolute',
+    bottom: 40,
+    flexWrap: 'nowrap',
+    width: 101
+  },
   infoValue: {
     fontSize: 16,
     fontFamily: defaultFont,
@@ -94,6 +100,7 @@ export default StyleSheet.create({
   modalFooter: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: 'center',
     marginTop: 15,
     marginBottom: 70,
     marginHorizontal: 24
@@ -105,7 +112,6 @@ export default StyleSheet.create({
     backgroundColor: colorLightGray,
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 16
   },
   infoText: {
     color: colorTextGray
@@ -119,5 +125,35 @@ export default StyleSheet.create({
     lineHeight: 20
   },
   imgSet: { flexDirection: "row", flex: 1 },
-  insidePadding: { paddingHorizontal: 24 }
+  insidePadding: { paddingHorizontal: 24 },
+  modalCancelStyle: {
+    backgroundColor: "white",
+    borderRadius: 12,
+    paddingVertical: 15
+  },
+  modalOverlayStyle: {
+    backgroundColor: "rgba(0,0,0,0.4)",
+    padding: 10,
+    paddingTop: 300,
+    justifyContent: "flex-end"
+  },
+  modalCancelTextStyle: {
+    color: "#1d7ee2",
+    fontFamily: semiboldFont,
+    fontSize: 20
+  },
+  modalOptionContainer: {
+    backgroundColor: "white",
+    borderRadius: 12,
+    paddingHorizontal: 0,
+  },
+  modalOptionTextStyle: {
+    color: colorBlack,
+    fontSize: 20,
+  },
+  changeItem: {
+    alignItems: 'center',
+    marginHorizontal: 10,
+    position: 'relative'
+  },
 });

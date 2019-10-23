@@ -10,6 +10,7 @@ import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
 import styles from './ModalPepupNotification.styles';
 import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -97,6 +98,7 @@ export class Component extends React.PureComponent<> {
           </View>
           ); }}
         </View>
+        <ErrorModal />
       </Modal>
     );
   }

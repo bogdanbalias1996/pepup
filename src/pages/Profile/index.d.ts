@@ -1,4 +1,5 @@
 import {NavigationScreenProp, NavigationScreenOptions} from 'react-navigation';
+import { Celeb } from '../Pepups';
 
 export type Profile = {
   email: string;
@@ -61,7 +62,9 @@ export type FanRequestsProps = {
 export type HistoryItemsProps = {
   pepups: Array<Pepup>;
   profileData: Profile;
+  celebData: Celeb;
   isFetching: boolean,
+  getCeleb: (id:string) => Promise<any>
   getAllPepups: () => Promise<any>;
 }
 

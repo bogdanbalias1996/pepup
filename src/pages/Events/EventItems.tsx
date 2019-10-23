@@ -15,6 +15,7 @@ import {
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {Loader} from '../../components/Loader/Loader';
+import { ContestItems } from '../Contests/ContestItems';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
@@ -32,14 +33,13 @@ export class Component extends React.PureComponent<EventItemsProps> {
     const {getAllEvents} = this.props;
     getAllEvents();
   }
-
+  
   renderItem = ({item}: any) => {
     const {openEventModal, getEvent, isFetching} = this.props;
     const getModal = () => {
       openEventModal();
       getEvent(item.id);
     };
-
     return (
       <Loader size="large" color={colorBlueberry} isDataLoaded={!isFetching}>
         <View style={styles.card}>

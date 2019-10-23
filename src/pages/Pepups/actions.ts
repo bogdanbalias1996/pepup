@@ -115,12 +115,12 @@ export const getCelebsByCategory = (categoryId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebsByCategory(res));
-        // if (!res.length) {
-        //   dispatch(openError({
-        //     type: 'noResults',
-        //     onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
-        //   }));
-        // }
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getCelebsByCategory(categoryId) as any) }
+          }));
+        }
       })
       .catch(err => {
         dispatch(failureCelebsByCategory());
@@ -237,7 +237,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
       }
     })
       .then((res) => {
-        dispatch(receivePepup(res));
+        dispatch(receivePepup());
         dispatch(openAlert({
           title: 'Request Submitted',
           text:
@@ -433,7 +433,12 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       })
       .catch((err) => {
         dispatch(failureReview());
-        dispatch(postReview(payload, setErrors) as any)
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(postReview(payload, setErrors) as any)
+          }
+        }));
         const { error = 'Please fill review form and rate celebrity' } = err.response.body
         setErrors({
           'review': error,
