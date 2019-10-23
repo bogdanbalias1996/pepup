@@ -3,7 +3,7 @@ import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 
-import {openEventModal, getEvent, getAllEvents} from './actions';
+import {openEventModal, getEvent, getEventsByCategory} from './actions';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
 import {EventItemsProps} from './';
 import {
@@ -19,7 +19,7 @@ import { ContestItems } from '../Contests/ContestItems';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
-  getAllEvents: () => dispatch(getAllEvents() as any),
+  getEventsByCategory: () => dispatch(getEventsByCategory() as any),
   getEvent: (val: string) => dispatch(getEvent(val) as any),
 });
 
@@ -30,8 +30,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<EventItemsProps> {
   componentDidMount() {
-    const {getAllEvents} = this.props;
-    getAllEvents();
+    const {getEventsByCategory} = this.props;
+    getEventsByCategory();
   }
   
   renderItem = ({item}: any) => {

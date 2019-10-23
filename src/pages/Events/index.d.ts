@@ -34,12 +34,12 @@ export type EventsScreenStateProps = {
 }
 
 export type EventsScreenDispatchProps = {
-  getAllEvents: () => Promise<any>;
+  getEventsByCategory: () => Promise<any>;
 };
 
 export type EventItemsProps = {
   events: Array<Event>;
-  getAllEvents: () => Promise<any>;
+  getEventsByCategory: () => Promise<any>;
   openEventModal: () => void;
   getEvent: (eventId: string) => Promise<any>;
   isFetching: boolean;

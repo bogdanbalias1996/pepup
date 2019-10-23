@@ -14,7 +14,7 @@ export enum ApiOperation {
   SignUp,
   ResetPass,
   GetProfile,
-  GetAllEvents,
+  GetEventsByCategory,
   GetEvent,
   GetAllContests,
   GetContest,
@@ -107,7 +107,7 @@ export class CitiznApi implements IApi<ApiOperation> {
         return ApiMethod.POST
 
       case ApiOperation.GetProfile:
-      case ApiOperation.GetAllEvents:
+      case ApiOperation.GetEventsByCategory:
       case ApiOperation.GetEvent:
       case ApiOperation.GetAllContests:
       case ApiOperation.GetContest:
@@ -145,8 +145,8 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/user/reset-password`
       case ApiOperation.GetProfile:
         return `${host}/user/profile/${handle}`
-      case ApiOperation.GetAllEvents:
-        return `${host}/pepup/event/all`
+      case ApiOperation.GetEventsByCategory:
+        return `${host}/pepup/event/${categoryId}`
       case ApiOperation.GetEvent:
         return `${host}/pepup/event/${eventId}`
       case ApiOperation.GetAllContests:
@@ -211,7 +211,7 @@ export class CitiznApi implements IApi<ApiOperation> {
 
       case ApiOperation.EditProfile:
       case ApiOperation.GetProfile:
-      case ApiOperation.GetAllEvents:
+      case ApiOperation.GetEventsByCategory:
       case ApiOperation.GetEvent:
       case ApiOperation.GetAllContests:
       case ApiOperation.GetContest:

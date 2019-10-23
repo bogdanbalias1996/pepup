@@ -26,6 +26,7 @@ export type Celeb = {
   userInfo: any,
   mediaBasePath: string,
   dataInfo: any,
+  isChecked?: boolean, 
   weightedRating: string
 }
 

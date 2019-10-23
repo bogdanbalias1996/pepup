@@ -11,6 +11,7 @@ import styles from './ModalPepupNotification.styles';
 import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import { ErrorModal } from '../ErrorState/ErrorState';
+import { PepupNotificationProps } from '.';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -20,7 +21,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeNotifyModal: () => dispatch(closeNotifyModal()),
 });
 
-export class Component extends React.PureComponent<> {
+export class Component extends React.PureComponent<PepupNotificationProps> {
   handleSubmit = () => {};
 
   render() {
@@ -89,7 +90,7 @@ export class Component extends React.PureComponent<> {
                 />
                 <ButtonStyled
                   style={styles.btnSubmit}
-                  onPress={() => handleSubmit()}
+                  onPress={() => this.handleSubmit()}
                   text="ACCEPT"
                   loader={isFetching}
                 />

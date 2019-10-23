@@ -30,6 +30,7 @@ import {ModalVideo} from '../ModalVideo/ModalVideo';
 import {ModalPepupReq} from '../ModalPepupReq/ModalPepupReq';
 import {ModalReviews} from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
+import { Celeb } from '../../pages/Pepups';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -160,7 +161,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 ) : null
               }
               renderItem={this.renderItem}
-              keyExtractor={item => item.id}
+              keyExtractor={(item:Celeb) => item.id}
               style={styles.carousel}
               contentContainerStyle={{
                 alignItems: 'center',

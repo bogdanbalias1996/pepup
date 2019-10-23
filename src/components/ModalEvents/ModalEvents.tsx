@@ -21,6 +21,7 @@ import {IGlobalState} from '../../coreTypes';
 import {Dispatch} from 'redux';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
+import { Event } from '../../pages/Events';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
@@ -141,7 +142,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                 showsHorizontalScrollIndicator={false}
                 data={eventData.dataInfo.images}
                 renderItem={this.renderItem}
-                keyExtractor={item => item.id}
+                keyExtractor={(item:Event) => item.id}
                 style={styles.carousel}
               />
             </View>

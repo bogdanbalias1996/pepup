@@ -48,18 +48,18 @@ export const failureAllEvents = (): IAction<undefined> => {
   };
 };
 
-export const getAllEvents = () => {
+export const getEventsByCategory = () => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllEvents());
     request({
-      operation: ApiOperation.GetAllEvents
+      operation: ApiOperation.GetEventsByCategory
     })
       .then(res => {
         dispatch(receiveAllEvents(res));
         if (!res.length) {
           dispatch(openError({
             type: 'noResults',
-            onPress: () => { dispatch(getAllEvents() as any) }
+            onPress: () => { dispatch(getEventsByCategory() as any) }
           }))
         }
       })
@@ -67,7 +67,7 @@ export const getAllEvents = () => {
         dispatch(failureAllEvents());
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(getAllEvents() as any) }
+          onPress: () => { dispatch(getEventsByCategory() as any) }
         }))
       });
   };
