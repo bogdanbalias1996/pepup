@@ -11,7 +11,7 @@ import {
 import format from 'date-fns/format';
 import {Dispatch} from 'redux';
 
-import {openContestModal, getContest, getAllContests} from './actions';
+import {openContestModal, getContest, getContestsByCategory} from './actions';
 
 import {ContestItemsProps} from './';
 import {
@@ -28,7 +28,7 @@ import {ErrorModal} from '../../components/ErrorState/ErrorState';
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openContestModal: () => dispatch(openContestModal()),
   getContest: (contestId: string) => dispatch(getContest(contestId) as any),
-  getAllContests: () => dispatch(getAllContests() as any),
+  getContestsByCategory: (id: string) => dispatch(getContestsByCategory(id) as any),
 });
 
 const mapStateToProps = (state: IGlobalState) => ({
@@ -38,9 +38,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<ContestItemsProps> {
   componentDidMount() {
-    const {getAllContests} = this.props;
+    const {getContestsByCategory, categoryId} = this.props;
 
-    getAllContests();
+    getContestsByCategory(categoryId);
   }
   renderItem = ({item}: any) => {
     const {openContestModal, getContest, isFetching} = this.props;
@@ -55,15 +55,12 @@ export class Component extends React.PureComponent<ContestItemsProps> {
         <TouchableOpacity onPress={() => getModal()} style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.text}>{`${item.entries} entries`}</Text>
-            <Text style={styles.text}>{`Ends: ${format(
-              item.endDate,
-              'd MMM y',
-            )}`}</Text>
+            <Text style={styles.text}>{`Ends: ${item.endDt}`}</Text>
           </View>
           <View style={styles.wrapTitle}>
             <Image
               style={styles.imageLogo}
-              source={{uri: item.creatorInfo.logo}}
+              source={{uri: item.mediaBasePath + item.organizerLogo}}
               resizeMode="cover"
             />
             <Text style={styles.title}>{item.title}</Text>

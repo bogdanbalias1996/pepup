@@ -44,24 +44,23 @@ export class Component extends React.PureComponent<EventsScreenProps> {
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <EventItems />,
-        
+        component: () => <EventItems categoryId='Past'/>,
       },
       {
         title: 'Today',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId='Today'/>,
       },
       {
         title: 'Featured',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId='Featured'/>,
       },
       {
         title: 'Upcoming',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId='Upcoming'/>,
       },
       {
-        title: 'Deals',
-        component: () => <EventItems />,
+        title: 'Hot',
+        component: () => <EventItems categoryId='Hot'/>,
       }
     ];
 

@@ -19,7 +19,7 @@ import { ContestItems } from '../Contests/ContestItems';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
-  getEventsByCategory: () => dispatch(getEventsByCategory() as any),
+  getEventsByCategory: (id:string) => dispatch(getEventsByCategory(id) as any),
   getEvent: (val: string) => dispatch(getEvent(val) as any),
 });
 
@@ -30,8 +30,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<EventItemsProps> {
   componentDidMount() {
-    const {getEventsByCategory} = this.props;
-    getEventsByCategory();
+    const {getEventsByCategory, categoryId} = this.props;
+
+    getEventsByCategory(categoryId);
   }
   
   renderItem = ({item}: any) => {

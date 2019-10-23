@@ -19,7 +19,7 @@ export type Event = {
   pricePerSeat: number,
   remainingSeats: number,
   soldSeats: number,
-  startDt: number,
+  startDt: string,
   title: string,
   totalSeats: number,
   dataInfo: any,
@@ -34,12 +34,13 @@ export type EventsScreenStateProps = {
 }
 
 export type EventsScreenDispatchProps = {
-  getEventsByCategory: () => Promise<any>;
+  
 };
 
 export type EventItemsProps = {
   events: Array<Event>;
-  getEventsByCategory: () => Promise<any>;
+  categoryId: string,
+  getEventsByCategory: (id: string) => Promise<any>;
   openEventModal: () => void;
   getEvent: (eventId: string) => Promise<any>;
   isFetching: boolean;

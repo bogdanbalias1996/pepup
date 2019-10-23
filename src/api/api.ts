@@ -16,7 +16,7 @@ export enum ApiOperation {
   GetProfile,
   GetEventsByCategory,
   GetEvent,
-  GetAllContests,
+  GetContestsByCategory,
   GetContest,
   EditProfile,
   GetAllActiveCategories,
@@ -109,7 +109,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProfile:
       case ApiOperation.GetEventsByCategory:
       case ApiOperation.GetEvent:
-      case ApiOperation.GetAllContests:
+      case ApiOperation.GetContestsByCategory:
       case ApiOperation.GetContest:
       case ApiOperation.GetAllActiveCategories:
       case ApiOperation.GetProductCategories:  
@@ -146,11 +146,11 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProfile:
         return `${host}/user/profile/${handle}`
       case ApiOperation.GetEventsByCategory:
-        return `${host}/pepup/event/${categoryId}`
+        return `${host}/pepup/event/all/${categoryId}`
       case ApiOperation.GetEvent:
         return `${host}/pepup/event/${eventId}`
-      case ApiOperation.GetAllContests:
-        return `${host}/pepup/contest/all`
+      case ApiOperation.GetContestsByCategory:
+        return `${host}/pepup/contest/all/${categoryId}`
       case ApiOperation.GetContest:
         return `${host}/pepup/contest/${contestId}`
       case ApiOperation.EditProfile:
@@ -213,7 +213,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProfile:
       case ApiOperation.GetEventsByCategory:
       case ApiOperation.GetEvent:
-      case ApiOperation.GetAllContests:
+      case ApiOperation.GetContestsByCategory:
       case ApiOperation.GetContest:
       case ApiOperation.GetAllActiveCategories:
       case ApiOperation.GetProductCategories:  

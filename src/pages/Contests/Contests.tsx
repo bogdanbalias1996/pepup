@@ -62,15 +62,15 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <ContestItems />,
+        component: () => <ContestItems categoryId='Past'/>,
       },
       {
         title: 'Active',
-        component: () => <ContestItems />,
+        component: () => <ContestItems categoryId='Active'/>,
       },
       {
         title: 'Featured',
-        component: () => <ContestItems />,
+        component: () => <ContestItems categoryId='Featured'/>,
       },
     ];
 
