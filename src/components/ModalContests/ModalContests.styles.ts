@@ -8,7 +8,6 @@ import {
   boldFont,
   semiboldFont,
   defaultFont,
-  colorLightGradEnd,
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -168,14 +167,14 @@ export default StyleSheet.create({
   },
   btnDelete: {
     position: 'absolute',
-    width: 16,
-    height: 16,
-    borderRadius: 8,
-    backgroundColor: colorLightGradEnd,
+    width: 20,
+    height: 20,
+    borderRadius: 4,
+    backgroundColor: 'rgba(255, 0, 0, 0.6)',
     alignItems: 'center',
     justifyContent: 'center',
-    top: -8,
-    right: -8,
+    top: 0,
+    right: 0,
     zIndex: 20,
   },
 });
