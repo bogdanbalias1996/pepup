@@ -10,14 +10,16 @@ export type Contest = {
   title: string,
   type: string,
   organizerLogo: string,
+  creator: string
   entries: number,
-  data: string,
   contestImage: string,
-  creator: string,
-  createdOn: number,
-  endDate: number,
+  creatorInfo: any,
+  createdOnDt: number,
+  endDt: number,
   prize: string,
   currency: string,
+  dataInfo: any,
+  mediaBasePath: string
   markedForDelete: boolean
 }
 

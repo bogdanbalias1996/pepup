@@ -52,10 +52,6 @@ export class Component extends React.PureComponent<ModalContestsProps> {
 
     if (!contestData) return null;
 
-    const parsedContestData = contestData.data
-      ? JSON.parse(contestData.data)
-      : {};
-
     return (
       <Modal
         position="bottom"
@@ -87,17 +83,17 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               >
                 <Image
                   style={styles.image}
-                  source={media[0].avatar}
-                  resizeMode="cover"
+                  source={{uri: contestData.mediaBasePath + contestData.contestImage}}
+                  resizeMode="contain"
                 />
                 <Text style={styles.title}>{contestData.title}</Text>
                 <Text style={styles.descriptionTitle}>Contest details:</Text>
                 <Text style={[styles.text, styles.infoText]}>
-                  {parsedContestData.details}
+                  {contestData.dataInfo.details}
                 </Text>
                 <Text style={styles.descriptionTitle}>Contest rules:</Text>
                 <Text style={[styles.text, styles.infoText]}>
-                  {parsedContestData.rules}
+                  {contestData.dataInfo.rules}
                 </Text>
                 <View style={styles.infoBlock}>
                   <View style={styles.infoItem}>
@@ -107,7 +103,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                   <View style={styles.infoItem}>
                     <Text style={styles.infoLabel}>End Date</Text>
                     <Text style={styles.infoValue}>
-                      {format(contestData.endDate, "d MMM y")}
+                      {contestData.endDt}
                     </Text>
                   </View>
                   <View style={styles.infoItem}>
