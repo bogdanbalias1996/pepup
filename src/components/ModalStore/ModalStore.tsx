@@ -136,7 +136,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
                       showsHorizontalScrollIndicator={false}
                       data={prodData.dataInfo.images}
                       renderItem={this.renderItem}
-                      keyExtractor={item => item.id}
+                      keyExtractor={(item:{id: string}) => item.id}
                       style={styles.carousel}
                     />
                   </View>

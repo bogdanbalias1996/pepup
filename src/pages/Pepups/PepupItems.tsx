@@ -96,7 +96,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
             columnWrapperStyle={styles.row}
             data={celebs}
             renderItem={this.renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={(item:Celeb) => item.mappedUserId}
           />
         </Loader>
       </View>
@@ -112,7 +112,6 @@ export const PepupItems = connect(
 const styles = StyleSheet.create({
   row: {
     flex: 1,
-    justifyContent: "space-around"
   },
   card: {
     flex: 0.5,

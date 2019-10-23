@@ -20,7 +20,18 @@ export type Profile = {
 };
 
 export type Pepup = {
-  
+  id: string,
+  fulfilled: boolean,
+  featured: boolean,
+  request: string,
+  category: string,
+  requestFor: string,
+  requestDenied: boolean,
+  sharePublicly: boolean,
+  requestedOf: string,
+  requestedBy: string,
+  requestedOn: number,
+  markedForDelete: boolean
 }
 
 export type ProfileScreenStateProps = {

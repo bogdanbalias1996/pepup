@@ -13,7 +13,7 @@ import {Dispatch} from 'redux';
 
 import {openContestModal, getContest, getContestsByCategory} from './actions';
 
-import {ContestItemsProps} from './';
+import {ContestItemsProps, Contest} from './';
 import {
   colorTextGray,
   colorBlack,
@@ -79,7 +79,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
           showsVerticalScrollIndicator={false}
           data={contests}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item:Contest) => item.id}
         />
       </Loader>
     );

@@ -5,7 +5,7 @@ import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
 
 import {openEventModal, getEvent, getEventsByCategory} from './actions';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {EventItemsProps} from './';
+import {EventItemsProps, Event} from './';
 import {
   colorTextGray,
   colorBlack,
@@ -15,7 +15,6 @@ import {
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {Loader} from '../../components/Loader/Loader';
-import { ContestItems } from '../Contests/ContestItems';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
@@ -84,7 +83,7 @@ export class Component extends React.PureComponent<EventItemsProps> {
           showsVerticalScrollIndicator={false}
           data={events}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item:Event) => item.id}
         />
       </Loader>
     );

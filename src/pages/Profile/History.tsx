@@ -11,7 +11,7 @@ import {
 import {Dispatch} from 'redux';
 import {format} from 'date-fns';
 
-import {HistoryItemsProps} from './';
+import {HistoryItemsProps, Pepup} from './';
 import {
   colorBlack,
   italicFont,
@@ -91,6 +91,8 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const {isFetching, pepups, celebData} = this.props;
     const [rating, totalRating] = celebData.weightedRating.split('/');
 
+    if(!celebData) return null;
+
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <View style={styles.statistics}>
@@ -118,7 +120,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
           showsVerticalScrollIndicator={true}
           data={pepups}
           renderItem={this.renderItem}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={(item: Pepup) => item.id}
         />
       </Loader>
     );

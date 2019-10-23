@@ -16,7 +16,7 @@ import {
   getProductsCategoryType,
   getProduct,
 } from './actions';
-import {StoreItemsProps} from './';
+import {StoreItemsProps, Product} from './';
 import {
   colorBlack,
   colorTextRed,
@@ -131,7 +131,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
             columnWrapperStyle={styles.row}
             data={goods}
             renderItem={this.renderItem}
-            keyExtractor={item => item.id}
+            keyExtractor={(item:Product) => item.id}
           />
         </Loader>
       </View>
@@ -147,7 +147,6 @@ export const StoreItems = connect(
 const styles = StyleSheet.create({
   row: {
     flex: 1,
-    justifyContent: 'space-around',
   },
   card: {
     flex: 0.5,
