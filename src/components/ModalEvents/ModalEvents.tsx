@@ -65,9 +65,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
   render() {
     const {closeEventModal, isModalShown, eventData, quantity, setQuantity, isFetching, purchaseEventTicket} = this.props;
 
-    if (!eventData) return null;
-
-    return (
+    return (eventData &&
       <Modal
         position="bottom"
         isOpen={isModalShown}

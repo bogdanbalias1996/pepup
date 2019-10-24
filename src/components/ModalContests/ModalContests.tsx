@@ -52,9 +52,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
       openContestTestModal
     } = this.props;
 
-    if (!contestData) return null;
-
-    return (
+    return (contestData && 
       <Modal
         position="bottom"
         isOpen={isModalShown}

@@ -27,7 +27,7 @@ import {IGlobalState} from '../../coreTypes';
 import {getAllPepups} from './actions';
 import {Loader} from '../../components/Loader/Loader';
 import {getCeleb} from '../Pepups/actions';
-import { kFormatter } from '../../helpers';
+import {kFormatter} from '../../helpers';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -84,39 +84,41 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
 
   render() {
     const {isFetching, pepups, celebData} = this.props;
-    
-    if(!celebData) return null;
-    const [rating, totalRating] = celebData.weightedRating.split('/');
+    const [rating] = celebData ? celebData.weightedRating.split('/') : ['0'];
 
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
-        <View style={styles.statistics}>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{pepups.length}</Text>
-            <Text style={styles.statText}>PEPUPS</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>
-              {kFormatter(celebData.billRate * pepups.length)}
-            </Text>
-            <Text style={styles.statText}>EARNINGS</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{rating}</Text>
-            <Text style={styles.statText}>RATING</Text>
-          </View>
-          <View style={styles.statItem}>
-            <Text style={styles.statNumber}>{celebData.reviews}</Text>
-            <Text style={styles.statText}>REVIEWS</Text>
-          </View>
-        </View>
-        <FlatList
-          style={{flex: 1}}
-          showsVerticalScrollIndicator={true}
-          data={pepups}
-          renderItem={this.renderItem}
-          keyExtractor={(item: Pepup) => item.id}
-        />
+        {celebData && (
+          <>
+            <View style={styles.statistics}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{pepups.length}</Text>
+                <Text style={styles.statText}>PEPUPS</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>
+                  {kFormatter(celebData.billRate * pepups.length)}
+                </Text>
+                <Text style={styles.statText}>EARNINGS</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{rating}</Text>
+                <Text style={styles.statText}>RATING</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{celebData.reviews}</Text>
+                <Text style={styles.statText}>REVIEWS</Text>
+              </View>
+            </View>
+            <FlatList
+              style={{flex: 1}}
+              showsVerticalScrollIndicator={true}
+              data={pepups}
+              renderItem={this.renderItem}
+              keyExtractor={(item: Pepup) => item.id}
+            />
+          </>
+        )}
       </Loader>
     );
   }

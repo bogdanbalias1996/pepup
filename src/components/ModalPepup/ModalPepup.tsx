@@ -87,11 +87,9 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openVideoModal,
     } = this.props;
 
-    if (!celebData) return null;
+    const [rating, totalRating] = celebData? celebData.weightedRating.split('/') : ['0', '0'];
 
-    const [rating, totalRating] = celebData.weightedRating.split('/');
-
-    return (
+    return (celebData &&
       <Modal
         isOpen={isModalShown}
         swipeToClose={true}
