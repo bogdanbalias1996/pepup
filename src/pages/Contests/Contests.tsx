@@ -17,8 +17,8 @@ const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation?: any;
     title?: any;
-    getLeftComponent?: (() => any) | undefined;
-    getRightComponent?: (() => any) | undefined;
+    getLeftComponent?: (() => any);
+    getRightComponent?: (() => any);
   },
 ) => <HeaderRounded {...props} title={'Contests'.toUpperCase()} />;
 
@@ -38,8 +38,8 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
           JSX.IntrinsicAttributes & {
             navigation?: any;
             title?: any;
-            getLeftComponent?: (() => any) | undefined;
-            getRightComponent?: (() => any) | undefined;
+            getLeftComponent?: (() => any);
+            getRightComponent?: (() => any);
           },
           | 'title'
           | 'key'

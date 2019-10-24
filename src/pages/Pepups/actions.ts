@@ -219,8 +219,6 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
     const { selectedCategory } = store;
     const userId = store.celebData.mappedUserId;
 
-    // Temporary solution for tracking error states
-    const headers = name ? null : { 'Prefer': 'status=400' }
     dispatch(requestPepup());
     request({
       operation: ApiOperation.RequestPepup,
@@ -232,7 +230,6 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
         share: shareCheckbox
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
@@ -404,8 +401,6 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
     const store = getState().PepupState;
     const userId = store.celebData.userInfo.id;
 
-    // Temporary solution for tracking error states
-    const headers = review ? null : { 'Prefer': 'status=400' }
     dispatch(requestReview());
     request({
       operation: ApiOperation.PostReview,
@@ -415,7 +410,6 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
         celebId: userId
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })

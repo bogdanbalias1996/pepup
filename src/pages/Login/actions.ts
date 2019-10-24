@@ -64,8 +64,6 @@ export const loginUser = (
   return (dispatch: Dispatch) => {
     const {email, password} = payload;
 
-    // Temporary solution for tracking error states
-    const headers = email ? null : {Prefer: 'status=400'};
     dispatch(requestLogInUser());
     request({
       operation: ApiOperation.LogIn,
@@ -74,7 +72,6 @@ export const loginUser = (
         password,
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     })

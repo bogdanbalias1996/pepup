@@ -8,8 +8,8 @@ import {deviceInfoCheck} from '../../helpers';
 export const HeaderRounded = (props: {
   navigation?: any;
   title: any;
-  getLeftComponent?: (() => any) | undefined;
-  getRightComponent?: (() => any) | undefined;
+  getLeftComponent?: (() => any);
+  getRightComponent?: (() => any);
 }) => {
   const {
     navigation,

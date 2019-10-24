@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   Image,
+  ListRenderItem,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
@@ -22,7 +23,7 @@ import {
 } from '../../pages/Pepups/actions';
 import {Icon} from '../../components/Icon/Icon';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {ModalPepupProps} from './';
+import {ModalPepupProps, RenderItemMedia} from './';
 import styles from './ModalPepup.styles';
 import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
@@ -54,7 +55,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     getAllReviews(celebData.userInfo.id);
   };
 
-  renderItem = ({item}:any) => {
+  renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
     return (
       <View style={styles.carouselCard}>
         <View style={styles.carouselAvatar}>

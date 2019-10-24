@@ -27,6 +27,7 @@ import {IGlobalState} from '../../coreTypes';
 import {getAllPepups} from './actions';
 import {Loader} from '../../components/Loader/Loader';
 import {getCeleb} from '../Pepups/actions';
+import { kFormatter } from '../../helpers';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -38,12 +39,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getAllPepups: () => dispatch(getAllPepups() as any),
   getCeleb: (id: string) => dispatch(getCeleb(id) as any),
 });
-
-const kFormatter = (num: number) => {
-  return Math.abs(num) > 999
-    ? Math.sign(num) * (Math.abs(num) / 1000).toFixed(1) + 'K'
-    : Math.sign(num) * Math.abs(num);
-};
 
 export class Component extends React.PureComponent<HistoryItemsProps> {
   componentDidMount() {
@@ -89,9 +84,9 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
 
   render() {
     const {isFetching, pepups, celebData} = this.props;
-    const [rating, totalRating] = celebData.weightedRating.split('/');
-
+    
     if(!celebData) return null;
+    const [rating, totalRating] = celebData.weightedRating.split('/');
 
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>

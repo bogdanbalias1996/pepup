@@ -13,13 +13,13 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { closeContestTestModal } from '../../pages/Contests/actions';
-import { Icon } from '../../components/Icon/Icon';
-import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { ModalContestTestProps } from './';
+import { Icon } from '../Icon/Icon';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { ModalContestQuizProps } from '.';
 import styles from './ModalContests.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
-import { RadioButtonsContest } from '../../components/RadioButtons/RadioButtonsContest';
+import { RadioButtonsContest } from '../RadioButtons/RadioButtonsContest';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 
@@ -77,7 +77,7 @@ const testData = [
   }
 ];
 
-export class Component extends React.PureComponent<ModalContestTestProps> {
+export class Component extends React.PureComponent<ModalContestQuizProps> {
   handleSubmit = () => {};
 
   getInitValues = (arr: { reduce: (arg0: (el: any) => string) => void; }) => {
@@ -186,7 +186,7 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
   }
 }
 
-export const ModalContestTest = connect(
+export const ModalContestQuiz = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Component);

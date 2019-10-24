@@ -27,7 +27,7 @@ export type Celeb = {
   mediaBasePath: string,
   dataInfo: any,
   isChecked?: boolean, 
-  weightedRating: string
+  weightedRating: string,
 }
 
 export type Review = {

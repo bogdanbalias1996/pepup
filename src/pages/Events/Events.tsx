@@ -12,7 +12,7 @@ import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
 import { IGlobalState } from '../../coreTypes';
 
-const Header = (props: JSX.IntrinsicAttributes & { navigation?: any; title?: any; getLeftComponent?: (() => any) | undefined; getRightComponent?: (() => any) | undefined; }) => (
+const Header = (props: JSX.IntrinsicAttributes & { navigation?: any; title?: any; getLeftComponent?: (() => any); getRightComponent?: (() => any); }) => (
   <HeaderRounded {...props} title={'Events'.toUpperCase()} />
 );
 

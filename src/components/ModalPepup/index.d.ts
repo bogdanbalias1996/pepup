@@ -20,3 +20,8 @@ export type ModalReviewsProps = {
   isFetching?: boolean;
 };
 
+export type RenderItemMedia = {
+  date: string,
+  title: string
+}
+

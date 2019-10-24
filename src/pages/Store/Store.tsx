@@ -20,8 +20,8 @@ const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation?: any;
     title?: any;
-    getLeftComponent?: (() => any) | undefined;
-    getRightComponent?: (() => any) | undefined;
+    getLeftComponent?: () => any;
+    getRightComponent?: () => any;
   },
 ) => <HeaderRounded {...props} title={'Store'.toUpperCase()} />;
 
@@ -46,8 +46,8 @@ export class Component extends React.PureComponent<StoreScreenProps> {
           JSX.IntrinsicAttributes & {
             navigation?: any;
             title?: any;
-            getLeftComponent?: (() => any) | undefined;
-            getRightComponent?: (() => any) | undefined;
+            getLeftComponent?: () => any;
+            getRightComponent?: () => any;
           },
           | 'title'
           | 'key'
@@ -87,7 +87,7 @@ export class Component extends React.PureComponent<StoreScreenProps> {
             size="large"
             color={colorBlueberry}
             isDataLoaded={!isFetchingCat}>
-            {prodCategories.length ? (
+            {tabsConfig && (
               <Tabs
                 config={tabsConfig}
                 style={{flex: 1, marginHorizontal: 14}}
@@ -97,7 +97,7 @@ export class Component extends React.PureComponent<StoreScreenProps> {
                   marginBottom: 10,
                 }}
               />
-            ) : null}
+            )}
           </Loader>
         </View>
         <ModalStore />

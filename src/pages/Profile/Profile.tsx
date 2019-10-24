@@ -60,6 +60,7 @@ const ConnectedHeader = connect(
   null,
 )(Header);
 
+const ROLE_CELEB = 'REGULAR,CELEBRITY';
 export class Component extends React.PureComponent<ProfileScreenProps> {
   static navigationOptions = ({navigation}: any) => ({
     header: (props: any) => (
@@ -137,7 +138,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
             }
             resizeMode="cover"
           />
-          {profileData.role === 'REGULAR,CELEBRITY' ? (
+          {profileData.role === ROLE_CELEB ? (
             <TouchableOpacity onPress={() => getModal()}>
               <Image
                 style={[styles.avatar, styles.avatarCeleb]}
@@ -151,7 +152,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
           <Text style={styles.title}>{profileData.name || ''}</Text>
           <TouchableOpacity
             onPress={
-              profileData.role === 'REGULAR,CELEBRITY'
+              profileData.role === ROLE_CELEB
                 ? () => navigate({routeName: 'EditProfileCeleb'})
                 : () => navigate({routeName: 'EditProfile'})
             }>
@@ -164,7 +165,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         </TouchableOpacity>
 
         <View style={styles.wrapContent}>
-          {profileData.role === 'REGULAR,CELEBRITY' ? (
+          {profileData.role === ROLE_CELEB ? (
             <Tabs
               config={this.tabsConfigCeleb}
               style={{flex: 1}}

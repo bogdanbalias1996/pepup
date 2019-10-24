@@ -34,8 +34,6 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
   return (dispatch: Dispatch) => {
     const { email, password, name } = payload
 
-    // Temporary solution for tracking error states
-    const headers = email ? null : { 'Prefer': 'status=400' }
     dispatch(requestSignUpUser());
     request({
       operation: ApiOperation.SignUp,
@@ -45,7 +43,6 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
         name
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })

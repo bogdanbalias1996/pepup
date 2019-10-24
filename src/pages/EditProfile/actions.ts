@@ -35,8 +35,6 @@ export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) 
   return (dispatch: Dispatch) => {
     const { email, newPasswd, name, dob, userId, profileInfo } = payload;
 
-    // Temporary solution for tracking error states
-    const headers = email ? null : { 'Prefer': 'status=400' }
     dispatch(requestEditUser());
     request({
       operation: ApiOperation.EditProfile,
@@ -49,7 +47,6 @@ export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) 
         profileInfo
       },
       headers: {
-        ...headers,
         'Content-Type': 'multipart/form-data'
       }
     })

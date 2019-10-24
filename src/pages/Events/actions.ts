@@ -168,8 +168,6 @@ export const purchaseEventTicket = (eventId: string, payload: ModalEventsFromDat
   return (dispatch: Dispatch) => {
     const { quantity } = payload;
 
-    // Temporary solution for tracking error states
-    const headers = eventId ? null : { 'Prefer': 'status=400' }
     dispatch(requestEventPurchase());
     request({
       operation: ApiOperation.BuyEventTicket,
@@ -180,7 +178,6 @@ export const purchaseEventTicket = (eventId: string, payload: ModalEventsFromDat
         quantity,
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })

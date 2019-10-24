@@ -31,7 +31,7 @@ export type Pepup = {
   requestedOf: string,
   requestedBy: string,
   requestedOn: number,
-  markedForDelete: boolean
+  markedForDelete: boolean,
 }
 
 export type ProfileScreenStateProps = {

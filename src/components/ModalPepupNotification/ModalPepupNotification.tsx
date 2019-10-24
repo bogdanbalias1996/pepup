@@ -10,8 +10,8 @@ import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
 import styles from './ModalPepupNotification.styles';
 import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
-import { ErrorModal } from '../ErrorState/ErrorState';
-import { PepupNotificationProps } from '.';
+import {ErrorModal} from '../ErrorState/ErrorState';
+import {PepupNotificationProps} from '.';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -25,7 +25,12 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
   handleSubmit = () => {};
 
   render() {
-    const {closeNotifyModal, isModalNotifyShown, isFetching, celebData} = this.props;
+    const {
+      closeNotifyModal,
+      isModalNotifyShown,
+      isFetching,
+      celebData,
+    } = this.props;
 
     return (
       <Modal
@@ -66,11 +71,11 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
                   <Text style={styles.title}>Instructions</Text>
                   <Text style={styles.reqData}>{}</Text>
                 </View>
-                {celebData.isChecked ? (
-                  <Text style={styles.title}>This Pepup will be featured on your profile page</Text>
-                ) : (
-                  <Text style={styles.title}>This Pepup won't be featured on your profile page</Text>
-                )}
+                <Text style={styles.title}>
+                  {celebData.isChecked
+                    ? 'This Pepup will be featured on your profile page'
+                    : "This Pepup won't be featured on your profile page"}
+                </Text>
               </View>
             </ScrollView>
 
@@ -86,7 +91,7 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
                   onPress={() => alert('q')}
                   text="REJECT"
                   loader={isFetching}
-                  type='grey'
+                  type="grey"
                 />
                 <ButtonStyled
                   style={styles.btnSubmit}

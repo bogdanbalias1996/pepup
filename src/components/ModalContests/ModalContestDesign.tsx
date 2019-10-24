@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 import { closeContestTestModal } from '../../pages/Contests/actions';
 import { Icon } from '../Icon/Icon';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
-import { ModalContestTestProps } from '.';
+import { ModalContestQuizProps } from '.';
 import styles from './ModalContests.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
@@ -30,7 +30,7 @@ const TestSchema = Yup.object().shape({
   text: Yup.string().required("Please type person's name")
 });
 
-export class Component extends React.PureComponent<ModalContestTestProps> {
+export class Component extends React.PureComponent<ModalContestQuizProps> {
   handleSubmit = () => {};
 
   render() {
