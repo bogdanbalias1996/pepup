@@ -10,8 +10,9 @@ export type ModalContestsProps = {
 
 export type ModalContestTestProps = {
   closeContestTestModal: () => void;
-  submitEnrty: (video: any) => void;
+  submitEnrty: (values: any, id: string, type: string) => void;
   isModalTestShown: boolean;
+  isFetching: boolean;
   contestData: Contest;
   values: any;
   handleSubmit: any;

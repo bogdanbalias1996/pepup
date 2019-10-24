@@ -158,18 +158,45 @@ export const closeContestTestModal = (): IAction<undefined> => {
   };
 };
 
-export const submitEnrty = (values: any, id: string) => {
-  console.log('values', values, id);
+export const RECEIVE_SUBMIT_ENTRY = 'RECEIVE_SUBMIT_ENTRY';
+export const receiveSubmitEntry = (data: any) => {
+  return {
+    type: RECEIVE_SUBMIT_ENTRY,
+    data,
+  };
+};
+
+export const REQUEST_SUBMIT_ENTRY = 'REQUEST_SUBMIT_ENTRY';
+export const requestSubmitEntry = (): IAction<undefined> => {
+  return {
+    type: REQUEST_SUBMIT_ENTRY,
+    data: undefined,
+  };
+};
+
+export const FAILURE_SUBMIT_ENTRY = 'FAILURE_SUBMIT_ENTRY';
+export const failureSubmitEntry = (): IAction<undefined> => {
+  return {
+    type: FAILURE_SUBMIT_ENTRY,
+    data: undefined,
+  };
+};
+
+export const submitEnrty = (values: any, id: string, type: string) => {
+  const {media, ...rest} = values;
+  const responses = Object.values(rest).map(answer => ({response: answer}));
+
   return (dispatch: Dispatch) => {
+    dispatch(requestSubmitEntry());
     request({
       operation: ApiOperation.SubmitEntryContest,
       variables: {
-        entry: '',
+        entry: JSON.stringify({submissionEntry: {responses: responses}}),
         mediaData: {
-          name: '',
-          uri: '',
+          name: media[0].id,
+          uri: media[0].uri,
         },
-        mediaType: '',
+        mediaType: type,
       },
       params: {
         contestId: id,
@@ -179,10 +206,12 @@ export const submitEnrty = (values: any, id: string) => {
       },
     })
       .then(res => {
-        console.log(`SUCCESS MEDIA`);
+        dispatch(receiveSubmitEntry(res));
+        // console.log(`SUCCESS MEDIA`, res);
       })
       .catch(err => {
-        console.log(`ERROR MEDIA: `, err);
+        dispatch(failureSubmitEntry());
+        // console.log(`ERROR MEDIA: `, err);
         console.error(JSON.stringify(err, null, 2));
       });
   };

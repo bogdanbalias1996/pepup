@@ -58,15 +58,16 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         isOpen={isModalShown}
         swipeToClose={true}
         coverScreen={true}
-        useNativeDriver={false}
+        useNativeDriver={true}
         swipeArea={100}
+        animationDuration={600}
         onClosed={() => closeContestModal()}
         style={[
           styles.modal,
           {
-            maxHeight: this.state.heightDescription + THRESHOLD,
+            maxHeight: '100%',
             height: '100%',
-            marginTop: 50,
+            marginTop: 20,
           },
         ]}>
         {Object.keys(contestData).length !== 0 ? (

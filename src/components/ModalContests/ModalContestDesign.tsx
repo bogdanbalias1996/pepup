@@ -7,6 +7,7 @@ import {Dispatch} from 'redux';
 import {withFormik} from 'formik';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
+import {Video} from 'expo-av';
 
 import {closeContestTestModal, submitEnrty} from '../../pages/Contests/actions';
 import {Icon} from '../Icon/Icon';
@@ -24,12 +25,14 @@ import {TextInputBorderStyled} from '../TextInputStyled/TextInputBorderStyled';
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
   contestData: state.ContestState.contestData,
+  isFetching: state.ContestState.isFetching,
+  submitEntryData: state.ContestState.submitEntryData,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestTestModal: () => dispatch(closeContestTestModal()),
-  submitEnrty: (values: any, id: string) =>
-    dispatch(submitEnrty(values, id) as any),
+  submitEnrty: (values: any, id: string, type: string) =>
+    dispatch(submitEnrty(values, id, type) as any),
 });
 export class Component extends React.Component<ModalContestTestProps> {
   state = {
@@ -37,42 +40,51 @@ export class Component extends React.Component<ModalContestTestProps> {
   };
 
   onImageChange = async () => {
-    const {setFieldValue, values} = this.props;
+    const {setFieldValue, values, contestData} = this.props;
 
     setTimeout(async () => {
       const hanlder = ImagePicker.launchImageLibraryAsync;
+      const mediaTypeImage =
+        contestData.dataInfo['contest-info'].submissionInfo.mediaType ===
+        'PHOTO';
 
       const result = await hanlder({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: mediaTypeImage
+          ? ImagePicker.MediaTypeOptions.Images
+          : ImagePicker.MediaTypeOptions.Videos,
         aspect: [4, 3],
         base64: true,
         quality: 0.5,
       });
 
       if (!result.cancelled) {
-        let array = values.images.length ? values.images : [];
+        console.log(JSON.stringify(result, null, 2));
+        let array = values.media.length ? values.media : [];
         array.push({
-          image: {
+          mediaItem: {
             id: new Date().getTime(),
-            uri: `data:image/${result.uri.split('.').pop()};base64,${
-              result.base64
-            }`,
+            uri: mediaTypeImage
+              ? `data:image/${result.uri.split('.').pop()};base64,${
+                  result.base64
+                }`
+              : result.uri,
+            type: mediaTypeImage ? 'image' : 'video',
           },
         });
-        setFieldValue('images', array);
+        setFieldValue('media', array);
       }
     }, 1000);
   };
 
-  removeItem = item => {
+  removeItem = (item: any) => {
     const {setFieldValue, values} = this.props;
 
-    let array = values.images;
-    const newArray = array.filter(val => {
-      return item.image.id !== val.image.id;
+    let array = values.media;
+    const newArray = array.filter((val: any) => {
+      return item.mediaItem.id !== val.mediaItem.id;
     });
 
-    setFieldValue('images', newArray);
+    setFieldValue('media', newArray);
   };
 
   openModalWindow = async () => {
@@ -86,15 +98,21 @@ export class Component extends React.Component<ModalContestTestProps> {
   };
 
   render() {
+    console.log('SUCCESS', this.props.submitEntryData);
     const {
       closeContestTestModal,
       isModalTestShown,
+      isFetching,
       contestData,
       values,
       handleSubmit,
       errors,
       touched,
     } = this.props;
+    const requiresMedia =
+      contestData.dataInfo['contest-info'].submissionInfo.requiresMedia;
+    const mediaTypeImage =
+      contestData.dataInfo['contest-info'].submissionInfo.mediaType === 'PHOTO';
 
     const formattedErrorString = Object.keys(errors)
       .reduce((acc: Array<string>, key: string) => {
@@ -118,7 +136,7 @@ export class Component extends React.Component<ModalContestTestProps> {
         <View style={styles.wrapModalContent}>
           <View style={styles.swiperLine} />
           <View style={styles.wrap}>
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
               <View style={styles.conTitle}>
                 <Image
                   style={styles.avatar}
@@ -138,7 +156,7 @@ export class Component extends React.Component<ModalContestTestProps> {
                 <View style={{justifyContent: 'space-between'}}>
                   {contestData.dataInfo[
                     'contest-info'
-                  ].submissionInfo.prompts.map((item, i) => {
+                  ].submissionInfo.prompts.map((item: any, i: number) => {
                     return (
                       <View style={styles.itemWrap}>
                         <Text style={styles.subTitle}>{item.prompt}</Text>
@@ -153,46 +171,58 @@ export class Component extends React.Component<ModalContestTestProps> {
                       </View>
                     );
                   })}
-                  <View style={styles.itemWrap}>
-                    <Text style={styles.subTitle}>Upload your designs</Text>
-                    <View style={styles.mediaWrap}>
-                      {values.images.length <
-                        contestData.dataInfo['contest-info'].submissionInfo
-                          .limitMedia && (
-                        <LinearGradient
-                          colors={[colorLightGradEnd, colorLightGradStart]}
-                          style={styles.mediaGrad}>
-                          <TouchableOpacity
-                            style={styles.mediaBtn}
-                            activeOpacity={0.8}
-                            onPress={() => {
-                              this.openModalWindow();
-                            }}>
-                            <Icon size={40} name="add" />
-                          </TouchableOpacity>
-                        </LinearGradient>
-                      )}
-                      <ScrollView horizontal>
-                        {values.images.length
-                          ? values.images.map(item => {
-                              return (
-                                <View style={styles.itemGalleryWrap}>
-                                  <Image
-                                    style={styles.itemGallery}
-                                    source={{uri: item.image.uri}}
-                                  />
-                                  <TouchableOpacity
-                                    style={styles.btnDelete}
-                                    onPress={() => this.removeItem(item)}>
-                                    <Icon size={10} name="cancel" />
-                                  </TouchableOpacity>
-                                </View>
-                              );
-                            })
-                          : null}
-                      </ScrollView>
+                  {requiresMedia ? (
+                    <View style={styles.itemWrap}>
+                      <Text style={styles.subTitle}>Upload your designs</Text>
+                      <View style={styles.mediaWrap}>
+                        {values.media.length <
+                          contestData.dataInfo['contest-info'].submissionInfo
+                            .limitMedia && (
+                          <LinearGradient
+                            colors={[colorLightGradEnd, colorLightGradStart]}
+                            style={styles.mediaGrad}>
+                            <TouchableOpacity
+                              style={styles.mediaBtn}
+                              activeOpacity={0.8}
+                              onPress={() => {
+                                this.openModalWindow();
+                              }}>
+                              <Icon size={40} name="add" />
+                            </TouchableOpacity>
+                          </LinearGradient>
+                        )}
+                        <ScrollView horizontal>
+                          {values.media.length
+                            ? values.media.map((item: any) => {
+                                return (
+                                  <View style={styles.itemGalleryWrap}>
+                                    {mediaTypeImage ? (
+                                      <Image
+                                        style={styles.itemGallery}
+                                        source={{uri: item.mediaItem.uri}}
+                                      />
+                                    ) : (
+                                      <Video
+                                        source={{
+                                          uri: item.mediaItem.uri,
+                                        }}
+                                        resizeMode="cover"
+                                        style={styles.itemGallery}
+                                      />
+                                    )}
+                                    <TouchableOpacity
+                                      style={styles.btnDelete}
+                                      onPress={() => this.removeItem(item)}>
+                                      <Icon size={10} name="cancel" />
+                                    </TouchableOpacity>
+                                  </View>
+                                );
+                              })
+                            : null}
+                        </ScrollView>
+                      </View>
                     </View>
-                  </View>
+                  ) : null}
                 </View>
               </View>
             </ScrollView>
@@ -204,6 +234,7 @@ export class Component extends React.Component<ModalContestTestProps> {
               </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
+                loader={isFetching}
                 onPress={() => handleSubmit()}
                 text="Submit"
               />
@@ -216,19 +247,22 @@ export class Component extends React.Component<ModalContestTestProps> {
 }
 
 const ContestForm = withFormik({
-  mapPropsToValues: props => {
+  mapPropsToValues: (props: any) => {
     const questions = props.contestData.dataInfo[
       'contest-info'
-    ].submissionInfo.prompts.reduce((acc, current, i) => {
+    ].submissionInfo.prompts.reduce((acc: any, current: any, i: number) => {
       return {...acc, [`text${i}`]: ''};
     }, {});
 
-    return {...questions, images: []};
+    return {...questions, media: []};
   },
 
   handleSubmit: (values, {props}) => {
-    // props.submitEnrty(values, props.contestData.id);
-    console.log(values);
+    props.submitEnrty(
+      values,
+      props.contestData.id,
+      props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
+    );
   },
 })(Component);
 
