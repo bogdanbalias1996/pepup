@@ -1,18 +1,19 @@
 import { IAction } from "../../coreTypes";
-import { OPEN_EVENT_MODAL, CLOSE_EVENT_MODAL, RECEIVE_ALL_EVENTS, RECEIVE_EVENT, REQUEST_ALL_EVENTS, FAILURE_ALL_EVENTS, REQUEST_EVENT, FAILURE_EVENT } from "./actions";
+import { OPEN_EVENT_MODAL, CLOSE_EVENT_MODAL, RECEIVE_ALL_EVENTS, RECEIVE_EVENT, REQUEST_ALL_EVENTS, FAILURE_ALL_EVENTS, REQUEST_EVENT, FAILURE_EVENT, SET_QUANTITY, RECEIVE_EVENT_PURCHASE, REQUEST_EVENT_PURCHASE, FAILURE_EVENT_PURCHASE } from "./actions";
 import { Event } from ".";
 export class EventState {
   isModalShown: boolean;
   events: Array<Event>;
   eventData: Event | null;
   isFetching: boolean;
-
+  selectedQuantity: string;
 
   constructor() {
     this.isModalShown = false;
     this.events = [];
     this.eventData = null;
     this.isFetching = false;
+    this.selectedQuantity = '';
   }
 }
 
@@ -61,6 +62,26 @@ export const EventReducer = (
         isFetching: true
       };
     case FAILURE_EVENT:
+      return {
+        ...state,
+        isFetching: false
+      };
+    case SET_QUANTITY:
+      return {
+        ...state,
+        selectedQuantity: action.data
+      }
+    case RECEIVE_EVENT_PURCHASE:
+      return {
+        ...state,
+        isFetching: false,
+      }
+    case REQUEST_EVENT_PURCHASE:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FAILURE_EVENT_PURCHASE:
       return {
         ...state,
         isFetching: false

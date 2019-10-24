@@ -29,8 +29,8 @@ const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation: any;
     title?: any;
-    getLeftComponent?: (() => null) | undefined;
-    getRightComponent?: (() => null) | undefined;
+    getLeftComponent?: (() => null);
+    getRightComponent?: (() => null);
   },
 ) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
 

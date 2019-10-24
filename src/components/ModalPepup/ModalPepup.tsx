@@ -6,6 +6,7 @@ import {
   FlatList,
   ScrollView,
   Image,
+  ListRenderItem,
 } from 'react-native';
 import {connect} from 'react-redux';
 import {Dispatch} from 'redux';
@@ -22,13 +23,15 @@ import {
 } from '../../pages/Pepups/actions';
 import {Icon} from '../../components/Icon/Icon';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {ModalPepupProps} from './';
+import {ModalPepupProps, RenderItemMedia} from './';
 import styles from './ModalPepup.styles';
 import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {ModalVideo} from '../ModalVideo/ModalVideo';
 import {ModalPepupReq} from '../ModalPepupReq/ModalPepupReq';
 import {ModalReviews} from './ModalReviews';
+import { ErrorModal } from '../ErrorState/ErrorState';
+import { Pepup } from '../../pages/Profile';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -52,7 +55,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     getAllReviews(celebData.userInfo.id);
   };
 
-  renderItem = ({item}) => {
+  renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
     return (
       <View style={styles.carouselCard}>
         <View style={styles.carouselAvatar}>
@@ -84,11 +87,9 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openVideoModal,
     } = this.props;
 
-    if (!celebData) return null;
+    const [rating, totalRating] = celebData? celebData.weightedRating.split('/') : ['0', '0'];
 
-    const [rating, totalRating] = celebData.weightedRating.split('/');
-
-    return (
+    return (celebData &&
       <Modal
         isOpen={isModalShown}
         swipeToClose={true}
@@ -159,7 +160,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 ) : null
               }
               renderItem={this.renderItem}
-              keyExtractor={item => item.id}
+              keyExtractor={(item:Pepup) => item.id}
               style={styles.carousel}
               contentContainerStyle={{
                 alignItems: 'center',
@@ -223,6 +224,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         <ModalPepupReq />
         <ModalVideo />
         <ModalReviews />
+        <ErrorModal />
       </Modal>
     );
   }

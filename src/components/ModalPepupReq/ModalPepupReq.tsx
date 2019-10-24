@@ -180,7 +180,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <ButtonStyled
                         style={styles.btnSubmit}
                         onPress={() => handleSubmit()}
-                        text={`Request for ${celebData.billRate} INR`}
+                        text={`Request for ${celebData.fee} INR`}
                         loader={isFetching}
                         iconSource={require('../../../assets/coins.png')}
                       />

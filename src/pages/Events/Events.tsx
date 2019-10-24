@@ -1,82 +1,99 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import { View } from 'react-native';
-import { Dispatch } from 'redux';
+import {connect} from 'react-redux';
+import {View} from 'react-native';
+import {Dispatch} from 'redux';
 
-import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
-import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { EventsScreenProps } from '.';
-import { EventItems } from './EventItems';
-import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
+import {ModalEvents} from '../../components/ModalEvents/ModalEvents';
+import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
+import {EventsScreenProps} from '.';
+import {EventItems} from './EventItems';
+import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
+import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
-import { IGlobalState } from '../../coreTypes';
+import {IGlobalState} from '../../coreTypes';
 
-const Header = props => (
-  <HeaderRounded {...props} title={'Events'.toUpperCase()} />
-);
+const Header = (
+  props: JSX.IntrinsicAttributes & {
+    navigation?: any;
+    title?: any;
+    getLeftComponent?: () => any;
+    getRightComponent?: () => any;
+  },
+) => <HeaderRounded {...props} title={'Events'.toUpperCase()} />;
 
 const ConnectedHeader = connect(
   null,
-  null
+  null,
 )(Header);
 
-const mapStateToProps = (state: IGlobalState) => ({
-});
+const mapStateToProps = (state: IGlobalState) => ({});
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-});
+const mapDispatchToProps = (dispatch: Dispatch) => ({});
 
 export class Component extends React.PureComponent<EventsScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({navigation}: any) => ({
+    header: (
+      props: JSX.IntrinsicAttributes &
+        Pick<
+          JSX.IntrinsicAttributes & {
+            navigation?: any;
+            title?: any;
+            getLeftComponent?: (() => any);
+            getRightComponent?: () => any;
+          },
+          | 'title'
+          | 'key'
+          | 'navigation'
+          | 'getLeftComponent'
+          | 'getRightComponent'
+        >,
+    ) => <ConnectedHeader {...props} navigation={navigation} />,
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
   };
 
   toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   render() {
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <EventItems />,
-        
+        component: () => <EventItems categoryId="Past" />,
       },
       {
         title: 'Today',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId="Today" />,
       },
       {
         title: 'Featured',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId="Featured" />,
       },
       {
         title: 'Upcoming',
-        component: () => <EventItems />,
+        component: () => <EventItems categoryId="Upcoming" />,
       },
       {
-        title: 'Deals',
-        component: () => <EventItems />,
-      }
+        title: 'Hot',
+        component: () => <EventItems categoryId="Hot" />,
+      },
     ];
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-            <Tabs
-              config={tabsConfig}
-              style={{ flex: 1 }}
-              stylesItem={defaultTabsStyles.roundedTabs}
-              stylesTabsContainer={{
-                backgroundColor: 'transparent',
-                marginBottom: 5
-              }}
-            />
+          <Tabs
+            config={tabsConfig}
+            style={{flex: 1}}
+            stylesItem={defaultTabsStyles.roundedTabs}
+            stylesTabsContainer={{
+              backgroundColor: 'transparent',
+              marginBottom: 5,
+            }}
+          />
         </View>
         <ModalEvents />
       </PepupBackground>
@@ -86,5 +103,5 @@ export class Component extends React.PureComponent<EventsScreenProps> {
 
 export const EventsScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);

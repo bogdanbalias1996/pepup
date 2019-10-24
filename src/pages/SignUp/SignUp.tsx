@@ -130,7 +130,7 @@ export const Component : React.SFC<SignupScreenProps> = ({
               <Text style={styles.createAccountLink}>Log In</Text>
             </Text>
           </TouchableOpacity>
-          <Text style={styles.loginWithText}>Sign Up with</Text>
+          {/* <Text style={styles.loginWithText}>Sign Up with</Text>
           <View style={styles.wrapSocialBtns}>
             <ButtonStyled
               style={{ flex: 1 }}
@@ -146,7 +146,7 @@ export const Component : React.SFC<SignupScreenProps> = ({
               text="Google"
               iconName="google"
             />
-          </View>
+          </View> */}
         </View>
       </KeyboardAwareScrollView>
     </PepupBackground>

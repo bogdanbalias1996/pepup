@@ -72,7 +72,10 @@ export const getAllActiveCategories = () => {
       })
       .catch(err => {
         dispatch(failureAllActiveCategories());
-
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getAllActiveCategories() as any) }
+        }))
       });
   };
 };
@@ -216,8 +219,6 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
     const { selectedCategory } = store;
     const userId = store.celebData.mappedUserId;
 
-    // Temporary solution for tracking error states
-    const headers = name ? null : { 'Prefer': 'status=400' }
     dispatch(requestPepup());
     request({
       operation: ApiOperation.RequestPepup,
@@ -229,12 +230,11 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
         share: shareCheckbox
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
       .then((res) => {
-        dispatch(receivePepup(res));
+        dispatch(receivePepup());
         dispatch(openAlert({
           title: 'Request Submitted',
           text:
@@ -401,8 +401,6 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
     const store = getState().PepupState;
     const userId = store.celebData.userInfo.id;
 
-    // Temporary solution for tracking error states
-    const headers = review ? null : { 'Prefer': 'status=400' }
     dispatch(requestReview());
     request({
       operation: ApiOperation.PostReview,
@@ -412,7 +410,6 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
         celebId: userId
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
@@ -430,7 +427,12 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       })
       .catch((err) => {
         dispatch(failureReview());
-        dispatch(postReview(payload, setErrors) as any)
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(postReview(payload, setErrors) as any)
+          }
+        }));
         const { error = 'Please fill review form and rate celebrity' } = err.response.body
         setErrors({
           'review': error,
@@ -452,5 +454,54 @@ export const closeNotifyModal = (): IAction<undefined> => {
   return {
     type: CLOSE_NOTIFY_MODAL,
     data: undefined
+  };
+};
+
+export const RECEIVE_FEATURED_CELEBS = 'RECEIVE_FEATURED_CELEBS';
+export const receiveFeaturedCelebs = (data: Array<Celeb>): IAction<Array<Celeb>> => {
+  return {
+    type: RECEIVE_FEATURED_CELEBS,
+    data
+  };
+};
+
+export const REQUEST_FEATURED_CELEBS = 'REQUEST_FEATURED_CELEBS';
+export const requestFeaturedCelebs = (): IAction<undefined> => {
+  return {
+    type: REQUEST_FEATURED_CELEBS,
+    data: undefined
+  };
+};
+
+export const FAILURE_FEATURED_CELEBS = 'FAILURE_FEATURED_CELEBS';
+export const failureFeaturedCelebs = (): IAction<any> => {
+  return {
+    type: FAILURE_FEATURED_CELEBS,
+    data: undefined
+  };
+};
+
+export const getFeaturedCelebs = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestFeaturedCelebs());
+    request({
+      operation: ApiOperation.GetFeaturedCelebs
+    })
+      .then(res => {
+        dispatch(receiveFeaturedCelebs(res));
+        if (!res.length) {
+          dispatch(openError({
+            type: 'noResults',
+            onPress: () => { dispatch(getFeaturedCelebs() as any) }
+          }));
+        }
+      })
+      .catch(err => {
+        dispatch(failureFeaturedCelebs());
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(getFeaturedCelebs() as any) }
+        }))
+      });
   };
 };

@@ -14,13 +14,17 @@ export type Event = {
   featured: boolean,
   id: string,
   markedForDelete: boolean,
+  mediaBasePath: string,
   organizerLogo: string,
   pricePerSeat: number,
   remainingSeats: number,
   soldSeats: number,
-  startDate: number,
+  startDt: string,
   title: string,
   totalSeats: number,
+  dataInfo: any,
+  creatorInfo: any,
+  createdOnDt: string
 }
 
 export type EventsScreenStateProps = {
@@ -30,12 +34,13 @@ export type EventsScreenStateProps = {
 }
 
 export type EventsScreenDispatchProps = {
-  getAllEvents: () => Promise<any>;
+  
 };
 
 export type EventItemsProps = {
   events: Array<Event>;
-  getAllEvents: () => Promise<any>;
+  categoryId: string,
+  getEventsByCategory: (id: string) => Promise<any>;
   openEventModal: () => void;
   getEvent: (eventId: string) => Promise<any>;
   isFetching: boolean;

@@ -13,13 +13,15 @@ import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import { closeContestTestModal } from '../../pages/Contests/actions';
-import { Icon } from '../../components/Icon/Icon';
-import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { ModalContestTestProps } from './';
+import { Icon } from '../Icon/Icon';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { ModalContestQuizProps } from '.';
 import styles from './ModalContests.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
-import { RadioButtonsContest } from '../../components/RadioButtons/RadioButtonsContest';
+import { RadioButtonsContest } from '../RadioButtons/RadioButtonsContest';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -36,7 +38,7 @@ const TestSchema = Yup.object().shape({
 });
 
 
-export class Component extends React.PureComponent<ModalContestTestProps> {
+export class Component extends React.PureComponent<ModalContestQuizProps> {
   handleSubmit = () => {};
 
   getInitValues = (arr:any) => {
@@ -138,12 +140,14 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
             }}
           </Formik>
         </View>
+        <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }
 }
 
-export const ModalContestTest = connect(
+export const ModalContestQuiz = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Component);
