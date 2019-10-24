@@ -39,7 +39,9 @@ const TestSchema = Yup.object().shape({
 
 
 export class Component extends React.PureComponent<ModalContestQuizProps> {
-  handleSubmit = () => {};
+  handleSubmit = (
+
+  ) => {};
 
   getInitValues = (arr:any) => {
     arr.reduce((el: { id: any; }) => {
@@ -122,7 +124,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       </View>
                     </View>
                   </ScrollView>
-                  <View style={[styles.modalFooter, styles.modalFooterContest]}>
+                  <View style={[{backgroundColor: 'transparent'}, styles.modalFooter, styles.modalFooterContest, ]}>
                     <TouchableOpacity
                       style={styles.btnCancel}
                       onPress={() => closeContestTestModal()}
@@ -131,7 +133,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                     </TouchableOpacity>
                     <ButtonStyled
                       style={styles.btnSubmit}
-                      onPress={() => alert('ok')}
+                      onPress={() => handleSubmit()}
                       text="Submit"
                     />
                   </View>

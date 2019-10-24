@@ -5,13 +5,14 @@ export default StyleSheet.create({
   container: {
     flexDirection: "row",
     marginTop: 14,
-    padding: 4
+    padding: 4,
+    flex: 1
   },
   item: {
-    flex: 1,
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "flex-start",
-    position: "relative"
+    position: "relative",
+    height: 80
   },
   itemText: {
     color: colorVioletGrey,
@@ -24,8 +25,9 @@ export default StyleSheet.create({
   itemLast: {},
   itemSelected: {
     backgroundColor: "transparent",
-    justifyContent: "flex-end",
-    alignItems: "flex-start"
+    justifyContent: "flex-start",
+    alignItems: "flex-start",
+    height: 80
   },
   itemSelectedText: {
     color: colorBlack,

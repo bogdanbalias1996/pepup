@@ -43,12 +43,11 @@ export class RadioButtonsContest extends React.PureComponent<
                       {
                         backgroundColor:
                         value && value === item ? "transparent" : "white",
-                        height: value && value === item ? 30 : 28
                       }
                     ]}
                     onPress={() => onPress(item)}
                   >
-                    <Text style={styles.btnText}>{item}</Text>
+                    <Text style={styles.btnTextQuiz}>{item}</Text>
                   </TouchableOpacity>
                 </LinearGradient>
               </LinearGradient>
