@@ -26,7 +26,8 @@ export type Celeb = {
   userInfo: any,
   mediaBasePath: string,
   dataInfo: any,
-  weightedRating: string
+  isChecked?: boolean, 
+  weightedRating: string,
 }
 
 export type Review = {
@@ -49,10 +50,15 @@ export type PepupsScreenStateProps = {
 
 export type PepupsScreenDispatchProps = {
   getAllActiveCategories: () => Promise<any>;
-  getCelebsByCategory: (categoryid: string) => Promise<any>;
 };
 
+export type PepupsItemsScreenStateProps = {
+  celebs: Array<Celeb>;
+  isFetching: boolean;
+}
+
 export type PepupItemsProps = {
+  getFeaturedCelebs: () => Promise<any>
   setCategory: (categoryid: string) => void;
   celebs: Array<Celeb>;
   openPepupModal: () => void;

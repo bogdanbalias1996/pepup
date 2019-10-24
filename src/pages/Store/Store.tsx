@@ -1,120 +1,104 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { View } from "react-native";
+import * as React from 'react';
+import {connect} from 'react-redux';
+import {View, Text} from 'react-native';
+import {Dispatch} from 'redux';
 
-import { ModalStore } from "../../components/ModalStore/ModalStore";
-import { PepupBackground } from "../../components/PepupBackground/PepupBackground";
-import { StoreScreenProps } from ".";
-import { StoreItems } from "./StoreItems";
-import { HeaderRounded } from "../../components/HeaderRounded/HeaderRounded";
-import { Tabs, defaultTabsStyles } from "../../components/Tabs/Tabs";
-import styles from "./Store.styles";
+import {ModalStore} from '../../components/ModalStore/ModalStore';
+import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
+import {StoreScreenProps} from '.';
+import {StoreItems} from './StoreItems';
+import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
+import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import styles from './Store.styles';
+import {IGlobalState} from '../../coreTypes';
+import {getProductsCategories} from './actions';
+import {Tab} from '../../components/Tabs';
+import {Loader} from '../../components/Loader/Loader';
+import {colorBlueberry} from '../../variables';
 
-const Header = props => (
-  <HeaderRounded {...props} title={"Store".toUpperCase()} />
-);
+const Header = (
+  props: JSX.IntrinsicAttributes & {
+    navigation?: any;
+    title?: any;
+    getLeftComponent?: () => any;
+    getRightComponent?: () => any;
+  },
+) => <HeaderRounded {...props} title={'Store'.toUpperCase()} />;
 
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({});
+const mapStateToProps = (state: IGlobalState) => ({
+  prodCategories: state.StoreState.prodCategories,
+  isFetchingCat: state.StoreState.isFetchingCat,
+});
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getProductsCategories: () => dispatch(getProductsCategories() as any),
+});
 
 const ConnectedHeader = connect(
   mapStateToProps,
-  null
+  null,
 )(Header);
 
 export class Component extends React.PureComponent<StoreScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({navigation}: any) => ({
+    header: (
+      props: JSX.IntrinsicAttributes &
+        Pick<
+          JSX.IntrinsicAttributes & {
+            navigation?: any;
+            title?: any;
+            getLeftComponent?: () => any;
+            getRightComponent?: () => any;
+          },
+          | 'title'
+          | 'key'
+          | 'navigation'
+          | 'getLeftComponent'
+          | 'getRightComponent'
+        >,
+    ) => <ConnectedHeader {...props} navigation={navigation} />,
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+  };
+
+  componentDidMount = () => {
+    const {getProductsCategories} = this.props;
+    getProductsCategories();
   };
 
   toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   render() {
-    const dataStore = [
-      {
-        id: "1",
-        name: "Sindhu Signed Olympics 2016 pic",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        salePrize: "1529",
-        prize: "1799",
-        sale: "15"
-      },
-      {
-        id: "2",
-        name: "Viktor Axelsen",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        salePrize: "1529",
-        prize: "1799",
-        sale: "15"
-      },
-      {
-        id: "3",
-        name: "Viktor Axelsen",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        prize: "1799"
-      },
-      {
-        id: "4",
-        name: "Viktor Axelsen",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        salePrize: "1529",
-        prize: "1799",
-        sale: "15"
-      },
-      {
-        id: "5",
-        name: "Viktor Axelsen",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        salePrize: "1529",
-        prize: "1799",
-        sale: "15"
-      },
-      {
-        id: "6",
-        name: "Viktor Axelsen",
-        avatar: require("../../../assets/mock_avatar.jpg"),
-        salePrize: "1529",
-        prize: "1799",
-        sale: "15"
-      }
-    ];
-    const tabsConfig = [
-      {
-        title: "Featured",
-        component: () => <StoreItems data={dataStore} />
-      },
-      {
-        title: "Badminton",
-        component: () => <StoreItems data={dataStore} />
-      },
-      {
-        title: "Football",
-        component: () => <StoreItems data={dataStore} />
-      },
-      {
-        title: "Khaddi",
-        component: () => <StoreItems data={dataStore} />
-      }
-    ];
+    const {prodCategories, isFetchingCat} = this.props;
+    const tabsConfig: Array<Tab> = prodCategories.length
+      ? prodCategories.map(cat => ({
+          title: cat.name,
+          component: () => <StoreItems prodCatType={cat.type} />,
+        }))
+      : null;
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-          <Tabs
-            config={tabsConfig}
-            style={{ flex: 1 }}
-            stylesItem={defaultTabsStyles.roundedTabs}
-            stylesTabsContainer={{
-              backgroundColor: "transparent",
-              marginBottom: 10
-            }}
-          />
+          <Loader
+            size="large"
+            color={colorBlueberry}
+            isDataLoaded={!isFetchingCat}>
+            {tabsConfig && (
+              <Tabs
+                config={tabsConfig}
+                style={{flex: 1, marginHorizontal: 14}}
+                stylesItem={defaultTabsStyles.roundedTabs}
+                stylesTabsContainer={{
+                  backgroundColor: 'transparent',
+                  marginBottom: 10,
+                }}
+              />
+            )}
+          </Loader>
         </View>
         <ModalStore />
       </PepupBackground>
@@ -124,5 +108,5 @@ export class Component extends React.PureComponent<StoreScreenProps> {
 
 export const StoreScreen = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);

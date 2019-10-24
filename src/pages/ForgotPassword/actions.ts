@@ -4,6 +4,7 @@ import { ResetpassScreenFromData } from './'
 import { navigate } from '../../navigationService'
 import { IAction } from '../../coreTypes';
 import { Dispatch } from 'redux';
+import { openError } from '../ErrorModal/actions';
 
 
 export const REQUEST_RESETPASSWORD_USER = "REQUEST_RESETPASSWORD_USER ";
@@ -52,7 +53,12 @@ export const resetPassword = (payload: ResetpassScreenFromData, setErrors: any) 
       })
       .catch((err) => {
         const { error = 'Email does not exist' } = err.response.body
-        console.error(JSON.stringify(err, null, 2))
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => {
+            dispatch(resetPassword(payload, setErrors) as any);
+          },
+        }));
         dispatch(failureResetPasswordUser())
         setErrors({
           'emailId': error

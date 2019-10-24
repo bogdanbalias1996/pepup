@@ -2,11 +2,10 @@ import * as React from 'react';
 import {Dispatch} from 'redux';
 import {connect} from 'react-redux';
 import {Text, View, FlatList, StyleSheet, Image} from 'react-native';
-import format from 'date-fns/format';
 
-import {openEventModal, getEvent, getAllEvents} from './actions';
+import {openEventModal, getEvent, getEventsByCategory} from './actions';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {EventItemsProps} from './';
+import {EventItemsProps, Event} from './';
 import {
   colorTextGray,
   colorBlack,
@@ -19,7 +18,7 @@ import {Loader} from '../../components/Loader/Loader';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openEventModal: () => dispatch(openEventModal()),
-  getAllEvents: () => dispatch(getAllEvents() as any),
+  getEventsByCategory: (id:string) => dispatch(getEventsByCategory(id) as any),
   getEvent: (val: string) => dispatch(getEvent(val) as any),
 });
 
@@ -30,17 +29,17 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<EventItemsProps> {
   componentDidMount() {
-    const {getAllEvents} = this.props;
-    getAllEvents();
-  }
+    const {getEventsByCategory, categoryId} = this.props;
 
+    getEventsByCategory(categoryId);
+  }
+  
   renderItem = ({item}: any) => {
     const {openEventModal, getEvent, isFetching} = this.props;
     const getModal = () => {
       openEventModal();
       getEvent(item.id);
     };
-
     return (
       <Loader size="large" color={colorBlueberry} isDataLoaded={!isFetching}>
         <View style={styles.card}>
@@ -48,21 +47,20 @@ export class Component extends React.PureComponent<EventItemsProps> {
             <Text style={styles.text}>
               {`${item.soldSeats} going • ${item.remainingSeats} spots left`}
             </Text>
-            {/* <Text style={styles.text}>{format(item.startDate, 'H:mm')}</Text> */}
             <Text style={styles.text}>{item.startDt}</Text>
           </View>
           <View style={styles.wrapTitle}>
             <Image
               style={styles.imageLogo}
-              source={{uri: item.creatorInfo.icon}}
+              source={{uri: item.mediaBasePath + item.organizerLogo}}
               resizeMode="contain"
             />
             <Text style={styles.title}>{item.title}</Text>
           </View>
-          {item.avatar && (
+          {item.coverImage && (
             <Image
               style={styles.avatar}
-              source={item.avatar}
+              source={{uri: item.mediaBasePath + item.coverImage}}
               resizeMode="cover"
             />
           )}
@@ -85,7 +83,7 @@ export class Component extends React.PureComponent<EventItemsProps> {
           showsVerticalScrollIndicator={false}
           data={events}
           renderItem={this.renderItem}
-          keyExtractor={item => item.id}
+          keyExtractor={(item:Event) => item.id}
         />
       </Loader>
     );

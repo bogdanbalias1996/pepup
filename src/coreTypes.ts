@@ -6,6 +6,7 @@ import { ProfileState } from "./pages/Profile/reducer";
 import { PepupState } from './pages/Pepups/reducer';
 import { AlertState } from "./pages/Alert/reducer";
 import { ErrorState } from "./pages/ErrorModal/reducer";
+import { StoreState } from "./pages/Store/reducer";
 import { ConnectionState } from "./utils/connectionCheck/reducer";
 
 export interface IGlobalState {
@@ -18,6 +19,7 @@ export interface IGlobalState {
   AlertState: AlertState;
   ErrorState: ErrorState;
   ConnectionState: ConnectionState;
+  StoreState: StoreState;
 }
 
 export interface IAction<T> {

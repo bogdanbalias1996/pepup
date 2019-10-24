@@ -8,7 +8,7 @@ export type ModalContestsProps = {
   text?: string;
 };
 
-export type ModalContestTestProps = {
+export type ModalContestQuizProps = {
   closeContestTestModal: () => void;
   isModalTestShown: boolean;
   contestData: Contest;
