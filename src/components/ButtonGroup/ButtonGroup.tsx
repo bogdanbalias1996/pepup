@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from './ButtonGroup.styles';
 import { ButtonGroupProps, ButtonGroupItem } from './';
-import { Category } from '../../pages/Pepups';
 
 export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   state: {
@@ -87,8 +86,8 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
         data={items}
         ref={this.btnGroupRef}
         renderItem={this.renderItem}
-        keyExtractor={(item: any) => item.id}
-        style={styles.container}
+        keyExtractor={(item: any, index: number) => `${index}`}
+        style={[styles.container, style]}
       />
     );
   }

@@ -106,9 +106,11 @@ export default class App extends Component {
     this.notificationListener();
     this.notificationOpenedListener();
   }
+
   notificationListener() {
     throw new Error('Method not implemented.');
   }
+
   notificationOpenedListener() {
     throw new Error('Method not implemented.');
   }

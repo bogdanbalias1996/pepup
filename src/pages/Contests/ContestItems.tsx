@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
@@ -8,12 +8,9 @@ import {
   Image,
   TouchableOpacity,
 } from 'react-native';
-import format from 'date-fns/format';
-import {Dispatch} from 'redux';
-
-import {openContestModal, getContest, getContestsByCategory} from './actions';
-
-import {ContestItemsProps, Contest} from './';
+import { Dispatch } from 'redux';
+import { openContestModal, getContest, getContestsByCategory } from './actions';
+import { ContestItemsProps, Contest } from './';
 import {
   colorTextGray,
   colorBlack,
@@ -21,9 +18,8 @@ import {
   semiboldFont,
   colorBlueberry,
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {Loader} from '../../components/Loader/Loader';
-import {ErrorModal} from '../../components/ErrorState/ErrorState';
+import { IGlobalState } from '../../coreTypes';
+import { Loader } from '../../components/Loader/Loader';
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openContestModal: () => dispatch(openContestModal()),
@@ -38,12 +34,12 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<ContestItemsProps> {
   componentDidMount() {
-    const {getContestsByCategory, categoryId} = this.props;
+    const { getContestsByCategory, categoryId } = this.props;
 
     getContestsByCategory(categoryId);
   }
-  renderItem = ({item}: any) => {
-    const {openContestModal, getContest, isFetching} = this.props;
+  renderItem = ({ item }: any) => {
+    const { openContestModal, getContest, isFetching } = this.props;
 
     const getModal = () => {
       openContestModal();
@@ -51,35 +47,38 @@ export class Component extends React.PureComponent<ContestItemsProps> {
     };
 
     return (
-      <Loader size="large" color={colorBlueberry} isDataLoaded={!isFetching}>
-        <TouchableOpacity onPress={() => getModal()} style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.text}>{`${item.entries} entries`}</Text>
-            <Text style={styles.text}>{`Ends: ${item.endDt}`}</Text>
-          </View>
-          <View style={styles.wrapTitle}>
-            <Image
-              style={styles.imageLogo}
-              source={{uri: item.mediaBasePath + item.organizerLogo}}
-              resizeMode="contain"
-            />
-            <Text style={styles.title}>{item.title}</Text>
-          </View>
-        </TouchableOpacity>
-      </Loader>
+      <TouchableOpacity
+        onPress={() => getModal()}
+        style={styles.card}
+        activeOpacity={1}
+      >
+        <View style={styles.cardHeader}>
+          <Text style={styles.text}>{`${item.entries} entries`}</Text>
+          <Text style={styles.text}>{`Ends: ${item.endDt}`}</Text>
+        </View>
+        <View style={styles.wrapTitle}>
+          <Image
+            style={styles.imageLogo}
+            source={{ uri: item.mediaBasePath + item.organizerLogo }}
+            resizeMode="contain"
+          />
+          <Text style={styles.title}>{item.title}</Text>
+        </View>
+      </TouchableOpacity>
     );
   };
 
   render() {
-    const {isFetching, contests} = this.props;
+    const { isFetching, contests } = this.props;
+
     return (
       <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
         <FlatList
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={contests}
           renderItem={this.renderItem}
-          keyExtractor={(item:Contest) => item.id}
+          keyExtractor={(item: Contest) => item.id}
         />
       </Loader>
     );
