@@ -7,9 +7,12 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   state: {
     selectedItem: ButtonGroupItem;
   };
+  btnGroupRef: any;
 
   constructor(props: ButtonGroupProps) {
     super(props);
+
+    this.btnGroupRef = React.createRef();
 
     this.state = {
       selectedItem:
@@ -19,10 +22,12 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     };
   }
 
-  handlePress = (item: ButtonGroupItem) => {
+  handlePress = (item: ButtonGroupItem, index: number) => {
     this.setState({
       selectedItem: item,
     });
+
+    this.btnGroupRef.current.scrollToIndex({animated: true, index, viewPosition: 0.5 })
 
     if (item.onPress) item.onPress();
   };
@@ -64,7 +69,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     );
     return (
       <TouchableOpacity
-        onPress={() => this.handlePress(item)}
+        onPress={() => this.handlePress(item, index)}
         style={stylesbuttonGroupItem}
         key={index}>
         {content}
@@ -80,9 +85,10 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
         showsHorizontalScrollIndicator={false}
         horizontal
         data={items}
+        ref={this.btnGroupRef}
         renderItem={this.renderItem}
         keyExtractor={(item: any) => item.id}
-        contentContainerStyle={[styles.container, style]}
+        style={styles.container}
       />
     );
   }
