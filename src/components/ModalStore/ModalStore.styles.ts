@@ -80,10 +80,14 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    marginTop: 15,
+    paddingBottom: 10,
     marginBottom: 70,
-    marginHorizontal: 24
+    marginHorizontal: 24,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   btnCancel: {
     width: 48,
@@ -166,5 +170,6 @@ export default StyleSheet.create({
     color: colorBlack,
     fontSize: 20
   },
-  insidePadding: { paddingHorizontal: 24 }
+  insidePadding: { paddingHorizontal: 24, position: 'relative' },
+  scrollContent:{ paddingBottom: 90 }
 });
