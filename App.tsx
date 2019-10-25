@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {View, Text, Alert, StatusBar} from 'react-native';
+import {Alert, StatusBar} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
@@ -18,6 +18,7 @@ import {getStore} from './src/configureStore';
 import {setTopLevelNavigator, navigate} from './src/navigationService';
 import {Loader} from './src/components/Loader/Loader';
 import {IGlobalState} from './src/coreTypes';
+import SplashScreen from 'react-native-splash-screen';
 
 import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
 import {MainNavigator} from './src/navigators/MainNavigator';
@@ -63,7 +64,10 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 
 export default class App extends Component {
   messageListener!: () => any;
+
   async componentDidMount(): Promise<any> {
+    SplashScreen.hide();
+
     await NetInfo.fetch().then(state => {
       getStore().dispatch(setInternetConnection(state.isConnected));
     });
