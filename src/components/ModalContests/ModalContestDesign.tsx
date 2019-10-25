@@ -178,7 +178,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                       'contest-info'
                     ].submissionInfo.prompts.map((item: any, i: number) => {
                       return (
-                        <View style={styles.itemWrap}>
+                        <View style={styles.itemWrap} key={i}>
                           <Text style={styles.subTitle}>{item.prompt}</Text>
                           <TextInputBorderStyled
                             name={`text${i}`}

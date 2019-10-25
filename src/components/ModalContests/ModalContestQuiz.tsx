@@ -108,7 +108,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       <View style={styles.itemWrap}>
                         {contestData.dataInfo[
                           'contest-info'
-                        ].submissionInfo.questions.map((val: any) => {
+                        ].submissionInfo.questions.map((val: any, index: number) => {
                           return (
                             <RadioButtonsContest
                               options={val.options}
@@ -117,6 +117,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                               }}
                               question={val.question}
                               value={values[val.question]}
+                              key={index}
                             />
                           );
                         })}
