@@ -10,9 +10,9 @@ import {
 } from "../../variables";
 
 export default StyleSheet.create({
-  scrollView: { 
-    flex: 1, 
-    marginBottom: 10 
+  scrollView: {
+    flex: 1,
+    marginBottom: 10
   },
   wrapModalContent: {
     backgroundColor: "white",
@@ -53,13 +53,13 @@ export default StyleSheet.create({
   },
   carousel: {
     marginTop: 0,
-    marginLeft: 24
+    marginLeft: 24,
   },
+  imageCarouselWrap: {width: Dimensions.get("window").width - 48, marginRight: 10},
   imageCarousel: {
     width: Dimensions.get("window").width - 48,
     flex: 1,
     height: 170,
-    marginRight: 8,
     borderRadius: 8
   },
   infoBlock: {
@@ -99,11 +99,14 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: 'center',
-    marginTop: 15,
-    marginBottom: 70,
-    marginHorizontal: 24
+    marginBottom: 60,
+    paddingBottom: 20,
+    marginHorizontal: 24,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   btnCancel: {
     width: 48,
@@ -124,8 +127,11 @@ export default StyleSheet.create({
     fontFamily: defaultFont,
     lineHeight: 20
   },
-  imgSet: { flexDirection: "row", flex: 1 },
-  insidePadding: { paddingHorizontal: 24 },
+  imgSet: {
+    flexDirection: "row",
+    flex: 1,
+  },
+  insidePadding: { paddingHorizontal: 24, position: 'relative' },
   modalCancelStyle: {
     backgroundColor: "white",
     borderRadius: 12,
@@ -156,4 +162,5 @@ export default StyleSheet.create({
     marginHorizontal: 10,
     position: 'relative'
   },
+  scrollContent: { paddingBottom: 90 }
 });

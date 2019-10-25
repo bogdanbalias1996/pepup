@@ -84,41 +84,43 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
             <View style={styles.swiperLine} />
             <View style={styles.wrap}>
               <ScrollView>
-                <View style={styles.conTitle}>
-                  <Image
-                    style={styles.avatar}
-                    source={{
-                      uri:
-                        contestData.mediaBasePath + contestData.organizerLogo,
-                    }}
-                    resizeMode="contain"
-                  />
-                  <Text style={styles.title}>{contestData.title}</Text>
-                </View>
-                <View style={styles.form}>
-                  {Boolean(formattedErrorString) && (
-                    <View style={styles.formErrorContainer}>
-                      <Text style={styles.formError}>
-                        {formattedErrorString}
-                      </Text>
-                    </View>
-                  )}
-                  <View style={{justifyContent: 'space-between'}}>
-                    <View style={styles.itemWrap}>
-                      {contestData.dataInfo[
-                        'contest-info'
-                      ].submissionInfo.questions.map((val: any) => {
-                        return (
-                          <RadioButtonsContest
-                            options={val.options}
-                            onPress={(item: any) => {
-                              setFieldValue(val.question, item);
-                            }}
-                            question={val.question}
-                            value={values[val.question]}
-                          />
-                        );
-                      })}
+                <View style={styles.scrollContent}>
+                  <View style={styles.conTitle}>
+                    <Image
+                      style={styles.avatar}
+                      source={{
+                        uri:
+                          contestData.mediaBasePath + contestData.organizerLogo,
+                      }}
+                      resizeMode="contain"
+                    />
+                    <Text style={styles.title}>{contestData.title}</Text>
+                  </View>
+                  <View style={styles.form}>
+                    {Boolean(formattedErrorString) && (
+                      <View style={styles.formErrorContainer}>
+                        <Text style={styles.formError}>
+                          {formattedErrorString}
+                        </Text>
+                      </View>
+                    )}
+                    <View style={{justifyContent: 'space-between'}}>
+                      <View style={styles.itemWrap}>
+                        {contestData.dataInfo[
+                          'contest-info'
+                        ].submissionInfo.questions.map((val: any) => {
+                          return (
+                            <RadioButtonsContest
+                              options={val.options}
+                              onPress={(item: any) => {
+                                setFieldValue(val.question, item);
+                              }}
+                              question={val.question}
+                              value={values[val.question]}
+                            />
+                          );
+                        })}
+                      </View>
                     </View>
                   </View>
                 </View>

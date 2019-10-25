@@ -139,92 +139,97 @@ export class Component extends React.Component<ModalContestQuizProps> {
           <View style={styles.swiperLine} />
           <View style={styles.wrap}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.conTitle}>
-                <Image
-                  style={styles.avatar}
-                  source={{
-                    uri: contestData.mediaBasePath + contestData.organizerLogo,
-                  }}
-                  resizeMode="cover"
-                />
-                <Text style={styles.title}>{contestData.title}</Text>
-              </View>
-              <View style={styles.form}>
-                {Boolean(formattedErrorString) && (
-                  <View style={styles.formErrorContainer}>
-                    <Text style={styles.formError}>{formattedErrorString}</Text>
-                  </View>
-                )}
-                <View style={{justifyContent: 'space-between'}}>
-                  {contestData.dataInfo[
-                    'contest-info'
-                  ].submissionInfo.prompts.map((item: any, i: number) => {
-                    return (
-                      <View style={styles.itemWrap}>
-                        <Text style={styles.subTitle}>{item.prompt}</Text>
-                        <TextInputBorderStyled
-                          name={`text${i}`}
-                          label="Type your description here"
-                          inputStyle={{height: 100}}
-                          multiline={true}
-                          numberOfLines={3}
-                          formProps={this.props}
-                        />
-                      </View>
-                    );
-                  })}
-                  {requiresMedia ? (
-                    <View style={styles.itemWrap}>
-                      <Text style={styles.subTitle}>Upload your designs</Text>
-                      <View style={styles.mediaWrap}>
-                        {values.media.length <
-                          contestData.dataInfo['contest-info'].submissionInfo
-                            .limitMedia && (
-                          <LinearGradient
-                            colors={[colorLightGradEnd, colorLightGradStart]}
-                            style={styles.mediaGrad}>
-                            <TouchableOpacity
-                              style={styles.mediaBtn}
-                              activeOpacity={0.8}
-                              onPress={() => {
-                                this.openModalWindow();
-                              }}>
-                              <Icon size={40} name="add" />
-                            </TouchableOpacity>
-                          </LinearGradient>
-                        )}
-                        <ScrollView horizontal>
-                          {values.media.length
-                            ? values.media.map((item: any) => {
-                                return (
-                                  <View style={styles.itemGalleryWrap}>
-                                    {mediaTypeImage ? (
-                                      <Image
-                                        style={styles.itemGallery}
-                                        source={{uri: item.mediaItem.uri}}
-                                      />
-                                    ) : (
-                                      <Video
-                                        source={{
-                                          uri: item.mediaItem.uri,
-                                        }}
-                                        resizeMode="cover"
-                                        style={styles.itemGallery}
-                                      />
-                                    )}
-                                    <TouchableOpacity
-                                      style={styles.btnDelete}
-                                      onPress={() => this.removeItem(item)}>
-                                      <Icon size={10} name="cancel" />
-                                    </TouchableOpacity>
-                                  </View>
-                                );
-                              })
-                            : null}
-                        </ScrollView>
-                      </View>
+              <View style={styles.scrollContent}>
+                <View style={styles.conTitle}>
+                  <Image
+                    style={styles.avatar}
+                    source={{
+                      uri:
+                        contestData.mediaBasePath + contestData.organizerLogo,
+                    }}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.title}>{contestData.title}</Text>
+                </View>
+                <View style={styles.form}>
+                  {Boolean(formattedErrorString) && (
+                    <View style={styles.formErrorContainer}>
+                      <Text style={styles.formError}>
+                        {formattedErrorString}
+                      </Text>
                     </View>
-                  ) : null}
+                  )}
+                  <View style={{justifyContent: 'space-between'}}>
+                    {contestData.dataInfo[
+                      'contest-info'
+                    ].submissionInfo.prompts.map((item: any, i: number) => {
+                      return (
+                        <View style={styles.itemWrap}>
+                          <Text style={styles.subTitle}>{item.prompt}</Text>
+                          <TextInputBorderStyled
+                            name={`text${i}`}
+                            label="Type your description here"
+                            inputStyle={{height: 100}}
+                            multiline={true}
+                            numberOfLines={3}
+                            formProps={this.props}
+                          />
+                        </View>
+                      );
+                    })}
+                    {requiresMedia ? (
+                      <View style={styles.itemWrap}>
+                        <Text style={styles.subTitle}>Upload your designs</Text>
+                        <View style={styles.mediaWrap}>
+                          {values.media.length <
+                            contestData.dataInfo['contest-info'].submissionInfo
+                              .limitMedia && (
+                            <LinearGradient
+                              colors={[colorLightGradEnd, colorLightGradStart]}
+                              style={styles.mediaGrad}>
+                              <TouchableOpacity
+                                style={styles.mediaBtn}
+                                activeOpacity={0.8}
+                                onPress={() => {
+                                  this.openModalWindow();
+                                }}>
+                                <Icon size={40} name="add" />
+                              </TouchableOpacity>
+                            </LinearGradient>
+                          )}
+                          <ScrollView horizontal>
+                            {values.media.length
+                              ? values.media.map((item: any) => {
+                                  return (
+                                    <View style={styles.itemGalleryWrap}>
+                                      {mediaTypeImage ? (
+                                        <Image
+                                          style={styles.itemGallery}
+                                          source={{uri: item.mediaItem.uri}}
+                                        />
+                                      ) : (
+                                        <Video
+                                          source={{
+                                            uri: item.mediaItem.uri,
+                                          }}
+                                          resizeMode="cover"
+                                          style={styles.itemGallery}
+                                        />
+                                      )}
+                                      <TouchableOpacity
+                                        style={styles.btnDelete}
+                                        onPress={() => this.removeItem(item)}>
+                                        <Icon size={10} name="cancel" />
+                                      </TouchableOpacity>
+                                    </View>
+                                  );
+                                })
+                              : null}
+                          </ScrollView>
+                        </View>
+                      </View>
+                    ) : null}
+                  </View>
                 </View>
               </View>
             </ScrollView>
