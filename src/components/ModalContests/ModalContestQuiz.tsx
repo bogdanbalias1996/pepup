@@ -169,13 +169,11 @@ const ContestForm = withFormik({
         props.contestData.dataInfo['contest-info'].submissionInfo.questions,
       ),
     );
-    let errors = {};
     const isValid = getValidationSchema(initKeys)
       .validate(values)
       .then(values => values)
       .catch(err => {
-        errors = {...errors, globalError: 'All fields are required'};
-        throw errors;
+        throw {globalError: 'All fields are required'};
       });
     return isValid;
   },

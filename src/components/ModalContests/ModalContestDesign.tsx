@@ -75,18 +75,18 @@ export class Component extends React.Component<ModalContestQuizProps> {
         });
         setFieldValue('media', array);
       }
-    }, 1000);
+    }, 0);
   };
 
   removeItem = (item: any) => {
     const {setFieldValue, values} = this.props;
 
-    let array = values.media;
-    const newArray = array.filter((val: any) => {
-      return item.mediaItem.id !== val.mediaItem.id;
-    });
-
-    setFieldValue('media', newArray);
+    setFieldValue(
+      'media',
+      values.media.filter((val: any) => {
+        return item.mediaItem.id !== val.mediaItem.id;
+      }),
+    );
   };
 
   openModalWindow = async () => {
@@ -97,6 +97,20 @@ export class Component extends React.Component<ModalContestQuizProps> {
     if (status === 'granted') {
       this.onImageChange();
     }
+  };
+
+  getMediaElement = (type: boolean, item: any) => {
+    return type ? (
+      <Image style={styles.itemGallery} source={{uri: item}} />
+    ) : (
+      <Video
+        source={{
+          uri: item,
+        }}
+        resizeMode="cover"
+        style={styles.itemGallery}
+      />
+    );
   };
 
   render() {
@@ -198,33 +212,22 @@ export class Component extends React.Component<ModalContestQuizProps> {
                             </LinearGradient>
                           )}
                           <ScrollView horizontal>
-                            {values.media.length
-                              ? values.media.map((item: any) => {
-                                  return (
-                                    <View style={styles.itemGalleryWrap}>
-                                      {mediaTypeImage ? (
-                                        <Image
-                                          style={styles.itemGallery}
-                                          source={{uri: item.mediaItem.uri}}
-                                        />
-                                      ) : (
-                                        <Video
-                                          source={{
-                                            uri: item.mediaItem.uri,
-                                          }}
-                                          resizeMode="cover"
-                                          style={styles.itemGallery}
-                                        />
-                                      )}
-                                      <TouchableOpacity
-                                        style={styles.btnDelete}
-                                        onPress={() => this.removeItem(item)}>
-                                        <Icon size={10} name="cancel" />
-                                      </TouchableOpacity>
-                                    </View>
-                                  );
-                                })
-                              : null}
+                            {!!values.media.length &&
+                              values.media.map((item: any) => {
+                                return (
+                                  <View style={styles.itemGalleryWrap}>
+                                    {this.getMediaElement(
+                                      mediaTypeImage,
+                                      item.mediaItem.uri,
+                                    )}
+                                    <TouchableOpacity
+                                      style={styles.btnDelete}
+                                      onPress={() => this.removeItem(item)}>
+                                      <Icon size={10} name="cancel" />
+                                    </TouchableOpacity>
+                                  </View>
+                                );
+                              })}
                           </ScrollView>
                         </View>
                       </View>
@@ -237,7 +240,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeContestQuizModal()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
+                <Icon name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
