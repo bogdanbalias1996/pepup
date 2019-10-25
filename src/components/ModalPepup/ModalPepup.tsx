@@ -53,7 +53,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const { celebData, openReviewsModal, getAllReviews } = this.props;
 
     openReviewsModal();
-    getAllReviews(celebData.userInfo.id);
+    celebData ? getAllReviews(celebData.userInfo.id) : ()=>{};
   };
 
   renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {

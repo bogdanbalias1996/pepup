@@ -264,7 +264,7 @@ export const sendRequestForPepup = (payload: RequestPepupScreenFromData, setErro
 }
 
 export const SET_CATEGORY = "SET_CATEGORY";
-export const setCategory = (data: Category): IAction<Category> => {
+export const setCategory = (data: string): IAction<string> => {
   return {
     type: SET_CATEGORY,
     data

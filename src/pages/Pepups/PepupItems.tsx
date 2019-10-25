@@ -7,9 +7,10 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {LinearGradient} from 'expo-linear-gradient';
-import {Dispatch} from 'redux';
+
+import { connect } from 'react-redux';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Dispatch } from 'redux';
 
 import {
   openPepupModal,
@@ -18,15 +19,15 @@ import {
   setCategory,
   getFeaturedCelebs,
 } from './actions';
-import {PepupItemsProps, Celeb, Category, PepupsScreenDispatchProps} from './';
+import { PepupItemsProps, Celeb } from './';
 import {
   colorLightGray,
   colorBlueberry,
   semiboldFont,
   defaultFont,
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {Loader} from '../../components/Loader/Loader';
+import { IGlobalState } from '../../coreTypes';
+import { Loader } from '../../components/Loader/Loader';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebs: state.PepupState.celebs,
@@ -38,12 +39,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebsByCategory: (id: string) => dispatch(getCelebsByCategory(id) as any),
   getFeaturedCelebs: () => dispatch(getFeaturedCelebs() as any),
   getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  setCategory: (cat: Category) => dispatch(setCategory(cat) as any),
+  setCategory: (cat: string) => dispatch(setCategory(cat) as any),
 });
 
 export class Component extends React.PureComponent<PepupItemsProps> {
-  renderItem = ({item}: any) => {
-    const {openPepupModal, getCeleb} = this.props;
+  renderItem = ({ item }: any) => {
+    const { openPepupModal, getCeleb } = this.props;
     const getModal = () => {
       openPepupModal();
       getCeleb(item.userInfo.id);
@@ -56,11 +57,11 @@ export class Component extends React.PureComponent<PepupItemsProps> {
           style={styles.card}
           activeOpacity={1}
         >
-          <Image
-            style={styles.avatar}
-            source={{uri: item.userInfo.icon}}
-            resizeMode="cover"
-          />
+          <Loader color={colorBlueberry} size="large" isDataLoaded={!!item}>
+            <Image
+              style={styles.avatar}
+              source={{uri: item.userInfo.icon}}
+            />
           <LinearGradient
             start={[0.5, 0.3]}
             end={[0.5, 1]}
@@ -72,7 +73,8 @@ export class Component extends React.PureComponent<PepupItemsProps> {
               {item.dataInfo.intro}
             </Text>
           </LinearGradient>
-        </TouchableOpacity>
+        </Loader>
+      </TouchableOpacity>
       </View>
     );
   };
@@ -92,7 +94,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
   }
 
   render() {
-    const {celebs, isFetching} = this.props;
+    const { celebs, isFetching } = this.props;
     return (
       <View style={styles.celebsWrapper}>
         <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
@@ -103,7 +105,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
             columnWrapperStyle={styles.row}
             data={celebs}
             renderItem={this.renderItem}
-            keyExtractor={(item:Celeb) => item.mappedUserId}
+            keyExtractor={(item: Celeb) => item.mappedUserId}
           />
         </Loader>
       </View>
