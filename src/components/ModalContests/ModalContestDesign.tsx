@@ -19,15 +19,15 @@ import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
-  contestData: state.ContestState.contestData
+  contestData: state.ContestState.contestData,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestQuizModal: () => dispatch(closeContestQuizModal())
+  closeContestQuizModal: () => dispatch(closeContestQuizModal()),
 });
 
 const TestSchema = Yup.object().shape({
-  text: Yup.string().required("Please type person's name")
+  text: Yup.string().required("Please type person's name"),
 });
 
 export class Component extends React.PureComponent<ModalContestQuizProps> {
@@ -37,106 +37,106 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
     const { closeContestQuizModal, isModalTestShown, contestData } = this.props;
 
     return (
-      contestData &&
-      <Modal
-        isOpen={isModalTestShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={false}
-        swipeArea={100}
-        onClosed={() => closeContestQuizModal()}
-        style={styles.modal}
-      >
-        <View style={styles.wrapModalContent}>
-          <View style={styles.swiperLine} />
-          <Formik
-            initialValues={{ text: '' }}
-            //validationSchema={TestSchema}
-            onSubmit={this.handleSubmit}
-          >
-            {(props: any) => {
-              const {
-                values,
-                handleSubmit,
-                errors,
-                touched,
-                setFieldValue
-              } = props;
-              const formattedErrorString = Object.keys(errors)
-                .reduce((acc: Array<string>, key: string) => {
-                  const value = (errors as any)[key];
-                  if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                    acc.push(value);
-                  }
-                  return acc;
-                }, [])
-                .join('. ');
+      contestData && (
+        <Modal
+          isOpen={isModalTestShown}
+          swipeToClose={true}
+          coverScreen={true}
+          useNativeDriver={false}
+          swipeArea={100}
+          onClosed={() => closeContestQuizModal()}
+          style={styles.modal}>
+          <View style={styles.wrapModalContent}>
+            <View style={styles.swiperLine} />
+            <Formik
+              initialValues={{ text: '' }}
+              //validationSchema={TestSchema}
+              onSubmit={this.handleSubmit}>
+              {(props: any) => {
+                const {
+                  values,
+                  handleSubmit,
+                  errors,
+                  touched,
+                  setFieldValue,
+                } = props;
+                const formattedErrorString = Object.keys(errors)
+                  .reduce((acc: Array<string>, key: string) => {
+                    const value = (errors as any)[key];
+                    if ((touched as any)[key] && acc.indexOf(value) < 0) {
+                      acc.push(value);
+                    }
+                    return acc;
+                  }, [])
+                  .join('. ');
 
-              return (
-                <View style={styles.wrap}>
-                  <ScrollView>
-                    <View style={styles.conTitle}>
-                      <Image
-                        style={styles.avatar}
-                        source={require('../../../assets/mock_avatar.jpg')}
-                        resizeMode="cover"
-                      />
-                      <Text style={styles.title}>{contestData.title}</Text>
-                    </View>
-                    <View style={styles.form}>
-                      {Boolean(formattedErrorString) && (
-                        <View style={styles.formErrorContainer}>
-                          <Text style={styles.formError}>
-                            {formattedErrorString}
-                          </Text>
-                        </View>
-                      )}
-                      <View style={{ justifyContent: 'space-between' }}>
-                        <View style={styles.itemWrap}>
-                          <Text style={styles.subTitle}>
-                            Describe your design and the inspiration behind it
-                          </Text>
-                          <TextInputBorderStyled
-                            name="text"
-                            label="Type your description here"
-                            inputStyle={{ height: 100 }}
-                            multiline={true}
-                            numberOfLines={3}
-                            formProps={props}
+                return (
+                  <View style={styles.wrap}>
+                    <ScrollView>
+                      <View style={styles.scrollContent}>
+                        <View style={styles.conTitle}>
+                          <Image
+                            style={styles.avatar}
+                            source={require('../../../assets/mock_avatar.jpg')}
+                            resizeMode="cover"
                           />
+                          <Text style={styles.title}>{contestData.title}</Text>
                         </View>
-                        <View style={styles.itemWrap}>
-
+                        <View style={styles.form}>
+                          {Boolean(formattedErrorString) && (
+                            <View style={styles.formErrorContainer}>
+                              <Text style={styles.formError}>
+                                {formattedErrorString}
+                              </Text>
+                            </View>
+                          )}
+                          <View style={{ justifyContent: 'space-between' }}>
+                            <View style={styles.itemWrap}>
+                              <Text style={styles.subTitle}>
+                                Describe your design and the inspiration behind
+                                it
+                              </Text>
+                              <TextInputBorderStyled
+                                name="text"
+                                label="Type your description here"
+                                inputStyle={{ height: 100 }}
+                                multiline={true}
+                                numberOfLines={3}
+                                formProps={props}
+                              />
+                            </View>
+                            <View style={styles.itemWrap}></View>
+                          </View>
                         </View>
                       </View>
+                    </ScrollView>
+                    <View
+                      style={[styles.modalFooter, styles.modalFooterContest]}>
+                      <TouchableOpacity
+                        style={styles.btnCancel}
+                        onPress={() => closeContestQuizModal()}>
+                        <Icon size={24} name="cancel" color={colorBlack} />
+                      </TouchableOpacity>
+                      <ButtonStyled
+                        style={styles.btnSubmit}
+                        onPress={() => handleSubmit()}
+                        text="Submit"
+                      />
                     </View>
-                  </ScrollView>
-                  <View style={[styles.modalFooter, styles.modalFooterContest]}>
-                    <TouchableOpacity
-                      style={styles.btnCancel}
-                      onPress={() => closeContestQuizModal()}
-                    >
-                      <Icon size={24} name="cancel" color={colorBlack} />
-                    </TouchableOpacity>
-                    <ButtonStyled
-                      style={styles.btnSubmit}
-                      onPress={() => handleSubmit()}
-                      text="Submit"
-                    />
                   </View>
-                </View>
-              );
-            }}
-          </Formik>
-        </View>
-        <SuccessfulAlert />
-        <ErrorModal />
-      </Modal>
+                );
+              }}
+            </Formik>
+          </View>
+          <SuccessfulAlert />
+          <ErrorModal />
+        </Modal>
+      )
     );
   }
 }
 
 export const ModalContestDesign = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);

@@ -120,10 +120,14 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 15,
-    marginBottom: 50,
-    backgroundColor: 'transparent'
+    marginBottom: 40,
+    marginHorizontal: 24,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   modalFooterReviews: {
     justifyContent: 'center'
@@ -198,5 +202,6 @@ export default StyleSheet.create({
   rewiewsNumber: {
     justifyContent: 'flex-start',
     marginBottom: 8
-  }
+  },
+  scrollContent: { paddingBottom: 90 }
 });

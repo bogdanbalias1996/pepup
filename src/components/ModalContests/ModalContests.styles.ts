@@ -73,13 +73,20 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: "row",
-    justifyContent: "space-between",
+    left: 0,
+    right: 0,
+    marginHorizontal: 24,
     marginTop: 15,
-    marginBottom: 90
+    marginBottom: 90,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0
   },
   modalFooterContest: {
     marginBottom: 50,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0
   },
   btnCancel: {
     width: 48,
@@ -133,12 +140,14 @@ export default StyleSheet.create({
   },
   wrap: {
     flex: 1, 
-    marginBottom: 10
+    marginBottom: 10,
+    position: 'relative'
   },
   subTitle: {
     fontSize: 16,
     fontFamily: semiboldFont,
     color: colorBlack,
     marginBottom: 10
-  }
+  },
+  scrollContent:{ paddingBottom: 90 }
 });
