@@ -9,7 +9,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import {Video} from 'expo-av';
 
-import {closeContestTestModal, submitEnrty} from '../../pages/Contests/actions';
+import {closeContestQuizModal, submitEnrty} from '../../pages/Contests/actions';
 import {Icon} from '../Icon/Icon';
 import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
 import {ModalContestQuizProps} from './';
@@ -32,7 +32,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestTestModal: () => dispatch(closeContestTestModal()),
+  closeContestQuizModal: () => dispatch(closeContestQuizModal()),
   submitEnrty: (values: any, id: string, type: string, contestType: string) =>
     dispatch(submitEnrty(values, id, type, contestType) as any),
 });
@@ -101,7 +101,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
 
   render() {
     const {
-      closeContestTestModal,
+      closeContestQuizModal,
       isModalTestShown,
       isFetching,
       contestData,
@@ -133,7 +133,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
         coverScreen={true}
         useNativeDriver={false}
         swipeArea={100}
-        onClosed={() => closeContestTestModal()}
+        onClosed={() => closeContestQuizModal()}
         style={styles.modal}>
         <View style={styles.wrapModalContent}>
           <View style={styles.swiperLine} />
@@ -231,7 +231,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
             <View style={[styles.modalFooter, styles.modalFooterContest]}>
               <TouchableOpacity
                 style={styles.btnCancel}
-                onPress={() => closeContestTestModal()}>
+                onPress={() => closeContestQuizModal()}>
                 <Icon size={24} name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled

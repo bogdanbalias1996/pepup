@@ -294,6 +294,8 @@ PODS:
     - React
   - react-native-netinfo (4.4.0):
     - React
+  - react-native-splash-screen (3.2.0):
+    - React
   - React-RCTActionSheet (0.61.0):
     - React-Core/RCTActionSheetHeaders (= 0.61.0)
   - React-RCTAnimation (0.61.0):
@@ -393,6 +395,7 @@ DEPENDENCIES:
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cameraroll (from `../node_modules/@react-native-community/cameraroll`)"
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
+  - react-native-splash-screen (from `../node_modules/react-native-splash-screen`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
   - React-RCTBlob (from `../node_modules/react-native/Libraries/Blob`)
@@ -502,6 +505,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-community/cameraroll"
   react-native-netinfo:
     :path: "../node_modules/@react-native-community/netinfo"
+  react-native-splash-screen:
+    :path: "../node_modules/react-native-splash-screen"
   React-RCTActionSheet:
     :path: "../node_modules/react-native/Libraries/ActionSheetIOS"
   React-RCTAnimation:
@@ -614,6 +619,7 @@ SPEC CHECKSUMS:
   react-native-camera: b6a6a61bcdbd619c19df3df581fcb009131938bf
   react-native-cameraroll: 3e5e34d36d93548ae7770ee8ab7b2ae9e778f571
   react-native-netinfo: 6bb847e64f45a2d69c6173741111cfd95c669301
+  react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   React-RCTActionSheet: 5f9a1733ec8e380aae8a97877f1166cb058733ae
   React-RCTAnimation: 3e0a55305b70b1eb5a5e34230ed8198d4a782da9
   React-RCTBlob: a6ff2220ed7ef4b06e559ec61a0b0f4e80a3716a
@@ -643,6 +649,6 @@ SPEC CHECKSUMS:
   UMTaskManagerInterface: 1e70fe58b872355f0ecb44fb81bb1a16484047f0
   Yoga: 3f70bbd9aa01e04eefec36e2a085b2fc0ff1dd98
 
-PODFILE CHECKSUM: 4b9da6f4eda97d02674e6f22cc5da4c401e80c5c
+PODFILE CHECKSUM: 9be8fdca84f33253cc48f979f83c3cc22d9a4ed8
 
 COCOAPODS: 1.8.4

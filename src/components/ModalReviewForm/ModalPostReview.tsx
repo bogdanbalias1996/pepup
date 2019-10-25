@@ -60,9 +60,10 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
       celebData
     } = this.props;
 
-    const [rate, totalRating] = celebData.weightedRating.split('/');
+    const [,totalRating] = celebData ? celebData.weightedRating.split('/') : [, ''];
 
     return (
+      celebData &&
       <Modal
         isOpen={isModalPostReviewShown}
         swipeToClose={true}

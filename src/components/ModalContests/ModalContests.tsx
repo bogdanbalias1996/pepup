@@ -6,18 +6,18 @@ import {Dispatch} from 'redux';
 
 import {
   closeContestModal,
-  openContestTestModal,
+  openContestQuizModal,
 } from '../../pages/Contests/actions';
 import {Icon} from '../../components/Icon/Icon';
 import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
 import {ModalContestsProps} from './';
 import styles from './ModalContests.styles';
-import {colorBlack, colorBlueberry} from '../../variables';
+import {colorBlack} from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {ModalContestQuiz} from './ModalContestQuiz';
 import {ModalContestDesign} from './ModalContestDesign';
 import {ErrorModal} from '../ErrorState/ErrorState';
-import {Loader} from '../Loader/Loader';
+import {ImageSafe} from '../ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ContestState.isModalShown,
@@ -26,7 +26,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestModal: () => dispatch(closeContestModal()),
-  openContestTestModal: () => dispatch(openContestTestModal()),
+  openContestQuizModal: () => dispatch(openContestQuizModal()),
 });
 
 const THRESHOLD = 200;
@@ -41,7 +41,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
       closeContestModal,
       isModalShown,
       contestData,
-      openContestTestModal,
+      openContestQuizModal,
     } = this.props;
 
     return (
@@ -72,19 +72,14 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                     Object.keys(contestData).length !== 0 &&
                       this.setState({heightDescription: height});
                   }}>
-                  <Loader
-                    isDataLoaded={!!contestData.contestImage}
-                    size="large"
-                    color={colorBlueberry}>
-                    <Image
-                      style={styles.image}
-                      source={{
-                        uri:
-                          contestData.mediaBasePath + contestData.contestImage,
-                      }}
-                      resizeMode="contain"
-                    />
-                  </Loader>
+                  <ImageSafe
+                    isLoaded={!!contestData.contestImage}
+                    style={styles.image}
+                    iconSource={{
+                      uri: contestData.mediaBasePath + contestData.contestImage,
+                    }}
+                    resizeModeImg="contain"
+                  />
                   <Text style={styles.title}>{contestData.title}</Text>
                   <Text style={styles.descriptionTitle}>Contest details:</Text>
                   <Text style={[styles.text, styles.infoText]}>
@@ -120,7 +115,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                 </TouchableOpacity>
                 <ButtonStyled
                   style={styles.btnSubmit}
-                  onPress={() => openContestTestModal()}
+                  onPress={() => openContestQuizModal()}
                   text="Enter contest"
                 />
               </View>

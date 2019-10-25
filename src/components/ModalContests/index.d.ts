@@ -3,13 +3,14 @@ import {Contest} from '../../pages/Contests/index';
 export type ModalContestsProps = {
   closeContestModal: () => void;
   isModalShown: boolean;
-  contestData: Contest;
-  openContestTestModal: () => void;
+  contestData: Contest | null;
+  openContestQuizModal: () => void;
   text?: string;
 };
 
 export type ModalContestQuizProps = {
   closeContestTestModal: () => void;
+  closeContestQuizModal: () => void;
   submitEnrty: (
     values: any,
     id: string,

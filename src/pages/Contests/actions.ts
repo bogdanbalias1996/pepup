@@ -149,13 +149,13 @@ export const getContest = (contestId: string) => {
   };
 };
 
-export const openContestTestModal = (): IAction<undefined> => {
+export const openContestQuizModal = (): IAction<undefined> => {
   return {
     type: OPEN_CONTEST_TEST_MODAL,
     data: undefined,
   };
 };
-export const closeContestTestModal = (): IAction<undefined> => {
+export const closeContestQuizModal = (): IAction<undefined> => {
   return {
     type: CLOSE_CONTEST_TEST_MODAL,
     data: undefined,

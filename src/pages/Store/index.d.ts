@@ -19,7 +19,7 @@ export type StoreItemsProps = {
   filterValue: any;
   goods: Array<Product>;
   prodCatType: string;
-  dataType: ProdCategory;
+  dataType: ProdCategory | null;
   getProduct: (val:string) => Promise<any>;
   isFetching: boolean;
   isFetchingCat: boolean;

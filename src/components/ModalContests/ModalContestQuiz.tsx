@@ -6,7 +6,7 @@ import {Dispatch} from 'redux';
 import {withFormik} from 'formik';
 import * as Yup from 'yup';
 
-import {closeContestTestModal, submitEnrty} from '../../pages/Contests/actions';
+import {closeContestQuizModal, submitEnrty} from '../../pages/Contests/actions';
 import {Icon} from '../Icon/Icon';
 import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
 import {ModalContestQuizProps} from '.';
@@ -24,9 +24,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestTestModal: () => dispatch(closeContestTestModal()),
   submitEnrty: (values: any, id: string, type: string, contestType: string) =>
     dispatch(submitEnrty(values, id, type, contestType) as any),
+  closeContestQuizModal: () => dispatch(closeContestQuizModal()),
 });
 
 const getValidationSchema = (keys: string[]) => {
@@ -49,7 +49,7 @@ const getInitValues = (arr: any) => {
 export class Component extends React.PureComponent<ModalContestQuizProps> {
   render() {
     const {
-      closeContestTestModal,
+      closeContestQuizModal,
       isModalTestShown,
       contestData,
       isFetching,
@@ -71,77 +71,82 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
       .join('. ');
 
     return (
-      <Modal
-        isOpen={isModalTestShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={false}
-        swipeArea={100}
-        onClosed={() => closeContestTestModal()}
-        style={styles.modal}>
-        <View style={styles.wrapModalContent}>
-          <View style={styles.swiperLine} />
-          <View style={styles.wrap}>
-            <ScrollView>
-              <View style={styles.conTitle}>
-                <Image
-                  style={styles.avatar}
-                  source={{
-                    uri: contestData.mediaBasePath + contestData.organizerLogo,
-                  }}
-                  resizeMode="contain"
-                />
-                <Text style={styles.title}>{contestData.title}</Text>
-              </View>
-              <View style={styles.form}>
-                {Boolean(formattedErrorString) && (
-                  <View style={styles.formErrorContainer}>
-                    <Text style={styles.formError}>{formattedErrorString}</Text>
-                  </View>
-                )}
-                <View style={{justifyContent: 'space-between'}}>
-                  <View style={styles.itemWrap}>
-                    {contestData.dataInfo[
-                      'contest-info'
-                    ].submissionInfo.questions.map((val: any) => {
-                      return (
-                        <RadioButtonsContest
-                          options={val.options}
-                          onPress={(item: any) => {
-                            setFieldValue(val.question, item);
-                          }}
-                          question={val.question}
-                          value={values[val.question]}
-                        />
-                      );
-                    })}
+      contestData && (
+        <Modal
+          isOpen={isModalTestShown}
+          swipeToClose={true}
+          coverScreen={true}
+          useNativeDriver={false}
+          swipeArea={100}
+          onClosed={() => closeContestQuizModal()}
+          style={styles.modal}>
+          <View style={styles.wrapModalContent}>
+            <View style={styles.swiperLine} />
+            <View style={styles.wrap}>
+              <ScrollView>
+                <View style={styles.conTitle}>
+                  <Image
+                    style={styles.avatar}
+                    source={{
+                      uri:
+                        contestData.mediaBasePath + contestData.organizerLogo,
+                    }}
+                    resizeMode="contain"
+                  />
+                  <Text style={styles.title}>{contestData.title}</Text>
+                </View>
+                <View style={styles.form}>
+                  {Boolean(formattedErrorString) && (
+                    <View style={styles.formErrorContainer}>
+                      <Text style={styles.formError}>
+                        {formattedErrorString}
+                      </Text>
+                    </View>
+                  )}
+                  <View style={{justifyContent: 'space-between'}}>
+                    <View style={styles.itemWrap}>
+                      {contestData.dataInfo[
+                        'contest-info'
+                      ].submissionInfo.questions.map((val: any) => {
+                        return (
+                          <RadioButtonsContest
+                            options={val.options}
+                            onPress={(item: any) => {
+                              setFieldValue(val.question, item);
+                            }}
+                            question={val.question}
+                            value={values[val.question]}
+                          />
+                        );
+                      })}
+                    </View>
                   </View>
                 </View>
+              </ScrollView>
+              <View
+                style={[
+                  {backgroundColor: 'transparent'},
+                  styles.modalFooter,
+                  styles.modalFooterContest,
+                ]}>
+                <TouchableOpacity
+                  style={styles.btnCancel}
+                  onPress={() => closeContestQuizModal()}>
+                  <Icon size={24} name="cancel" color={colorBlack} />
+                </TouchableOpacity>
+                <ButtonStyled
+                  style={styles.btnSubmit}
+                  loader={isFetching}
+                  onPress={() => handleSubmit()}
+                  text="Submit"
+                />
               </View>
-            </ScrollView>
-            <View
-              style={[
-                {backgroundColor: 'transparent'},
-                styles.modalFooter,
-                styles.modalFooterContest,
-              ]}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closeContestTestModal()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
-              <ButtonStyled
-                style={styles.btnSubmit}
-                loader={isFetching}
-                onPress={() => handleSubmit()}
-                text="Submit"
-              />
             </View>
           </View>
-        </View>
-        <SuccessfulAlert />
-        <ErrorModal />
-      </Modal>
+          <SuccessfulAlert />
+          <ErrorModal />
+        </Modal>
+      )
     );
   }
 }

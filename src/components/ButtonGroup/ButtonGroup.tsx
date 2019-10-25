@@ -40,7 +40,6 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     const {selectedItem} = this.state;
     const {
       items,
-      style = {},
       stylesFirstItem = {},
       stylesLastItem = {},
       stylesItem = {},

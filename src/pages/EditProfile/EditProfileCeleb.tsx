@@ -85,6 +85,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   render() {
     const {profileData, isFetching, openVideoRecordModal} = this.props;
     return (
+      profileData &&
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Formik

@@ -5,7 +5,6 @@ import {
   View,
   FlatList,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import {Dispatch} from 'redux';
@@ -28,6 +27,7 @@ import {getAllPepups} from './actions';
 import {Loader} from '../../components/Loader/Loader';
 import {getCeleb} from '../Pepups/actions';
 import {kFormatter} from '../../helpers';
+import { ImageSafe } from '../../components/ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -45,18 +45,20 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const {getAllPepups, getCeleb, profileData} = this.props;
 
     getAllPepups();
-    getCeleb(profileData.id);
+    profileData ? getCeleb(profileData.id) : () => {};
   }
 
   renderItem = ({item}: any) => {
-    return (
+    return ( this.props.profileData &&
       <TouchableOpacity onPress={() => alert('Open pepup')}>
         <View style={styles.card}>
           <View style={styles.avatarWrap}>
-            <Image
-              resizeMode="cover"
+            <ImageSafe
+              resizeModeImg="cover"
               style={styles.avatar}
-              source={{uri: this.props.profileData.icon}}
+              iconSource={{uri: this.props.profileData.icon}}
+              isLoaded={!!this.props.profileData.icon}
+              loaderSize='small'
             />
           </View>
           <View style={styles.textWrap}>
@@ -149,6 +151,10 @@ const styles = StyleSheet.create({
   avatarWrap: {
     borderRightColor: colorDotGray,
     borderRightWidth: 1,
+    width: 90,
+    height: 120,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   avatar: {
     width: 90,
