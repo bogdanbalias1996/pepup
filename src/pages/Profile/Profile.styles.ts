@@ -2,13 +2,21 @@ import { StyleSheet } from "react-native";
 import { colorEndButtonInput, colorLightGray, semiboldFont } from "../../variables";
 
 export default StyleSheet.create({
+  avatarsWrap: {
+    flexDirection: 'row',
+    alignSelf: "center",
+    justifyContent: 'space-between',
+    width: 155
+  },
   avatar: {
     width: 64,
     height: 64,
     borderRadius: 8,
-    alignSelf: "center",
     marginVertical: 24,
     marginHorizontal: 5
+  },
+  avatarCeleb: {
+    backgroundColor: 'white',
   },
   titleWrap: {
     flexDirection: "row",

@@ -6,7 +6,8 @@ export default StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 16
+    marginBottom: 16,
+    flex: 1
   },
   wrapRadioButtonsC: {
     flexWrap: "wrap",
@@ -17,10 +18,11 @@ export default StyleSheet.create({
   },
   btn: {
     borderRadius: 15,
-    paddingLeft: 10,
+    paddingHorizontal: 10,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
+    flex: 1,
     width: "100%"
   },
   btnGradientDark: {
@@ -32,12 +34,14 @@ export default StyleSheet.create({
   },
   btnGradient: {
     borderRadius: 15,
-    height: 28,
+    height: 30,
+    flex: 1,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginHorizontal: 7
   },
   btnText: {
-    textAlign: "left",
+    textAlign: 'left',
     fontSize: 14,
     fontFamily: defaultFont,
     color: colorBlack

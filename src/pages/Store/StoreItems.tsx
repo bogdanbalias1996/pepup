@@ -1,72 +1,110 @@
-import * as React from "react";
+import * as React from 'react';
 import {
   Text,
   FlatList,
   StyleSheet,
   Image,
   TouchableOpacity,
-  View
-} from "react-native";
-import { connect } from "react-redux";
+  View,
+} from 'react-native';
+import {connect} from 'react-redux';
+import {Dispatch} from 'redux';
 
-import { openStoreModal, setFilterValue } from "./actions";
-import { StoreItemsProps } from "./";
+import {
+  openStoreModal,
+  setFilterValue,
+  getProductsCategoryType,
+  getProduct,
+} from './actions';
+import {StoreItemsProps, Product} from './';
 import {
   colorBlack,
   colorTextRed,
   colorTextGray,
   colorOrange,
   defaultFont,
-  semiboldFont
-} from "../../variables";
-import { RadioButtons } from "../../components/RadioButtons/RadioButtons";
+  semiboldFont,
+  colorBlueberry,
+} from '../../variables';
+import {RadioButtons} from '../../components/RadioButtons/RadioButtons';
+import {IGlobalState} from '../../coreTypes';
+import {Loader} from '../../components/Loader/Loader';
 
-const mapStateToProps = state => ({
-  filterValue: state.StoreState.filterValue
+const mapStateToProps = (state: IGlobalState) => ({
+  isFetchingCat: state.StoreState.isFetchingCat,
+  filterValue: state.StoreState.filterValue,
+  isFetching: state.StoreState.isFetching,
+  goods: state.StoreState.goods,
+  dataType: state.StoreState.dataType,
 });
-const mapDispatchToProps = dispatch => ({
+
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   openStoreModal: () => dispatch(openStoreModal()),
-  setFilterValue: (val: boolean) => dispatch(setFilterValue(val))
+  setFilterValue: (val: boolean) => dispatch(setFilterValue(val)),
+  getProductsCategoryType: (type: string) =>
+    dispatch(getProductsCategoryType(type) as any),
+  getProduct: (val: string) => dispatch(getProduct(val) as any),  
 });
 
 const options = [
   {
-    key: "1",
-    text: "All"
+    key: '1',
+    text: 'All',
   },
   {
-    key: "2",
-    text: "Featured"
+    key: '2',
+    text: 'Featured',
   },
   {
-    key: "3",
-    text: "Deals"
-  }
+    key: '3',
+    text: 'Deals',
+  },
 ];
 
 export class Component extends React.PureComponent<StoreItemsProps> {
-  renderItem = ({ item }) => {
-    const { openStoreModal } = this.props;
+  componentDidMount() {
+    const {getProductsCategoryType, prodCatType } = this.props;
+
+    getProductsCategoryType(prodCatType);
+  }
+
+  renderItem = ({item}: any) => {
+    const {openStoreModal, dataType, getProduct} = this.props;
+    const getModal = () => {
+      openStoreModal();
+      getProduct(item.id);
+    };
     return (
-      <TouchableOpacity
-        onPress={() => openStoreModal()}
-        style={styles.card}
-      >
-        <Image style={styles.avatar} source={item.avatar} resizeMode="cover" />
+      <TouchableOpacity onPress={() => getModal()} style={styles.card}>
+        <Image
+          style={styles.avatar}
+          source={{uri: dataType.mediaBasePath + item.icon}}
+          resizeMode="cover"
+        />
         <View style={styles.wrapInfo}>
           <Text style={styles.name}>{item.name}</Text>
 
-          {item.sale ? (
-            <View style={styles.wrapPrizes}>
-              <Text style={styles.salePrizeText}>{`$ + ${item.salePrize}`}</Text>
-              <Text style={styles.prizeText}>{`$ + ${item.prize}`}</Text>
+          {item.discount ? (
+            <View style={styles.wrapPrices}>
+              <Text
+                style={
+                  styles.salePriceText
+                }>{`${item.defaultCurrency} ${item.sellingPrice}`}</Text>
+              <Text
+                style={
+                  styles.priceText
+                }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
+
               <View style={styles.wrapSale}>
-                <Text style={styles.saleText}>{`${item.sale}% OFF`}</Text>
+                <Text style={styles.saleText}>{`${item.discount}% OFF`}</Text>
               </View>
             </View>
           ) : (
-            <View style={styles.wrapPrizes}>
-              <Text style={styles.salePrizeText}>{`$ + ${item.prize}`}</Text>
+            <View style={styles.wrapPrices}>
+              <Text
+                style={
+                  styles.salePriceText
+                }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
             </View>
           )}
         </View>
@@ -75,21 +113,27 @@ export class Component extends React.PureComponent<StoreItemsProps> {
   };
 
   render() {
-    const { filterValue, setFilterValue } = this.props;
+    const {filterValue, setFilterValue, goods, isFetching} = this.props;
     return (
-      <View style={{ flex: 1 }}>
-        <RadioButtons
+      <View style={{flex: 1}}>
+        {/* <RadioButtons
           options={options}
           value={filterValue}
           onPress={val => setFilterValue(val)}
-        />
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          numColumns={2}
-          data={this.props.data}
-          renderItem={this.renderItem}
-          keyExtractor={item => item.id}
-        />
+        /> */}
+        <Loader
+          isDataLoaded={!isFetching}
+          size="large"
+          color={colorBlueberry}>
+          <FlatList
+            showsVerticalScrollIndicator={false}
+            numColumns={2}
+            columnWrapperStyle={styles.row}
+            data={goods}
+            renderItem={this.renderItem}
+            keyExtractor={(item:Product) => item.id}
+          />
+        </Loader>
       </View>
     );
   }
@@ -97,76 +141,83 @@ export class Component extends React.PureComponent<StoreItemsProps> {
 
 export const StoreItems = connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Component);
 
 const styles = StyleSheet.create({
-  card: {
+  row: {
     flex: 1,
+  },
+  card: {
+    flex: 0.5,
     padding: 8,
     marginVertical: 10,
     marginHorizontal: 4,
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 24,
-    shadowColor: "black",
+    shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: 3
+      height: 3,
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
-    justifyContent: "flex-start",
-    alignItems: "center",
-    position: "relative"
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    position: 'relative',
   },
   avatar: {
-    width: "100%",
+    width: '100%',
     height: 200,
-    borderRadius: 16
+    borderRadius: 16,
   },
   wrapInfo: {
-    width: "100%",
-    justifyContent: "space-between",
-    flex: 1
+    width: '100%',
+    justifyContent: 'space-between',
+    flex: 1,
   },
   name: {
-    width: "100%",
+    textAlign: 'center',
+    width: '100%',
     fontSize: 14,
     fontFamily: defaultFont,
     color: colorBlack,
     marginVertical: 8,
-    lineHeight: 22
+    lineHeight: 22,
   },
-  wrapPrizes: {
-    width: "100%",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 8,
-    paddingHorizontal: 4
+  wrapPrices: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    marginBottom: 10,
+    paddingHorizontal: 4,
+    flexWrap: 'wrap',
   },
-  salePrizeText: {
+  salePriceText: {
     color: colorTextRed,
     fontSize: 14,
-    fontFamily: semiboldFont
+    fontFamily: semiboldFont,
   },
-  prizeText: {
+  priceText: {
     color: colorTextGray,
     fontSize: 14,
+    paddingHorizontal: 5,
     fontFamily: defaultFont,
-    textDecorationLine: "line-through"
+    textDecorationLine: 'line-through',
   },
   wrapSale: {
     backgroundColor: colorOrange,
     borderRadius: 2,
     paddingVertical: 2,
     paddingHorizontal: 4,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 5,
   },
   saleText: {
     color: colorBlack,
     fontSize: 10,
-    fontFamily: defaultFont
-  }
+    fontFamily: defaultFont,
+  },
 });

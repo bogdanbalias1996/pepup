@@ -2,7 +2,7 @@ import * as React from 'react';
 import {connect} from 'react-redux';
 import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {FanRequestsProps} from './';
+import {FanRequestsProps, Pepup} from './';
 import {
   colorTextGray,
   colorBlack,
@@ -115,7 +115,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           showsVerticalScrollIndicator={false}
           data={celebPepups}
           renderItem={this.renderItemCeleb}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={(item: Pepup) => item.id}
         />
       </Loader>
     );
