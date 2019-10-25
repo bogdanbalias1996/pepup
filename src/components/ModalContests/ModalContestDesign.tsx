@@ -47,6 +47,7 @@ export class Component extends React.Component<ModalContestTestProps> {
       const mediaTypeImage =
         contestData.dataInfo['contest-info'].submissionInfo.mediaType ===
         'PHOTO';
+      // const mediaTypeImage = false;
 
       const result = await hanlder({
         mediaTypes: mediaTypeImage
@@ -58,7 +59,6 @@ export class Component extends React.Component<ModalContestTestProps> {
       });
 
       if (!result.cancelled) {
-        console.log(JSON.stringify(result, null, 2));
         let array = values.media.length ? values.media : [];
         array.push({
           mediaItem: {
@@ -98,7 +98,6 @@ export class Component extends React.Component<ModalContestTestProps> {
   };
 
   render() {
-    console.log('SUCCESS', this.props.submitEntryData);
     const {
       closeContestTestModal,
       isModalTestShown,
@@ -113,6 +112,7 @@ export class Component extends React.Component<ModalContestTestProps> {
       contestData.dataInfo['contest-info'].submissionInfo.requiresMedia;
     const mediaTypeImage =
       contestData.dataInfo['contest-info'].submissionInfo.mediaType === 'PHOTO';
+    // const mediaTypeImage = false;
 
     const formattedErrorString = Object.keys(errors)
       .reduce((acc: Array<string>, key: string) => {

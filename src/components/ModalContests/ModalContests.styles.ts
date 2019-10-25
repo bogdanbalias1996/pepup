@@ -26,7 +26,7 @@ export default StyleSheet.create({
     alignSelf: 'center',
   },
   modal: {
-    marginTop: 20,
+    marginTop: 40,
     zIndex: 100,
     flex: 1,
     borderTopLeftRadius: 32,

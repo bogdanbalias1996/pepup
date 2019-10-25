@@ -193,8 +193,8 @@ export const submitEnrty = (values: any, id: string, type: string) => {
       variables: {
         entry: JSON.stringify({submissionEntry: {responses: responses}}),
         mediaData: {
-          name: media[0].id,
-          uri: media[0].uri,
+          name: media[0].mediaItem.id,
+          uri: media[0].mediaItem.uri,
         },
         mediaType: type,
       },
@@ -207,7 +207,7 @@ export const submitEnrty = (values: any, id: string, type: string) => {
     })
       .then(res => {
         dispatch(receiveSubmitEntry(res));
-        // console.log(`SUCCESS MEDIA`, res);
+        console.log(`SUCCESS MEDIA`, JSON.stringify(res, null, 2));
       })
       .catch(err => {
         dispatch(failureSubmitEntry());

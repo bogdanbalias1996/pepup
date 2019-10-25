@@ -65,9 +65,9 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         style={[
           styles.modal,
           {
-            maxHeight: '100%',
+            maxHeight: this.state.heightDescription + THRESHOLD,
             height: '100%',
-            marginTop: 20,
+            marginTop: 50,
           },
         ]}>
         {Object.keys(contestData).length !== 0 ? (
