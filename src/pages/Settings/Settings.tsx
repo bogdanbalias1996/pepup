@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { Dispatch } from 'redux';
 
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { goBack } from '../../navigationService';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
 import { colorLightGreyBlue } from '../../variables';
 import { logoutUser } from '../Login/actions';
-import { ConnectedHeader } from './Settings.header';
 
 const ListItem = ({
   title = '',
@@ -35,7 +36,20 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export class Component extends React.PureComponent<SettingsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (props: any) => <ConnectedHeader {...props} navigation={navigation} />
+    header: (props: any) => (
+      <HeaderRounded
+        {...props}
+        navigation={navigation}
+        title={'Settings'.toUpperCase()}
+        getLeftComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Icon name="left" />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )
   });
 
   render() {

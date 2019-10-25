@@ -118,7 +118,7 @@ export const MainNavigator = createStackNavigator({
   Tabs: {
     screen: TabsNavigator,
     navigationOptions: {
-      header: null,
+      header: () => {}
     },
   },
   Settings: SettingsScreen,
