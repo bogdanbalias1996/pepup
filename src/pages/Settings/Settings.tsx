@@ -1,43 +1,20 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import { Dispatch } from 'redux';
 
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { goBack } from '../../navigationService';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { SettingsScreenProps } from '.';
-import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { goBack } from '../../navigationService';
 import { colorLightGreyBlue } from '../../variables';
 import { logoutUser } from '../Login/actions';
 
-const Header = props => (
-  <HeaderRounded
-    {...props}
-    title={'Settings'.toUpperCase()}
-    getLeftComponent={() => {
-      return (
-        <TouchableOpacity onPress={() => goBack()}>
-          <Icon name="left" />
-        </TouchableOpacity>
-      );
-    }}
-  />
-);
-
-const mapStateToProps = state => ({});
-const mapDispatchToProps = dispatch => ({
-  logoutUser: () => dispatch(logoutUser() as any)
-});
-
-const ConnectedHeader = connect(
-  mapStateToProps,
-  null
-)(Header);
-
 const ListItem = ({
-  title,
-  onPress,
+  title = '',
+  onPress = () => {},
   withIcon = false,
   style = {},
   styleText = {}
@@ -48,18 +25,36 @@ const ListItem = ({
       onPress={() => !!onPress && onPress()}
     >
       <Text style={[styles.listItemText, styleText]}>{title}</Text>
-      {!!withIcon && <Icon name="next" color={colorLightGreyBlue} size={24} />}
+      {!!withIcon && <Icon name="next" color={colorLightGreyBlue} />}
     </TouchableOpacity>
   );
 };
 
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logoutUser: () => dispatch(logoutUser() as any)
+});
+
 export class Component extends React.PureComponent<SettingsScreenProps> {
-  static navigationOptions = ({ navigation }) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (props: any) => (
+      <HeaderRounded
+        {...props}
+        navigation={navigation}
+        title={'Settings'.toUpperCase()}
+        getLeftComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Icon name="left" />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )
   });
 
   render() {
     const { logoutUser } = this.props;
+
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
@@ -101,6 +96,6 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
 }
 
 export const SettingsScreen = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(Component);

@@ -35,7 +35,7 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
       [ScreenName]: ScreenComponent,
     }),
     navigationOptions: ({navigation}: any) => ({
-      headerTransparent: true,
+      headerTransparent: true
     }),
   };
 };
@@ -118,7 +118,7 @@ export const MainNavigator = createStackNavigator({
   Tabs: {
     screen: TabsNavigator,
     navigationOptions: {
-      header: null,
+      header: () => {}
     },
   },
   Settings: SettingsScreen,
