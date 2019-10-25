@@ -78,7 +78,8 @@ export default StyleSheet.create({
     marginBottom: 90
   },
   modalFooterContest: {
-    marginBottom: 50
+    marginBottom: 50,
+    backgroundColor: 'transparent'
   },
   btnCancel: {
     width: 48,

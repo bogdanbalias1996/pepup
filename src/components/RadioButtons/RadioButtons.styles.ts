@@ -18,7 +18,8 @@ export default StyleSheet.create({
   },
   btn: {
     borderRadius: 15,
-    paddingHorizontal: 10,
+    paddingLeft: 10,
+    paddingVertical: 5,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
@@ -27,24 +28,27 @@ export default StyleSheet.create({
   },
   btnGradientDark: {
     borderRadius: 15,
-    height: 30,
     width: "48%",
     padding: 1,
     marginBottom: 10
   },
   btnGradient: {
     borderRadius: 15,
-    height: 30,
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginHorizontal: 7
+    flexGrow: 1
   },
-  btnText: {
-    textAlign: 'left',
+  btnTextQuiz: {
+    textAlign: "left",
     fontSize: 14,
     fontFamily: defaultFont,
     color: colorBlack
+  },
+  btnText: {
+    textAlign: "center",
+    fontSize: 14,
+    fontFamily: defaultFont,
+    color: colorBlack,
   },
   qText: {
     fontSize: 16,

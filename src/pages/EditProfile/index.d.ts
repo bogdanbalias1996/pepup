@@ -8,7 +8,7 @@ import { AlertProps } from "../../components/SuccessfulAlert";
 
 export type EditProfileScreenStateProps = {
     navigationOptions?: NavigationScreenOptions;
-    profileData: Profile;
+    profileData?: Profile | null;
     isFetching?: boolean;
     userId: string;
 }
@@ -18,6 +18,7 @@ export type EditProfileScreenFromData = EditProfileScreenStateProps & EditProfil
 export type EditProfileScreenDispatchProps = {
     editProfile: (data: EditProfileScreenFromData, setErrors: any) => Promise<any>;
     openAlert: (data: AlertProps) => Promise<any>;
+    openVideoRecordModal: () => void;
 };
 
 export type profileInfo = {

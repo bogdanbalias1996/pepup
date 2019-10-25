@@ -42,8 +42,6 @@ export class RadioButtons extends React.PureComponent<RadioButtonsProps> {
                     styles.btnText,
                     {
                       color: value.key === item.key ? 'white' : colorBlack,
-                      textAlign: 'center',
-                      width: '100%',
                     },
                   ]}>
                   {item.text}

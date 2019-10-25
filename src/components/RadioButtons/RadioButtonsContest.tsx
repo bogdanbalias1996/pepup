@@ -20,17 +20,16 @@ export class RadioButtonsContest extends React.PureComponent<
       <View>
         <Text style={styles.qText}>{question}</Text>
         <View style={styles.wrapRadioButtonsC}>
-          {options.map(item => {
+          {options.map((item:any, i:number) => {
             return (
               <LinearGradient
-                key={item.key}
+                key={i}
                 start={[0, 0.5]}
                 end={[1, 0.5]}
                 colors={[colorVioletStart, colorVioletEnd]}
                 style={[styles.btnGradientDark]}
               >
                 <LinearGradient
-                  key={item.key}
                   start={[0, 0.5]}
                   end={[1, 0.5]}
                   colors={[colorLightGradStart, colorLightGradEnd]}
@@ -43,14 +42,12 @@ export class RadioButtonsContest extends React.PureComponent<
                       styles.btn,
                       {
                         backgroundColor:
-                        value && value === item.key ? "transparent" : "white",
-                        height: value && value === item.key ? 30 : 28,
-                        width: '100%'
+                        value && value === item ? "transparent" : "white",
                       }
                     ]}
                     onPress={() => onPress(item)}
                   >
-                    <Text style={[styles.btnText, {width: '100%'}]}>{item.text}</Text>
+                    <Text style={styles.btnTextQuiz}>{item}</Text>
                   </TouchableOpacity>
                 </LinearGradient>
               </LinearGradient>

@@ -61,7 +61,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
             <Image
               style={styles.imageLogo}
               source={{uri: item.mediaBasePath + item.organizerLogo}}
-              resizeMode="cover"
+              resizeMode="contain"
             />
             <Text style={styles.title}>{item.title}</Text>
           </View>

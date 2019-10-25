@@ -1,7 +1,7 @@
 import { ButtonGroupStylesProps } from '../ButtonGroup'
 
 export type Tab = {
-  title?: string
+  title: string
   titleComponent?: (isActive: boolean) => JSX.Element
   component: any
   tabStyles?: any

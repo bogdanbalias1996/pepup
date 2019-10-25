@@ -4,5 +4,5 @@ export type PepupNotificationProps = {
     closeNotifyModal: () => void, 
     isModalNotifyShown: boolean, 
     isFetching: boolean, 
-    celebData: Celeb
+    celebData: Celeb | null
 }

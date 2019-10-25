@@ -22,6 +22,7 @@ import {Dispatch} from 'redux';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Event } from '../../pages/Events';
+import { ImageSafe } from '../ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
@@ -53,11 +54,13 @@ export class Component extends React.PureComponent<ModalEventsProps> {
 
   renderItem = ({item}: any) => {
     const {eventData} = this.props;
-    return (
-      <Image
+
+    return (eventData &&
+      <ImageSafe
         style={styles.imageCarousel}
-        source={{uri: eventData.mediaBasePath + item.link}}
-        resizeMode="cover"
+        iconSource={{uri: eventData.mediaBasePath + item.link}}
+        resizeModeImg="cover"
+        isLoaded={!!item.link}
       />
     );
   };

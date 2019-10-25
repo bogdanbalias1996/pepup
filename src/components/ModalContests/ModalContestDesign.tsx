@@ -6,7 +6,7 @@ import { Dispatch } from 'redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { closeContestTestModal } from '../../pages/Contests/actions';
+import { closeContestQuizModal } from '../../pages/Contests/actions';
 import { Icon } from '../Icon/Icon';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
 import { ModalContestQuizProps } from '.';
@@ -23,7 +23,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestTestModal: () => dispatch(closeContestTestModal())
+  closeContestQuizModal: () => dispatch(closeContestQuizModal())
 });
 
 const TestSchema = Yup.object().shape({
@@ -34,16 +34,17 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
   handleSubmit = () => {};
 
   render() {
-    const { closeContestTestModal, isModalTestShown, contestData } = this.props;
+    const { closeContestQuizModal, isModalTestShown, contestData } = this.props;
 
     return (
+      contestData &&
       <Modal
         isOpen={isModalTestShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
         swipeArea={100}
-        onClosed={() => closeContestTestModal()}
+        onClosed={() => closeContestQuizModal()}
         style={styles.modal}
       >
         <View style={styles.wrapModalContent}>
@@ -113,7 +114,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                   <View style={[styles.modalFooter, styles.modalFooterContest]}>
                     <TouchableOpacity
                       style={styles.btnCancel}
-                      onPress={() => closeContestTestModal()}
+                      onPress={() => closeContestQuizModal()}
                     >
                       <Icon size={24} name="cancel" color={colorBlack} />
                     </TouchableOpacity>

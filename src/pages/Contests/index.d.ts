@@ -10,12 +10,11 @@ export type Contest = {
   title: string,
   type: string,
   organizerLogo: string,
+  creator: string
   entries: number,
-  data: string,
   contestImage: string,
   creatorInfo: any,
   dataInfo: any,
-  creator: string,
   endDt: string,
   prize: string,
   currency: string,
