@@ -1,7 +1,8 @@
 import * as React from 'react';
-import { Text, TouchableOpacity, FlatList } from 'react-native';
+import {Text, TouchableOpacity, FlatList} from 'react-native';
 import styles from './ButtonGroup.styles';
-import { ButtonGroupProps, ButtonGroupItem } from './';
+import {ButtonGroupProps, ButtonGroupItem} from './';
+
 
 export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   state: {
@@ -27,13 +28,17 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
       selectedItem: item,
     });
 
-    this.btnGroupRef.current.scrollToIndex({animated: true, index, viewPosition: 0.5 })
+    this.btnGroupRef.current.scrollToIndex({
+      animated: true,
+      index,
+      viewPosition: 0.5,
+    });
 
     if (item.onPress) item.onPress();
   };
 
-  renderItem = ({ item, index }: any) => {
-    const { selectedItem } = this.state;
+  renderItem = ({item, index}: any) => {
+    const {selectedItem} = this.state;
     const {
       items,
       stylesFirstItem = {},
@@ -77,7 +82,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   };
 
   render() {
-    const { items, style = {} } = this.props;
+    const {items, style = {}} = this.props;
 
     return (
       <FlatList

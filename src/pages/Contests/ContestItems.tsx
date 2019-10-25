@@ -24,7 +24,8 @@ import { Loader } from '../../components/Loader/Loader';
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openContestModal: () => dispatch(openContestModal()),
   getContest: (contestId: string) => dispatch(getContest(contestId) as any),
-  getContestsByCategory: (id: string) => dispatch(getContestsByCategory(id) as any),
+  getContestsByCategory: (id: string) =>
+    dispatch(getContestsByCategory(id) as any),
 });
 
 const mapStateToProps = (state: IGlobalState) => ({

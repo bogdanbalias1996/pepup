@@ -14,7 +14,8 @@ export default StyleSheet.create({
   form: {
     marginTop: 20,
     flex: 1,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    position: 'relative'
   },
   formErrorContainer: {
     flexDirection: "row",
@@ -34,9 +35,14 @@ export default StyleSheet.create({
   footer: {
     flexDirection: "row",
     justifyContent: "center",
-    marginBottom: 50,
+    marginBottom: 40,
     flexGrow: 1,
-    paddingHorizontal: 24
+    paddingHorizontal: 24,
+    backgroundColor: 'transparent',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   btnCancel: {
     width: 48,
@@ -57,5 +63,6 @@ export default StyleSheet.create({
     paddingLeft: 40,
     marginBottom: 25
   },
-  scrollview: { flexShrink: 1 }
+  scrollview: { flexShrink: 1 },
+  scrollContent: { paddingBottom: 90 }
 });
