@@ -61,8 +61,8 @@ export const Component: React.SFC<LoginScreenProps> = ({
           <Text style={styles.title}>Sign In</Text>
           <Formik
             initialValues={{
-              email: 'prashanth238@gmail.com',
-              password: 'testing'
+              email: '',
+              password: ''
             }}
             validationSchema={LoginSchema}
             onSubmit={handleSubmit}
@@ -131,7 +131,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
               <Text style={styles.createAccountLink}>Sign Up</Text>
             </Text>
           </TouchableOpacity>
-          <Text style={styles.loginWithText}>Log In with</Text>
+          {/* <Text style={styles.loginWithText}>Log In with</Text>
           <View style={styles.wrapSocialBtns}>
             <ButtonStyled
               style={styles.fbButton}
@@ -147,7 +147,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
               text="Google"
               iconName="google"
             />
-          </View>
+          </View> */}
         </View>
       </KeyboardAwareScrollView>
     </PepupBackground>

@@ -12,7 +12,7 @@ import {Video} from 'expo-av';
 import {closeContestTestModal, submitEnrty} from '../../pages/Contests/actions';
 import {Icon} from '../Icon/Icon';
 import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
-import {ModalContestTestProps} from '.';
+import {ModalContestQuizProps} from './';
 import styles from './ModalContests.styles';
 import {
   colorBlack,
@@ -21,6 +21,8 @@ import {
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {TextInputBorderStyled} from '../TextInputStyled/TextInputBorderStyled';
+import {SuccessfulAlert} from '../SuccessfulAlert/SuccessfulAlert';
+import {ErrorModal} from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -31,10 +33,10 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestTestModal: () => dispatch(closeContestTestModal()),
-  submitEnrty: (values: any, id: string, type: string) =>
-    dispatch(submitEnrty(values, id, type) as any),
+  submitEnrty: (values: any, id: string, type: string, contestType: string) =>
+    dispatch(submitEnrty(values, id, type, contestType) as any),
 });
-export class Component extends React.Component<ModalContestTestProps> {
+export class Component extends React.Component<ModalContestQuizProps> {
   state = {
     image: null,
   };
@@ -241,6 +243,8 @@ export class Component extends React.Component<ModalContestTestProps> {
             </View>
           </View>
         </View>
+        <SuccessfulAlert />
+        <ErrorModal />
       </ModalBox>
     );
   }
@@ -262,6 +266,7 @@ const ContestForm = withFormik({
       values,
       props.contestData.id,
       props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
+      props.contestData.type,
     );
   },
 })(Component);

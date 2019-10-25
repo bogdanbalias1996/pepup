@@ -8,9 +8,14 @@ export type ModalContestsProps = {
   text?: string;
 };
 
-export type ModalContestTestProps = {
+export type ModalContestQuizProps = {
   closeContestTestModal: () => void;
-  submitEnrty: (values: any, id: string, type: string) => void;
+  submitEnrty: (
+    values: any,
+    id: string,
+    type: string,
+    contestType: string,
+  ) => void;
   isModalTestShown: boolean;
   isFetching: boolean;
   contestData: Contest;

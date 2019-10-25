@@ -45,6 +45,7 @@ export default StyleSheet.create({
     },
     disclaimerText: {
         color: colorTextGray,
+        backgroundColor: 'white',
         lineHeight: 22,
         alignSelf: 'flex-start',
         fontFamily: defaultFont

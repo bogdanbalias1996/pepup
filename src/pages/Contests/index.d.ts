@@ -7,14 +7,16 @@ export type Contest = {
   title: string;
   type: string;
   organizerLogo: string;
-  entries: number;
-  data: string;
-  contestImage: string;
   creator: string;
-  createdOn: number;
-  endDt: number;
+  entries: number;
+  contestImage: string;
+  creatorInfo: any;
+  dataInfo: any;
+  endDt: string;
   prize: string;
   currency: string;
+  mediaBasePath: string;
+  createdOnDt: string;
   markedForDelete: boolean;
 };
 
@@ -27,11 +29,12 @@ export type ContestsScreenStateProps = {
 export type ContestsScreenDispatchProps = {};
 
 export type ContestItemsProps = {
-  getAllContests: () => Promise<any>;
+  getContestsByCategory: (id: string) => Promise<any>;
   contests: Array<Contest>;
   openContestModal: () => void;
   getContest: (contestId: string) => Promise<any>;
   isFetching: boolean;
+  categoryId: string;
 };
 
 export type ContestsScreenProps = ContestsScreenStateProps &

@@ -4,6 +4,7 @@ import {View, Image, Text, TouchableOpacity} from 'react-native';
 import {Dispatch} from 'redux';
 
 import {IGlobalState} from '../../coreTypes';
+import {ModalPepup} from '../../components/ModalPepup/ModalPepup';
 import {ModalRecordVideo} from '../../components/ModalRecordVideo/ModalRecordVideo';
 import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
 import {Icon} from '../../components/Icon/Icon';
@@ -22,6 +23,7 @@ import {ProfileScreenProps, HeaderProps} from '.';
 import {NotificationItems} from './NotificationItems';
 import {History} from './History';
 import {FanRequests} from './FanRequests';
+import {openPepupModal, getCeleb} from '../Pepups/actions';
 
 const Header = (props: HeaderProps) => (
   <HeaderRounded
@@ -46,6 +48,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (handle: string) => dispatch(getProfile(handle) as any),
   openVideoRecordModal: () => dispatch(openVideoRecordModal()),
+  openPepupModal: () => dispatch(openPepupModal()),
+  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
   fulfillPepupRequest: (video: any) =>
     dispatch(fulfillPepupRequest(video) as any),
   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
@@ -56,6 +60,7 @@ const ConnectedHeader = connect(
   null,
 )(Header);
 
+const ROLE_CELEB = 'REGULAR,CELEBRITY';
 export class Component extends React.PureComponent<ProfileScreenProps> {
   static navigationOptions = ({navigation}: any) => ({
     header: (props: any) => (
@@ -109,25 +114,45 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
   };
 
   render() {
-    const {profileData, openVideoRecordModal, fulfillPepupRequest} = this.props;
+    const {
+      profileData,
+      openVideoRecordModal,
+      fulfillPepupRequest,
+      openPepupModal,
+      getCeleb,
+    } = this.props;
+    const getModal = () => {
+      openPepupModal();
+      getCeleb(profileData.id);
+    };
 
     return (
       <PepupBackground>
-        <Image
-          style={styles.avatar}
-          source={
-            profileData.icon
-              ? {uri: profileData.icon}
-              : require('../../../assets/avatarPlaceholder.png')
-          }
-          resizeMode="cover"
-        />
+        <View style={styles.avatarsWrap}>
+          <Image
+            style={styles.avatar}
+            source={
+              profileData.icon
+                ? {uri: profileData.icon}
+                : require('../../../assets/avatarPlaceholder.png')
+            }
+            resizeMode="cover"
+          />
+          {profileData.role === ROLE_CELEB ? (
+            <TouchableOpacity onPress={() => getModal()}>
+              <Image
+                style={[styles.avatar, styles.avatarCeleb]}
+                source={require('../../../assets/celebAvatar.png')}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          ) : null}
+        </View>
         <View style={styles.titleWrap}>
           <Text style={styles.title}>{profileData.name || ''}</Text>
           <TouchableOpacity
             onPress={
-              // profileData.role === 'REGULAR,CELEBRITY'
-              profileData.role === 'DF'
+              profileData.role === ROLE_CELEB
                 ? () => navigate({routeName: 'EditProfileCeleb'})
                 : () => navigate({routeName: 'EditProfile'})
             }>
@@ -140,8 +165,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         </TouchableOpacity>
 
         <View style={styles.wrapContent}>
-          {// profileData.role === 'REGULAR,CELEBRITY'
-          profileData.role === 'DF' ? (
+          {profileData.role === ROLE_CELEB ? (
             <Tabs
               config={this.tabsConfigCeleb}
               style={{flex: 1}}
@@ -164,6 +188,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
           )}
         </View>
         <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
+        <ModalPepup />
       </PepupBackground>
     );
   }

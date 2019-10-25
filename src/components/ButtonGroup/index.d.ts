@@ -6,6 +6,7 @@ export type ButtonGroupStylesProps = {
   stylesItemText?: any
   stylesSelectedItem?: any
   stylesSelectedItemText?: any
+  index?: number
 }
 
 export type ButtonGroupComponentProps = {

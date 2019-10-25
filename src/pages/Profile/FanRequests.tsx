@@ -1,8 +1,14 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import { connect } from 'react-redux';
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 
-import {FanRequestsProps} from './';
+import {FanRequestsProps, Pepup} from './';
 import {
   colorTextGray,
   colorBlack,
@@ -16,15 +22,15 @@ import {
   semiboldFont,
   colorBlueberry,
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {Dispatch} from 'redux';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getCelebPepups } from './actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
   userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching
+  isFetching: state.ProfileState.isFetching,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
@@ -32,8 +38,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 export class Component extends React.PureComponent<FanRequestsProps> {
   componentDidMount() {
-    const {getCelebPepups, userId} = this.props;
-    
+    const { getCelebPepups, userId } = this.props;
+
     getCelebPepups(userId);
   }
 
@@ -66,8 +72,8 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     }
   };
 
-  renderItemCeleb = ({item}: any) => {
-    const {msg, statusColor, onPress} = this.getStatusCeleb(
+  renderItemCeleb = ({ item }: any) => {
+    const { msg, statusColor, onPress } = this.getStatusCeleb(
       item.type,
       item.name,
     );
@@ -77,7 +83,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{color: statusColor}}>{item.type}</Text> -{' '}
+              <Text style={{ color: statusColor }}>{item.type}</Text> -{' '}
               <Text style={styles.name}>{item.name}</Text>
             </Text>
             <Text style={styles.date}>{item.date}</Text>
@@ -87,7 +93,11 @@ export class Component extends React.PureComponent<FanRequestsProps> {
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text
-                  style={[styles.text, {color: statusColor}, styles.completed]}>
+                  style={[
+                    styles.text,
+                    { color: statusColor },
+                    styles.completed,
+                  ]}>
                   Click to watch.
                 </Text>
               </Text>
@@ -106,16 +116,13 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   render() {
     const { isFetching, celebPepups } = this.props;
     return (
-      <Loader
-        isDataLoaded={!isFetching}
-        size="large"
-        color={colorBlueberry}>
+      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={celebPepups}
           renderItem={this.renderItemCeleb}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={(item: Pepup) => item.id}
         />
       </Loader>
     );

@@ -9,7 +9,7 @@ export type ModalPepupProps = {
   celebData: Celeb | null;
   openReviewsModal: () => void;
   getAllReviews: (id: string) => Promise<any>;
-  getCeleb: (id: string) => Promise<any>;
+  getCeleb?: (id: string) => Promise<any>;
 };
 
 export type ModalReviewsProps = {
@@ -19,4 +19,9 @@ export type ModalReviewsProps = {
   celebData: Celeb | null;
   isFetching?: boolean;
 };
+
+export type RenderItemMedia = {
+  date: string,
+  title: string
+}
 

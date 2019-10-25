@@ -5,6 +5,7 @@ import {IAction} from '../../coreTypes';
 import {Contest} from '.';
 import {openError, closeError} from '../ErrorModal/actions';
 import {navigate} from '../../navigationService';
+import {openAlert, closeAlert} from '../Alert/actions';
 
 export const OPEN_CONTEST_MODAL = 'OPEN_CONTEST_MODAL';
 export const CLOSE_CONTEST_MODAL = 'CLOSE_CONTEST_MODAL';
@@ -50,11 +51,14 @@ export const failureAllContests = (): IAction<undefined> => {
   };
 };
 
-export const getAllContests = () => {
+export const getContestsByCategory = (categoryId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllContests());
     request({
-      operation: ApiOperation.GetAllContests,
+      operation: ApiOperation.GetContestsByCategory,
+      params: {
+        category: categoryId,
+      },
     })
       .then(res => {
         dispatch(receiveAllContests(res));
@@ -63,7 +67,7 @@ export const getAllContests = () => {
             openError({
               type: 'noResults',
               onPress: () => {
-                dispatch(getAllContests() as any);
+                dispatch(getContestsByCategory(categoryId) as any);
               },
             }),
           );
@@ -75,7 +79,7 @@ export const getAllContests = () => {
           openError({
             type: 'unknown',
             onPress: () => {
-              dispatch(getAllContests() as any);
+              dispatch(getContestsByCategory(categoryId) as any);
             },
           }),
         );
@@ -182,22 +186,43 @@ export const failureSubmitEntry = (): IAction<undefined> => {
   };
 };
 
-export const submitEnrty = (values: any, id: string, type: string) => {
+export const submitEnrty = (
+  values: any,
+  id: string,
+  type: string,
+  contestType: string,
+) => {
   const {media, ...rest} = values;
-  const responses = Object.values(rest).map(answer => ({response: answer}));
+  const responses =
+    contestType === 'PHOTO'
+      ? Object.values(rest).map(answer => ({question: answer}))
+      : Object.keys(rest).map(key => ({
+          question: key,
+          selectedOption: rest[key],
+        }));
 
-  return (dispatch: Dispatch) => {
-    dispatch(requestSubmitEntry());
-    request({
-      operation: ApiOperation.SubmitEntryContest,
-      variables: {
+  const getVariables = () => {
+    if (contestType === 'PHOTO') {
+      return {
         entry: JSON.stringify({submissionEntry: {responses: responses}}),
         mediaData: {
           name: media[0].mediaItem.id,
           uri: media[0].mediaItem.uri,
         },
         mediaType: type,
-      },
+      };
+    } else {
+      return {
+        entry: JSON.stringify({submissionEntry: {answers: responses}}),
+      };
+    }
+  };
+
+  return (dispatch: Dispatch) => {
+    dispatch(requestSubmitEntry());
+    request({
+      operation: ApiOperation.SubmitEntryContest,
+      variables: getVariables(),
       params: {
         contestId: id,
       },
@@ -207,12 +232,30 @@ export const submitEnrty = (values: any, id: string, type: string) => {
     })
       .then(res => {
         dispatch(receiveSubmitEntry(res));
+        dispatch(
+          openAlert({
+            title: 'Entry Submitted',
+            text:
+              'Your entry to the contest has been submitted. Look out for further details in your email. ',
+            onPress: () => {
+              dispatch(closeAlert());
+              dispatch(closeContestModal());
+            },
+          }),
+        );
         console.log(`SUCCESS MEDIA`, JSON.stringify(res, null, 2));
       })
       .catch(err => {
         dispatch(failureSubmitEntry());
-        // console.log(`ERROR MEDIA: `, err);
-        console.error(JSON.stringify(err, null, 2));
+        dispatch(
+          openError({
+            type: 'paymentFail',
+            onPress: () => {
+              dispatch(submitEnrty(values, id, type, contestType) as any);
+            },
+          }),
+        );
+        console.log(`ERROR MEDIA: `, JSON.stringify(err, null, 2));
       });
   };
 };

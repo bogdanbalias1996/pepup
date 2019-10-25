@@ -4,6 +4,7 @@ import { request } from '../../api/network'
 import { SignupScreenFromData, AuthResponse } from './'
 import { navigate } from '../../navigationService'
 import { IAction } from "../../coreTypes";
+import { openError } from '../ErrorModal/actions'
 
 export const REQUEST_SIGNUP_USER = "REQUEST_SIGNUP_USER";
 export const requestSignUpUser = (): IAction<undefined> => {
@@ -33,8 +34,6 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
   return (dispatch: Dispatch) => {
     const { email, password, name } = payload
 
-    // Temporary solution for tracking error states
-    const headers = email ? null : { 'Prefer': 'status=400' }
     dispatch(requestSignUpUser());
     request({
       operation: ApiOperation.SignUp,
@@ -44,7 +43,6 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
         name
       },
       headers: {
-        ...headers,
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
@@ -54,6 +52,10 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
       })
       .catch((err) => {
         dispatch(failureSignUpUser());
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(signupUser(payload, setErrors, navigation) as any) }
+        }))
         const { error = 'This email is already registered' } = err.response.body
         setErrors({
           'email': error,
