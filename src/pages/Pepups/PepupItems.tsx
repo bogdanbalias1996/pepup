@@ -5,10 +5,9 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ActivityIndicator,
   View,
 } from 'react-native';
-import {connect, MapStateToProps} from 'react-redux';
+import {connect} from 'react-redux';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Dispatch} from 'redux';
 
@@ -51,23 +50,30 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     };
 
     return (
-      <TouchableOpacity onPress={() => getModal()} style={styles.card}>
-        <Image
-          style={styles.avatar}
-          source={{uri: item.userInfo.icon}}
-          resizeMode="cover"
-        />
-        <LinearGradient
-          start={[0.5, 0.3]}
-          end={[0.5, 1]}
-          colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
-          style={styles.wrapContent}>
-          <Text style={styles.name}>{item.userInfo.name}</Text>
-          <Text style={styles.status} numberOfLines={2} ellipsizeMode="tail">
-            {item.dataInfo.intro}
-          </Text>
-        </LinearGradient>
-      </TouchableOpacity>
+      <View style={{ flex: 0.5 }}>
+        <TouchableOpacity
+          onPress={() => getModal()}
+          style={styles.card}
+          activeOpacity={1}
+        >
+          <Image
+            style={styles.avatar}
+            source={{uri: item.userInfo.icon}}
+            resizeMode="cover"
+          />
+          <LinearGradient
+            start={[0.5, 0.3]}
+            end={[0.5, 1]}
+            colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
+            style={styles.wrapContent}
+          >
+            <Text style={styles.name}>{item.userInfo.name}</Text>
+            <Text style={styles.status} numberOfLines={2} ellipsizeMode="tail">
+              {item.dataInfo.intro}
+            </Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -93,6 +99,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
+            horizontal={false}
             columnWrapperStyle={styles.row}
             data={celebs}
             renderItem={this.renderItem}
@@ -114,7 +121,6 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    flex: 0.5,
     padding: 8,
     marginVertical: 8,
     marginHorizontal: 4,
@@ -131,7 +137,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative',
-    height: 220,
+    height: 220
   },
   avatar: {
     width: '100%',
