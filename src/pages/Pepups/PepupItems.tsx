@@ -19,7 +19,7 @@ import {
   setCategory,
   getFeaturedCelebs,
 } from './actions';
-import {PepupItemsProps, Celeb, Category, PepupsScreenDispatchProps} from './';
+import {PepupItemsProps, Celeb } from './';
 import {
   colorLightGray,
   colorBlueberry,
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebsByCategory: (id: string) => dispatch(getCelebsByCategory(id) as any),
   getFeaturedCelebs: () => dispatch(getFeaturedCelebs() as any),
   getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  setCategory: (cat: Category) => dispatch(setCategory(cat) as any),
+  setCategory: (cat: string) => dispatch(setCategory(cat) as any),
 });
 
 export class Component extends React.PureComponent<PepupItemsProps> {
