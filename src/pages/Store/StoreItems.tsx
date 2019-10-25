@@ -76,7 +76,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
       getProduct(item.id);
     };
 
-    return (
+    return (dataType &&
       <View style={{ flex: 0.5 }}>
         <TouchableOpacity
           onPress={() => getModal()}

@@ -20,12 +20,12 @@ import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 // Icons for BottomTabNavigator
 const Pepups = require('../../assets/pepups.png');
 const PepupsActive = require('../../assets/pepupsActive.png');
-//const Events = require('../../assets/events.png');
-//const EventsActive = require('../../assets/eventsActive.png');
+// const Events = require('../../assets/events.png');
+// const EventsActive = require('../../assets/eventsActive.png');
 const Contests = require('../../assets/contests.png');
 const ContestsActive = require('../../assets/contestsActive.png');
-//const Store = require('../../assets/store.png');
-//const StoreActive = require('../../assets/storeActive.png');
+// const Store = require('../../assets/store.png');
+// const StoreActive = require('../../assets/storeActive.png');
 const Profile = require('../../assets/profile.png');
 const ProfileActive = require('../../assets/profileActive.png');
 
@@ -43,9 +43,9 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
 export const TabsNavigator = createBottomTabNavigator(
   {
     Pepups: formatScreenProps('Pepups', PepupsScreen),
-    //Events: formatScreenProps('Events', EventsScreen),
+    // Events: formatScreenProps('Events', EventsScreen),
     Contests: formatScreenProps('Contests', ContestsScreen),
-    //Store: formatScreenProps('Store', StoreScreen),
+    // Store: formatScreenProps('Store', StoreScreen),
     Profile: formatScreenProps('Profile', ProfileScreen),
   },
   {

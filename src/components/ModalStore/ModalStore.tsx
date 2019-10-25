@@ -4,17 +4,17 @@ import {
   Text,
   View,
   FlatList,
-  ScrollView
+  ScrollView,
 } from 'react-native';
-import {connect} from 'react-redux';
+import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
-import {Dispatch} from 'redux';
+import { Dispatch } from 'redux';
 import ModalSelector from 'react-native-modal-selector';
 
-import {closeStoreModal} from '../../pages/Store/actions';
-import {Icon} from '../Icon/Icon';
-import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
-import {ModalStoreProps} from '.';
+import { closeStoreModal } from '../../pages/Store/actions';
+import { Icon } from '../Icon/Icon';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { ModalStoreProps } from '.';
 import styles from './ModalStore.styles';
 import {
   colorBlack,
@@ -22,7 +22,7 @@ import {
   boldFont,
   defaultFont,
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
+import { IGlobalState } from '../../coreTypes';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { ImageSafe } from '../ImageSafe/ImageSafe';
@@ -52,24 +52,24 @@ const sizeOptions = [
 ];
 
 const quantityOptions = [
-  {key: 1, label: '1'},
-  {key: 2, label: '2'},
-  {key: 3, label: '3'},
-  {key: 4, label: '4'},
-  {key: 5, label: '5'},
-  {key: 6, label: '6'},
-  {key: 7, label: '7'},
-  {key: 8, label: '8'},
-  {key: 9, label: '9'},
-  {key: 10, label: '10'},
-  {key: 11, label: '11'},
-  {key: 12, label: '12'},
-  {key: 13, label: '13'},
-  {key: 14, label: '14'},
-  {key: 15, label: '15'},
-  {key: 16, label: '16'},
-  {key: 17, label: '17'},
-  {key: 18, label: '18'},
+  { key: 1, label: '1' },
+  { key: 2, label: '2' },
+  { key: 3, label: '3' },
+  { key: 4, label: '4' },
+  { key: 5, label: '5' },
+  { key: 6, label: '6' },
+  { key: 7, label: '7' },
+  { key: 8, label: '8' },
+  { key: 9, label: '9' },
+  { key: 10, label: '10' },
+  { key: 11, label: '11' },
+  { key: 12, label: '12' },
+  { key: 13, label: '13' },
+  { key: 14, label: '14' },
+  { key: 15, label: '15' },
+  { key: 16, label: '16' },
+  { key: 17, label: '17' },
+  { key: 18, label: '18' },
 ];
 
 const THRESHOLD = 200;
@@ -83,165 +83,178 @@ export class Component extends React.PureComponent<ModalStoreProps> {
     },
     quantity: '',
   };
-  renderItem = ({item}: any) => {
-    const {prodData} = this.props;
+  renderItem = ({ item }: any) => {
+    const { prodData } = this.props;
 
-    return (prodData &&
-      <ImageSafe
-        style={styles.imageCarousel}
-        iconSource={{uri: prodData.mediaBasePath + item.link}}
-        resizeModeImg="contain"
-        isLoaded={!!item.link}
-      />
+    return (
+      prodData && (
+        <ImageSafe
+          style={styles.imageCarousel}
+          iconSource={{ uri: prodData.mediaBasePath + item.link }}
+          resizeModeImg="contain"
+          isLoaded={!!item.link}
+        />
+      )
     );
   };
 
   render() {
-    const {closeStoreModal, isModalShown, prodData} = this.props;
-    const {value} = this.state;
+    const { closeStoreModal, isModalShown, prodData } = this.props;
+    const { value } = this.state;
 
-    return (prodData &&
-      <Modal
-        position="bottom"
-        isOpen={isModalShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={false}
-        swipeArea={100}
-        onClosed={() => closeStoreModal()}
-        style={[
-          styles.modal,
-          {
-            marginTop: 50,
-            maxHeight: this.state.heightDescription + THRESHOLD,
-            height: '100%',
-          },
-        ]}>
-        {Object.keys(prodData).length !== 0 ? (
-          <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
-            <ScrollView style={styles.scrollView}>
-              <View
-                onLayout={event => {
-                  const {height} = event.nativeEvent.layout;
-                  this.setState({heightDescription: height});
-                }}
-                style={styles.insidePadding}>
-                <Text style={styles.title}>{prodData.name}</Text>
-                {prodData.dataInfo.images ? (
-                  <View style={styles.imagesWrap}>
-                    <FlatList
-                      horizontal={true}
-                      contentContainerStyle={{flexGrow:1, justifyContent: 'center'}}
-                      showsHorizontalScrollIndicator={false}
-                      data={prodData.dataInfo.images}
-                      renderItem={this.renderItem}
-                      keyExtractor={(item:{id: string}) => item.id}
-                      style={styles.carousel}
-                    />
-                  </View>
-                ) : null}
-                <Text style={[styles.text, styles.infoText]}>
-                  {prodData.description}
-                </Text>
-                <View style={styles.infoBlock}>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Discounted Price</Text>
-                    <Text style={styles.infoValue}>
-                      {`${prodData.sellingPrice} ${prodData.defaultCurrency}`}
+    return (
+      prodData && (
+        <Modal
+          position="bottom"
+          isOpen={isModalShown}
+          swipeToClose={true}
+          coverScreen={true}
+          useNativeDriver={false}
+          swipeArea={100}
+          onClosed={() => closeStoreModal()}
+          style={[
+            styles.modal,
+            {
+              marginTop: 50,
+              maxHeight: this.state.heightDescription + THRESHOLD,
+              height: '100%',
+            },
+          ]}>
+          {Object.keys(prodData).length !== 0 ? (
+            <View style={styles.wrapModalContent}>
+              <View style={styles.swiperLine} />
+              <ScrollView style={styles.scrollView}>
+                <View style={styles.scrollContent}>
+                  <View
+                    onLayout={event => {
+                      const { height } = event.nativeEvent.layout;
+                      this.setState({ heightDescription: height });
+                    }}
+                    style={styles.insidePadding}>
+                    <Text style={styles.title}>{prodData.name}</Text>
+                    {prodData.dataInfo.images ? (
+                      <View style={styles.imagesWrap}>
+                        <FlatList
+                          horizontal={true}
+                          contentContainerStyle={{
+                            flexGrow: 1,
+                            justifyContent: 'center',
+                          }}
+                          showsHorizontalScrollIndicator={false}
+                          data={prodData.dataInfo.images}
+                          renderItem={this.renderItem}
+                          keyExtractor={(item: { id: string }) => item.id}
+                          style={styles.carousel}
+                        />
+                      </View>
+                    ) : null}
+                    <Text style={[styles.text, styles.infoText]}>
+                      {prodData.description}
                     </Text>
-                  </View>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Regular Price</Text>
-                    <Text style={styles.infoValue}>
-                      {`${prodData.markedPrice} ${prodData.defaultCurrency}`}
-                    </Text>
-                  </View>
-                  <View style={styles.infoItem}>
-                    <Text style={styles.infoLabel}>Discount</Text>
-                    <View style={styles.wrapSale}>
-                      <Text style={styles.saleText}>
-                        {`${prodData.discount}% OFF`}
-                      </Text>
+                    <View style={styles.infoBlock}>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Discounted Price</Text>
+                        <Text style={styles.infoValue}>
+                          {`${prodData.sellingPrice} ${prodData.defaultCurrency}`}
+                        </Text>
+                      </View>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Regular Price</Text>
+                        <Text style={styles.infoValue}>
+                          {`${prodData.markedPrice} ${prodData.defaultCurrency}`}
+                        </Text>
+                      </View>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Discount</Text>
+                        <View style={styles.wrapSale}>
+                          <Text style={styles.saleText}>
+                            {`${prodData.discount}% OFF`}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.wrapChanging}>
+                      <View style={styles.changeItem}>
+                        <Text style={styles.infoLabel}>Choose a size</Text>
+                        <View style={styles.sizeWrap}>
+                          {sizeOptions.map(item => {
+                            return (
+                              <TouchableOpacity
+                                key={item.key}
+                                style={[
+                                  styles.sizeItem,
+                                  {
+                                    backgroundColor:
+                                      value.key === item.key
+                                        ? '#d8d8d8'
+                                        : colorLightGray,
+                                  },
+                                ]}
+                                onPress={() => {
+                                  this.setState({
+                                    value: item,
+                                  });
+                                }}>
+                                <Text
+                                  style={[
+                                    styles.sizeItemText,
+                                    {
+                                      fontFamily:
+                                        value.key === item.key
+                                          ? boldFont
+                                          : defaultFont,
+                                    },
+                                  ]}>
+                                  {item.text}
+                                </Text>
+                              </TouchableOpacity>
+                            );
+                          })}
+                        </View>
+                      </View>
+                      <View style={styles.changeItem}>
+                        <Text style={styles.infoLabel}>Choose quantity</Text>
+                        <ModalSelector
+                          data={quantityOptions}
+                          initValue={'0'}
+                          onChange={(option: { label: any }) => {
+                            this.setState({ quantity: option.label });
+                          }}
+                          cancelStyle={styles.modalCancelStyle}
+                          overlayStyle={styles.modalOverlayStyle}
+                          cancelTextStyle={styles.modalCancelTextStyle}
+                          optionContainerStyle={styles.modalOptionContainer}
+                          optionTextStyle={styles.modalOptionTextStyle}
+                          selectStyle={{
+                            borderRadius: 30,
+                            width: 100,
+                            padding: 5,
+                          }}
+                          cancelText="Cancel"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
-                <View style={styles.wrapChanging}>
-                  <View style={styles.changeItem}>
-                    <Text style={styles.infoLabel}>Choose a size</Text>
-                    <View style={styles.sizeWrap}>
-                      {sizeOptions.map(item => {
-                        return (
-                          <TouchableOpacity
-                            key={item.key}
-                            style={[
-                              styles.sizeItem,
-                              {
-                                backgroundColor:
-                                  value.key === item.key
-                                    ? '#d8d8d8'
-                                    : colorLightGray,
-                              },
-                            ]}
-                            onPress={() => {
-                              this.setState({
-                                value: item,
-                              });
-                            }}>
-                            <Text
-                              style={[
-                                styles.sizeItemText,
-                                {
-                                  fontFamily:
-                                    value.key === item.key
-                                      ? boldFont
-                                      : defaultFont,
-                                },
-                              ]}>
-                              {item.text}
-                            </Text>
-                          </TouchableOpacity>
-                        );
-                      })}
-                    </View>
-                  </View>
-                  <View style={styles.changeItem}>
-                    <Text style={styles.infoLabel}>Choose quantity</Text>
-                    <ModalSelector
-                      data={quantityOptions}
-                      initValue={'0'}
-                      onChange={(option: { label: any; }) => {
-                        this.setState({quantity: option.label});
-                      }}
-                      cancelStyle={styles.modalCancelStyle}
-                      overlayStyle={styles.modalOverlayStyle}
-                      cancelTextStyle={styles.modalCancelTextStyle}
-                      optionContainerStyle={styles.modalOptionContainer}
-                      optionTextStyle={styles.modalOptionTextStyle}
-                      selectStyle={{borderRadius: 30, width: 100, padding: 5}}
-                      cancelText="Cancel"
-                    />
-                  </View>
-                </View>
+              </ScrollView>
+              <View style={styles.modalFooter}>
+                <TouchableOpacity
+                  style={styles.btnCancel}
+                  onPress={() => closeStoreModal()}>
+                  <Icon size={24} name="cancel" color={colorBlack} />
+                </TouchableOpacity>
+                <ButtonStyled
+                  style={styles.btnSubmit}
+                  onPress={() => alert('ok')}
+                  text="Buy Now"
+                />
               </View>
-            </ScrollView>
-            <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closeStoreModal()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
-              <ButtonStyled
-                style={styles.btnSubmit}
-                onPress={() => alert('ok')}
-                text="Buy Now"
-              />
             </View>
-          </View>
-        ) : null}
-        <SuccessfulAlert />
-        <ErrorModal />
-      </Modal>
+          ) : null}
+          <SuccessfulAlert />
+          <ErrorModal />
+        </Modal>
+      )
     );
   }
 }
