@@ -29,8 +29,8 @@ const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation: any;
     title?: any;
-    getLeftComponent?: (() => null) | undefined;
-    getRightComponent?: (() => null) | undefined;
+    getLeftComponent?: (() => null);
+    getRightComponent?: (() => null);
   },
 ) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
 
@@ -85,6 +85,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   render() {
     const {profileData, isFetching, openVideoRecordModal} = this.props;
     return (
+      profileData &&
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Formik

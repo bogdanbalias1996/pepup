@@ -5,6 +5,8 @@ import { IAction } from "../../coreTypes";
 import { Event } from ".";
 import { openError, closeError } from "../ErrorModal/actions";
 import { navigate } from "../../navigationService";
+import { openAlert, closeAlert } from "../Alert/actions";
+import { ModalEventsFromDataProps } from "../../components/ModalEvents";
 
 export const OPEN_EVENT_MODAL = "OPEN_EVENT_MODAL";
 export const CLOSE_EVENT_MODAL = "CLOSE_EVENT_MODAL";
@@ -46,18 +48,21 @@ export const failureAllEvents = (): IAction<undefined> => {
   };
 };
 
-export const getAllEvents = () => {
+export const getEventsByCategory = (categoryId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllEvents());
     request({
-      operation: ApiOperation.GetAllEvents
+      operation: ApiOperation.GetEventsByCategory,
+      params: {
+        category: categoryId
+      }
     })
       .then(res => {
         dispatch(receiveAllEvents(res));
         if (!res.length) {
           dispatch(openError({
             type: 'noResults',
-            onPress: () => { dispatch(getAllEvents() as any) }
+            onPress: () => { dispatch(getEventsByCategory(categoryId) as any) }
           }))
         }
       })
@@ -65,7 +70,7 @@ export const getAllEvents = () => {
         dispatch(failureAllEvents());
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(getAllEvents() as any) }
+          onPress: () => { dispatch(getEventsByCategory(categoryId) as any) }
         }))
       });
   };
@@ -126,3 +131,76 @@ export const getEvent = (eventId: string) => {
       });
   };
 };
+
+export const SET_QUANTITY = "SET_QUANTITY";
+export const setQuantity = (data: string): IAction<string> => {
+  return {
+    type: SET_QUANTITY,
+    data
+  };
+};
+
+export const REQUEST_EVENT_PURCHASE = "REQUEST_EVENT_PURCHASE";
+export const requestEventPurchase = (): IAction<undefined> => {
+  return {
+    type: REQUEST_EVENT_PURCHASE,
+    data: undefined
+  };
+};
+
+export const RECEIVE_EVENT_PURCHASE = "RECEIVE_EVENT_PURCHASE";
+export const receiveEventPurchase = (data: boolean): IAction<boolean> => {
+  return {
+    type: RECEIVE_EVENT_PURCHASE,
+    data
+  };
+};
+
+export const FAILURE_EVENT_PURCHASE = "FAILURE_EVENT_PURCHASE";
+export const failureEventPurchase = (): IAction<undefined> => {
+  return {
+    type: FAILURE_EVENT_PURCHASE,
+    data: undefined
+  };
+};
+
+export const purchaseEventTicket = (eventId: string, payload: ModalEventsFromDataProps) => {
+  return (dispatch: Dispatch) => {
+    const { quantity } = payload;
+
+    dispatch(requestEventPurchase());
+    request({
+      operation: ApiOperation.BuyEventTicket,
+      params: {
+        eventId
+      },
+      variables: {
+        quantity,
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then((res) => {
+        dispatch(receiveEventPurchase(res));
+        dispatch(openAlert({
+          title: 'Purchase Successful',
+          text:
+            'Thanks for purchasing the ticket. Look out for further details in your email. Don’t forget to bookmark your calendar!',
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeEventModal());
+          }
+        }));
+      })
+      .catch((err) => {
+        dispatch(failureEventPurchase());
+        dispatch(openError({
+          type: 'paymentFail',
+          onPress: () => {
+            dispatch(purchaseEventTicket(eventId, payload) as any)
+          }
+        }));
+      })
+  }
+}

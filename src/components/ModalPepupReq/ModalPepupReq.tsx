@@ -56,9 +56,10 @@ export class Component extends React.PureComponent<RequestPepupProps> {
       celebData,
     } = this.props;
 
-    const fullName = celebData.userInfo.name.split(' ');
+    const fullName = celebData ? celebData.userInfo.name.split(' ') : ['', ''];
 
     return (
+      celebData &&
       <Modal
         isOpen={isModalReqShown}
         swipeToClose={true}
@@ -180,7 +181,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <ButtonStyled
                         style={styles.btnSubmit}
                         onPress={() => handleSubmit()}
-                        text={`Request for ${celebData.billRate} INR`}
+                        text={`Request for ${celebData.fee} INR`}
                         loader={isFetching}
                         iconSource={require('../../../assets/coins.png')}
                       />

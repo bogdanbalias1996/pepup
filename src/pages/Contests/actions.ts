@@ -48,18 +48,21 @@ export const failureAllContests = (): IAction<undefined> => {
   };
 };
 
-export const getAllContests = () => {
+export const getContestsByCategory = (categoryId:string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllContests());
     request({
-      operation: ApiOperation.GetAllContests,
+      operation: ApiOperation.GetContestsByCategory,
+      params: {
+        category: categoryId
+      }
     })
       .then(res => {
         dispatch(receiveAllContests(res));
         if (!res.length) {
           dispatch(openError({
             type: 'noResults',
-            onPress: () => { dispatch(getAllContests() as any) }
+            onPress: () => { dispatch(getContestsByCategory(categoryId) as any) }
           }))
         }
       })
@@ -67,7 +70,7 @@ export const getAllContests = () => {
         dispatch(failureAllContests());
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(getAllContests() as any) }
+          onPress: () => { dispatch(getContestsByCategory(categoryId) as any) }
         }))
       });
   };
@@ -129,13 +132,13 @@ export const getContest = (contestId: string) => {
   };
 };
 
-export const openContestTestModal = (): IAction<undefined> => {
+export const openContestQuizModal = (): IAction<undefined> => {
   return {
     type: OPEN_CONTEST_TEST_MODAL,
     data: undefined
   };
 };
-export const closeContestTestModal = (): IAction<undefined> => {
+export const closeContestQuizModal = (): IAction<undefined> => {
   return {
     type: CLOSE_CONTEST_TEST_MODAL,
     data: undefined

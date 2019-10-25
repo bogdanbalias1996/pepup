@@ -1,4 +1,5 @@
 import {NavigationScreenProp, NavigationScreenOptions} from 'react-navigation';
+import { Celeb } from '../Pepups';
 
 export type Profile = {
   email: string;
@@ -19,14 +20,25 @@ export type Profile = {
 };
 
 export type Pepup = {
-  
+  id: string,
+  fulfilled: boolean,
+  featured: boolean,
+  request: string,
+  category: string,
+  requestFor: string,
+  requestDenied: boolean,
+  sharePublicly: boolean,
+  requestedOf: string,
+  requestedBy: string,
+  requestedOn: number,
+  markedForDelete: boolean,
 }
 
 export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
   handle: string;
-  profileData: Profile;
+  profileData: Profile | null;
   userPepups: Array<Pepup>;
   celebPepups: Array<Pepup>;
   pepups: Array<Pepup>;
@@ -38,6 +50,8 @@ export type ProfileScreenDispatchProps = {
   openVideoRecordModal: () => void;
   fulfillPepupRequest: (video: any) => void;
   getUserPepups: (id: string) => Promise<any>;
+  openPepupModal: () => void;
+  getCeleb: (id: string) => Promise<any>;
 };
 
 export type NotificationItemsProps = {
@@ -58,8 +72,10 @@ export type FanRequestsProps = {
 
 export type HistoryItemsProps = {
   pepups: Array<Pepup>;
-  profileData: Profile;
+  profileData: Profile | null;
+  celebData: Celeb | null;
   isFetching: boolean,
+  getCeleb: (id:string) => Promise<any>
   getAllPepups: () => Promise<any>;
 }
 

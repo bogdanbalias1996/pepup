@@ -1,31 +1,42 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {View, Text, TouchableOpacity, Keyboard, ScrollView} from 'react-native';
+import { connect } from 'react-redux';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Keyboard,
+  ScrollView,
+} from 'react-native';
 
-import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
-import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import styles from './EditProfile.styles';
-import {Dispatch} from 'redux';
-import {IGlobalState} from '../../coreTypes';
-import {Formik} from 'formik';
+import { Dispatch } from 'redux';
+import { IGlobalState } from '../../coreTypes';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
-import {TextInputStyledForEdit} from '../../components/TextInputStyled/TextInputStyledForEdit';
-import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
+import { TextInputStyledForEdit } from '../../components/TextInputStyled/TextInputStyledForEdit';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import {
   EditProfileScreenProps,
   EditProfileScreenFromData,
   EditProfileScreenFromFormik,
 } from '.';
-import {editProfile} from './actions';
+import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
-import {format} from 'date-fns';
-import {navigate} from '../../navigationService';
-import {Icon} from '../../components/Icon/Icon';
-import {colorBlack} from '../../variables';
+import { format } from 'date-fns';
+import { navigate } from '../../navigationService';
+import { Icon } from '../../components/Icon/Icon';
+import { colorBlack } from '../../variables';
 
-const Header = props => (
-  <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
-);
+const Header = (
+  props: JSX.IntrinsicAttributes & {
+    navigation?: any;
+    title?: any;
+    getLeftComponent?: (() => any);
+    getRightComponent?: (() => any);
+  },
+) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
 
 const ConnectedHeader = connect(
   null,
@@ -50,16 +61,18 @@ const EditSchema = Yup.object().shape({
 });
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
-  static navigationOptions = ({navigation}: any) => ({
-    header: props => <ConnectedHeader {...props} navigation={navigation} />,
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (
+      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>,
+    ) => <ConnectedHeader {...props} navigation={navigation} />,
   });
 
   state = {
     birthdayDatePickerVisible: false,
   };
 
-  handleSubmit = (values: EditProfileScreenFromFormik, {setErrors}: any) => {
-    const {editProfile, userId} = this.props;
+  handleSubmit = (values: EditProfileScreenFromFormik, { setErrors }: any) => {
+    const { editProfile, userId } = this.props;
 
     editProfile(
       {
@@ -73,8 +86,9 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   };
 
   render() {
-    const {profileData, isFetching} = this.props;
-    return (
+    const { profileData, isFetching } = this.props;
+
+    return (profileData &&
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Formik
@@ -93,7 +107,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
             validationSchema={EditSchema}
             onSubmit={this.handleSubmit}>
             {(props: any) => {
-              const {handleSubmit, errors, touched, setFieldValue} = props;
+              const { handleSubmit, errors, touched, setFieldValue } = props;
 
               const formattedErrorString = Object.keys(errors)
                 .reduce((acc: Array<string>, key: string) => {
@@ -123,7 +137,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       />
                       <TouchableOpacity
                         onPress={() =>
-                          this.setState({birthdayDatePickerVisible: true})
+                          this.setState({ birthdayDatePickerVisible: true })
                         }>
                         <TextInputStyledForEdit
                           name="dob"
@@ -137,14 +151,14 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                         mode="date"
                         isVisible={this.state.birthdayDatePickerVisible}
                         onConfirm={date => {
-                          this.setState({birthdayDatePickerVisible: false});
+                          this.setState({ birthdayDatePickerVisible: false });
                           setFieldValue(
                             'dob',
                             format(date, 'd MMM yyyy').toString(),
                           );
                         }}
                         onCancel={() =>
-                          this.setState({birthdayDatePickerVisible: false})
+                          this.setState({ birthdayDatePickerVisible: false })
                         }
                       />
                       <TextInputStyledForEdit
@@ -157,14 +171,14 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                           flexDirection: 'row',
                           width: '100%',
                         }}>
-                        <View style={{width: '50%'}}>
+                        <View style={{ width: '50%' }}>
                           <TextInputStyledForEdit
                             name="profileInfo.city"
                             label="city"
                             formProps={props}
                           />
                         </View>
-                        <View style={{width: '50%'}}>
+                        <View style={{ width: '50%' }}>
                           <TextInputStyledForEdit
                             name="profileInfo.country"
                             label="country"
@@ -199,7 +213,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                   <View style={styles.footer}>
                     <TouchableOpacity
                       style={styles.btnCancel}
-                      onPress={() => navigate({routeName: 'Profile'})}>
+                      onPress={() => navigate({ routeName: 'Profile' })}>
                       <Icon size={24} name="cancel" color={colorBlack} />
                     </TouchableOpacity>
                     <ButtonStyled

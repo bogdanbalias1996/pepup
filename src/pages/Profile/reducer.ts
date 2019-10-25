@@ -22,7 +22,7 @@ import {
 } from '../EditProfile/actions';
 
 export class ProfileState {
-  profileData: Profile;
+  profileData: Profile | null;
   isFetching: boolean;
   isModalShown: boolean;
   userPepups: Array<Pepup>;
@@ -30,23 +30,7 @@ export class ProfileState {
   pepups: Array<Pepup>;
 
   constructor() {
-    this.profileData = {
-      email: '',
-      fbConnected: false,
-      flagged: false,
-      followerCnt: 0,
-      following: false,
-      followingCnt: 0,
-      handle: '',
-      id: '',
-      name: '',
-      profileInfo: {},
-      role: '',
-      status: '',
-      icon: '',
-      twitterConnected: false,
-      verified: false,
-    },
+    this.profileData = null,
       this.isFetching = false,
       this.isModalShown = false,
       this.userPepups = [],

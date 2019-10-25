@@ -6,14 +6,16 @@ import { Dispatch } from 'redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
-import { closeContestTestModal } from '../../pages/Contests/actions';
+import { closeContestQuizModal } from '../../pages/Contests/actions';
 import { Icon } from '../Icon/Icon';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
-import { ModalContestTestProps } from '.';
+import { ModalContestQuizProps } from '.';
 import styles from './ModalContests.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -21,27 +23,28 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeContestTestModal: () => dispatch(closeContestTestModal())
+  closeContestQuizModal: () => dispatch(closeContestQuizModal())
 });
 
 const TestSchema = Yup.object().shape({
   text: Yup.string().required("Please type person's name")
 });
 
-export class Component extends React.PureComponent<ModalContestTestProps> {
+export class Component extends React.PureComponent<ModalContestQuizProps> {
   handleSubmit = () => {};
 
   render() {
-    const { closeContestTestModal, isModalTestShown, contestData } = this.props;
+    const { closeContestQuizModal, isModalTestShown, contestData } = this.props;
 
     return (
+      contestData &&
       <Modal
         isOpen={isModalTestShown}
         swipeToClose={true}
         coverScreen={true}
         useNativeDriver={false}
         swipeArea={100}
-        onClosed={() => closeContestTestModal()}
+        onClosed={() => closeContestQuizModal()}
         style={styles.modal}
       >
         <View style={styles.wrapModalContent}>
@@ -111,7 +114,7 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
                   <View style={[styles.modalFooter, styles.modalFooterContest]}>
                     <TouchableOpacity
                       style={styles.btnCancel}
-                      onPress={() => closeContestTestModal()}
+                      onPress={() => closeContestQuizModal()}
                     >
                       <Icon size={24} name="cancel" color={colorBlack} />
                     </TouchableOpacity>
@@ -126,6 +129,8 @@ export class Component extends React.PureComponent<ModalContestTestProps> {
             }}
           </Formik>
         </View>
+        <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }

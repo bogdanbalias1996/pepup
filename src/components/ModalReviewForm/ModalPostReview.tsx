@@ -21,6 +21,7 @@ import styles from './ModalPostReview.styles';
 import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalPostReviewShown: state.PepupState.isModalPostReviewShown,
@@ -59,9 +60,10 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
       celebData
     } = this.props;
 
-    const [rate, totalRating] = celebData.weightedRating.split('/');
+    const [,totalRating] = celebData ? celebData.weightedRating.split('/') : [, ''];
 
     return (
+      celebData &&
       <Modal
         isOpen={isModalPostReviewShown}
         swipeToClose={true}
@@ -180,6 +182,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
           </Formik>
         </View>
         <SuccessfulAlert />
+        <ErrorModal />
       </Modal>
     );
   }

@@ -5,13 +5,12 @@ import {
   View,
   FlatList,
   StyleSheet,
-  Image,
   TouchableOpacity,
 } from 'react-native';
 import {Dispatch} from 'redux';
 import {format} from 'date-fns';
 
-import {HistoryItemsProps} from './';
+import {HistoryItemsProps, Pepup} from './';
 import {
   colorBlack,
   italicFont,
@@ -19,36 +18,47 @@ import {
   colorDotGray,
   colorBlueberry,
   colorTextGray,
+  boldFont,
+  colorStat,
+  defaultFont,
 } from '../../variables';
 import {IGlobalState} from '../../coreTypes';
 import {getAllPepups} from './actions';
 import {Loader} from '../../components/Loader/Loader';
+import {getCeleb} from '../Pepups/actions';
+import {kFormatter} from '../../helpers';
+import { ImageSafe } from '../../components/ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
   pepups: state.ProfileState.pepups,
   isFetching: state.ProfileState.isFetching,
+  celebData: state.PepupState.celebData,
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getAllPepups: () => dispatch(getAllPepups() as any),
+  getCeleb: (id: string) => dispatch(getCeleb(id) as any),
 });
 
 export class Component extends React.PureComponent<HistoryItemsProps> {
   componentDidMount() {
-    const {getAllPepups} = this.props;
+    const {getAllPepups, getCeleb, profileData} = this.props;
 
     getAllPepups();
+    profileData ? getCeleb(profileData.id) : () => {};
   }
 
   renderItem = ({item}: any) => {
-    return (
+    return ( this.props.profileData &&
       <TouchableOpacity onPress={() => alert('Open pepup')}>
         <View style={styles.card}>
           <View style={styles.avatarWrap}>
-            <Image
-              resizeMode="cover"
+            <ImageSafe
+              resizeModeImg="cover"
               style={styles.avatar}
-              source={{uri: this.props.profileData.icon}}
+              iconSource={{uri: this.props.profileData.icon}}
+              isLoaded={!!this.props.profileData.icon}
+              loaderSize='small'
             />
           </View>
           <View style={styles.textWrap}>
@@ -56,7 +66,10 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
               <Text style={styles.text}>
                 {format(item.requestedOn, 'd MMM y')}
               </Text>
-              <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.text, styles.pepupWrap]}>
+              <Text
+                numberOfLines={1}
+                ellipsizeMode="tail"
+                style={[styles.text, styles.pepupWrap]}>
                 {`${this.props.profileData.name} > ${item.requestFor}`}
               </Text>
             </View>
@@ -72,16 +85,42 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
   };
 
   render() {
-    const {isFetching, pepups} = this.props;
+    const {isFetching, pepups, celebData} = this.props;
+    const [rating] = celebData ? celebData.weightedRating.split('/') : ['0'];
+
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
-        <FlatList
-          style={{flex: 1}}
-          showsVerticalScrollIndicator={true}
-          data={pepups}
-          renderItem={this.renderItem}
-          keyExtractor={(item: any) => item.id}
-        />
+        {celebData && (
+          <>
+            <View style={styles.statistics}>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{pepups.length}</Text>
+                <Text style={styles.statText}>PEPUPS</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>
+                  {kFormatter(celebData.billRate * pepups.length)}
+                </Text>
+                <Text style={styles.statText}>EARNINGS</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{rating}</Text>
+                <Text style={styles.statText}>RATING</Text>
+              </View>
+              <View style={styles.statItem}>
+                <Text style={styles.statNumber}>{celebData.reviews}</Text>
+                <Text style={styles.statText}>REVIEWS</Text>
+              </View>
+            </View>
+            <FlatList
+              style={{flex: 1}}
+              showsVerticalScrollIndicator={true}
+              data={pepups}
+              renderItem={this.renderItem}
+              keyExtractor={(item: Pepup) => item.id}
+            />
+          </>
+        )}
       </Loader>
     );
   }
@@ -112,6 +151,10 @@ const styles = StyleSheet.create({
   avatarWrap: {
     borderRightColor: colorDotGray,
     borderRightWidth: 1,
+    width: 90,
+    height: 120,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   avatar: {
     width: 90,
@@ -138,5 +181,24 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: colorTextGray,
     marginRight: 14,
+  },
+  statistics: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 30,
+    paddingBottom: 17,
+  },
+  statItem: {},
+  statNumber: {
+    fontFamily: boldFont,
+    fontSize: 18,
+    textAlign: 'center',
+    color: colorStat,
+  },
+  statText: {
+    fontFamily: defaultFont,
+    fontSize: 12,
+    textAlign: 'center',
+    color: colorStat,
   },
 });
