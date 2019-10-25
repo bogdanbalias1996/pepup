@@ -73,7 +73,7 @@ export class Component extends React.PureComponent<StoreScreenProps> {
 
   render() {
     const {prodCategories, isFetchingCat} = this.props;
-    const tabsConfig: Array<Tab> = prodCategories.length
+    const tabsConfig: Array<Tab> | null = prodCategories.length
       ? prodCategories.map(cat => ({
           title: cat.name,
           component: () => <StoreItems prodCatType={cat.type} />,

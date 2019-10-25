@@ -25,6 +25,7 @@ import {
   defaultFont,
   semiboldFont,
   colorBlueberry,
+  colorLightGray
 } from '../../variables';
 import {RadioButtons} from '../../components/RadioButtons/RadioButtons';
 import {IGlobalState} from '../../coreTypes';
@@ -43,7 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setFilterValue: (val: boolean) => dispatch(setFilterValue(val)),
   getProductsCategoryType: (type: string) =>
     dispatch(getProductsCategoryType(type) as any),
-  getProduct: (val: string) => dispatch(getProduct(val) as any),  
+  getProduct: (val: string) => dispatch(getProduct(val) as any),
 });
 
 const options = [
@@ -74,41 +75,48 @@ export class Component extends React.PureComponent<StoreItemsProps> {
       openStoreModal();
       getProduct(item.id);
     };
+
     return (
-      <TouchableOpacity onPress={() => getModal()} style={styles.card}>
-        <Image
-          style={styles.avatar}
-          source={{uri: dataType.mediaBasePath + item.icon}}
-          resizeMode="cover"
-        />
-        <View style={styles.wrapInfo}>
-          <Text style={styles.name}>{item.name}</Text>
+      <View style={{ flex: 0.5 }}>
+        <TouchableOpacity
+          onPress={() => getModal()}
+          style={styles.card}
+          activeOpacity={1}
+        >
+          <Image
+            style={styles.avatar}
+            source={{uri: `${dataType ? dataType.mediaBasePath + item.icon : ''}`}}
+            resizeMode="cover"
+          />
+          <View style={styles.wrapInfo}>
+            <Text style={styles.name}>{item.name}</Text>
 
-          {item.discount ? (
-            <View style={styles.wrapPrices}>
-              <Text
-                style={
-                  styles.salePriceText
-                }>{`${item.defaultCurrency} ${item.sellingPrice}`}</Text>
-              <Text
-                style={
-                  styles.priceText
-                }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
+            {item.discount ? (
+              <View style={styles.wrapPrices}>
+                <Text
+                  style={
+                    styles.salePriceText
+                  }>{`${item.defaultCurrency} ${item.sellingPrice}`}</Text>
+                <Text
+                  style={
+                    styles.priceText
+                  }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
 
-              <View style={styles.wrapSale}>
-                <Text style={styles.saleText}>{`${item.discount}% OFF`}</Text>
+                <View style={styles.wrapSale}>
+                  <Text style={styles.saleText}>{`${item.discount}% OFF`}</Text>
+                </View>
               </View>
-            </View>
-          ) : (
-            <View style={styles.wrapPrices}>
-              <Text
-                style={
-                  styles.salePriceText
-                }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
-            </View>
-          )}
-        </View>
-      </TouchableOpacity>
+            ) : (
+              <View style={styles.wrapPrices}>
+                <Text
+                  style={
+                    styles.salePriceText
+                  }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
+              </View>
+            )}
+          </View>
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -128,6 +136,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
+            horizontal={false}
             columnWrapperStyle={styles.row}
             data={goods}
             renderItem={this.renderItem}
@@ -169,8 +178,9 @@ const styles = StyleSheet.create({
   },
   avatar: {
     width: '100%',
-    height: 200,
+    height: 212,
     borderRadius: 16,
+    backgroundColor: colorLightGray
   },
   wrapInfo: {
     width: '100%',
