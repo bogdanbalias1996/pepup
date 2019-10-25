@@ -1,142 +1,285 @@
 import * as React from 'react';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
-import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
-import { Dispatch } from 'redux';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
+import {LinearGradient} from 'expo-linear-gradient';
+import {connect} from 'react-redux';
+import ModalBox from 'react-native-modalbox';
+import {Dispatch} from 'redux';
+import {withFormik} from 'formik';
+import * as Permissions from 'expo-permissions';
+import * as ImagePicker from 'expo-image-picker';
+import {Video} from 'expo-av';
 
-import { closeContestQuizModal } from '../../pages/Contests/actions';
-import { Icon } from '../Icon/Icon';
-import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
-import { ModalContestQuizProps } from '.';
+import {closeContestQuizModal, submitEnrty} from '../../pages/Contests/actions';
+import {Icon} from '../Icon/Icon';
+import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
+import {ModalContestQuizProps} from './';
 import styles from './ModalContests.styles';
-import { colorBlack } from '../../variables';
-import { IGlobalState } from '../../coreTypes';
-import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
-import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
-import { ErrorModal } from '../ErrorState/ErrorState';
+import {
+  colorBlack,
+  colorLightGradStart,
+  colorLightGradEnd,
+} from '../../variables';
+import {IGlobalState} from '../../coreTypes';
+import {TextInputBorderStyled} from '../TextInputStyled/TextInputBorderStyled';
+import {SuccessfulAlert} from '../SuccessfulAlert/SuccessfulAlert';
+import {ErrorModal} from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
   contestData: state.ContestState.contestData,
+  isFetching: state.ContestState.isFetching,
+  submitEntryData: state.ContestState.submitEntryData,
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestQuizModal: () => dispatch(closeContestQuizModal()),
+  submitEnrty: (values: any, id: string, type: string, contestType: string) =>
+    dispatch(submitEnrty(values, id, type, contestType) as any),
 });
+export class Component extends React.Component<ModalContestQuizProps> {
+  state = {
+    image: null,
+  };
 
-const TestSchema = Yup.object().shape({
-  text: Yup.string().required("Please type person's name"),
-});
+  onImageChange = async () => {
+    const {setFieldValue, values, contestData} = this.props;
 
-export class Component extends React.PureComponent<ModalContestQuizProps> {
-  handleSubmit = () => {};
+    setTimeout(async () => {
+      const hanlder = ImagePicker.launchImageLibraryAsync;
+      const mediaTypeImage =
+        contestData.dataInfo['contest-info'].submissionInfo.mediaType ===
+        'PHOTO';
+      // const mediaTypeImage = false;
+
+      const result = await hanlder({
+        mediaTypes: mediaTypeImage
+          ? ImagePicker.MediaTypeOptions.Images
+          : ImagePicker.MediaTypeOptions.Videos,
+        aspect: [4, 3],
+        base64: true,
+        quality: 0.5,
+      });
+
+      if (!result.cancelled) {
+        let array = values.media.length ? values.media : [];
+        array.push({
+          mediaItem: {
+            id: new Date().getTime(),
+            uri: mediaTypeImage
+              ? `data:image/${result.uri.split('.').pop()};base64,${
+                  result.base64
+                }`
+              : result.uri,
+            type: mediaTypeImage ? 'image' : 'video',
+          },
+        });
+        setFieldValue('media', array);
+      }
+    }, 0);
+  };
+
+  removeItem = (item: any) => {
+    const {setFieldValue, values} = this.props;
+
+    setFieldValue(
+      'media',
+      values.media.filter((val: any) => {
+        return item.mediaItem.id !== val.mediaItem.id;
+      }),
+    );
+  };
+
+  openModalWindow = async () => {
+    const perms = [Permissions.CAMERA_ROLL];
+
+    const {status} = await Permissions.askAsync(...perms);
+
+    if (status === 'granted') {
+      this.onImageChange();
+    }
+  };
+
+  getMediaElement = (type: boolean, item: any) => {
+    return type ? (
+      <Image style={styles.itemGallery} source={{uri: item}} />
+    ) : (
+      <Video
+        source={{
+          uri: item,
+        }}
+        resizeMode="cover"
+        style={styles.itemGallery}
+      />
+    );
+  };
 
   render() {
-    const { closeContestQuizModal, isModalTestShown, contestData } = this.props;
+    const {
+      closeContestQuizModal,
+      isModalTestShown,
+      isFetching,
+      contestData,
+      values,
+      handleSubmit,
+      errors,
+      touched,
+    } = this.props;
+    const requiresMedia =
+      contestData.dataInfo['contest-info'].submissionInfo.requiresMedia;
+    const mediaTypeImage =
+      contestData.dataInfo['contest-info'].submissionInfo.mediaType === 'PHOTO';
+    // const mediaTypeImage = false;
+
+    const formattedErrorString = Object.keys(errors)
+      .reduce((acc: Array<string>, key: string) => {
+        const value = (errors as any)[key];
+        if ((touched as any)[key] && acc.indexOf(value) < 0) {
+          acc.push(value);
+        }
+        return acc;
+      }, [])
+      .join('. ');
 
     return (
-      contestData && (
-        <Modal
-          isOpen={isModalTestShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closeContestQuizModal()}
-          style={styles.modal}>
-          <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
-            <Formik
-              initialValues={{ text: '' }}
-              //validationSchema={TestSchema}
-              onSubmit={this.handleSubmit}>
-              {(props: any) => {
-                const {
-                  values,
-                  handleSubmit,
-                  errors,
-                  touched,
-                  setFieldValue,
-                } = props;
-                const formattedErrorString = Object.keys(errors)
-                  .reduce((acc: Array<string>, key: string) => {
-                    const value = (errors as any)[key];
-                    if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                      acc.push(value);
-                    }
-                    return acc;
-                  }, [])
-                  .join('. ');
-
-                return (
-                  <View style={styles.wrap}>
-                    <ScrollView>
-                      <View style={styles.scrollContent}>
-                        <View style={styles.conTitle}>
-                          <Image
-                            style={styles.avatar}
-                            source={require('../../../assets/mock_avatar.jpg')}
-                            resizeMode="cover"
+      <ModalBox
+        isOpen={isModalTestShown}
+        swipeToClose={true}
+        coverScreen={true}
+        useNativeDriver={false}
+        swipeArea={100}
+        onClosed={() => closeContestQuizModal()}
+        style={styles.modal}>
+        <View style={styles.wrapModalContent}>
+          <View style={styles.swiperLine} />
+          <View style={styles.wrap}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.scrollContent}>
+                <View style={styles.conTitle}>
+                  <Image
+                    style={styles.avatar}
+                    source={{
+                      uri:
+                        contestData.mediaBasePath + contestData.organizerLogo,
+                    }}
+                    resizeMode="cover"
+                  />
+                  <Text style={styles.title}>{contestData.title}</Text>
+                </View>
+                <View style={styles.form}>
+                  {Boolean(formattedErrorString) && (
+                    <View style={styles.formErrorContainer}>
+                      <Text style={styles.formError}>
+                        {formattedErrorString}
+                      </Text>
+                    </View>
+                  )}
+                  <View style={{justifyContent: 'space-between'}}>
+                    {contestData.dataInfo[
+                      'contest-info'
+                    ].submissionInfo.prompts.map((item: any, i: number) => {
+                      return (
+                        <View style={styles.itemWrap}>
+                          <Text style={styles.subTitle}>{item.prompt}</Text>
+                          <TextInputBorderStyled
+                            name={`text${i}`}
+                            label="Type your description here"
+                            inputStyle={{height: 100}}
+                            multiline={true}
+                            numberOfLines={3}
+                            formProps={this.props}
                           />
-                          <Text style={styles.title}>{contestData.title}</Text>
                         </View>
-                        <View style={styles.form}>
-                          {Boolean(formattedErrorString) && (
-                            <View style={styles.formErrorContainer}>
-                              <Text style={styles.formError}>
-                                {formattedErrorString}
-                              </Text>
-                            </View>
+                      );
+                    })}
+                    {requiresMedia ? (
+                      <View style={styles.itemWrap}>
+                        <Text style={styles.subTitle}>Upload your designs</Text>
+                        <View style={styles.mediaWrap}>
+                          {values.media.length <
+                            contestData.dataInfo['contest-info'].submissionInfo
+                              .limitMedia && (
+                            <LinearGradient
+                              colors={[colorLightGradEnd, colorLightGradStart]}
+                              style={styles.mediaGrad}>
+                              <TouchableOpacity
+                                style={styles.mediaBtn}
+                                activeOpacity={0.8}
+                                onPress={() => {
+                                  this.openModalWindow();
+                                }}>
+                                <Icon size={40} name="add" />
+                              </TouchableOpacity>
+                            </LinearGradient>
                           )}
-                          <View style={{ justifyContent: 'space-between' }}>
-                            <View style={styles.itemWrap}>
-                              <Text style={styles.subTitle}>
-                                Describe your design and the inspiration behind
-                                it
-                              </Text>
-                              <TextInputBorderStyled
-                                name="text"
-                                label="Type your description here"
-                                inputStyle={{ height: 100 }}
-                                multiline={true}
-                                numberOfLines={3}
-                                formProps={props}
-                              />
-                            </View>
-                            <View style={styles.itemWrap}></View>
-                          </View>
+                          <ScrollView horizontal>
+                            {!!values.media.length &&
+                              values.media.map((item: any) => {
+                                return (
+                                  <View style={styles.itemGalleryWrap}>
+                                    {this.getMediaElement(
+                                      mediaTypeImage,
+                                      item.mediaItem.uri,
+                                    )}
+                                    <TouchableOpacity
+                                      style={styles.btnDelete}
+                                      onPress={() => this.removeItem(item)}>
+                                      <Icon size={10} name="cancel" />
+                                    </TouchableOpacity>
+                                  </View>
+                                );
+                              })}
+                          </ScrollView>
                         </View>
                       </View>
-                    </ScrollView>
-                    <View
-                      style={[styles.modalFooter, styles.modalFooterContest]}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => closeContestQuizModal()}>
-                        <Icon size={24} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
-                      <ButtonStyled
-                        style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
-                        text="Submit"
-                      />
-                    </View>
+                    ) : null}
                   </View>
-                );
-              }}
-            </Formik>
+                </View>
+              </View>
+            </ScrollView>
+            <View style={[styles.modalFooter, styles.modalFooterContest]}>
+              <TouchableOpacity
+                style={styles.btnCancel}
+                onPress={() => closeContestQuizModal()}>
+                <Icon name="cancel" color={colorBlack} />
+              </TouchableOpacity>
+              <ButtonStyled
+                style={styles.btnSubmit}
+                loader={isFetching}
+                onPress={() => handleSubmit()}
+                text="Submit"
+              />
+            </View>
           </View>
-          <SuccessfulAlert />
-          <ErrorModal />
-        </Modal>
-      )
+        </View>
+        <SuccessfulAlert />
+        <ErrorModal />
+      </ModalBox>
     );
   }
 }
 
+const ContestForm = withFormik({
+  mapPropsToValues: (props: any) => {
+    const questions = props.contestData.dataInfo[
+      'contest-info'
+    ].submissionInfo.prompts.reduce((acc: any, current: any, i: number) => {
+      return {...acc, [`text${i}`]: ''};
+    }, {});
+
+    return {...questions, media: []};
+  },
+
+  handleSubmit: (values, {props}) => {
+    props.submitEnrty(
+      values,
+      props.contestData.id,
+      props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
+      props.contestData.type,
+    );
+  },
+})(Component);
+
 export const ModalContestDesign = connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Component);
+)(ContestForm);

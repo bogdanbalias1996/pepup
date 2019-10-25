@@ -28,7 +28,8 @@ import {ErrorModal} from '../../components/ErrorState/ErrorState';
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   openContestModal: () => dispatch(openContestModal()),
   getContest: (contestId: string) => dispatch(getContest(contestId) as any),
-  getContestsByCategory: (id: string) => dispatch(getContestsByCategory(id) as any),
+  getContestsByCategory: (id: string) =>
+    dispatch(getContestsByCategory(id) as any),
 });
 
 const mapStateToProps = (state: IGlobalState) => ({
@@ -79,7 +80,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
           showsVerticalScrollIndicator={false}
           data={contests}
           renderItem={this.renderItem}
-          keyExtractor={(item:Contest) => item.id}
+          keyExtractor={(item: Contest) => item.id}
         />
       </Loader>
     );

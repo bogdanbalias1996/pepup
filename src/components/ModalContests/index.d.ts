@@ -1,4 +1,4 @@
-import { Contest } from "../../pages/Contests/index"
+import {Contest} from '../../pages/Contests/index';
 
 export type ModalContestsProps = {
   closeContestModal: () => void;
@@ -9,8 +9,20 @@ export type ModalContestsProps = {
 };
 
 export type ModalContestQuizProps = {
+  closeContestTestModal: () => void;
   closeContestQuizModal: () => void;
+  submitEnrty: (
+    values: any,
+    id: string,
+    type: string,
+    contestType: string,
+  ) => void;
   isModalTestShown: boolean;
-  contestData: Contest | null;
-}
-
+  isFetching: boolean;
+  contestData: Contest;
+  values: any;
+  handleSubmit: any;
+  errors: any;
+  touched: any;
+  setFieldValue: any;
+};

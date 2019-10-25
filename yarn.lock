@@ -847,6 +847,11 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/async-storage/-/async-storage-1.6.2.tgz#a19ca7149c4dfe8216f2330e6b1ebfe2d075ef92"
   integrity sha512-EJGsbrHubK1mGxPjWB74AaHAd5m9I+Gg2RRPZzMK6org7QOU9WOBnIMFqoeVto3hKOaEPlk8NV74H6G34/2pZQ==
 
+"@react-native-community/cameraroll@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/cameraroll/-/cameraroll-1.2.1.tgz#68ae3a1de07dd5db8ce9d898057f30c1585c7f1d"
+  integrity sha512-dMvzCano5/ltQYbF4AOEHe0vaW3Owt05S4y+gJ6PlBp2/YfQAVv7XNgvsvF2CKz4oPKuZAOchENDV/J+nbMbWg==
+
 "@react-native-community/cli-platform-android@^3.0.0-alpha.1", "@react-native-community/cli-platform-android@^3.0.0-alpha.2":
   version "3.0.0-alpha.2"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-3.0.0-alpha.2.tgz#63cb00060c58a87d04b46229ef7140e056551dfa"
@@ -2749,12 +2754,17 @@ expo-font@^7.0.0:
   dependencies:
     fontfaceobserver "^2.1.0"
 
+expo-image-picker@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/expo-image-picker/-/expo-image-picker-7.0.0.tgz#e4a5a52bd6f9655f75ecf3cc866aa9bb0c99e24b"
+  integrity sha512-LeGdAqbeuB2KsT369ns1kDtCGbyDCmY2gIFlf/rsD3+UmagRFX9emZLGPEnUNdCWXoctSejjFwxDnCUtpvL6yw==
+
 expo-linear-gradient@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-linear-gradient/-/expo-linear-gradient-7.0.0.tgz#91e86f3f4a70428c7ac5e43ee0d06215bca39afd"
   integrity sha512-8VrFWR9tpXrDmk0kMyIpo6C5jKiDRzXPZN55JtyPhjuN1kF8Kle4d9ybNtV+bYd3Ql6PAZXY8Y/bhLAuWv0L9g==
 
-expo-permissions@~7.0.0:
+expo-permissions@^7.0.0, expo-permissions@~7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/expo-permissions/-/expo-permissions-7.0.0.tgz#f4135c3cf8e49c673a9a714459a1eb2b40fe2092"
   integrity sha512-C+qyVz+pdZO4YpVR2HSC3gsBZg0Qb8brCFgzmDmWcAtgrOiHClaLPdhI2XtQuGh8ubXcKPUGZp++UCEGiG0Jxg==
