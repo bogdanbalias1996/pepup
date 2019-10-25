@@ -56,9 +56,10 @@ export class Component extends React.PureComponent<RequestPepupProps> {
       celebData,
     } = this.props;
 
-    const fullName = celebData.userInfo.name.split(' ');
+    const fullName = celebData ? celebData.userInfo.name.split(' ') : ['', ''];
 
     return (
+      celebData &&
       <Modal
         isOpen={isModalReqShown}
         swipeToClose={true}

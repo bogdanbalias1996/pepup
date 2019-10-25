@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from './ButtonGroup.styles';
 import { ButtonGroupProps, ButtonGroupItem } from './';
+import { Category } from '../../pages/Pepups';
 
 export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   state: {
@@ -36,7 +37,6 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     const { selectedItem } = this.state;
     const {
       items,
-      style = {},
       stylesFirstItem = {},
       stylesLastItem = {},
       stylesItem = {},

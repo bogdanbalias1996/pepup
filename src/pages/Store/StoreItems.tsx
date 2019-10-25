@@ -3,7 +3,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Image,
   TouchableOpacity,
   View,
 } from 'react-native';
@@ -29,6 +28,7 @@ import {
 import {RadioButtons} from '../../components/RadioButtons/RadioButtons';
 import {IGlobalState} from '../../coreTypes';
 import {Loader} from '../../components/Loader/Loader';
+import { ImageSafe } from '../../components/ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isFetchingCat: state.StoreState.isFetchingCat,
@@ -76,10 +76,11 @@ export class Component extends React.PureComponent<StoreItemsProps> {
     };
     return (
       <TouchableOpacity onPress={() => getModal()} style={styles.card}>
-        <Image
+        <ImageSafe
+          isLoaded={!!item.icon}
           style={styles.avatar}
-          source={{uri: dataType.mediaBasePath + item.icon}}
-          resizeMode="cover"
+          iconSource={{uri: dataType.mediaBasePath + item.icon}}
+          resizeModeImg="cover"
         />
         <View style={styles.wrapInfo}>
           <Text style={styles.name}>{item.name}</Text>

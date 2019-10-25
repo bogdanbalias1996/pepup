@@ -4,8 +4,7 @@ import {
   Text,
   View,
   FlatList,
-  ScrollView,
-  Image,
+  ScrollView
 } from 'react-native';
 import {connect} from 'react-redux';
 import Modal from 'react-native-modalbox';
@@ -26,6 +25,7 @@ import {
 import {IGlobalState} from '../../coreTypes';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
+import { ImageSafe } from '../ImageSafe/ImageSafe';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.StoreState.isModalShown,
@@ -85,11 +85,13 @@ export class Component extends React.PureComponent<ModalStoreProps> {
   };
   renderItem = ({item}: any) => {
     const {prodData} = this.props;
-    return (
-      <Image
+
+    return (prodData &&
+      <ImageSafe
         style={styles.imageCarousel}
-        source={{uri: prodData.mediaBasePath + item.link}}
-        resizeMode="contain"
+        iconSource={{uri: prodData.mediaBasePath + item.link}}
+        resizeModeImg="contain"
+        isLoaded={!!item.link}
       />
     );
   };
@@ -208,7 +210,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
                     <ModalSelector
                       data={quantityOptions}
                       initValue={'0'}
-                      onChange={option => {
+                      onChange={(option: { label: any; }) => {
                         this.setState({quantity: option.label});
                       }}
                       cancelStyle={styles.modalCancelStyle}

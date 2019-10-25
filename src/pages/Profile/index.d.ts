@@ -38,7 +38,7 @@ export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
   handle: string;
-  profileData: Profile;
+  profileData: Profile | null;
   userPepups: Array<Pepup>;
   celebPepups: Array<Pepup>;
   pepups: Array<Pepup>;
@@ -72,8 +72,8 @@ export type FanRequestsProps = {
 
 export type HistoryItemsProps = {
   pepups: Array<Pepup>;
-  profileData: Profile;
-  celebData: Celeb;
+  profileData: Profile | null;
+  celebData: Celeb | null;
   isFetching: boolean,
   getCeleb: (id:string) => Promise<any>
   getAllPepups: () => Promise<any>;
