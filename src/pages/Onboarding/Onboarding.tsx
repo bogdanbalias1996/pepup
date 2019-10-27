@@ -1,7 +1,6 @@
 import * as React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {Text, View, Image} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
 
 import styles from './Onboarding.styles';
 import {navigate} from '../../navigationService';

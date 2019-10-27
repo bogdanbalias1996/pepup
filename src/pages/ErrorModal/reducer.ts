@@ -30,7 +30,7 @@ export const ErrorReducer = (
     case OPEN_ERROR:
       return {
         ...state,
-        isErrorShown: true,
+        // isErrorShown: true,
         ...action.data,
       };
     case CLOSE_ERROR:
