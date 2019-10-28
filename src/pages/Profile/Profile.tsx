@@ -24,20 +24,7 @@ import { NotificationItems } from './NotificationItems';
 import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
-
-const Header = (props: HeaderProps) => (
-  <HeaderRounded
-    {...props}
-    title={'Profile'.toUpperCase()}
-    getRightComponent={() => {
-      return (
-        <TouchableOpacity onPress={() => navigate({ routeName: 'Settings' })}>
-          <Icon name="nut-icon" />
-        </TouchableOpacity>
-      );
-    }}
-  />
-);
+import { Loader } from '../../components/Loader/Loader'
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -55,16 +42,21 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
 });
 
-const ConnectedHeader = connect(
-  mapStateToProps,
-  null,
-)(Header);
-
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
 export class Component extends React.PureComponent<ProfileScreenProps> {
-  static navigationOptions = ({ navigation }: any) => ({
+  static navigationOptions = () => ({
     header: (props: any) => (
-      <ConnectedHeader {...props} navigation={navigation} />
+      <HeaderRounded
+        {...props}
+        title={'Profile'.toUpperCase()}
+        getRightComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => navigate({ routeName: 'Settings' })}>
+              <Icon name="nut-icon" />
+            </TouchableOpacity>
+          );
+        }}
+      />
     ),
   });
 
@@ -123,62 +115,55 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     } = this.props;
     const getModal = () => {
       openPepupModal();
-      profileData ? getCeleb(profileData.id) : () => {};
+      profileData ? getCeleb(profileData.id) : () => { };
     };
 
     return (
-      profileData && (
-        <PepupBackground>
-          <View style={styles.avatarsWrap}>
-            <Image
-              style={styles.avatar}
-              source={
-                profileData.icon
-                  ? { uri: profileData.icon }
-                  : require('../../../assets/avatarPlaceholder.png')
-              }
-              resizeMode="cover"
-            />
-            {profileData.role === ROLE_CELEB ? (
-              <TouchableOpacity onPress={() => getModal()}>
-                <Image
-                  style={[styles.avatar, styles.avatarCeleb]}
-                  source={require('../../../assets/celebAvatar.png')}
-                  resizeMode="cover"
-                />
-              </TouchableOpacity>
-            ) : null}
-          </View>
-          <View style={styles.titleWrap}>
-            <Text style={styles.title}>{profileData.name || ''}</Text>
-            <TouchableOpacity
-              onPress={
-                profileData.role === ROLE_CELEB
-                  ? () => navigate({ routeName: 'EditProfileCeleb' })
-                  : () => navigate({ routeName: 'EditProfile' })
-              }>
-              <Icon name="edit" />
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity onPress={() => openVideoRecordModal()}>
-            <Text style={styles.title}>MODAL 222</Text>
-          </TouchableOpacity>
-
-          <View style={styles.wrapContent}>
-            {profileData.role === ROLE_CELEB ? (
-              <Tabs
-                config={this.tabsConfigCeleb}
-                style={{ flex: 1 }}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={{
-                  backgroundColor: 'transparent',
-                  marginBottom: 10,
-                }}
+      <PepupBackground>
+        <View style={styles.avatarsWrap}>
+          {
+            profileData && (
+              <Image
+                style={styles.avatar}
+                source={
+                  profileData.icon
+                    ? { uri: profileData.icon }
+                    : require('../../../assets/avatarPlaceholder.png')
+                }
+                resizeMode="cover"
               />
-            ) : (
+            )
+          }
+          {profileData && profileData.role === ROLE_CELEB && (
+            <TouchableOpacity onPress={() => getModal()}>
+              <Image
+                style={[styles.avatar, styles.avatarCeleb]}
+                source={require('../../../assets/celebAvatar.png')}
+                resizeMode="cover"
+              />
+            </TouchableOpacity>
+          )}
+        </View>
+
+        <View style={styles.titleWrap}>
+          <Text style={styles.title}>{profileData && profileData.name || ' '}</Text>
+          <TouchableOpacity
+            onPress={
+              profileData && profileData.role === ROLE_CELEB
+                ? () => navigate({ routeName: 'EditProfileCeleb' })
+                : () => navigate({ routeName: 'EditProfile' })
+            }>
+            <Icon name="edit" />
+          </TouchableOpacity>
+        </View>
+        <TouchableOpacity onPress={() => openVideoRecordModal()}>
+          <Text style={styles.title}>Record video</Text>
+        </TouchableOpacity>
+        <View style={styles.wrapContent}>
+          <Loader isDataLoaded={!!profileData}>
+            {!!profileData && (
               <Tabs
-                config={this.tabsConfig}
+                config={profileData.role === ROLE_CELEB ? this.tabsConfigCeleb : this.tabsConfig}
                 style={{ flex: 1 }}
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={{
@@ -187,11 +172,11 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
                 }}
               />
             )}
-          </View>
-          <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
-          <ModalPepup />
-        </PepupBackground>
-      )
+          </Loader>
+        </View>
+        <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
+        <ModalPepup />
+      </PepupBackground>
     );
   }
 }

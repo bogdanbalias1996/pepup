@@ -1,10 +1,14 @@
 import { createStackNavigator } from 'react-navigation'
 import { LoadingScreen } from '../pages/Loading/Loading'
+import { OnboardingScreen } from '../pages/Onboarding/Onboarding'
 
 export const PagesNavigator = createStackNavigator({
-  Loading: {
-    screen: LoadingScreen
-  }
+  Onboarding: OnboardingScreen,
+  Loading: LoadingScreen
 }, {
-    headerLayoutPreset: 'center'
-  })
+  defaultNavigationOptions: {
+    header: null
+  },
+  headerLayoutPreset: 'center',
+  initialRouteName: 'Onboarding'
+})
