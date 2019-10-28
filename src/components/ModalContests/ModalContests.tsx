@@ -1,23 +1,24 @@
 import * as React from 'react';
-import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
-import {connect} from 'react-redux';
+import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
-import {Dispatch} from 'redux';
+import { Dispatch } from 'redux';
 
 import {
   closeContestModal,
   openContestQuizModal,
 } from '../../pages/Contests/actions';
-import {Icon} from '../../components/Icon/Icon';
-import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {ModalContestsProps} from './';
+import { Icon } from '../../components/Icon/Icon';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import { ModalContestsProps } from './';
 import styles from './ModalContests.styles';
-import {colorBlack} from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {ModalContestQuiz} from './ModalContestQuiz';
-import {ModalContestDesign} from './ModalContestDesign';
-import {ErrorModal} from '../ErrorState/ErrorState';
-import {ImageSafe} from '../ImageSafe/ImageSafe';
+import { colorBlack } from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { ModalContestQuiz } from './ModalContestQuiz';
+import { ModalContestDesign } from './ModalContestDesign';
+import { ErrorModal } from '../ErrorState/ErrorState';
+import { ImageSafe } from '../ImageSafe/ImageSafe';
+import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ContestState.isModalShown,
@@ -28,8 +29,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestModal: () => dispatch(closeContestModal()),
   openContestQuizModal: () => dispatch(openContestQuizModal()),
 });
-
-const THRESHOLD = 200;
 
 export class Component extends React.PureComponent<ModalContestsProps> {
   state = {
@@ -46,32 +45,20 @@ export class Component extends React.PureComponent<ModalContestsProps> {
 
     return (
       contestData && (
-        <Modal
-          position="bottom"
-          isOpen={isModalShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closeContestModal()}
-          style={[
-            styles.modal,
-            {
-              maxHeight: this.state.heightDescription + THRESHOLD,
-              height: '100%',
-              marginTop: 50,
-            },
-          ]}>
-          {Object.keys(contestData).length !== 0 ? (
-            <View style={styles.wrapModalContent}>
+        <PepupModal
+          visible={isModalShown}
+          onRequestClose={() => closeContestModal()}
+          heightContent={this.state.heightDescription}>
+          {contestData && Object.keys(contestData).length !== 0 ? (
+            <View style={{ paddingHorizontal: 24 }}>
               <View style={styles.swiperLine} />
-              <ScrollView>
+              <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
                   <View
                     onLayout={event => {
-                      const {height} = event.nativeEvent.layout;
+                      const { height } = event.nativeEvent.layout;
                       Object.keys(contestData).length !== 0 &&
-                        this.setState({heightDescription: height});
+                        this.setState({ heightDescription: height });
                     }}>
                     <ImageSafe
                       isLoaded={!!contestData.contestImage}
@@ -130,13 +117,13 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               </View>
             </View>
           ) : null}
-          {contestData.type === 'QUIZ' ? (
+          {contestData && contestData.type === 'QUIZ' ? (
             <ModalContestQuiz />
           ) : (
             <ModalContestDesign />
           )}
           <ErrorModal />
-        </Modal>
+        </PepupModal>
       )
     );
   }

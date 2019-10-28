@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
@@ -77,13 +77,7 @@ export default StyleSheet.create({
     right: 0,
     marginHorizontal: 24,
     marginTop: 15,
-    marginBottom: 90,
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    bottom: 0,
-  },
-  modalFooterContest: {
-    marginBottom: 50,
+    marginBottom: 30,
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 0,
@@ -149,7 +143,7 @@ export default StyleSheet.create({
     color: colorBlack,
     marginBottom: 10,
   },
-  scrollContent: {paddingBottom: 90},
+  scrollContent: { paddingBottom: 90 },
   mediaWrap: {
     flexDirection: 'row',
   },

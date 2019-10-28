@@ -6,30 +6,30 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Alert, StatusBar} from 'react-native';
+import React, { Component } from 'react';
+import { Alert, StatusBar } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
 import * as Font from 'expo-font';
-import {createAppContainer, createSwitchNavigator} from 'react-navigation';
-import {Provider, connect} from 'react-redux';
-import {getStore} from './src/configureStore';
-import {setTopLevelNavigator, navigate} from './src/navigationService';
-import {Loader} from './src/components/Loader/Loader';
-import {IGlobalState} from './src/coreTypes';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { Provider, connect } from 'react-redux';
+import { getStore } from './src/configureStore';
+import { setTopLevelNavigator, navigate } from './src/navigationService';
+import { Loader } from './src/components/Loader/Loader';
+import { IGlobalState } from './src/coreTypes';
 import SplashScreen from 'react-native-splash-screen';
 
-import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
-import {MainNavigator} from './src/navigators/MainNavigator';
-import {PagesNavigator} from './src/navigators/PagesNavigator';
-import {OnboardingNavigator} from './src/navigators/OnboardingNavigator';
-import {colorBlueberry} from './src/variables';
-import {SuccessfulAlert} from './src/components/SuccessfulAlert/SuccessfulAlert';
-import {ErrorModal} from './src/components/ErrorState/ErrorState';
-import {setInternetConnection} from './src/utils/connectionCheck/actions';
-import {openError, closeError} from './src/pages/ErrorModal/actions';
-import {authenticate} from './src/common/utils/session';
+import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
+import { MainNavigator } from './src/navigators/MainNavigator';
+import { PagesNavigator } from './src/navigators/PagesNavigator';
+import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
+import { colorBlueberry } from './src/variables';
+import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from './src/components/ErrorState/ErrorState';
+import { setInternetConnection } from './src/utils/connectionCheck/actions';
+import { openError, closeError } from './src/pages/ErrorModal/actions';
+import { authenticate } from './src/common/utils/session';
 
 const AppNavigator = createSwitchNavigator(
   {
@@ -45,7 +45,7 @@ const AppNavigator = createSwitchNavigator(
 
 const AppContainer = createAppContainer(AppNavigator);
 
-const AppWithFontLoadedComponent = ({isFontLoaded}: any) => {
+const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
       <AppContainer
@@ -79,7 +79,7 @@ export default class App extends Component {
             type: 'connectionFail',
             onPress: () => {
               getStore().dispatch(closeError());
-              navigate({routeName: 'Login'});
+              navigate({ routeName: 'Login' });
             },
           }),
         );
@@ -119,14 +119,14 @@ export default class App extends Component {
     this.notificationListener = firebase
       .notifications()
       .onNotification(notification => {
-        const {title, body} = notification;
+        const { title, body } = notification;
         this.showAlert(title, body);
       });
 
     this.notificationOpenedListener = firebase
       .notifications()
       .onNotificationOpened(notificationOpen => {
-        const {title, body} = notificationOpen.notification;
+        const { title, body } = notificationOpen.notification;
         this.showAlert(title, body);
       });
 
@@ -134,7 +134,7 @@ export default class App extends Component {
       .notifications()
       .getInitialNotification();
     if (notificationOpen) {
-      const {title, body} = notificationOpen.notification;
+      const { title, body } = notificationOpen.notification;
       this.showAlert(title, body);
     }
 
@@ -147,8 +147,8 @@ export default class App extends Component {
     Alert.alert(
       title,
       body,
-      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
-      {cancelable: false},
+      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
+      { cancelable: false },
     );
   }
 

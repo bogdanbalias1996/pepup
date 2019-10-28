@@ -1,20 +1,20 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {View} from 'react-native';
+import { connect } from 'react-redux';
+import { View } from 'react-native';
 
-import {ModalPepup} from '../../components/ModalPepup/ModalPepup';
-import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
-import {PepupsScreenProps} from '.';
-import {PepupItems} from './PepupItems';
-import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
-import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { PepupsScreenProps } from '.';
+import { PepupItems } from './PepupItems';
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
-import {IGlobalState} from '../../coreTypes';
-import {Dispatch} from 'redux';
-import {getAllActiveCategories} from './actions';
-import {Tab} from '../../components/Tabs';
-import {Loader} from '../../components/Loader/Loader';
-import {colorBlueberry} from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
+import { getAllActiveCategories } from './actions';
+import { Tab } from '../../components/Tabs';
+import { Loader } from '../../components/Loader/Loader';
+import { colorBlueberry } from '../../variables';
 const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation?: any;
@@ -38,15 +38,15 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export class Component extends React.PureComponent<PepupsScreenProps> {
-  static navigationOptions = ({navigation}: any) => ({
+  static navigationOptions = ({ navigation }: any) => ({
     header: (
       props: JSX.IntrinsicAttributes &
         Pick<
           JSX.IntrinsicAttributes & {
             navigation?: any;
             title: any;
-            getLeftComponent?: (() => any);
-            getRightComponent?: (() => any);
+            getLeftComponent?: () => any;
+            getRightComponent?: () => any;
           },
           | 'navigation'
           | 'title'
@@ -55,23 +55,23 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
           | 'getRightComponent'
         >,
     ) => <ConnectedHeader {...props} navigation={navigation} />,
-  })
+  });
 
   state = {
     isModalVisible: false,
   };
 
   componentDidMount = () => {
-    const {getAllActiveCategories} = this.props;
+    const { getAllActiveCategories } = this.props;
     getAllActiveCategories();
   };
 
   toggleModal = () => {
-    this.setState({isModalVisible: !this.state.isModalVisible});
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
   render() {
-    const {categories, isFetchingCat} = this.props;
+    const { categories, isFetchingCat } = this.props;
     const tabsConfig: Array<Tab> = categories.length
       ? categories.map(cat => ({
           title: cat.id,
@@ -89,7 +89,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
             {tabsConfig && (
               <Tabs
                 config={tabsConfig}
-                style={{flex: 1}}
+                style={{ flex: 1 }}
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={{
                   backgroundColor: 'transparent',
