@@ -6,13 +6,14 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignSelf: "center",
     justifyContent: 'space-between',
-    width: 155
+    width: 155,
+    height: 64,
+    marginVertical: 24,
   },
   avatar: {
     width: 64,
     height: 64,
     borderRadius: 8,
-    marginVertical: 24,
     marginHorizontal: 5
   },
   avatarCeleb: {

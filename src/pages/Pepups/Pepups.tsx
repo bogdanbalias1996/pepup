@@ -15,19 +15,6 @@ import {getAllActiveCategories} from './actions';
 import {Tab} from '../../components/Tabs';
 import {Loader} from '../../components/Loader/Loader';
 import {colorBlueberry} from '../../variables';
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation?: any;
-    title: any;
-    getLeftComponent?: () => any;
-    getRightComponent?: () => any;
-  },
-) => <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null,
-)(Header);
 
 const mapStateToProps = (state: IGlobalState) => ({
   categories: state.PepupState.categories,
@@ -38,23 +25,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export class Component extends React.PureComponent<PepupsScreenProps> {
-  static navigationOptions = ({navigation}: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes &
-        Pick<
-          JSX.IntrinsicAttributes & {
-            navigation?: any;
-            title: any;
-            getLeftComponent?: (() => any);
-            getRightComponent?: (() => any);
-          },
-          | 'navigation'
-          | 'title'
-          | 'key'
-          | 'getLeftComponent'
-          | 'getRightComponent'
-        >,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+  static navigationOptions = () => ({
+    header: (props: any) => <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />
   })
 
   state = {
@@ -72,7 +44,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
   render() {
     const {categories, isFetchingCat} = this.props;
-    const tabsConfig: Array<Tab> = categories.length
+    const tabsConfig: Array<Tab> | null = categories.length
       ? categories.map(cat => ({
           title: cat.id,
           component: () => <PepupItems categoryId={cat.id} />,

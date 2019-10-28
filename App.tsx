@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Alert, StatusBar} from 'react-native';
+import {Alert, StatusBar, YellowBox} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
@@ -23,7 +23,6 @@ import SplashScreen from 'react-native-splash-screen';
 import {AuthenticationNavigator} from './src/navigators/AuthenticationNavigator';
 import {MainNavigator} from './src/navigators/MainNavigator';
 import {PagesNavigator} from './src/navigators/PagesNavigator';
-import {OnboardingNavigator} from './src/navigators/OnboardingNavigator';
 import {colorBlueberry} from './src/variables';
 import {SuccessfulAlert} from './src/components/SuccessfulAlert/SuccessfulAlert';
 import {ErrorModal} from './src/components/ErrorState/ErrorState';
@@ -31,20 +30,19 @@ import {setInternetConnection} from './src/utils/connectionCheck/actions';
 import {openError, closeError} from './src/pages/ErrorModal/actions';
 import {authenticate} from './src/common/utils/session';
 
-const AppNavigator = createSwitchNavigator(
-  {
-    Onboarding: OnboardingNavigator,
-    Pages: PagesNavigator,
-    Auth: AuthenticationNavigator,
-    Main: MainNavigator,
-  },
-  {
-    initialRouteName: 'Onboarding',
-  },
-);
+YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
+
+const FCM_TOKEN = 'fcmToken'
+
+const AppNavigator = createSwitchNavigator({
+  Pages: PagesNavigator,
+  Auth: AuthenticationNavigator,
+  Main: MainNavigator
+},{
+  initialRouteName: 'Pages'
+});
 
 const AppContainer = createAppContainer(AppNavigator);
-
 const AppWithFontLoadedComponent = ({isFontLoaded}: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
@@ -162,11 +160,11 @@ export default class App extends Component {
   }
 
   async getToken() {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    let fcmToken = await AsyncStorage.getItem(FCM_TOKEN);
     if (!fcmToken) {
       fcmToken = await firebase.messaging().getToken();
       if (fcmToken) {
-        await AsyncStorage.setItem('fcmToken', fcmToken);
+        await AsyncStorage.setItem(FCM_TOKEN, fcmToken);
       }
     }
   }
