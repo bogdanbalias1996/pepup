@@ -6,7 +6,7 @@ import { withFormik } from 'formik';
 
 import {
   closeContestQuizModal,
-  submitEnrty,
+  submitEnrty
 } from '../../pages/Contests/actions';
 import { Icon } from '../Icon/Icon';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
@@ -23,12 +23,13 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
   contestData: state.ContestState.contestData,
   isFetching: state.ContestState.isFetching,
+  submitEntryData: state.ContestState.submitEntryData
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   submitEnrty: (values: any, id: string, type: string, contestType: string) =>
     dispatch(submitEnrty(values, id, type, contestType) as any),
-  closeContestQuizModal: () => dispatch(closeContestQuizModal()),
+  closeContestQuizModal: () => dispatch(closeContestQuizModal())
 });
 
 const getInitValues = (arr: any) => {
@@ -40,7 +41,7 @@ const getInitValues = (arr: any) => {
 
 export class Component extends React.PureComponent<ModalContestQuizProps> {
   state = {
-    heightDescription: 0,
+    heightDescription: 0
   };
 
   isAllFieldsFilled = (obj: any) => {
@@ -58,7 +59,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
       isFetching,
       values,
       handleSubmit,
-      setFieldValue,
+      setFieldValue
     } = this.props;
 
     return (
@@ -83,7 +84,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       style={styles.avatar}
                       source={{
                         uri:
-                          contestData.mediaBasePath + contestData.organizerLogo,
+                          contestData.mediaBasePath + contestData.organizerLogo
                       }}
                       resizeMode="contain"
                     />
@@ -107,7 +108,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                                 key={index}
                               />
                             );
-                          },
+                          }
                         )}
                       </View>
                     </View>
@@ -123,7 +124,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                 <ButtonStyled
                   style={[
                     styles.btnSubmit,
-                    { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 },
+                    { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
                   ]}
                   loader={isFetching}
                   onPress={() =>
@@ -145,7 +146,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
 const ContestForm = withFormik({
   mapPropsToValues: (props: any) => {
     return getInitValues(
-      props.contestData.dataInfo['contest-info'].submissionInfo.questions,
+      props.contestData.dataInfo['contest-info'].submissionInfo.questions
     );
   },
 
@@ -154,12 +155,12 @@ const ContestForm = withFormik({
       values,
       props.contestData.id,
       props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
-      props.contestData.type,
+      props.contestData.type
     );
-  },
+  }
 })(Component);
 
 export const ModalContestQuiz = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ContestForm);

@@ -43,7 +43,6 @@ export class Component extends React.PureComponent<ModalContestsProps> {
       openContestQuizModal,
       isFetchingContest
     } = this.props;
-
     return (
       <PepupModal
         visible={isModalShown}

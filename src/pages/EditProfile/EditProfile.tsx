@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  ScrollView,
+  ScrollView
 } from 'react-native';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
@@ -20,7 +20,7 @@ import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import {
   EditProfileScreenProps,
   EditProfileScreenFromData,
-  EditProfileScreenFromFormik,
+  EditProfileScreenFromFormik
 } from '.';
 import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -33,42 +33,42 @@ const Header = (
   props: JSX.IntrinsicAttributes & {
     navigation?: any;
     title?: any;
-    getLeftComponent?: (() => any);
-    getRightComponent?: (() => any);
-  },
+    getLeftComponent?: () => any;
+    getRightComponent?: () => any;
+  }
 ) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
 
 const ConnectedHeader = connect(
   null,
-  null,
+  null
 )(Header);
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
   isFetching: state.ProfileState.isFetching,
-  userId: state.LoginState.userId,
+  userId: state.LoginState.userId
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
-    dispatch(editProfile(data, setErrors) as any),
+    dispatch(editProfile(data, setErrors) as any)
 });
 
 const EditSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
-    .required('Email is required'),
+    .required('Email is required')
 });
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (
-      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>
+    ) => <ConnectedHeader {...props} navigation={navigation} />
   });
 
   state = {
-    birthdayDatePickerVisible: false,
+    birthdayDatePickerVisible: false
   };
 
   handleSubmit = (values: EditProfileScreenFromFormik, { setErrors }: any) => {
@@ -77,9 +77,9 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
     editProfile(
       {
         ...values,
-        userId,
+        userId
       },
-      setErrors,
+      setErrors
     );
 
     Keyboard.dismiss();
@@ -88,153 +88,161 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   render() {
     const { profileData, isFetching } = this.props;
 
-    return (profileData &&
-      <PepupBackground>
-        <View style={styles.wrapContent}>
-          <Formik
-            initialValues={{
-              email: profileData.email,
-              name: profileData.name,
-              newPasswd: '',
-              dob: '',
-              profileInfo: {
-                country: '',
-                city: '',
-                phoneNumber: '',
-                address: '',
-              },
-            }}
-            validationSchema={EditSchema}
-            onSubmit={this.handleSubmit}>
-            {(props: any) => {
-              const { handleSubmit, errors, touched, setFieldValue } = props;
+    return (
+      profileData && (
+        <PepupBackground>
+          <View style={styles.wrapContent}>
+            <Formik
+              initialValues={{
+                email: profileData.email,
+                name: profileData.name,
+                newPasswd: '',
+                dob: '',
+                profileInfo: {
+                  country: '',
+                  city: '',
+                  phoneNumber: '',
+                  address: ''
+                }
+              }}
+              validationSchema={EditSchema}
+              onSubmit={this.handleSubmit}>
+              {(props: any) => {
+                const { handleSubmit, errors, touched, setFieldValue } = props;
 
-              const formattedErrorString = Object.keys(errors)
-                .reduce((acc: Array<string>, key: string) => {
-                  const value = (errors as any)[key];
-                  if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                    acc.push(value);
-                  }
-                  return acc;
-                }, [])
-                .join('. ');
+                const formattedErrorString = Object.keys(errors)
+                  .reduce((acc: Array<string>, key: string) => {
+                    const value = (errors as any)[key];
+                    if ((touched as any)[key] && acc.indexOf(value) < 0) {
+                      acc.push(value);
+                    }
+                    return acc;
+                  }, [])
+                  .join('. ');
 
-              return (
-                <View style={styles.form}>
-                  {Boolean(formattedErrorString) && (
-                    <View style={styles.formErrorContainer}>
-                      <Text style={styles.formError}>
-                        {formattedErrorString}
-                      </Text>
-                    </View>
-                  )}
-                  <View style={styles.scrollview}>
-                    <ScrollView>
-                      <TextInputStyledForEdit
-                        name="name"
-                        label="full name"
-                        formProps={props}
-                      />
-                      <TouchableOpacity
-                        onPress={() =>
-                          this.setState({ birthdayDatePickerVisible: true })
-                        }>
-                        <TextInputStyledForEdit
-                          name="dob"
-                          pointerEvents="none"
-                          editable={false}
-                          label="birthday"
-                          formProps={props}
-                        />
-                      </TouchableOpacity>
-                      <DateTimePicker
-                        mode="date"
-                        isVisible={this.state.birthdayDatePickerVisible}
-                        onConfirm={date => {
-                          this.setState({ birthdayDatePickerVisible: false });
-                          setFieldValue(
-                            'dob',
-                            format(date, 'd MMM yyyy').toString(),
-                          );
-                        }}
-                        onCancel={() =>
-                          this.setState({ birthdayDatePickerVisible: false })
-                        }
-                      />
-                      <TextInputStyledForEdit
-                        name="profileInfo.address"
-                        label="address"
-                        formProps={props}
-                      />
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          width: '100%',
-                        }}>
-                        <View style={{ width: '50%' }}>
-                          <TextInputStyledForEdit
-                            name="profileInfo.city"
-                            label="city"
-                            formProps={props}
-                          />
-                        </View>
-                        <View style={{ width: '50%' }}>
-                          <TextInputStyledForEdit
-                            name="profileInfo.country"
-                            label="country"
-                            formProps={props}
-                          />
-                        </View>
+                return (
+                  <View style={styles.form}>
+                    {Boolean(formattedErrorString) && (
+                      <View style={styles.formErrorContainer}>
+                        <Text style={styles.formError}>
+                          {formattedErrorString}
+                        </Text>
                       </View>
+                    )}
+                    <View style={styles.scrollview}>
+                      <ScrollView>
+                        <View style={styles.scrollContent}>
+                          <TextInputStyledForEdit
+                            name="name"
+                            label="full name"
+                            formProps={props}
+                          />
+                          <TouchableOpacity
+                            onPress={() =>
+                              this.setState({ birthdayDatePickerVisible: true })
+                            }>
+                            <TextInputStyledForEdit
+                              name="dob"
+                              pointerEvents="none"
+                              editable={false}
+                              label="birthday"
+                              formProps={props}
+                            />
+                          </TouchableOpacity>
+                          <DateTimePicker
+                            mode="date"
+                            isVisible={this.state.birthdayDatePickerVisible}
+                            onConfirm={date => {
+                              this.setState({
+                                birthdayDatePickerVisible: false
+                              });
+                              setFieldValue(
+                                'dob',
+                                format(date, 'd MMM yyyy').toString()
+                              );
+                            }}
+                            onCancel={() =>
+                              this.setState({
+                                birthdayDatePickerVisible: false
+                              })
+                            }
+                          />
+                          <TextInputStyledForEdit
+                            name="profileInfo.address"
+                            label="address"
+                            formProps={props}
+                          />
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              width: '100%'
+                            }}>
+                            <View style={{ width: '50%' }}>
+                              <TextInputStyledForEdit
+                                name="profileInfo.city"
+                                label="city"
+                                formProps={props}
+                              />
+                            </View>
+                            <View style={{ width: '50%' }}>
+                              <TextInputStyledForEdit
+                                name="profileInfo.country"
+                                label="country"
+                                formProps={props}
+                              />
+                            </View>
+                          </View>
 
-                      <TextInputStyledForEdit
-                        name="email"
-                        label="email"
-                        keyboardType="email-address"
-                        formProps={props}
-                      />
+                          <TextInputStyledForEdit
+                            name="email"
+                            label="email"
+                            keyboardType="email-address"
+                            formProps={props}
+                          />
 
-                      <TextInputStyledForEdit
-                        name="profileInfo.phoneNumber"
-                        label="phone"
-                        keyboardType="phone-pad"
-                        formProps={props}
-                      />
+                          <TextInputStyledForEdit
+                            name="profileInfo.phoneNumber"
+                            label="phone"
+                            keyboardType="phone-pad"
+                            formProps={props}
+                          />
 
-                      <TextInputStyledForEdit
-                        name="newPasswd"
-                        label="new password"
-                        keyboardType="numeric"
-                        secure={true}
-                        formProps={props}
+                          <TextInputStyledForEdit
+                            name="newPasswd"
+                            label="new password"
+                            keyboardType="numeric"
+                            secure={true}
+                            formProps={props}
+                          />
+                        </View>
+                      </ScrollView>
+                    </View>
+                    <View style={styles.footer}>
+                      <TouchableOpacity
+                        style={styles.btnCancel}
+                        onPress={() => navigate({ routeName: 'Profile' })}>
+                        <Icon size={24} name="cancel" color={colorBlack} />
+                      </TouchableOpacity>
+                      <ButtonStyled
+                        textBold={true}
+                        style={styles.btnSubmit}
+                        onPress={() => handleSubmit()}
+                        text="SAVE"
+                        loader={isFetching}
                       />
-                    </ScrollView>
+                    </View>
                   </View>
-                  <View style={styles.footer}>
-                    <TouchableOpacity
-                      style={styles.btnCancel}
-                      onPress={() => navigate({ routeName: 'Profile' })}>
-                      <Icon size={24} name="cancel" color={colorBlack} />
-                    </TouchableOpacity>
-                    <ButtonStyled
-                      textBold={true}
-                      style={styles.btnSubmit}
-                      onPress={() => handleSubmit()}
-                      text="SAVE"
-                      loader={isFetching}
-                    />
-                  </View>
-                </View>
-              );
-            }}
-          </Formik>
-        </View>
-      </PepupBackground>
+                );
+              }}
+            </Formik>
+          </View>
+        </PepupBackground>
+      )
     );
   }
 }
 
 export const EditProfileScreen = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
