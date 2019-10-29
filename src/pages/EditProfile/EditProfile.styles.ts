@@ -1,6 +1,11 @@
-import { StyleSheet } from "react-native";
-
-import { colorLightGray, colorTomato, semiboldFont, colorItalic } from "../../variables";
+import { StyleSheet } from 'react-native';
+import { deviceInfoCheck } from '../../helpers';
+import {
+  colorLightGray,
+  colorTomato,
+  semiboldFont,
+  colorItalic,
+} from '../../variables';
 
 export default StyleSheet.create({
   wrapContent: {
@@ -9,32 +14,32 @@ export default StyleSheet.create({
     borderTopRightRadius: 32,
     paddingTop: 16,
     flex: 1,
-    marginTop: 10
+    marginTop: deviceInfoCheck() ? 10 : 0,
   },
   form: {
     marginTop: 20,
     flex: 1,
     justifyContent: 'space-between',
-    position: 'relative'
+    position: 'relative',
   },
   formErrorContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   formError: {
     color: colorTomato,
-    textAlign: "center",
+    textAlign: 'center',
     paddingLeft: 40,
-    fontSize: 14
+    fontSize: 14,
   },
   btnSubmit: {
     width: 120,
-    fontFamily: semiboldFont
+    fontFamily: semiboldFont,
   },
   footer: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center',
     marginBottom: 40,
     flexGrow: 1,
     paddingHorizontal: 24,
@@ -42,27 +47,27 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
   },
   btnCancel: {
     width: 48,
     height: 48,
     borderRadius: 30,
     backgroundColor: colorLightGray,
-    justifyContent: "center",
-    alignItems: "center",
-    marginRight: 16
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 16,
   },
   private: {
-    marginTop: 55
+    marginTop: 55,
   },
   privateTitle: {
     color: colorItalic,
     fontFamily: semiboldFont,
     fontSize: 16,
     paddingLeft: 40,
-    marginBottom: 25
+    marginBottom: 25,
   },
   scrollview: { flexShrink: 1 },
-  scrollContent: { paddingBottom: 90 }
+  scrollContent: { paddingBottom: 90 },
 });

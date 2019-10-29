@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Modal from 'react-native-modalbox';
 import StarRating from 'react-native-star-rating';
 import { Video } from 'expo-av';
 
@@ -21,6 +20,7 @@ import {
   getAllReviews,
   openReviewsModal,
 } from '../../pages/Pepups/actions';
+import { PepupModal } from '../PepupModal/PepupModal';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps, RenderItemMedia } from './';
@@ -49,6 +49,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 export class Component extends React.PureComponent<ModalPepupProps> {
+  state = {
+    heightDescription: 0,
+  };
+
   getReviews = () => {
     const { celebData, openReviewsModal, getAllReviews } = this.props;
 
@@ -95,18 +99,20 @@ export class Component extends React.PureComponent<ModalPepupProps> {
 
     return (
       celebData && (
-        <Modal
-          isOpen={isModalShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closePepupModal()}
-          style={styles.modal}>
-          <View style={styles.wrapModalContent}>
+        <PepupModal
+          visible={isModalShown}
+          onRequestClose={() => closePepupModal()}
+          heightContent={this.state.heightDescription}>
+          <View style={{ paddingHorizontal: 24, flex: 1 }}>
             <View style={styles.swiperLine} />
-            <ScrollView style={styles.scrollview}>
-              <View style={styles.scrollContent}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View
+                style={styles.scrollContent}
+                onLayout={event => {
+                  const { height } = event.nativeEvent.layout;
+                  Object.keys(celebData).length !== 0 &&
+                    this.setState({ heightDescription: height });
+                }}>
                 <View style={{ position: 'relative' }}>
                   <View>
                     <View style={styles.header}>
@@ -242,7 +248,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
           <ModalVideo />
           <ModalReviews />
           <ErrorModal />
-        </Modal>
+        </PepupModal>
       )
     );
   }

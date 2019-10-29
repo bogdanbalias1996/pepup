@@ -1,28 +1,31 @@
 import * as React from 'react';
-import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import {connect} from 'react-redux';
-import ModalBox from 'react-native-modalbox';
-import {Dispatch} from 'redux';
-import {withFormik} from 'formik';
+import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { withFormik } from 'formik';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import {Video} from 'expo-av';
+import { Video } from 'expo-av';
 
-import {closeContestQuizModal, submitEnrty} from '../../pages/Contests/actions';
-import {Icon} from '../Icon/Icon';
-import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
-import {ModalContestQuizProps} from './';
+import {
+  closeContestQuizModal,
+  submitEnrty,
+} from '../../pages/Contests/actions';
+import { Icon } from '../Icon/Icon';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { PepupModal } from '../PepupModal/PepupModal';
+import { ModalContestQuizProps } from './';
 import styles from './ModalContests.styles';
 import {
   colorBlack,
   colorLightGradStart,
   colorLightGradEnd,
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {TextInputBorderStyled} from '../TextInputStyled/TextInputBorderStyled';
-import {SuccessfulAlert} from '../SuccessfulAlert/SuccessfulAlert';
-import {ErrorModal} from '../ErrorState/ErrorState';
+import { IGlobalState } from '../../coreTypes';
+import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -39,10 +42,11 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export class Component extends React.Component<ModalContestQuizProps> {
   state = {
     image: null,
+    heightDescription: 0,
   };
 
   onImageChange = async () => {
-    const {setFieldValue, values, contestData} = this.props;
+    const { setFieldValue, values, contestData } = this.props;
 
     setTimeout(async () => {
       const hanlder = ImagePicker.launchImageLibraryAsync;
@@ -79,7 +83,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
   };
 
   removeItem = (item: any) => {
-    const {setFieldValue, values} = this.props;
+    const { setFieldValue, values } = this.props;
 
     setFieldValue(
       'media',
@@ -92,7 +96,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
   openModalWindow = async () => {
     const perms = [Permissions.CAMERA_ROLL];
 
-    const {status} = await Permissions.askAsync(...perms);
+    const { status } = await Permissions.askAsync(...perms);
 
     if (status === 'granted') {
       this.onImageChange();
@@ -101,7 +105,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
 
   getMediaElement = (type: boolean, item: any) => {
     return type ? (
-      <Image style={styles.itemGallery} source={{uri: item}} />
+      <Image style={styles.itemGallery} source={{ uri: item }} />
     ) : (
       <Video
         source={{
@@ -141,19 +145,21 @@ export class Component extends React.Component<ModalContestQuizProps> {
       .join('. ');
 
     return (
-      <ModalBox
-        isOpen={isModalTestShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={false}
-        swipeArea={100}
-        onClosed={() => closeContestQuizModal()}
-        style={styles.modal}>
-        <View style={styles.wrapModalContent}>
+      <PepupModal
+        visible={isModalTestShown}
+        onRequestClose={() => closeContestQuizModal()}
+        heightContent={this.state.heightDescription}>
+        <View style={{ flex: 1, paddingHorizontal: 24 }}>
           <View style={styles.swiperLine} />
           <View style={styles.wrap}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.scrollContent}>
+              <View
+                style={styles.scrollContent}
+                onLayout={event => {
+                  const { height } = event.nativeEvent.layout;
+                  Object.keys(contestData).length !== 0 &&
+                    this.setState({ heightDescription: height });
+                }}>
                 <View style={styles.conTitle}>
                   <Image
                     style={styles.avatar}
@@ -173,7 +179,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                       </Text>
                     </View>
                   )}
-                  <View style={{justifyContent: 'space-between'}}>
+                  <View style={{ justifyContent: 'space-between' }}>
                     {contestData.dataInfo[
                       'contest-info'
                     ].submissionInfo.prompts.map((item: any, i: number) => {
@@ -183,7 +189,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                           <TextInputBorderStyled
                             name={`text${i}`}
                             label="Type your description here"
-                            inputStyle={{height: 100}}
+                            inputStyle={{ height: 100 }}
                             multiline={true}
                             numberOfLines={3}
                             formProps={this.props}
@@ -236,7 +242,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                 </View>
               </View>
             </ScrollView>
-            <View style={[styles.modalFooter, styles.modalFooterContest]}>
+            <View style={styles.modalFooter}>
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeContestQuizModal()}>
@@ -253,7 +259,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
         </View>
         <SuccessfulAlert />
         <ErrorModal />
-      </ModalBox>
+      </PepupModal>
     );
   }
 }
@@ -263,13 +269,13 @@ const ContestForm = withFormik({
     const questions = props.contestData.dataInfo[
       'contest-info'
     ].submissionInfo.prompts.reduce((acc: any, current: any, i: number) => {
-      return {...acc, [`text${i}`]: ''};
+      return { ...acc, [`text${i}`]: '' };
     }, {});
 
-    return {...questions, media: []};
+    return { ...questions, media: [] };
   },
 
-  handleSubmit: (values, {props}) => {
+  handleSubmit: (values, { props }) => {
     props.submitEnrty(
       values,
       props.contestData.id,
