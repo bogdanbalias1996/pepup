@@ -247,12 +247,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
             </View>
           </View>
         )}
-        <>
-          <ModalPepupReq />
-          <ModalVideo />
-          <ModalReviews />
-          <ErrorModal />
-        </>
+        <ModalPepupReq />
+        <ModalVideo />
+        <ModalReviews />
+        <ErrorModal />
       </PepupModal>
     );
   }

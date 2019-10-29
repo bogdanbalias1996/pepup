@@ -241,6 +241,7 @@ export const submitEnrty = (
               'Your entry to the contest has been submitted. Look out for further details in your email. ',
             onPress: () => {
               dispatch(closeAlert());
+              dispatch(closeContestQuizModal());
               dispatch(closeContestModal());
             }
           })
