@@ -3,4 +3,5 @@ export type PepupModalProps = {
   onRequestClose: () => void;
   heightContent: number;
   children: any;
+  isLoading?: boolean;
 };

@@ -10,7 +10,7 @@ import { Video } from 'expo-av';
 
 import {
   closeContestQuizModal,
-  submitEnrty,
+  submitEnrty
 } from '../../pages/Contests/actions';
 import { Icon } from '../Icon/Icon';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
@@ -20,7 +20,7 @@ import styles from './ModalContests.styles';
 import {
   colorBlack,
   colorLightGradStart,
-  colorLightGradEnd,
+  colorLightGradEnd
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
@@ -31,18 +31,18 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
   contestData: state.ContestState.contestData,
   isFetching: state.ContestState.isFetching,
-  submitEntryData: state.ContestState.submitEntryData,
+  submitEntryData: state.ContestState.submitEntryData
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestQuizModal: () => dispatch(closeContestQuizModal()),
   submitEnrty: (values: any, id: string, type: string, contestType: string) =>
-    dispatch(submitEnrty(values, id, type, contestType) as any),
+    dispatch(submitEnrty(values, id, type, contestType) as any)
 });
 export class Component extends React.Component<ModalContestQuizProps> {
   state = {
     image: null,
-    heightDescription: 0,
+    heightDescription: 0
   };
 
   onImageChange = async () => {
@@ -61,7 +61,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
           : ImagePicker.MediaTypeOptions.Videos,
         aspect: [4, 3],
         base64: true,
-        quality: 0.5,
+        quality: 0.5
       });
 
       if (!result.cancelled) {
@@ -74,8 +74,8 @@ export class Component extends React.Component<ModalContestQuizProps> {
                   result.base64
                 }`
               : result.uri,
-            type: mediaTypeImage ? 'image' : 'video',
-          },
+            type: mediaTypeImage ? 'image' : 'video'
+          }
         });
         setFieldValue('media', array);
       }
@@ -89,7 +89,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
       'media',
       values.media.filter((val: any) => {
         return item.mediaItem.id !== val.mediaItem.id;
-      }),
+      })
     );
   };
 
@@ -109,12 +109,19 @@ export class Component extends React.Component<ModalContestQuizProps> {
     ) : (
       <Video
         source={{
-          uri: item,
+          uri: item
         }}
         resizeMode="cover"
         style={styles.itemGallery}
       />
     );
+  };
+
+  isAllFieldsFilled = (obj: any) => {
+    for (var i in obj) {
+      if (obj[i] === '' || obj[i].length === 0) return false;
+    }
+    return true;
   };
 
   render() {
@@ -126,7 +133,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
       values,
       handleSubmit,
       errors,
-      touched,
+      touched
     } = this.props;
     const requiresMedia =
       contestData.dataInfo['contest-info'].submissionInfo.requiresMedia;
@@ -164,8 +171,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                   <Image
                     style={styles.avatar}
                     source={{
-                      uri:
-                        contestData.mediaBasePath + contestData.organizerLogo,
+                      uri: contestData.mediaBasePath + contestData.organizerLogo
                     }}
                     resizeMode="cover"
                   />
@@ -224,7 +230,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                                   <View style={styles.itemGalleryWrap}>
                                     {this.getMediaElement(
                                       mediaTypeImage,
-                                      item.mediaItem.uri,
+                                      item.mediaItem.uri
                                     )}
                                     <TouchableOpacity
                                       style={styles.btnDelete}
@@ -249,9 +255,14 @@ export class Component extends React.Component<ModalContestQuizProps> {
                 <Icon name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled
-                style={styles.btnSubmit}
+                style={[
+                  styles.btnSubmit,
+                  { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
+                ]}
                 loader={isFetching}
-                onPress={() => handleSubmit()}
+                onPress={() =>
+                  this.isAllFieldsFilled(values) ? handleSubmit() : {}
+                }
                 text="Submit"
               />
             </View>
@@ -280,12 +291,12 @@ const ContestForm = withFormik({
       values,
       props.contestData.id,
       props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
-      props.contestData.type,
+      props.contestData.type
     );
-  },
+  }
 })(Component);
 
 export const ModalContestDesign = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ContestForm);

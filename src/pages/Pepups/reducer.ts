@@ -1,4 +1,4 @@
-import { IAction } from "../../coreTypes";
+import { IAction } from '../../coreTypes';
 import {
   OPEN_PEPUP_MODAL,
   CLOSE_PEPUP_MODAL,
@@ -34,8 +34,8 @@ import {
   REQUEST_FEATURED_CELEBS,
   FAILURE_FEATURED_CELEBS,
   RECEIVE_FEATURED_CELEBS
-} from "./actions";
-import { Category, Celeb, Review } from ".";
+} from './actions';
+import { Category, Celeb, Review } from '.';
 
 export class PepupState {
   isModalShown: boolean;
@@ -46,6 +46,7 @@ export class PepupState {
   celebData: Celeb | null;
   isFetching: boolean;
   isFetchingCat: boolean;
+  isFetchingCeleb: boolean;
   selectedCategory: string;
   isModalReviewShown: boolean;
   reviews: Array<Review>;
@@ -60,6 +61,7 @@ export class PepupState {
     this.celebData = null;
     this.isFetching = false;
     this.isFetchingCat = false;
+    this.isFetchingCeleb = false;
     this.selectedCategory = '';
     this.isVideoModalShown = false;
     this.isModalReviewShown = false;
@@ -117,38 +119,38 @@ export const PepupReducer = (
         ...state,
         isFetching: false,
         celebs: action.data
-      }
+      };
     case REQUEST_CELEBS_BY_CATEGORY:
       return {
         ...state,
         isFetching: true
-      }
+      };
     case FAILURE_CELEBS_BY_CATEGORY:
       return {
         ...state,
         isFetching: false
-      }
+      };
     case RECEIVE_CELEB:
       return {
         ...state,
         celebData: action.data,
-        isFetching: false
-      }
+        isFetchingCeleb: false
+      };
     case REQUEST_CELEB:
       return {
         ...state,
-        isFetching: true
-      }
+        isFetchingCeleb: true
+      };
     case FAILURE_CELEB:
       return {
         ...state,
-        isFetching: false
-      }
+        isFetchingCeleb: false
+      };
     case RECEIVE_PEPUP:
       return {
         ...state,
         isFetching: false
-      }
+      };
     case REQUEST_PEPUP:
       return {
         ...state,
@@ -163,7 +165,7 @@ export const PepupReducer = (
       return {
         ...state,
         selectedCategory: action.data
-      }
+      };
     case OPEN_VIDEO_MODAL:
       return {
         ...state,
@@ -189,17 +191,17 @@ export const PepupReducer = (
         ...state,
         reviews: action.data,
         isFetching: false
-      }
+      };
     case REQUEST_ALL_REVIEWS:
       return {
         ...state,
         isFetching: true
-      }
+      };
     case FAILURE_ALL_REVIEWS:
       return {
         ...state,
         isFetching: false
-      }
+      };
     case OPEN_POST_REVIEW_MODAL:
       return {
         ...state,
@@ -215,7 +217,7 @@ export const PepupReducer = (
         ...state,
         isFetching: false,
         isModalPostReviewShown: false
-      }
+      };
     case REQUEST_REVIEW:
       return {
         ...state,
@@ -242,17 +244,17 @@ export const PepupReducer = (
         ...state,
         isFetching: false,
         celebs: action.data
-      }
+      };
     case REQUEST_FEATURED_CELEBS:
       return {
         ...state,
         isFetching: true
-      }
+      };
     case FAILURE_FEATURED_CELEBS:
       return {
         ...state,
         isFetching: false
-      }
+      };
     default:
       return state;
   }
