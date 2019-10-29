@@ -5,32 +5,41 @@ import { connect } from 'react-redux';
 import { PepupModalProps } from '.';
 import styles from './PepupModal.styles';
 import { deviceInfoCheck } from '../../helpers';
+import { Loader } from '../../components/Loader/Loader';
 
 export class Component extends React.Component<PepupModalProps> {
   render() {
-    const { visible, heightContent, onRequestClose, children } = this.props;
+    const {
+      visible,
+      heightContent,
+      onRequestClose,
+      children,
+      isLoading
+    } = this.props;
     return (
       visible && (
         <View style={styles.overlay}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={visible}
-            onRequestClose={onRequestClose}>
-            <View
-              style={[
-                styles.wrapper,
-                { paddingTop: deviceInfoCheck() ? 55 : 25 },
-              ]}>
+          <Loader color="white" size="large" isDataLoaded={!isLoading}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={visible}
+              onRequestClose={onRequestClose}>
               <View
                 style={[
-                  styles.wrapModalContent,
-                  { maxHeight: heightContent + 150, height: '100%' },
+                  styles.wrapper,
+                  { paddingTop: deviceInfoCheck() ? 55 : 25 }
                 ]}>
-                {children}
+                <View
+                  style={[
+                    styles.wrapModalContent,
+                    { maxHeight: heightContent + 150, height: '100%' }
+                  ]}>
+                  {children}
+                </View>
               </View>
-            </View>
-          </Modal>
+            </Modal>
+          </Loader>
         </View>
       )
     );
@@ -39,5 +48,5 @@ export class Component extends React.Component<PepupModalProps> {
 
 export const PepupModal = connect(
   null,
-  null,
+  null
 )(Component);

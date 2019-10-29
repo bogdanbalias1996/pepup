@@ -6,7 +6,7 @@ import {
   FlatList,
   ScrollView,
   Image,
-  ListRenderItem,
+  ListRenderItem
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -18,7 +18,7 @@ import {
   openPepupReqModal,
   openVideoModal,
   getAllReviews,
-  openReviewsModal,
+  openReviewsModal
 } from '../../pages/Pepups/actions';
 import { PepupModal } from '../PepupModal/PepupModal';
 import { Icon } from '../../components/Icon/Icon';
@@ -38,19 +38,20 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
   celebData: state.PepupState.celebData,
   isFetching: state.PepupState.isFetching,
-  reviews: state.PepupState.reviews,
+  isFetchingCeleb: state.PepupState.isFetchingCeleb,
+  reviews: state.PepupState.reviews
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
   openVideoModal: () => dispatch(openVideoModal()),
   openReviewsModal: () => dispatch(openReviewsModal()),
-  getAllReviews: (id: string) => dispatch(getAllReviews(id) as any),
+  getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
 
 export class Component extends React.PureComponent<ModalPepupProps> {
   state = {
-    heightDescription: 0,
+    heightDescription: 0
   };
 
   getReviews = () => {
@@ -66,7 +67,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         <View style={styles.carouselAvatar}>
           <Video
             source={{
-              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
             }}
             rate={1.0}
             volume={1.0}
@@ -89,7 +90,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openPepupReqModal,
       isModalShown,
       celebData,
-      openVideoModal,
+      openVideoModal
     } = this.props;
 
     const videoUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
@@ -98,11 +99,12 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       : ['0', '0'];
 
     return (
-      celebData && (
-        <PepupModal
-          visible={isModalShown}
-          onRequestClose={() => closePepupModal()}
-          heightContent={this.state.heightDescription}>
+      <PepupModal
+        visible={isModalShown}
+        isLoading={this.props.isFetchingCeleb}
+        onRequestClose={() => closePepupModal()}
+        heightContent={this.state.heightDescription}>
+        {!!celebData && (
           <View style={{ paddingHorizontal: 24, flex: 1 }}>
             <View style={styles.swiperLine} />
             <ScrollView showsVerticalScrollIndicator={false}>
@@ -136,7 +138,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     <View
                       style={[
                         styles.avatar,
-                        { overflow: 'hidden', marginVertical: 20 },
+                        { overflow: 'hidden', marginVertical: 20 }
                       ]}>
                       <Loader
                         isDataLoaded={!!videoUrl}
@@ -144,7 +146,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                         color={colorBlueberry}>
                         <Video
                           source={{
-                            uri: videoUrl,
+                            uri: videoUrl
                           }}
                           rate={1.0}
                           volume={1.0}
@@ -185,7 +187,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     style={styles.carousel}
                     contentContainerStyle={{
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'
                     }}
                   />
                   {celebData.dataInfo.review ? (
@@ -244,17 +246,19 @@ export class Component extends React.PureComponent<ModalPepupProps> {
               />
             </View>
           </View>
+        )}
+        <>
           <ModalPepupReq />
           <ModalVideo />
           <ModalReviews />
           <ErrorModal />
-        </PepupModal>
-      )
+        </>
+      </PepupModal>
     );
   }
 }
 
 export const ModalPepup = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);

@@ -1,16 +1,16 @@
 import * as React from 'react';
-import {Dispatch} from 'redux';
-import {Text, View, Image, TouchableOpacity} from 'react-native';
-import {connect} from 'react-redux';
-import Modal from 'react-native-modalbox';
+import { Dispatch } from 'redux';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
 
-import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {ErrorStateProps} from './';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import { ErrorStateProps } from './';
 import styles from './ErrorState.styles';
-import {IGlobalState} from '../../coreTypes';
-import {closeError} from '../../pages/ErrorModal/actions';
-import {Icon} from '../Icon/Icon';
-import {colorBlack} from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { closeError } from '../../pages/ErrorModal/actions';
+import { Icon } from '../Icon/Icon';
+import { colorBlack } from '../../variables';
+import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isErrorShown: state.ErrorState.isErrorShown,
@@ -20,9 +20,11 @@ const mapStateToProps = (state: IGlobalState) => ({
   buttonText: state.ErrorState.buttonText,
   imgSource: state.ErrorState.imgSource,
   isFetching: state.PepupState.isFetching,
+  isFetchingContest: state.ContestState.isFetching,
+  isFetchingProfile: state.ProfileState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeError: () => dispatch(closeError()),
+  closeError: () => dispatch(closeError())
 });
 
 export class Component extends React.PureComponent<ErrorStateProps> {
@@ -35,18 +37,16 @@ export class Component extends React.PureComponent<ErrorStateProps> {
       imgSource,
       onPress,
       isFetching,
-      buttonText,
+      isFetchingContest,
+      isFetchingProfile,
+      buttonText
     } = this.props;
 
     return (
-      <Modal
-        isOpen={isErrorShown}
-        swipeToClose={false}
-        position="bottom"
-        coverScreen={true}
-        useNativeDriver={false}
-        onClosed={() => closeError()}
-        style={styles.modal}>
+      <PepupModal
+        visible={isErrorShown}
+        onRequestClose={() => closeError()}
+        heightContent={1000}>
         <View style={styles.modal}>
           <View style={styles.wrapModalContent}>
             <View style={styles.imageContainer}>
@@ -70,17 +70,17 @@ export class Component extends React.PureComponent<ErrorStateProps> {
                 style={styles.btnSubmit}
                 onPress={() => onPress()}
                 text={buttonText}
-                loader={isFetching}
+                loader={isFetching || isFetchingContest || isFetchingProfile}
               />
             </View>
           </View>
         </View>
-      </Modal>
+      </PepupModal>
     );
   }
 }
 
 export const ErrorModal = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);

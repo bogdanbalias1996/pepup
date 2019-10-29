@@ -1,4 +1,4 @@
-import {SuperAgentRequest} from 'superagent';
+import { SuperAgentRequest } from 'superagent';
 
 export enum ApiMethod {
   UNKNOWN = 1,
@@ -6,7 +6,7 @@ export enum ApiMethod {
   POST,
   PUT,
   PATCH,
-  DELETE,
+  DELETE
 }
 
 export enum ApiOperation {
@@ -35,7 +35,7 @@ export enum ApiOperation {
   GetFeaturedCelebs,
   GetProdCategoryByType,
   GetProductById,
-  BuyEventTicket,
+  BuyEventTicket
 }
 
 export interface INetwork<C> {
@@ -44,7 +44,7 @@ export interface INetwork<C> {
     operation: T,
     params?: Object,
     data?: U,
-    urlParams?: Object,
+    urlParams?: Object
   ) => Promise<any>;
 }
 
@@ -96,7 +96,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       urlParams,
       queryType,
       variables,
-      headers,
+      headers
     } = options;
 
     this.operation = operation;
@@ -154,7 +154,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       categoryId,
       handle,
       prodCatType,
-      productId,
+      productId
     } = (this.getParams() || {}) as any;
 
     switch (this.operation) {

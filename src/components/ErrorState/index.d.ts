@@ -13,5 +13,7 @@ export type ErrorStateProps = {
   imgSource: any;
   onPress: any;
   isFetching: any;
+  isFetchingContest: boolean;
+  isFetchingProfile: boolean;
   buttonText: any;
 };

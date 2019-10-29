@@ -2,13 +2,12 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
 import {
   closePepupReqModal,
-  sendRequestForPepup,
+  sendRequestForPepup
 } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
@@ -28,18 +27,18 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
   celebData: state.PepupState.celebData,
   categoryId: state.PepupState.selectedCategory,
-  isFetching: state.PepupState.isFetching,
+  isFetching: state.PepupState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupReqModal: () => dispatch(closePepupReqModal()),
   sendRequestForPepup: (data: RequestPepupScreenFromData, setErrors: any) =>
     dispatch(sendRequestForPepup(data, setErrors) as any),
-  openAlert: (data: AlertProps) => dispatch(openAlert(data)),
+  openAlert: (data: AlertProps) => dispatch(openAlert(data))
 });
 
 const RequestSchema = Yup.object().shape({
   name: Yup.string().required('Please type your request'),
-  text: Yup.string().required("Please type person's name"),
+  text: Yup.string().required("Please type person's name")
 });
 
 export class Component extends React.PureComponent<RequestPepupProps> {
@@ -56,7 +55,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
       closePepupReqModal,
       isModalReqShown,
       isFetching,
-      celebData,
+      celebData
     } = this.props;
 
     const fullName = celebData ? celebData.userInfo.name.split(' ') : ['', ''];
@@ -73,7 +72,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
               initialValues={{
                 name: '',
                 text: '',
-                shareCheckbox: false,
+                shareCheckbox: false
               }}
               validationSchema={RequestSchema}
               onSubmit={this.handleSubmit}>
@@ -83,7 +82,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                   errors,
                   touched,
                   setFieldValue,
-                  values,
+                  values
                 } = props;
 
                 const formattedErrorString = Object.keys(errors)
@@ -159,14 +158,14 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                   onPress={() =>
                                     setFieldValue(
                                       'shareCheckbox',
-                                      !values.shareCheckbox,
+                                      !values.shareCheckbox
                                     )
                                   }
                                 />
                                 <Text
                                   style={[
                                     styles.subTitle,
-                                    styles.checkText,
+                                    styles.checkText
                                   ]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
                               </View>
                               <Text style={styles.disclaimerText}>
@@ -207,5 +206,5 @@ export class Component extends React.PureComponent<RequestPepupProps> {
 
 export const ModalPepupReq = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);

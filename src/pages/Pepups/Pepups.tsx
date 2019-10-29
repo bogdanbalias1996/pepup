@@ -15,6 +15,7 @@ import { getAllActiveCategories } from './actions';
 import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
 import { colorBlueberry } from '../../variables';
+import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   categories: state.PepupState.categories,
@@ -74,6 +75,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
           </Loader>
         </View>
         <ModalPepup />
+        {/* <ErrorModal /> */}
       </PepupBackground>
     );
   }
