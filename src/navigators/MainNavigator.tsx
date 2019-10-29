@@ -1,6 +1,9 @@
 import * as React from 'react';
-import {createStackNavigator, createBottomTabNavigator} from 'react-navigation';
-import {Image, View} from 'react-native';
+import {
+  createStackNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation';
+import { Image, View } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
@@ -8,13 +11,13 @@ import {
   defaultFont,
 } from '../variables';
 
-import {PepupsScreen} from '../pages/Pepups/Pepups';
-import {EventsScreen} from '../pages/Events/Events';
-import {ContestsScreen} from '../pages/Contests/Contests';
-import {ProfileScreen} from '../pages/Profile/Profile';
-import {SettingsScreen} from '../pages/Settings/Settings';
-import {StoreScreen} from '../pages/Store/Store';
-import {EditProfileScreen} from '../pages/EditProfile/EditProfile';
+import { PepupsScreen } from '../pages/Pepups/Pepups';
+import { EventsScreen } from '../pages/Events/Events';
+import { ContestsScreen } from '../pages/Contests/Contests';
+import { ProfileScreen } from '../pages/Profile/Profile';
+import { SettingsScreen } from '../pages/Settings/Settings';
+import { StoreScreen } from '../pages/Store/Store';
+import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 
 // Icons for BottomTabNavigator
@@ -29,14 +32,31 @@ const ContestsActive = require('../../assets/contestsActive.png');
 const Profile = require('../../assets/profile.png');
 const ProfileActive = require('../../assets/profileActive.png');
 
+const getActiveTabIconName = (routeName: string, focused: boolean) => {
+  switch (routeName) {
+    case 'Pepups':
+      return focused ? PepupsActive : Pepups;
+    // case 'Events':
+    //   return focused ? EventsActive : Events;
+    case 'Contests':
+      return focused ? ContestsActive : Contests;
+    // case 'Store':
+    //   return focused ? StoreActive : Store;
+    case 'Profile':
+      return focused ? ProfileActive : Profile;
+    default:
+      console.log(`Unsupported tab name: '${routeName}'`)
+  }
+}
+
 const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
   return {
-    screen: createStackNavigator({
-      [ScreenName]: ScreenComponent,
-    }),
-    navigationOptions: ({navigation}: any) => ({
-      headerTransparent: true
-    }),
+    screen: createStackNavigator(
+      { [ScreenName]: ScreenComponent },
+      {
+        headerMode: 'screen'
+      }
+    )
   };
 };
 
@@ -49,6 +69,7 @@ export const TabsNavigator = createBottomTabNavigator(
     Profile: formatScreenProps('Profile', ProfileScreen),
   },
   {
+    initialRouteName: 'Pepups',
     tabBarOptions: {
       style: {
         height: 62,
@@ -75,36 +96,17 @@ export const TabsNavigator = createBottomTabNavigator(
         alignItems: 'center',
         paddingTop: 5,
         paddingBottom: 7,
-      },
+      }
     },
-    initialRouteName: 'Pepups',
-    defaultNavigationOptions: ({navigation}) => ({
-      tabBarIcon: ({focused, horizontal, tintColor}) => {
-        const {routeName} = navigation.state;
-        let iconName;
+    defaultNavigationOptions: ({ navigation }) => ({
+      tabBarIcon: ({ focused }) => {
+        const { routeName } = navigation.state;
 
-        switch (routeName) {
-          case 'Pepups':
-            iconName = focused ? PepupsActive : Pepups;
-            break;
-          // case 'Events':
-          //   iconName = focused ? EventsActive : Events;
-          //   break;
-          case 'Contests':
-            iconName = focused ? ContestsActive : Contests;
-            break;
-          // case 'Store':
-          //   iconName = focused ? StoreActive : Store;
-          //   break;
-          case 'Profile':
-            iconName = focused ? ProfileActive : Profile;
-            break;
-        }
         return (
-          <View style={{position: 'relative'}}>
+          <View style={{ position: 'relative' }}>
             <Image
-              source={iconName}
-              style={{width: 24, height: 24}}
+              source={getActiveTabIconName(routeName, focused)}
+              style={{ width: 24, height: 24 }}
               resizeMode="contain"
             />
           </View>
@@ -115,13 +117,13 @@ export const TabsNavigator = createBottomTabNavigator(
 );
 
 export const MainNavigator = createStackNavigator({
-  Tabs: {
-    screen: TabsNavigator,
-    navigationOptions: {
-      header: () => {}
-    },
-  },
+  Tabs: TabsNavigator,
   Settings: SettingsScreen,
   EditProfile: EditProfileScreen,
   EditProfileCeleb: EditProfileCelebScreen
+}, {
+  headerMode: 'screen',
+  defaultNavigationOptions: {
+    header: null
+  }
 });

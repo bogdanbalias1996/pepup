@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Alert, StatusBar } from 'react-native';
+import { Alert, StatusBar, YellowBox } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
@@ -23,7 +23,6 @@ import SplashScreen from 'react-native-splash-screen';
 import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
 import { MainNavigator } from './src/navigators/MainNavigator';
 import { PagesNavigator } from './src/navigators/PagesNavigator';
-import { OnboardingNavigator } from './src/navigators/OnboardingNavigator';
 import { colorBlueberry } from './src/variables';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from './src/components/ErrorState/ErrorState';
@@ -31,20 +30,22 @@ import { setInternetConnection } from './src/utils/connectionCheck/actions';
 import { openError, closeError } from './src/pages/ErrorModal/actions';
 import { authenticate } from './src/common/utils/session';
 
+YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
+
+const FCM_TOKEN = 'fcmToken';
+
 const AppNavigator = createSwitchNavigator(
   {
-    Onboarding: OnboardingNavigator,
     Pages: PagesNavigator,
     Auth: AuthenticationNavigator,
-    Main: MainNavigator,
+    Main: MainNavigator
   },
   {
-    initialRouteName: 'Onboarding',
-  },
+    initialRouteName: 'Pages'
+  }
 );
 
 const AppContainer = createAppContainer(AppNavigator);
-
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
@@ -59,7 +60,7 @@ const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
 };
 
 const AppWithFontLoaded = connect((state: IGlobalState) => ({
-  isFontLoaded: state.FontState.isFontLoaded,
+  isFontLoaded: state.FontState.isFontLoaded
 }))(AppWithFontLoadedComponent);
 
 export default class App extends Component {
@@ -80,8 +81,8 @@ export default class App extends Component {
             onPress: () => {
               getStore().dispatch(closeError());
               navigate({ routeName: 'Login' });
-            },
-          }),
+            }
+          })
         );
       }
     });
@@ -91,11 +92,11 @@ export default class App extends Component {
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
       'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
       'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
-      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
+      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf')
     });
 
     getStore().dispatch({
-      type: 'FONT_LOADED',
+      type: 'FONT_LOADED'
     });
 
     this.checkPermission();
@@ -148,7 +149,7 @@ export default class App extends Component {
       title,
       body,
       [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-      { cancelable: false },
+      { cancelable: false }
     );
   }
 
@@ -162,11 +163,11 @@ export default class App extends Component {
   }
 
   async getToken() {
-    let fcmToken = await AsyncStorage.getItem('fcmToken');
+    let fcmToken = await AsyncStorage.getItem(FCM_TOKEN);
     if (!fcmToken) {
       fcmToken = await firebase.messaging().getToken();
       if (fcmToken) {
-        await AsyncStorage.setItem('fcmToken', fcmToken);
+        await AsyncStorage.setItem(FCM_TOKEN, fcmToken);
       }
     }
   }

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import {
   colorEndButtonInput,
   colorLightGray,
-  semiboldFont,
+  semiboldFont
 } from '../../variables';
 import { deviceInfoCheck } from '../../helpers';
 
@@ -12,20 +12,21 @@ export default StyleSheet.create({
     alignSelf: 'center',
     justifyContent: 'space-between',
     width: 155,
+    height: 64,
+    marginVertical: 24
   },
   avatar: {
     width: 64,
     height: 64,
     borderRadius: 8,
-    marginVertical: 24,
-    marginHorizontal: 5,
+    marginHorizontal: 5
   },
   avatarCeleb: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   titleWrap: {
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 20,
@@ -34,7 +35,7 @@ export default StyleSheet.create({
     textAlign: 'center',
     marginBottom: 24,
     marginHorizontal: 10,
-    flexShrink: 1,
+    flexShrink: 1
   },
   wrapContent: {
     backgroundColor: colorLightGray,
@@ -43,10 +44,10 @@ export default StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     flex: 1,
-    marginTop: deviceInfoCheck() ? 10 : 0,
+    marginTop: deviceInfoCheck() ? 10 : 0
   },
   wrapHeaderRight: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   wrapHeaderRightIcon: {
     backgroundColor: colorEndButtonInput,
@@ -55,13 +56,13 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
     width: 40,
-    height: 40,
+    height: 40
   },
   rateIcon: {
     width: 20,
-    height: 20,
+    height: 20
   },
   imageWrap: {
-    flexDirection: 'row',
-  },
+    flexDirection: 'row'
+  }
 });

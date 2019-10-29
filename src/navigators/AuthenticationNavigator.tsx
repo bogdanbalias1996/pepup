@@ -6,41 +6,12 @@ import { SignUpScreen } from "../pages/SignUp/SignUp";
 
 export const AuthenticationNavigator = createStackNavigator(
   {
-    Login: {
-      screen: LoginScreen,
-      navigationOptions: ({ navigation, screenProps }: any) => ({
-        header: null,
-        headerTransparent: true,
-        title: "Login"
-      })
-    },
-    SignUp: {
-      screen: SignUpScreen,
-      navigationOptions: ({ navigation, screenProps }: any) => ({
-        title: "SignUp",
-        header: null,
-        headerTransparent: true,
-        headerTintColor: "white"
-      })
-    },
-    ForgotPassword: {
-      screen: ForgotPasswordScreen,
-      navigationOptions: ({ navigation, screenProps }: any) => ({
-        header: null,
-        headerTransparent: true,
-        headerTintColor: "white"
-      })
-    },
-    CheckInbox: {
-      screen: CheckInboxScreen,
-      navigationOptions: ({ navigation, screenProps }: any) => ({
-        header: null,
-        headerTransparent: true,
-        headerTintColor: "white"
-      })
-    }
+    Login: LoginScreen,
+    SignUp: SignUpScreen,
+    ForgotPassword: ForgotPasswordScreen,
+    CheckInbox: CheckInboxScreen
   },
   {
-    headerLayoutPreset: "center"
+    headerMode: 'none'
   }
 );

@@ -2,8 +2,8 @@ import * as React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import { deviceInfoCheck } from '../../helpers';
 
-export const PepupBackground = (props): JSX.Element => {
-  const { children = null, style } = props;
+export const PepupBackground = (props: any): JSX.Element => {
+  const { children = null, style = {} } = props;
 
   return (
     <LinearGradient
@@ -11,12 +11,9 @@ export const PepupBackground = (props): JSX.Element => {
       start={[0, 0.5]}
       end={[1, 0.5]}
       style={[
-        {
-          width: '100%',
-          height: '100%',
-          paddingTop: deviceInfoCheck() ? 80 : 65,
-        },
-      ].concat(style)}>
+        { flexShrink: 0, flexGrow: 1, paddingTop: deviceInfoCheck() ? 80 : 65 },
+        style
+      ]}>
       {children}
     </LinearGradient>
   );

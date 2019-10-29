@@ -1,12 +1,13 @@
 import * as React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import {Text, View, Image} from 'react-native';
-import {SafeAreaView} from 'react-navigation';
+import { Text, View, Image } from 'react-native';
 
 import styles from './Onboarding.styles';
-import {navigate} from '../../navigationService';
-import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
+import { navigate } from '../../navigationService';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import { setLocalStorage } from '../../common/utils/session'
 
+export const IS_ONBOARDING_PASSED = 'OnboardingPassed'
 const slides = [
   {
     key: '1',
@@ -39,10 +40,6 @@ export class OnboardingScreen extends React.Component {
     lastSlide: false,
   };
 
-  setIndex = () => {
-    this.setState({lastSlide: true});
-  };
-
   _renderItem = (item: any) => {
     return (
       <View style={styles.container}>
@@ -57,26 +54,27 @@ export class OnboardingScreen extends React.Component {
           <Text style={styles.title}>{item.item.title}</Text>
           <Text style={styles.description}>{item.item.description}</Text>
         </View>
-        { item.item.key === '4' && (
-            <ButtonStyled
-              style={styles.buttonStyle}
-              onPress={() => this._onDone()}
-              text={'Get Started'.toUpperCase()}
-              type='white'
-            />
-          )}
+        {item.item.key === '4' && (
+          <ButtonStyled
+            style={styles.buttonStyle}
+            onPress={() => this._onDone()}
+            text={'Get Started'.toUpperCase()}
+            type='white'
+          />
+        )}
       </View>
     );
   };
 
   _onDone = () => {
-    navigate({routeName: 'Auth'});
+    setLocalStorage(true, IS_ONBOARDING_PASSED)
+    navigate({ routeName: 'Auth' });
   };
 
   onChange = (index: number) => {
     index === slides.length - 1
-      ? this.setState({lastSlide: true})
-      : this.setState({lastSlide: false});
+      ? this.setState({ lastSlide: true })
+      : this.setState({ lastSlide: false });
   };
 
   render() {

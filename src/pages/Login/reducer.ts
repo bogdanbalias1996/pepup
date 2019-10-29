@@ -1,4 +1,5 @@
 import {IAction} from '../../coreTypes';
+import { IS_ONBOARDING_PASSED } from '../Onboarding/Onboarding'
 import {
   RECEIVE_LOGIN_USER,
   REMOVE_SESSION,
@@ -24,6 +25,7 @@ import {
   setLocalStorage,
   clearLocalStorage,
   ACCESS_TOKEN_NAME,
+  ACCESS_HANDLE_NAME
 } from '../../common/utils/session';
 
 export class LoginState {
@@ -49,7 +51,7 @@ export const LoginReducer = (
   switch (action.type) {
     case RECEIVE_LOGIN_USER:
       setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, 'handle_name');
+      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
 
       return {
         ...state,
@@ -72,7 +74,7 @@ export const LoginReducer = (
       };
 
     case REMOVE_SESSION:
-      clearLocalStorage();
+      clearLocalStorage([IS_ONBOARDING_PASSED]);
       return new LoginState();
 
     case REQUEST_SIGNUP_USER:
@@ -89,7 +91,7 @@ export const LoginReducer = (
 
     case RECEIVE_SIGNUP_USER:
       setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, 'handle_name');
+      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
 
       return {
         ...state,
