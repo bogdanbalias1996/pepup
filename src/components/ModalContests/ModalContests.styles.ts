@@ -134,7 +134,6 @@ export default StyleSheet.create({
   },
   wrap: {
     flex: 1,
-    marginBottom: 10,
     position: 'relative',
   },
   subTitle: {

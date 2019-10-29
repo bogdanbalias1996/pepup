@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 import { Dispatch } from 'redux';
 import { withFormik } from 'formik';
-import * as Yup from 'yup';
 
 import {
   closeContestQuizModal,
@@ -33,16 +31,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestQuizModal: () => dispatch(closeContestQuizModal()),
 });
 
-const getValidationSchema = (keys: string[]) => {
-  const schema = Yup.object().shape({
-    ...keys.reduce((acc, cur) => {
-      return { ...acc, [cur]: Yup.string().required() };
-    }, {}),
-  });
-
-  return schema;
-};
-
 const getInitValues = (arr: any) => {
   return arr.reduce((acc: any, cur: any) => {
     const { question } = cur;
@@ -55,6 +43,13 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
     heightDescription: 0,
   };
 
+  isAllFieldsFilled = (obj: any) => {
+    for (var i in obj) {
+      if (obj[i] === '') return false;
+    }
+    return true;
+  };
+
   render() {
     const {
       closeContestQuizModal,
@@ -63,20 +58,8 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
       isFetching,
       values,
       handleSubmit,
-      errors,
-      touched,
       setFieldValue,
     } = this.props;
-
-    const formattedErrorString = Object.keys(errors)
-      .reduce((acc: Array<string>, key: string) => {
-        const value = (errors as any)[key];
-        if ((touched as any)[key] && acc.indexOf(value) < 0) {
-          acc.push(value);
-        }
-        return acc;
-      }, [])
-      .join('. ');
 
     return (
       contestData && (
@@ -107,13 +90,6 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                     <Text style={styles.title}>{contestData.title}</Text>
                   </View>
                   <View style={styles.form}>
-                    {Boolean(formattedErrorString) && (
-                      <View style={styles.formErrorContainer}>
-                        <Text style={styles.formError}>
-                          {formattedErrorString}
-                        </Text>
-                      </View>
-                    )}
                     <View style={{ justifyContent: 'space-between' }}>
                       <View style={styles.itemWrap}>
                         {contestData.dataInfo[
@@ -145,9 +121,14 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                   <Icon size={24} name="cancel" color={colorBlack} />
                 </TouchableOpacity>
                 <ButtonStyled
-                  style={styles.btnSubmit}
+                  style={[
+                    styles.btnSubmit,
+                    { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 },
+                  ]}
                   loader={isFetching}
-                  onPress={() => handleSubmit()}
+                  onPress={() =>
+                    this.isAllFieldsFilled(values) ? handleSubmit() : {}
+                  }
                   text="Submit"
                 />
               </View>
@@ -163,27 +144,9 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
 
 const ContestForm = withFormik({
   mapPropsToValues: (props: any) => {
-    return {
-      ...getInitValues(
-        props.contestData.dataInfo['contest-info'].submissionInfo.questions,
-      ),
-      globalError: false,
-    };
-  },
-
-  validate: (values, props) => {
-    const initKeys = Object.keys(
-      getInitValues(
-        props.contestData.dataInfo['contest-info'].submissionInfo.questions,
-      ),
+    return getInitValues(
+      props.contestData.dataInfo['contest-info'].submissionInfo.questions,
     );
-    const isValid = getValidationSchema(initKeys)
-      .validate(values)
-      .then(values => values)
-      .catch(err => {
-        throw { globalError: 'All fields are required' };
-      });
-    return isValid;
   },
 
   handleSubmit: (values, { props }) => {

@@ -1,5 +1,12 @@
-import { StyleSheet } from "react-native";
-import { colorLightGray, colorSwipeLine, colorTextGray, defaultFont, semiboldFont } from "../../variables";
+import { StyleSheet } from 'react-native';
+import {
+  colorLightGray,
+  colorSwipeLine,
+  colorTextGray,
+  defaultFont,
+  semiboldFont,
+} from '../../variables';
+import { deviceInfoCheck } from '../../helpers';
 
 export default StyleSheet.create({
   wrapContent: {
@@ -8,27 +15,27 @@ export default StyleSheet.create({
     borderTopRightRadius: 32,
     paddingTop: 16,
     flex: 1,
-    marginTop: 10
+    marginTop: deviceInfoCheck() ? 10 : 0,
   },
   listItemGroup: {
-    marginBottom: 32
+    marginBottom: 32,
   },
   listItem: {
     padding: 16,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderColor: colorSwipeLine
+    borderColor: colorSwipeLine,
   },
   listItemText: {
     color: colorTextGray,
     fontSize: 14,
-    fontFamily: defaultFont
+    fontFamily: defaultFont,
   },
   signOutText: {
     fontSize: 14,
     color: colorTextGray,
-    fontFamily: semiboldFont
-  }
+    fontFamily: semiboldFont,
+  },
 });

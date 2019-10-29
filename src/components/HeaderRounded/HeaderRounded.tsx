@@ -1,15 +1,15 @@
 import * as React from 'react';
-import {View, Text, TouchableOpacity, NativeModules} from 'react-native';
-import {Icon} from '../../components/Icon/Icon';
+import { View, Text, TouchableOpacity, Platform } from 'react-native';
+import { Icon } from '../../components/Icon/Icon';
 import styles from './HeaderRounded.styles';
-import {goBack} from '../../navigationService';
-import {deviceInfoCheck} from '../../helpers';
+import { goBack } from '../../navigationService';
+import { deviceInfoCheck } from '../../helpers';
 
 export const HeaderRounded = (props: {
   navigation?: any;
   title: any;
-  getLeftComponent?: (() => any);
-  getRightComponent?: (() => any);
+  getLeftComponent?: () => any;
+  getRightComponent?: () => any;
 }) => {
   const {
     navigation,
@@ -18,9 +18,19 @@ export const HeaderRounded = (props: {
     getRightComponent = () => null,
   } = props;
 
+  const getPaddingTop = () => {
+    if (deviceInfoCheck() && Platform.OS === 'ios') {
+      return 50;
+    } else if (Platform.OS === 'ios') {
+      return 25;
+    } else {
+      return 18;
+    }
+  };
+
   const heightCheck = {
-    paddingTop: deviceInfoCheck() ? 50 : 40,
-    paddingBottom: deviceInfoCheck() ? 25 : 15,
+    paddingTop: getPaddingTop(),
+    paddingBottom: deviceInfoCheck() ? 25 : 13,
   };
 
   return (

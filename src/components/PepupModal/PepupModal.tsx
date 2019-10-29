@@ -1,26 +1,17 @@
 import * as React from 'react';
 import { View, Modal } from 'react-native';
-import Constants from 'expo-constants';
 import { connect } from 'react-redux';
 
 import { PepupModalProps } from '.';
 import styles from './PepupModal.styles';
+import { deviceInfoCheck } from '../../helpers';
 
 export class Component extends React.Component<PepupModalProps> {
   render() {
     const { visible, heightContent, onRequestClose, children } = this.props;
     return (
       visible && (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'flex-end',
-            backgroundColor: 'rgba(0, 0, 0, 0.6)',
-            position: 'absolute',
-            top: 0,
-            bottom: 0,
-            width: '100%',
-          }}>
+        <View style={styles.overlay}>
           <Modal
             animationType="slide"
             transparent={true}
@@ -29,7 +20,7 @@ export class Component extends React.Component<PepupModalProps> {
             <View
               style={[
                 styles.wrapper,
-                { paddingTop: Constants.statusBarHeight > 40 ? 50 : 25 },
+                { paddingTop: deviceInfoCheck() ? 55 : 25 },
               ]}>
               <View
                 style={[

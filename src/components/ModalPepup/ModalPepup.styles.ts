@@ -185,10 +185,6 @@ export default StyleSheet.create({
   regularText: {
     color: colorTextGray,
   },
-  scrollview: {
-    flex: 1,
-    marginBottom: 10,
-  },
   header: {
     flex: 1,
     flexDirection: 'row',
