@@ -38,8 +38,6 @@ const AppNavigator = createSwitchNavigator({
   Pages: PagesNavigator,
   Auth: AuthenticationNavigator,
   Main: MainNavigator
-},{
-  initialRouteName: 'Pages'
 });
 
 const AppContainer = createAppContainer(AppNavigator);

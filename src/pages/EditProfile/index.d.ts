@@ -18,7 +18,7 @@ export type EditProfileScreenFromData = EditProfileScreenStateProps & EditProfil
 export type EditProfileScreenDispatchProps = {
     editProfile: (data: EditProfileScreenFromData, setErrors: any) => Promise<any>;
     openAlert: (data: AlertProps) => Promise<any>;
-    openVideoRecordModal: () => void;
+    videoRecordModalOpen: () => void;
 };
 
 export type profileInfo = {
@@ -31,7 +31,7 @@ export type EditProfileScreenFromFormik = {
     name: string;
     email: string;
     newPasswd: string;
-    dob?: string;    
+    dob?: string;
     profileInfo?: profileInfo;
 }
 

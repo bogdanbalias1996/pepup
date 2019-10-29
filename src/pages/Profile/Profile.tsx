@@ -15,9 +15,9 @@ import { navigate } from '../../navigationService';
 import styles from './Profile.styles';
 import {
   getProfile,
-  openVideoRecordModal,
   fulfillPepupRequest,
-  getUserPepups,
+  updateCelebIntroVideo,
+  getUserPepups
 } from './actions';
 import { ProfileScreenProps, HeaderProps } from '.';
 import { NotificationItems } from './NotificationItems';
@@ -34,12 +34,13 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (handle: string) => dispatch(getProfile(handle) as any),
-  openVideoRecordModal: () => dispatch(openVideoRecordModal()),
   openPepupModal: () => dispatch(openPepupModal()),
   getCeleb: (val: string) => dispatch(getCeleb(val) as any),
   fulfillPepupRequest: (video: any) =>
     dispatch(fulfillPepupRequest(video) as any),
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
+  updateCelebIntroVideo: (celebId: string, video: any) =>
+    dispatch(updateCelebIntroVideo(celebId, video) as any),
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
 });
 
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
@@ -59,10 +60,6 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
       />
     ),
   });
-
-  state = {
-    isModalVisible: false,
-  };
 
   tabsConfig = [
     {
@@ -94,10 +91,6 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     },
   ];
 
-  toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
-  };
-
   componentDidMount = () => {
     const { userId, handle } = this.props;
 
@@ -105,17 +98,28 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     userId && this.props.getUserPepups(userId);
   };
 
+  handleVideoSave = (video: any) => {
+    const { fulfillPepupRequest, updateCelebIntroVideo, profileData } = this.props;
+
+    if (!profileData) return
+
+    const isCelebrity = profileData.role === ROLE_CELEB;
+
+    isCelebrity ? updateCelebIntroVideo(profileData.id, video) : fulfillPepupRequest(video);
+  }
+
   render() {
     const {
       profileData,
-      openVideoRecordModal,
-      fulfillPepupRequest,
       openPepupModal,
       getCeleb,
     } = this.props;
+
+    const isCelebrity = profileData && profileData.role === ROLE_CELEB
+
     const getModal = () => {
       openPepupModal();
-      profileData ? getCeleb(profileData.id) : () => { };
+      profileData && getCeleb(profileData.id);
     };
 
     return (
@@ -134,8 +138,8 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
               />
             )
           }
-          {profileData && profileData.role === ROLE_CELEB && (
-            <TouchableOpacity onPress={() => getModal()}>
+          {isCelebrity && (
+            <TouchableOpacity onPress={getModal}>
               <Image
                 style={[styles.avatar, styles.avatarCeleb]}
                 source={require('../../../assets/celebAvatar.png')}
@@ -148,17 +152,13 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         <View style={styles.titleWrap}>
           <Text style={styles.title}>{profileData && profileData.name || ' '}</Text>
           <TouchableOpacity
-            onPress={
-              profileData && profileData.role === ROLE_CELEB
-                ? () => navigate({ routeName: 'EditProfileCeleb' })
-                : () => navigate({ routeName: 'EditProfile' })
+            onPress={() => navigate({
+              routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
+            })
             }>
             <Icon name="edit" />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => openVideoRecordModal()}>
-          <Text style={styles.title}>Record video</Text>
-        </TouchableOpacity>
         <View style={styles.wrapContent}>
           <Loader isDataLoaded={!!profileData}>
             {!!profileData && (
@@ -174,7 +174,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
             )}
           </Loader>
         </View>
-        <ModalRecordVideo onVideoSave={fulfillPepupRequest} />
+        <ModalRecordVideo onVideoSave={this.handleVideoSave} />
         <ModalPepup />
       </PepupBackground>
     );

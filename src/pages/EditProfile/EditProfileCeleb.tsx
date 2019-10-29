@@ -28,22 +28,7 @@ import { format } from 'date-fns';
 import { navigate } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
 import { colorBlack, colorTextGray } from '../../variables';
-import { ModalRecordVideo } from '../../components/ModalRecordVideo/ModalRecordVideo';
-import { openVideoRecordModal } from '../Profile/actions';
-
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation: any;
-    title?: any;
-    getLeftComponent?: () => null;
-    getRightComponent?: () => null;
-  },
-) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null,
-)(Header);
+import { videoRecordModalOpen } from '../RecordVideo/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -54,7 +39,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
     dispatch(editProfile(data, setErrors) as any),
-  openVideoRecordModal: () => dispatch(openVideoRecordModal()),
+    videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
 });
 
 const EditSchema = Yup.object().shape({
@@ -65,9 +50,7 @@ const EditSchema = Yup.object().shape({
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+    header: (props: any) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
   });
 
   state = {
@@ -89,7 +72,8 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
   };
 
   render() {
-    const { profileData, isFetching, openVideoRecordModal } = this.props;
+    const { profileData, isFetching, videoRecordModalOpen } = this.props;
+
     return (
       profileData && (
         <PepupBackground>
@@ -156,7 +140,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             inputStyle={{ height: 120 }}
                           />
                           <TouchableOpacity
-                            onPress={() => openVideoRecordModal()}>
+                            onPress={() => videoRecordModalOpen()}>
                             <TextInputStyledForEdit
                               name="profileInfo.introVideo"
                               pointerEvents="none"
