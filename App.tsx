@@ -81,7 +81,7 @@ export default class App extends Component {
     });
 
     await Font.loadAsync({
-      'brackit-font': require('./assets/fonts/icon-font/brackit_icons.ttf'),
+      'icons-font': require('./assets/fonts/icon-font/icons-font.ttf'),
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
       'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
       'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),

@@ -18,6 +18,7 @@ import { RadioButtonsContest } from '../RadioButtons/RadioButtonsContest';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
+const alphabet = [...'abcdefghijklmnopqrstuvwxyz']
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -82,10 +83,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                   <View style={styles.conTitle}>
                     <Image
                       style={styles.avatar}
-                      source={{
-                        uri:
-                          contestData.mediaBasePath + contestData.organizerLogo
-                      }}
+                      source={{ uri: `${contestData.mediaBasePath}${contestData.organizerLogo}` }}
                       resizeMode="contain"
                     />
                     <Text style={styles.title}>{contestData.title}</Text>
@@ -99,7 +97,9 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                           (val: any, index: number) => {
                             return (
                               <RadioButtonsContest
-                                options={val.options}
+                                options={val.options.map((answer: string, index: number) => {
+                                  return `${alphabet[index].toUpperCase()}. ${answer}`
+                                })}
                                 onPress={(item: any) => {
                                   setFieldValue(val.question, item);
                                 }}

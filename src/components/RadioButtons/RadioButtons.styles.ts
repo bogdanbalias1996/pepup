@@ -40,7 +40,7 @@ export default StyleSheet.create({
   },
   btnTextQuiz: {
     textAlign: 'left',
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: defaultFont,
     color: colorBlack
   },

@@ -48,7 +48,8 @@ export default StyleSheet.create({
     fontFamily: boldFont,
     color: colorBlack,
     lineHeight: 24,
-    marginVertical: 16
+    height: 24,
+    marginVertical: 16,
   },
   infoBlock: {
     flexDirection: 'row',
@@ -114,7 +115,6 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   form: {
-    marginTop: 20,
     flexGrow: 1,
     justifyContent: 'space-between'
   },

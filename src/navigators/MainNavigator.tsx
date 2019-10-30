@@ -12,11 +12,11 @@ import {
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
-import { EventsScreen } from '../pages/Events/Events';
+// import { EventsScreen } from '../pages/Events/Events';
 import { ContestsScreen } from '../pages/Contests/Contests';
 import { ProfileScreen } from '../pages/Profile/Profile';
 import { SettingsScreen } from '../pages/Settings/Settings';
-import { StoreScreen } from '../pages/Store/Store';
+// import { StoreScreen } from '../pages/Store/Store';
 import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 

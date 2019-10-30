@@ -12,7 +12,6 @@ import { Dispatch } from 'redux';
 import { openContestModal, getContest, getContestsByCategory } from './actions';
 import { ContestItemsProps, Contest } from './';
 import {
-  colorTextGray,
   colorBlack,
   defaultFont,
   semiboldFont,
@@ -42,7 +41,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
   }
 
   renderItem = ({ item }: any) => {
-    const { openContestModal, getContest, isFetching } = this.props;
+    const { openContestModal, getContest } = this.props;
 
     const getModal = () => {
       openContestModal();
