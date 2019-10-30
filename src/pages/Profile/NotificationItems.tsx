@@ -1,8 +1,14 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {Text, View, FlatList, StyleSheet, TouchableOpacity} from 'react-native';
+import { connect } from 'react-redux';
+import {
+  Text,
+  View,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
-import {NotificationItemsProps} from './';
+import { NotificationItemsProps } from './';
 import {
   colorTextGray,
   colorBlack,
@@ -14,12 +20,13 @@ import {
   colorCompletedStatus,
   italicFont,
   semiboldFont,
-  colorBlueberry,
+  colorBlueberry
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {Dispatch} from 'redux';
-import {Loader} from '../../components/Loader/Loader';
-import {getUserPepups} from './actions';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
+import { Loader } from '../../components/Loader/Loader';
+import { getUserPepups } from './actions';
+import { capitalize } from '../../helpers';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userPepups: state.ProfileState.userPepups,
@@ -27,96 +34,73 @@ const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.ProfileState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
 });
 
 export class Component extends React.PureComponent<NotificationItemsProps> {
   componentDidMount() {
-    const {getUserPepups, userId} = this.props;
+    const { getUserPepups, userId } = this.props;
 
     getUserPepups(userId);
   }
 
-  getStatusUser = (type: string, name: string) => {
-    switch (type) {
-      case 'Pending':
+  getStatusUser = (status: string, name: string) => {
+    switch (status) {
+      case 'PENDING':
         return {
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => alert('Pend'),
+          onPress: () => alert('Pend')
         };
-      case 'Accepted':
+      case 'ACCEPTED':
         return {
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc'),
+          onPress: () => alert('Acc')
         };
-      case 'Unavailable':
+      case 'UNAVAILABLE':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => alert('Unav'),
+          onPress: () => alert('Unav')
         };
-      case 'Completed':
+      case 'COMPLETED':
         return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl'),
+          onPress: () => alert('Compl')
         };
     }
   };
 
-  getStatusCeleb = (type: string, name: string) => {
-    switch (type) {
-      case 'Pending':
-        return {
-          msg: `${name} has been notified.`,
-          statusColor: colorGreen,
-          onPress: () => alert('Pend'),
-        };
-      case 'Accepted':
-        return {
-          msg: `${name} is working on your request.`,
-          statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc'),
-        };
-      case 'Unavailable':
-        return {
-          msg: `Sorry. ${name} is unable to complete your request.`,
-          statusColor: colorTextRed,
-          onPress: () => alert('Unav'),
-        };
-      case 'Completed':
-        return {
-          msg: `Hurray! Your pepup is ready.`,
-          statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl'),
-        };
-    }
-  };
-
-  renderItemUser = ({item}: any) => {
-    const {msg, statusColor, onPress} = this.getStatusUser(
-      item.type,
-      item.name,
+  renderItemUser = ({ item }: any) => {
+    const { msg, statusColor, onPress } = this.getStatusUser(
+      item.status,
+      item.celebInfo.userInfo.name
     );
 
     return (
-      <TouchableOpacity onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{color: statusColor}}>{item.type}</Text> -{' '}
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={{ color: statusColor }}>
+                {capitalize(item.status.toLowerCase())}
+              </Text>{' '}
+              - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
             </Text>
-            <Text style={styles.date}>{item.date}</Text>
+            <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.type === 'Completed' ? (
+            {item.status === 'COMPLETED' ? (
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text
-                  style={[styles.text, {color: statusColor}, styles.completed]}>
+                  style={[
+                    styles.text,
+                    { color: statusColor },
+                    styles.completed
+                  ]}>
                   Click to watch.
                 </Text>
               </Text>
@@ -124,44 +108,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
               <Text style={styles.text}>{msg}</Text>
             )}
             <Text style={[styles.text, styles.reqDescription]}>
-              {item.text}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  renderItemCeleb = ({item}: any) => {
-    const {msg, statusColor, onPress} = this.getStatusCeleb(
-      item.type,
-      item.name,
-    );
-
-    return (
-      <TouchableOpacity onPress={() => onPress()}>
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.notificationStatus}>
-              <Text style={{color: statusColor}}>{item.type}</Text> -{' '}
-              <Text style={styles.name}>{item.name}</Text>
-            </Text>
-            <Text style={styles.date}>{item.date}</Text>
-          </View>
-          <View>
-            {item.type === 'Completed' ? (
-              <Text>
-                <Text style={styles.text}>{msg}</Text>{' '}
-                <Text
-                  style={[styles.text, {color: statusColor}, styles.completed]}>
-                  Click to watch.
-                </Text>
-              </Text>
-            ) : (
-              <Text style={styles.text}>{msg}</Text>
-            )}
-            <Text style={[styles.text, styles.reqDescription]}>
-              {item.text}
+              {item.request}
             </Text>
           </View>
         </View>
@@ -170,11 +117,12 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
   };
 
   render() {
-    const {isFetching, userPepups} = this.props;
+    const { isFetching, userPepups } = this.props;
+
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
-          style={{flex: 1}}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={userPepups}
           renderItem={this.renderItemUser}
@@ -187,7 +135,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
 
 export const NotificationItems = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
 
 const styles = StyleSheet.create({
@@ -195,20 +143,20 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingRight: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground,
+    borderColor: colorInputBackground
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 8
   },
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGray
   },
   completed: {
-    fontFamily: semiboldFont,
+    fontFamily: semiboldFont
   },
   reqDescription: {
     fontSize: 12,
@@ -217,17 +165,15 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
-    flexShrink: 1,
+    color: colorTextGray
   },
   name: {
-    flexGrow: 1,
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorBlack,
+    color: colorBlack
   },
   notificationStatus: {
     flexDirection: 'row',
     fontFamily: defaultFont,
-  },
+  }
 });

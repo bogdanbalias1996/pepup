@@ -1,4 +1,4 @@
-import {NavigationScreenProp, NavigationScreenOptions} from 'react-navigation';
+import { NavigationScreenProp, NavigationScreenOptions } from 'react-navigation';
 import { Celeb } from '../Pepups';
 
 export type Profile = {
@@ -32,6 +32,26 @@ export type Pepup = {
   requestedBy: string,
   requestedOn: number,
   markedForDelete: boolean,
+}
+
+export type UserRequest = {
+  id: string,
+  fulfilled: false,
+  status: string,
+  paymentStatus: string,
+  featured: false,
+  request: string,
+  category: string,
+  requestFor: string,
+  requestDenied: false,
+  sharePublicly: true,
+  requestedOf: string,
+  requestedBy: string,
+  markedForDelete: false,
+  mediaBasePath: string,
+  requestedByInfo: any,
+  celebInfo: Celeb,
+  requestedOnDt: string
 }
 
 export type ProfileScreenStateProps = {
@@ -76,7 +96,7 @@ export type HistoryItemsProps = {
   profileData: Profile | null;
   celebData: Celeb | null;
   isFetching: boolean,
-  getCeleb: (id:string) => Promise<any>
+  getCeleb: (id: string) => Promise<any>
   getAllPepups: () => Promise<any>;
 }
 

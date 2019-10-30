@@ -43,27 +43,27 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     getCelebPepups(userId);
   }
 
-  getStatusCeleb = (type: string, name: string) => {
-    switch (type) {
-      case 'Pending':
+  getStatusCeleb = (status: string, name: string) => {
+    switch (status) {
+      case 'PENDING':
         return {
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
           onPress: () => alert('Pend'),
         };
-      case 'Accepted':
+      case 'ACCEPTED':
         return {
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
           onPress: () => alert('Acc'),
         };
-      case 'Unavailable':
+      case 'UNAVAILABLE':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
           onPress: () => alert('Unav'),
         };
-      case 'Completed':
+      case 'COMPLETED':
         return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
@@ -74,7 +74,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
 
   renderItemCeleb = ({ item }: any) => {
     const { msg, statusColor, onPress } = this.getStatusCeleb(
-      item.type,
+      item.status,
       item.name,
     );
 
@@ -86,10 +86,10 @@ export class Component extends React.PureComponent<FanRequestsProps> {
               <Text style={{ color: statusColor }}>{item.type}</Text> -{' '}
               <Text style={styles.name}>{item.name}</Text>
             </Text>
-            <Text style={styles.date}>{item.date}</Text>
+            <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.type === 'Completed' ? (
+            {item.status === 'COMPLETED' ? (
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text
