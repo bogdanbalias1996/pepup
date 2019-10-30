@@ -29,7 +29,7 @@ export default StyleSheet.create({
   },
   itemSelectedText: {
     color: colorBlack,
-    fontSize: 18,
+    fontSize: 20,
     fontFamily: boldFont,
     letterSpacing: 2,
     lineHeight: 22

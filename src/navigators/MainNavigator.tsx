@@ -91,7 +91,7 @@ export const TabsNavigator = createBottomTabNavigator(
       labelStyle: {
         marginTop: 3,
         fontSize: 13,
-        letterSpacing: 0.5,
+        letterSpacing: 1,
         fontFamily: semiboldFont,
       },
       tabStyle: {

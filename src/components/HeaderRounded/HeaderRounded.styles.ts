@@ -19,6 +19,7 @@ export default StyleSheet.create({
     fontSize: 24,
     fontFamily: boldFont,
     textAlign: 'center',
+    letterSpacing: 2
   },
   leftContainer: {
     minWidth: 20,

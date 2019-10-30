@@ -15,6 +15,7 @@ import {
   colorBlack,
   defaultFont,
   semiboldFont,
+  boldFont,
   colorBlueberry,
   colorTextGreyIntro
 } from '../../variables';
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
     lineHeight: 24
   }

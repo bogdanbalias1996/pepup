@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colorBlack, defaultFont } from '../../variables';
+import { colorBlack, defaultFont, boldFont } from '../../variables';
 
 export default StyleSheet.create({
   wrapRadioButtons: {
@@ -42,7 +42,8 @@ export default StyleSheet.create({
     textAlign: 'left',
     fontSize: 16,
     fontFamily: defaultFont,
-    color: colorBlack
+    color: colorBlack,
+    paddingTop: 5
   },
   btnText: {
     textAlign: 'center',
@@ -51,9 +52,9 @@ export default StyleSheet.create({
     color: colorBlack
   },
   qText: {
-    fontSize: 15,
+    fontSize: 16,
     color: colorBlack,
     marginBottom: 5,
-    fontFamily: defaultFont
+    fontFamily: boldFont
   }
 });

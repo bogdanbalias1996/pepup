@@ -50,12 +50,14 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
     switch (normalizedStatus) {
       case 'pending':
         return {
+          status,
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
           onPress: () => alert('Pend')
         };
       case 'accepted':
         return {
+          status,
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
           onPress: () => alert('Acc')
@@ -63,12 +65,14 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
       case 'unavailable':
       case 'rejected':
         return {
+          status: 'unavailable',
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
           onPress: () => alert('Unav')
         };
       case 'completed':
         return {
+          status,
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl')
@@ -76,6 +80,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
       default:
         console.log(`Unsupported request status: '${normalizedStatus}'`)
         return {
+          status,
           msg: ``,
           statusColor: colorCompletedStatus,
           onPress: () => {}
@@ -84,7 +89,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
   };
 
   renderItemUser = ({ item }: any) => {
-    const { msg, statusColor, onPress } = this.getStatusUser(
+    const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
       item.celebInfo.userInfo.name
     );
@@ -95,14 +100,14 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
               <Text style={{ color: statusColor }}>
-                {capitalize(item.status.toLowerCase())}
+                {capitalize(status.toLowerCase())}
               </Text>{' '}
               - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
             </Text>
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.status.toLowerCase() === 'completed' ? (
+            {status.toLowerCase() === 'completed' ? (
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text

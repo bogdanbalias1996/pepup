@@ -17,7 +17,7 @@ export class RadioButtonsContest extends React.PureComponent<
   render() {
     const { options, value, onPress, question } = this.props;
     return (
-      <View>
+      <View style={{ marginBottom: 10 }}>
         <Text style={styles.qText}>{question}</Text>
         <View style={styles.wrapRadioButtonsC}>
           {options.map((item: any, i: number) => {
