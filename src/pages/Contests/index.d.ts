@@ -20,6 +20,11 @@ export type Contest = {
   markedForDelete: boolean;
 };
 
+export type ContestResponseType = {
+  categoryId: string;
+  data: Contest[];
+}
+
 export type ContestsScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   contests: Array<Contest>;
@@ -30,7 +35,9 @@ export type ContestsScreenDispatchProps = {};
 
 export type ContestItemsProps = {
   getContestsByCategory: (id: string) => Promise<any>;
-  contests: Array<Contest>;
+  contests: {
+    [key: string]: Contest[]
+  };
   openContestModal: () => void;
   getContest: (contestId: string) => Promise<any>;
   isFetching: boolean;

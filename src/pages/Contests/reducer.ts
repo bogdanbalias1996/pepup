@@ -67,7 +67,10 @@ export const ContestReducer = (
     case RECEIVE_ALL_CONTESTS:
       return {
         ...state,
-        contests: action.data,
+        contests: {
+          ...state.contests,
+          [action.data.categoryId as string]: action.data.data
+        },
         isFetching: false
       };
     case RECEIVE_CONTEST:

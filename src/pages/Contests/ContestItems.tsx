@@ -40,6 +40,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
 
     getContestsByCategory(categoryId);
   }
+
   renderItem = ({ item }: any) => {
     const { openContestModal, getContest, isFetching } = this.props;
 
@@ -70,14 +71,14 @@ export class Component extends React.PureComponent<ContestItemsProps> {
   };
 
   render() {
-    const { isFetching, contests } = this.props;
+    const { isFetching, contests, categoryId } = this.props;
 
     return (
-      <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
+      <Loader isDataLoaded={(contests && contests[categoryId]) || !isFetching} color={colorBlueberry} size="large">
         <FlatList
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
-          data={contests}
+          data={contests[categoryId]}
           renderItem={this.renderItem}
           keyExtractor={(item: Contest) => item.id}
         />

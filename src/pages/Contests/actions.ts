@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
 import { IAction } from '../../coreTypes';
-import { Contest } from '.';
+import { Contest, ContestResponseType } from '.';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
 import { openAlert, closeAlert } from '../Alert/actions';
@@ -27,8 +27,8 @@ export const closeContestModal = (): IAction<undefined> => {
 
 export const RECEIVE_ALL_CONTESTS = 'RECEIVE_ALL_CONTESTS';
 export const receiveAllContests = (
-  data: Array<Contest>
-): IAction<Array<Contest>> => {
+  data: ContestResponseType
+): IAction<ContestResponseType> => {
   return {
     type: RECEIVE_ALL_CONTESTS,
     data
@@ -54,6 +54,7 @@ export const failureAllContests = (): IAction<undefined> => {
 export const getContestsByCategory = (categoryId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllContests());
+
     request({
       operation: ApiOperation.GetContestsByCategory,
       params: {
@@ -61,7 +62,11 @@ export const getContestsByCategory = (categoryId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveAllContests(res));
+        dispatch(receiveAllContests({
+          categoryId,
+          data: res
+        }));
+
         if (!res.length) {
           dispatch(
             openError({
@@ -245,7 +250,6 @@ export const submitEnrty = (
             }
           })
         );
-        console.log(`SUCCESS MEDIA`, JSON.stringify(res, null, 2));
       })
       .catch(err => {
         dispatch(failureSubmitEntry());
@@ -257,7 +261,6 @@ export const submitEnrty = (
             }
           })
         );
-        console.log(`ERROR MEDIA: `, JSON.stringify(err, null, 2));
       });
   };
 };
