@@ -199,6 +199,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                             multiline={true}
                             numberOfLines={3}
                             formProps={this.props}
+                            blurOnSubmit={true}
                           />
                         </View>
                       );

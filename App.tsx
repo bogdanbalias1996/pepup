@@ -94,7 +94,7 @@ export default class App extends Component {
       'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
       'ss-bold': require('./assets/fonts/samsung-sharp/ss-bold.ttf'),
       'ss-regular': require('./assets/fonts/samsung-sharp/ss-regular.ttf'),
-      'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.otf'),
+      'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.ttf'),
     });
 
     getStore().dispatch({
