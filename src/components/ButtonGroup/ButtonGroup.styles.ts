@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { colorVioletGrey, colorBlack, defaultFont } from "../../variables";
+import { colorVioletGrey, colorBlack, defaultFont, boldFont, semiboldFont } from "../../variables";
 
 export default StyleSheet.create({
   container: {
@@ -14,10 +14,11 @@ export default StyleSheet.create({
   },
   itemText: {
     color: colorVioletGrey,
-    fontSize: 14,
-    fontFamily: defaultFont,
+    fontSize: 16,
+    fontFamily: semiboldFont,
     textAlign: "left",
-    lineHeight: 29
+    lineHeight: 20,
+    letterSpacing: 0.5
   },
   itemFirst: {},
   itemLast: {},
@@ -28,8 +29,9 @@ export default StyleSheet.create({
   },
   itemSelectedText: {
     color: colorBlack,
-    fontSize: 24,
-    fontFamily: defaultFont,
-    lineHeight: 29
+    fontSize: 18,
+    fontFamily: boldFont,
+    letterSpacing: 0.5,
+    lineHeight: 22
   }
 });

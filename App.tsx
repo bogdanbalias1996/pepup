@@ -80,7 +80,6 @@ export default class App extends Component {
             type: 'connectionFail',
             onPress: () => {
               getStore().dispatch(closeError());
-              navigate({ routeName: 'Login' });
             }
           })
         );
@@ -92,7 +91,10 @@ export default class App extends Component {
       'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
       'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
       'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
-      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf')
+      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
+      'ss-bold': require('./assets/fonts/samsung-sharp/ss-bold.ttf'),
+      'ss-regular': require('./assets/fonts/samsung-sharp/ss-regular.ttf'),
+      'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.otf'),
     });
 
     getStore().dispatch({
@@ -103,19 +105,16 @@ export default class App extends Component {
     this.createNotificationListeners();
   }
 
+  // TODO: Handle correctly when component is unmounted.
   componentWillUnmount() {
     this.notificationListener();
     this.notificationOpenedListener();
   }
 
-  notificationListener() {
-    throw new Error('Method not implemented.');
-  }
+  notificationListener:any;
+  notificationOpenedListener:any;
 
-  notificationOpenedListener() {
-    throw new Error('Method not implemented.');
-  }
-
+  // TODO: Handle notifications
   async createNotificationListeners() {
     this.notificationListener = firebase
       .notifications()
@@ -144,6 +143,7 @@ export default class App extends Component {
     });
   }
 
+  // TODO: Remove this. This is not production code
   showAlert(title: any, body: any) {
     Alert.alert(
       title,
@@ -172,6 +172,7 @@ export default class App extends Component {
     }
   }
 
+  // TODO: Remove the console log and dispatch an event to firebase analytics
   async requestPermission() {
     try {
       await firebase.messaging().requestPermission();

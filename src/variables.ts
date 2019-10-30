@@ -1,3 +1,4 @@
+export const colorPastelPurple = "#D6CEF2";
 export const colorBlueberry = "#58377b";
 export const colorLightBlue = "#f2f5ff";
 export const colorLightGreyBlue = "#aeb6d1";
@@ -59,7 +60,7 @@ export const colorDots = '#a1a8b5';
 export const colorTextAlert = "#302c48";
 export const colorStat = "#a02e9e"
 
-export const defaultFont = 'montserrat-medium';
-export const semiboldFont = 'montserrat-semibold';
-export const boldFont = 'montserrat-bold';
+export const defaultFont = 'ss-medium';
+export const semiboldFont = 'ss-medium';
+export const boldFont = 'ss-bold';
 export const italicFont = 'montserrat-italic';
