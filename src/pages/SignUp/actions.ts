@@ -54,7 +54,7 @@ export const signupUser = (
     })
       .then(res => {
         dispatch(receiveSignUpUser(res));
-        navigate({ routeName: 'PEPUPS' });
+        navigate({ routeName: 'Pepups' });
       })
       .catch(err => {
         dispatch(failureSignUpUser());

@@ -21,29 +21,29 @@ import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 
 // Icons for BottomTabNavigator
-const PEPUPS = require('../../assets/pepups.png');
+const Pepups = require('../../assets/pepups.png');
 const PepupsActive = require('../../assets/pepupsActive.png');
 // const Events = require('../../assets/events.png');
 // const EventsActive = require('../../assets/eventsActive.png');
-const CONTESTS = require('../../assets/contests.png');
+const Contests = require('../../assets/contests.png');
 const ContestsActive = require('../../assets/contestsActive.png');
 // const Store = require('../../assets/store.png');
 // const StoreActive = require('../../assets/storeActive.png');
-const PROFILE = require('../../assets/profile.png');
+const Profile = require('../../assets/profile.png');
 const ProfileActive = require('../../assets/profileActive.png');
 
 const getActiveTabIconName = (routeName: string, focused: boolean) => {
   switch (routeName) {
-    case 'PEPUPS':
-      return focused ? PepupsActive : PEPUPS;
+    case 'Pepups':
+      return focused ? PepupsActive : Pepups;
     // case 'Events':
     //   return focused ? EventsActive : Events;
-    case 'CONTESTS':
-      return focused ? ContestsActive : CONTESTS;
+    case 'Contests':
+      return focused ? ContestsActive : Contests;
     // case 'Store':
     //   return focused ? StoreActive : Store;
-    case 'PROFILE':
-      return focused ? ProfileActive : PROFILE;
+    case 'Profile':
+      return focused ? ProfileActive : Profile;
     default:
       console.log(`Unsupported tab name: '${routeName}'`)
   }
@@ -62,14 +62,39 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
 
 export const TabsNavigator = createBottomTabNavigator(
   {
-    PEPUPS: formatScreenProps('PEPUPS', PepupsScreen),
-    // Events: formatScreenProps('Events', EventsScreen),
-    CONTESTS: formatScreenProps('CONTESTS', ContestsScreen),
-    // Store: formatScreenProps('Store', StoreScreen),
-    PROFILE: formatScreenProps('PROFILE', ProfileScreen),
+    Pepups: {
+      screen: PepupsScreen,
+      navigationOptions: {
+        tabBarLabel: 'Pepups'.toUpperCase(),
+      },
+    },
+    Contests: {
+      screen: ContestsScreen,
+      navigationOptions: {
+        tabBarLabel: 'Constests'.toUpperCase(),
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        tabBarLabel: 'Profile'.toUpperCase(),
+      },
+    },
+    // Events: {
+    //   screen: EventsScreen,
+    //   navigationOptions: {
+    //     tabBarLabel: 'Events'.toUpperCase(),
+    //   },
+    // },
+    // Store: {
+    //   screen: StoreScreen,
+    //   navigationOptions: {
+    //     tabBarLabel: 'Store'.toUpperCase(),
+    //   },
+    // }
   },
   {
-    initialRouteName: 'PEPUPS',
+    initialRouteName: 'Pepups',
     tabBarOptions: {
       style: {
         height: 62,

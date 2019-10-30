@@ -57,7 +57,7 @@ export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) 
           text: 'Updates to your profile have been saved.',
           onPress: () => {
             dispatch(closeAlert());
-            navigate({ routeName: 'PROFILE' })
+            navigate({ routeName: 'Profile' })
           }
         }));
       })

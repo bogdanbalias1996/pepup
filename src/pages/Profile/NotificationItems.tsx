@@ -45,26 +45,28 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
   }
 
   getStatusUser = (status: string, name: string) => {
-    switch (status) {
-      case 'PENDING':
+    const normalizedStatus = status.toLowerCase();
+
+    switch (normalizedStatus) {
+      case 'pending':
         return {
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
           onPress: () => alert('Pend')
         };
-      case 'ACCEPTED':
+      case 'accepted':
         return {
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
           onPress: () => alert('Acc')
         };
-      case 'UNAVAILABLE':
+      case 'unavailable':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
           onPress: () => alert('Unav')
         };
-      case 'COMPLETED':
+      case 'completed':
         return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
@@ -92,7 +94,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.status === 'COMPLETED' ? (
+            {item.status.toLowerCase() === 'completed' ? (
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text

@@ -77,7 +77,7 @@ export const loginUser = (
     })
       .then(res => {
         dispatch(receiveLoginUser(res));
-        navigate({ routeName: 'PEPUPS' });
+        navigate({ routeName: 'Pepups' });
       })
       .catch(err => {
         const {
