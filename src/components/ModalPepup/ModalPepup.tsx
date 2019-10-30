@@ -97,7 +97,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const [rating, totalRating] = celebData
       ? celebData.weightedRating.split('/')
       : ['0', '0'];
-
+    console.log('celebData', JSON.stringify(celebData, null, 2));
     return (
       <PepupModal
         visible={isModalShown}
@@ -105,8 +105,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         onRequestClose={() => closePepupModal()}
         heightContent={this.state.heightDescription}>
         {!!celebData && (
-          <View style={{ paddingHorizontal: 24, flex: 1 }}>
-            <View style={styles.swiperLine} />
+          <View style={{ flex: 1, paddingTop: 20 }}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View
                 style={styles.scrollContent}
@@ -115,73 +114,66 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   Object.keys(celebData).length !== 0 &&
                     this.setState({ heightDescription: height });
                 }}>
-                <View style={{ position: 'relative' }}>
-                  <View>
-                    <View style={styles.header}>
-                      <Text style={styles.title}>
-                        {celebData.userInfo.name}
-                      </Text>
-                      <View style={styles.rate}>
-                        <Image
-                          style={styles.rateImg}
-                          source={require('../../../assets/fullStar.png')}
-                        />
-                        <View style={styles.rateText}>
-                          <Text style={styles.actualR}>{`${rating}/`}</Text>
-                          <Text style={styles.generalR}>{totalRating}</Text>
-                        </View>
+                <View style={{ paddingHorizontal: 24 }}>
+                  <View style={styles.header}>
+                    <Text style={styles.title}>{celebData.userInfo.name}</Text>
+                    <View style={styles.rate}>
+                      <Image
+                        style={styles.rateImg}
+                        source={require('../../../assets/fullStar.png')}
+                      />
+                      <View style={styles.rateText}>
+                        <Text style={styles.actualR}>{`${rating}/`}</Text>
+                        <Text style={styles.generalR}>{totalRating}</Text>
                       </View>
                     </View>
-                    <Text style={[styles.text, styles.subTitle]}>
-                      {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}
-                    </Text>
-                    <View
-                      style={[
-                        styles.avatar,
-                        { overflow: 'hidden', marginVertical: 20 }
-                      ]}>
-                      <Loader
-                        isDataLoaded={!!videoUrl}
-                        size="large"
-                        color={colorBlueberry}>
-                        <Video
-                          source={{
-                            uri: videoUrl
-                          }}
-                          rate={1.0}
-                          volume={1.0}
-                          isMuted={false}
-                          isLooping={true}
-                          resizeMode="cover"
-                          useNativeControls={false}
-                          style={styles.avatar}
-                        />
-                      </Loader>
-                      <TouchableOpacity
-                        style={styles.wrapVideo}
-                        onPress={() => openVideoModal()}>
-                        <Image
-                          style={{ width: 60, height: 60 }}
-                          source={require('../../../assets/play.png')}
-                          resizeMode="contain"
-                        />
-                      </TouchableOpacity>
-                    </View>
-                    <Text style={[styles.text, styles.infoText]}>
-                      {celebData.dataInfo.who}
-                    </Text>
                   </View>
-                  <FlatList
+                  <Text style={[styles.text, styles.subTitle]}>
+                    {celebData.dataInfo.intro}
+                  </Text>
+                  <Text
+                    style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
+                    {`${celebData.totalPepupsFulfilled} Pepups`}
+                  </Text>
+                </View>
+                <View style={{ overflow: 'hidden' }}>
+                  <Loader
+                    isDataLoaded={!!videoUrl}
+                    size="large"
+                    color={colorBlueberry}>
+                    <View style={styles.avatarWrapper}>
+                      <Video
+                        source={{
+                          uri: videoUrl
+                        }}
+                        rate={1.0}
+                        volume={1.0}
+                        isMuted={false}
+                        isLooping={true}
+                        resizeMode="cover"
+                        useNativeControls={false}
+                        style={styles.avatar}
+                      />
+                    </View>
+                  </Loader>
+                  <TouchableOpacity
+                    style={styles.wrapVideo}
+                    onPress={() => openVideoModal()}>
+                    <Image
+                      style={{ width: 60, height: 60 }}
+                      source={require('../../../assets/play.png')}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={{ paddingHorizontal: 24 }}>
+                  <Text style={[styles.text, styles.infoText]}>
+                    {celebData.dataInfo.who}
+                  </Text>
+                  {/* <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={celebData.media}
-                    ListEmptyComponent={() =>
-                      !celebData.media ? (
-                        <Text style={styles.nopepups}>
-                          No Pepups fulfilled!
-                        </Text>
-                      ) : null
-                    }
                     renderItem={this.renderItem}
                     keyExtractor={(item: Pepup) => item.id}
                     style={styles.carousel}
@@ -189,7 +181,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       alignItems: 'center',
                       justifyContent: 'center'
                     }}
-                  />
+                  /> */}
                   {celebData.dataInfo.review ? (
                     <View style={styles.reviews}>
                       <View style={styles.rewiewsHeader}>
@@ -222,14 +214,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       </View>
                     </View>
                   ) : null}
-                  <Text style={styles.footerText}>
-                    <Text style={styles.greenText}>24 Hour</Text>
-                    <Text style={styles.regularText}>
-                      {' Response Time • '}
-                    </Text>
-                    <Text style={styles.greenText}>100%</Text>
-                    <Text style={styles.regularText}>{' Response Rate'}</Text>
-                  </Text>
                 </View>
               </View>
             </ScrollView>

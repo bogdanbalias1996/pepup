@@ -66,13 +66,12 @@ export class Component extends React.PureComponent<RequestPepupProps> {
           visible={isModalReqShown}
           onRequestClose={() => closePepupReqModal()}
           heightContent={this.state.heightDescription}>
-          <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
+          <View style={{ paddingHorizontal: 24, flex: 1, paddingTop: 10 }}>
             <Formik
               initialValues={{
                 name: '',
                 text: '',
-                shareCheckbox: false
+                shareCheckbox: true
               }}
               validationSchema={RequestSchema}
               onSubmit={this.handleSubmit}>
@@ -106,18 +105,15 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                             this.setState({ heightDescription: height });
                         }}>
                         <View style={styles.reqTitle}>
-                          <Image
-                            style={styles.avatar}
-                            source={{ uri: celebData.userInfo.icon }}
-                            resizeMode="cover"
-                          />
+                          <View style={styles.avatarWrapper}>
+                            <Image
+                              style={styles.avatar}
+                              source={{ uri: celebData.userInfo.icon }}
+                              resizeMode="cover"
+                            />
+                          </View>
                           <Text style={[styles.title, { textAlign: 'center' }]}>
-                            Book{' '}
-                            <Text
-                              style={[styles.title, { textAlign: 'center' }]}>
-                              {'\n'}
-                              {celebData.userInfo.name}
-                            </Text>
+                            {celebData.userInfo.name}
                           </Text>
                         </View>
                         <View style={styles.form}>
@@ -136,6 +132,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               <TextInputBorderStyled
                                 name="name"
                                 label="Requested for..."
+                                returnKeyType="done"
                                 formProps={props}
                                 inputStyle={{ height: 42 }}
                               />
@@ -146,8 +143,10 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="text"
-                                label="Type your request here"
+                                label="Type your request celebrity"
                                 inputStyle={{ height: 180 }}
+                                blurOnSubmit={true}
+                                returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={5}
                                 formProps={props}
@@ -169,8 +168,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                   ]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
                               </View>
                               <Text style={styles.disclaimerText}>
-                                DISCLAIMER: We will only charge you when we
-                                fulfill your request.
+                                NOTE: We will only charge you when we fulfill
+                                your Pepup request. Your Pepup will be ready
+                                within 7 days.
                               </Text>
                             </View>
                           </View>

@@ -9,7 +9,9 @@ import {
   colorGreen,
   colorTomato,
   semiboldFont,
+  boldFont,
   defaultFont,
+  colorTextGreyIntro
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -18,23 +20,42 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flex: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: 24
   },
   avatar: {
     width: '100%',
+    height: '100%',
+    borderRadius: 20,
+    position: 'relative'
+  },
+  avatarWrapper: {
+    padding: 4,
+    marginHorizontal: 24,
+    backgroundColor: 'white',
+    borderRadius: 24,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
     height: 390,
-    borderRadius: 16,
-    position: 'relative',
+    marginVertical: 20
   },
   title: {
-    fontSize: 24,
-    fontFamily: semiboldFont,
-    color: colorBlack,
+    fontSize: 26,
+    fontFamily: boldFont,
+    color: colorBlack
   },
   subTitle: {
-    fontSize: 12,
-    color: colorTextGray,
-    marginTop: 3,
+    fontSize: 14,
+    color: colorTextGreyIntro,
+    fontFamily: semiboldFont,
+    marginTop: 3
   },
   nopepups: {
     textAlign: 'center',
@@ -42,81 +63,81 @@ export default StyleSheet.create({
     marginVertical: 30,
     fontSize: 16,
     color: colorTomato,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   swiperLine: {
     width: 64,
     height: 4,
     backgroundColor: colorSwipeLine,
     marginVertical: 20,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   infoText: {
-    color: colorTextGray,
-    lineHeight: 22,
+    color: colorTextGreyIntro,
+    lineHeight: 22
   },
   modal: {
     marginTop: 20,
     zIndex: 100,
     flex: 1,
     borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
+    borderTopRightRadius: 32
   },
   carouselCard: {
     borderRadius: 16,
-    marginRight: 8,
+    marginRight: 8
   },
   carouselAvatar: {
     width: 140,
     height: 200,
-    borderRadius: 16,
+    borderRadius: 16
   },
   carouselTitle: {
     color: colorBlack,
-    marginVertical: 6,
+    marginVertical: 6
   },
   carouselDate: {
     fontSize: 12,
-    color: colorTextGray,
+    color: colorTextGray
   },
   carousel: {
     margin: 24,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   reviews: {
-    paddingHorizontal: 24,
+    marginVertical: 10
   },
   rewiewsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 15,
+    marginBottom: 10
   },
   numberRewiewsText: {
     fontSize: 12,
-    color: colorTextGray,
+    color: colorTextGray
   },
   allRewiewsButton: {
-    color: colorTextViolet,
+    color: colorTextViolet
   },
   commentCard: {
     padding: 16,
-    backgroundColor: colorLightGray,
-    borderRadius: 8,
+    backgroundColor: 'white',
+    borderRadius: 8
   },
   commentCardOnModal: {
-    marginVertical: 8,
+    marginVertical: 8
   },
   commentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 5
   },
   commentTitle: {
-    color: colorBlack,
+    color: colorBlack
   },
   commentText: {
     color: colorVioletGrey,
-    lineHeight: 22,
+    lineHeight: 22
   },
   modalFooter: {
     flexDirection: 'row',
@@ -127,26 +148,26 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   },
   modalFooterReviews: {
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   btnCancel: {
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 16
   },
   btnSubmit: {
-    flex: 1,
+    flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   wrapVideo: {
     position: 'absolute',
@@ -154,50 +175,52 @@ export default StyleSheet.create({
     height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    zIndex: 30,
+    zIndex: 30
   },
   rate: { flexDirection: 'row' },
   rateText: {
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   actualR: {
     fontSize: 12,
     color: colorTextGray,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   generalR: {
     fontSize: 10,
     color: colorTextGray,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   rateImg: {
     marginHorizontal: 3,
+    width: 22,
+    height: 22
   },
   footerText: {
     textAlign: 'right',
     fontSize: 11,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   greenText: {
-    color: colorGreen,
+    color: colorGreen
   },
   regularText: {
-    color: colorTextGray,
+    color: colorTextGray
   },
   header: {
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   headerReviews: {
     marginBottom: 35,
-    marginTop: 15,
+    marginTop: 15
   },
   rewiewsNumber: {
     justifyContent: 'flex-start',
-    marginBottom: 8,
+    marginBottom: 8
   },
-  scrollContent: { paddingBottom: 90 },
+  scrollContent: { paddingBottom: 90, position: 'relative' }
 });
