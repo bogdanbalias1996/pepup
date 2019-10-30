@@ -193,7 +193,6 @@ export const submitEnrty = (
   type: string,
   contestType: string
 ) => {
-  console.log(1);
   const { media, ...rest } = values;
   const responses =
     contestType === 'PHOTO'
