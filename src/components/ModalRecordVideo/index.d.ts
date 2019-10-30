@@ -1,8 +1,8 @@
 import { RecordOptions } from 'react-native-camera';
 
 export type ModalRecordVideoProps = {
-  closeVideoRecordModal: () => void;
-  isModalShown: boolean;
+  videoRecordModalClose: () => void;
+  isVideoRecordModalVisible: boolean;
   durationInSeconds: number | null;
   recordOptions?: any;
   onVideoSave: (video: any) => void;

@@ -22,6 +22,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 export class Component extends React.PureComponent<AlertProps> {
   render() {
     const {title, text, onPress, isAlertShown, closeAlert} = this.props;
+
     return (
       <Modal
         transparent

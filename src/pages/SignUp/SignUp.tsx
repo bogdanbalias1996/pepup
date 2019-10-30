@@ -10,7 +10,6 @@ import { PepupBackground } from "../../components/PepupBackground/PepupBackgroun
 import { TextInputPassword } from "../../components/TextInputStyled/TextInputPassword";
 import { TextInputStyled } from "../../components/TextInputStyled/TextInputStyled";
 import { ButtonStyled } from "../../components/ButtonStyled/ButtonStyled";
-import { _retrieveData } from "../../common/utils/helpers";
 
 import { signupUser } from "./actions";
 import styles from "./SignUp.styles";

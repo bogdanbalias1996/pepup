@@ -33,17 +33,11 @@ import { authenticate } from './src/common/utils/session';
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const FCM_TOKEN = 'fcmToken';
-
-const AppNavigator = createSwitchNavigator(
-  {
-    Pages: PagesNavigator,
-    Auth: AuthenticationNavigator,
-    Main: MainNavigator
-  },
-  {
-    initialRouteName: 'Pages'
-  }
-);
+const AppNavigator = createSwitchNavigator({
+  Pages: PagesNavigator,
+  Auth: AuthenticationNavigator,
+  Main: MainNavigator
+});
 
 const AppContainer = createAppContainer(AppNavigator);
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {

@@ -8,6 +8,7 @@ export const setTopLevelNavigator = (navigatorRef: any) => {
 
 export const navigate = ({ routeName, params }: NavigationNavigateActionPayload) => {
   if (!_navigator) return
+
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,

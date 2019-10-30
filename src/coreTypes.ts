@@ -8,6 +8,7 @@ import { AlertState } from "./pages/Alert/reducer";
 import { ErrorState } from "./pages/ErrorModal/reducer";
 import { StoreState } from "./pages/Store/reducer";
 import { ConnectionState } from "./utils/connectionCheck/reducer";
+import { RecordVideoState } from './pages/RecordVideo/reducer';
 
 export interface IGlobalState {
   LoginState: LoginState;
@@ -20,6 +21,7 @@ export interface IGlobalState {
   ErrorState: ErrorState;
   ConnectionState: ConnectionState;
   StoreState: StoreState;
+  RecordVideoState: RecordVideoState;
 }
 
 export interface IAction<T> {
