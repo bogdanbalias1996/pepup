@@ -40,10 +40,10 @@ target 'pepup' do
 
   pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
 
-  target 'pepupTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+#  target 'pepupTests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
 
   use_native_modules!
   use_unimodules!
