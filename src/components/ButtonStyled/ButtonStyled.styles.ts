@@ -1,18 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import {
   colorBlueStart,
   colorVioletStart,
   colorOrangeStart,
   colorCoolGrey
-} from "../../variables";
+} from '../../variables';
 
 export default StyleSheet.create({
   btn: {
     borderRadius: 30,
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    height: 48
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 48,
+    paddingVertical: 16
   },
   btnShadow: {
     shadowOffset: {
@@ -44,10 +45,10 @@ export default StyleSheet.create({
     height: 48
   },
   btnText: {
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 16,
-    letterSpacing: 1,
-    marginHorizontal: 10
+    letterSpacing: 1
+    // marginHorizontal: 10
   },
   image: {
     width: 24,
