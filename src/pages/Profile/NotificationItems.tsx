@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   },
   reqDescription: {
     fontSize: 12,
-    fontFamily: italicFont,
+    fontFamily: italicFont
   },
   date: {
     fontSize: 12,
@@ -174,6 +174,6 @@ const styles = StyleSheet.create({
   },
   notificationStatus: {
     flexDirection: 'row',
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   }
 });

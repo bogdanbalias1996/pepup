@@ -1,12 +1,17 @@
-import { StyleSheet } from "react-native";
-import { colorTomato, colorBlack, defaultFont } from "../../variables";
+import { StyleSheet } from 'react-native';
+import {
+  colorTomato,
+  colorBlack,
+  defaultFont,
+  semiboldFont
+} from '../../variables';
 
 export default StyleSheet.create({
   container: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-    width: "100%",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%',
     backgroundColor: 'white',
     paddingHorizontal: 16,
     paddingVertical: 5,
@@ -21,15 +26,19 @@ export default StyleSheet.create({
   input: {
     flexGrow: 1,
     paddingLeft: 0,
-    color: colorBlack
+    color: colorBlack,
+    fontFamily: semiboldFont,
+    fontSize: 15
   },
-  inputBorder:{
+  inputBorder: {
     flexGrow: 1,
+    fontFamily: semiboldFont,
+    fontSize: 15,
     color: colorBlack,
     backgroundColor: 'white',
     borderRadius: 8,
     paddingVertical: 10,
-    paddingHorizontal: 5,
+    paddingHorizontal: 5
   },
   errorText: {
     backgroundColor: colorTomato,
@@ -37,7 +46,7 @@ export default StyleSheet.create({
     paddingVertical: 3,
     zIndex: -10,
     fontSize: 15,
-    color: "white",
+    color: 'white',
     fontFamily: defaultFont
   },
   inputGradient: {

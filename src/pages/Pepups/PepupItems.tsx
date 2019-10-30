@@ -3,7 +3,6 @@ import {
   Text,
   FlatList,
   StyleSheet,
-  Image,
   TouchableOpacity,
   View,
   Animated
@@ -26,7 +25,6 @@ import {
   colorBlueberry,
   boldFont,
   semiboldFont,
-  defaultFont,
   colorPastelPurple,
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
@@ -63,7 +61,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
             <View style={styles.avatarWrapper}>
               <Animated.Image
                 style={styles.avatar}
-                source={{ uri: item.userInfo.icon }} 
+                source={{ uri: item.userInfo.icon }}
                 resizeMode="cover"/>
               <LinearGradient
                 start={[0.5, 0.3]}
@@ -91,22 +89,26 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     } = this.props;
 
     setCategory(categoryId);
+
     categoryId === 'Featured'
       ? getFeaturedCelebs()
       : getCelebsByCategory(categoryId);
   }
 
   render() {
-    const { celebs, isFetching } = this.props;
+    const { celebs, isFetching, categoryId } = this.props;
+    const categoryName = categoryId.toLowerCase()
+    const celebsArr = celebs[categoryName];
+
     return (
       <View style={styles.celebsWrapper}>
-        <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
+        <Loader isDataLoaded={(celebsArr && celebsArr.length) || !isFetching} color={colorBlueberry} size="large">
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
             horizontal={false}
             columnWrapperStyle={styles.row}
-            data={celebs}
+            data={celebsArr}
             renderItem={this.renderItem}
             keyExtractor={(item: Celeb) => item.mappedUserId}
           />

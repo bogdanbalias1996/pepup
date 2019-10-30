@@ -4,7 +4,7 @@ import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
 import { RequestPepupScreenFromData } from '../../components/ModalPepupReq';
 import { getStore } from '../../configureStore';
-import { Review, Category, Celeb } from '.';
+import { Review, Category, Celeb, CelebsResponseType } from '.';
 import { PostReviewFormProps } from '../../components/ModalReviewForm';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
@@ -94,8 +94,8 @@ export const getAllActiveCategories = () => {
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';
 export const receiveCelebsByCategory = (
-  data: Array<Celeb>
-): IAction<Array<Celeb>> => {
+  data: CelebsResponseType
+): IAction<CelebsResponseType> => {
   return {
     type: RECEIVE_CELEBS_BY_CATEGORY,
     data
@@ -128,7 +128,10 @@ export const getCelebsByCategory = (categoryId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveCelebsByCategory(res));
+        dispatch(receiveCelebsByCategory({
+          categoryId,
+          data: res
+        }));
         if (!res.length) {
           dispatch(
             openError({
@@ -509,24 +512,6 @@ export const closeNotifyModal = (): IAction<undefined> => {
   };
 };
 
-export const RECEIVE_FEATURED_CELEBS = 'RECEIVE_FEATURED_CELEBS';
-export const receiveFeaturedCelebs = (
-  data: Array<Celeb>
-): IAction<Array<Celeb>> => {
-  return {
-    type: RECEIVE_FEATURED_CELEBS,
-    data
-  };
-};
-
-export const REQUEST_FEATURED_CELEBS = 'REQUEST_FEATURED_CELEBS';
-export const requestFeaturedCelebs = (): IAction<undefined> => {
-  return {
-    type: REQUEST_FEATURED_CELEBS,
-    data: undefined
-  };
-};
-
 export const FAILURE_FEATURED_CELEBS = 'FAILURE_FEATURED_CELEBS';
 export const failureFeaturedCelebs = (): IAction<any> => {
   return {
@@ -537,12 +522,16 @@ export const failureFeaturedCelebs = (): IAction<any> => {
 
 export const getFeaturedCelebs = () => {
   return (dispatch: Dispatch) => {
-    dispatch(requestFeaturedCelebs());
+    dispatch(requestCelebsByCategory());
+
     request({
       operation: ApiOperation.GetFeaturedCelebs
     })
       .then(res => {
-        dispatch(receiveFeaturedCelebs(res));
+        dispatch(receiveCelebsByCategory({
+          categoryId: 'featured',
+          data: res
+        }));
         if (!res.length) {
           dispatch(
             openError({

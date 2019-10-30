@@ -73,7 +73,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View
-                  style={styles.scrollContent}
+                  style={[styles.scrollContent, { paddingBottom: 0 }]}
                   onLayout={event => {
                     const { height } = event.nativeEvent.layout;
                     Object.keys(contestData).length !== 0 &&
@@ -113,26 +113,26 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       </View>
                     </View>
                   </View>
+                  <View style={[styles.modalFooter, { position: 'relative' }]}>
+                    <TouchableOpacity
+                      style={styles.btnCancel}
+                      onPress={() => closeContestQuizModal()}>
+                      <Icon size={24} name="cancel" color={colorBlack} />
+                    </TouchableOpacity>
+                    <ButtonStyled
+                      style={[
+                        styles.btnSubmit,
+                        { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
+                      ]}
+                      loader={isFetching}
+                      onPress={() =>
+                        this.isAllFieldsFilled(values) ? handleSubmit() : {}
+                      }
+                      text="Submit"
+                    />
+                  </View>
                 </View>
               </ScrollView>
-              <View style={styles.modalFooter}>
-                <TouchableOpacity
-                  style={styles.btnCancel}
-                  onPress={() => closeContestQuizModal()}>
-                  <Icon size={20} name="cancel" color={colorBlack} />
-                </TouchableOpacity>
-                <ButtonStyled
-                  style={[
-                    styles.btnSubmit,
-                    { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
-                  ]}
-                  loader={isFetching}
-                  onPress={() =>
-                    this.isAllFieldsFilled(values) ? handleSubmit() : {}
-                  }
-                  text="Submit"
-                />
-              </View>
             </View>
           </View>
           <SuccessfulAlert />
