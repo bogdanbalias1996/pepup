@@ -6,6 +6,7 @@ import {
   Image,
   TouchableOpacity,
   View,
+  Animated
 } from 'react-native';
 
 import { connect } from 'react-redux';
@@ -23,8 +24,10 @@ import { PepupItemsProps, Celeb } from './';
 import {
   colorLightGray,
   colorBlueberry,
+  boldFont,
   semiboldFont,
   defaultFont,
+  colorPastelPurple,
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Loader } from '../../components/Loader/Loader';
@@ -55,26 +58,26 @@ export class Component extends React.PureComponent<PepupItemsProps> {
         <TouchableOpacity
           onPress={() => getModal()}
           style={styles.card}
-          activeOpacity={1}
-        >
-          <Loader color={colorBlueberry} size="large" isDataLoaded={!!item}>
-            <Image
-              style={styles.avatar}
-              source={{uri: item.userInfo.icon}}
-            />
-          <LinearGradient
-            start={[0.5, 0.3]}
-            end={[0.5, 1]}
-            colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
-            style={styles.wrapContent}
-          >
-            <Text style={styles.name}>{item.userInfo.name}</Text>
-            <Text style={styles.status} numberOfLines={2} ellipsizeMode="tail">
-              {item.dataInfo.intro}
-            </Text>
-          </LinearGradient>
-        </Loader>
-      </TouchableOpacity>
+          activeOpacity={1}>
+          <Loader color={colorPastelPurple} size="large" isDataLoaded={!!item}>
+            <View style={styles.avatarWrapper}>
+              <Animated.Image
+                style={styles.avatar}
+                source={{ uri: item.userInfo.icon }} 
+                resizeMode="cover"/>
+              <LinearGradient
+                start={[0.5, 0.3]}
+                end={[0.5, 1]}
+                colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
+                style={styles.wrapContent}>
+                <Text style={styles.name} numberOfLines={2} ellipsizeMode="tail">{item.userInfo.name}</Text>
+                <Text style={styles.status} numberOfLines={1} ellipsizeMode="tail">
+                  {item.dataInfo.intro}
+                </Text>
+              </LinearGradient>
+            </View>
+          </Loader>
+        </TouchableOpacity>
       </View>
     );
   };
@@ -123,9 +126,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   card: {
-    padding: 8,
-    marginVertical: 8,
-    marginHorizontal: 4,
+    padding: 4,
+    marginVertical: 6,
+    marginHorizontal: 6,
     backgroundColor: 'white',
     borderRadius: 24,
     shadowColor: 'black',
@@ -141,30 +144,36 @@ const styles = StyleSheet.create({
     position: 'relative',
     height: 220
   },
+  avatarWrapper: {
+    backgroundColor: colorPastelPurple, width: '100%', borderRadius: 20
+  },
   avatar: {
     width: '100%',
     height: '100%',
-    borderRadius: 16,
+    borderRadius: 20,
   },
   wrapContent: {
     position: 'absolute',
-    top: 8,
+    top: 0,
     width: '100%',
     height: '100%',
-    padding: 12,
+    padding: 4,
     justifyContent: 'flex-end',
-    borderRadius: 16,
+    borderRadius: 20,
   },
   name: {
-    fontSize: 18,
-    fontFamily: semiboldFont,
+    fontSize: 16,
+    fontFamily: boldFont,
     color: 'white',
-    marginBottom: 10,
+    letterSpacing: 0.5,
+    marginLeft: 8
   },
   status: {
     fontSize: 12,
-    fontFamily: defaultFont,
+    fontFamily: semiboldFont,
     color: colorLightGray,
+    marginBottom: 10,
+    marginLeft: 8
   },
   celebsWrapper: {
     flex: 1,
