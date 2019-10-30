@@ -31,9 +31,7 @@ import {
   FAILURE_CELEB,
   OPEN_NOTIFY_MODAL,
   CLOSE_NOTIFY_MODAL,
-  REQUEST_FEATURED_CELEBS,
-  FAILURE_FEATURED_CELEBS,
-  RECEIVE_FEATURED_CELEBS
+  FAILURE_FEATURED_CELEBS
 } from './actions';
 import { Category, Celeb, Review } from '.';
 
@@ -118,7 +116,10 @@ export const PepupReducer = (
       return {
         ...state,
         isFetching: false,
-        celebs: action.data
+        celebs: {
+          ...state.celebs,
+          [(action.data.categoryId || '').toLowerCase()]: action.data.data
+        }
       };
     case REQUEST_CELEBS_BY_CATEGORY:
       return {
@@ -238,17 +239,6 @@ export const PepupReducer = (
       return {
         ...state,
         isModalNotifyShown: false
-      };
-    case RECEIVE_FEATURED_CELEBS:
-      return {
-        ...state,
-        isFetching: false,
-        celebs: action.data
-      };
-    case REQUEST_FEATURED_CELEBS:
-      return {
-        ...state,
-        isFetching: true
       };
     case FAILURE_FEATURED_CELEBS:
       return {
