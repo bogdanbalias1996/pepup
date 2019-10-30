@@ -1,6 +1,6 @@
-import {IAction} from '../../coreTypes';
+import { IAction } from '../../coreTypes';
 
-import {OPEN_ERROR, CLOSE_ERROR} from './actions';
+import { OPEN_ERROR, CLOSE_ERROR } from './actions';
 
 export class ErrorState {
   isErrorShown: boolean;
@@ -24,7 +24,7 @@ export const initialState = new ErrorState();
 
 export const ErrorReducer = (
   state: ErrorState = initialState,
-  action: IAction<any>,
+  action: IAction<any>
 ): ErrorState => {
   switch (action.type) {
     case OPEN_ERROR:
@@ -36,7 +36,7 @@ export const ErrorReducer = (
     case CLOSE_ERROR:
       return {
         ...state,
-        isErrorShown: false,
+        isErrorShown: false
       };
     default:
       return state;

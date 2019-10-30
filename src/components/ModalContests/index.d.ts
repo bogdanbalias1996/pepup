@@ -1,8 +1,9 @@
-import {Contest} from '../../pages/Contests/index';
+import { Contest } from '../../pages/Contests/index';
 
 export type ModalContestsProps = {
   closeContestModal: () => void;
   isModalShown: boolean;
+  isFetchingContest: boolean;
   contestData: Contest | null;
   openContestQuizModal: () => void;
   text?: string;
@@ -15,7 +16,7 @@ export type ModalContestQuizProps = {
     values: any,
     id: string,
     type: string,
-    contestType: string,
+    contestType: string
   ) => void;
   isModalTestShown: boolean;
   isFetching: boolean;

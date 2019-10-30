@@ -1,14 +1,19 @@
-import { StyleSheet } from "react-native";
-import { colorEndButtonInput, colorLightGray, semiboldFont } from "../../variables";
+import { StyleSheet } from 'react-native';
+import {
+  colorEndButtonInput,
+  colorLightGray,
+  semiboldFont
+} from '../../variables';
+import { deviceInfoCheck } from '../../helpers';
 
 export default StyleSheet.create({
   avatarsWrap: {
     flexDirection: 'row',
-    alignSelf: "center",
+    alignSelf: 'center',
     justifyContent: 'space-between',
     width: 155,
     height: 64,
-    marginVertical: 24,
+    marginVertical: 24
   },
   avatar: {
     width: 64,
@@ -17,17 +22,17 @@ export default StyleSheet.create({
     marginHorizontal: 5
   },
   avatarCeleb: {
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   titleWrap: {
-    flexDirection: "row",
-    justifyContent: "center",
+    flexDirection: 'row',
+    justifyContent: 'center'
   },
   title: {
     fontSize: 20,
     fontFamily: semiboldFont,
-    color: "white",
-    textAlign: "center",
+    color: 'white',
+    textAlign: 'center',
     marginBottom: 24,
     marginHorizontal: 10,
     flexShrink: 1
@@ -39,16 +44,16 @@ export default StyleSheet.create({
     paddingTop: 16,
     paddingLeft: 16,
     flex: 1,
-    marginTop: 10
+    marginTop: deviceInfoCheck() ? 10 : 0
   },
   wrapHeaderRight: {
-    flexDirection: "row"
+    flexDirection: 'row'
   },
   wrapHeaderRightIcon: {
     backgroundColor: colorEndButtonInput,
     borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginLeft: 10,
     width: 40,
     height: 40

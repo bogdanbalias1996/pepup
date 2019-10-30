@@ -46,7 +46,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* pepupTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = pepupTests.m; sourceTree = "<group>"; };
 		0CC02293D9044DDF19BF476B /* libPods-pepup.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-pepup.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		13B07F961A680F5B00A75B9A /* pepup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = pepup.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* Pepup.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pepup.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = pepup/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = pepup/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -182,7 +182,7 @@
 		83CBBA001A601CBA00E9B192 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				13B07F961A680F5B00A75B9A /* pepup.app */,
+				13B07F961A680F5B00A75B9A /* Pepup.app */,
 				00E356EE1AD99517003FC87E /* pepupTests.xctest */,
 				2D02E47B1E0B4A5D006451C7 /* pepup-tvOS.app */,
 				2D02E4901E0B4A5D006451C7 /* pepup-tvOSTests.xctest */,
@@ -244,7 +244,7 @@
 			);
 			name = pepup;
 			productName = pepup;
-			productReference = 13B07F961A680F5B00A75B9A /* pepup.app */;
+			productReference = 13B07F961A680F5B00A75B9A /* Pepup.app */;
 			productType = "com.apple.product-type.application";
 		};
 		2D02E47A1E0B4A5D006451C7 /* pepup-tvOS */ = {
@@ -318,10 +318,9 @@
 			};
 			buildConfigurationList = 83CBB9FA1A601CBA00E9B192 /* Build configuration list for PBXProject "pepup" */;
 			compatibilityVersion = "Xcode 3.2";
-			developmentRegion = English;
+			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				English,
 				en,
 				Base,
 			);
@@ -647,7 +646,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pepup/pepup.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = H67322LE4M;
 				HEADER_SEARCH_PATHS = (
@@ -682,8 +681,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Pepup;
-				PRODUCT_NAME = pepup;
+				PRODUCT_BUNDLE_IDENTIFIER = in.bitsport.pepup;
+				PRODUCT_NAME = Pepup;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -694,7 +693,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = pepup/pepup.entitlements;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = H67322LE4M;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -728,8 +727,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = org.reactjs.native.example.Pepup;
-				PRODUCT_NAME = pepup;
+				PRODUCT_BUNDLE_IDENTIFIER = in.bitsport.pepup;
+				PRODUCT_NAME = Pepup;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;

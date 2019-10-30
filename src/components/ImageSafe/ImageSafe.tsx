@@ -7,12 +7,15 @@ import { colorBlueberry } from '../../variables';
 export const ImageSafe = ({
   isLoaded = true,
   iconSource = '',
-  resizeModeImg = '',
+  resizeModeImg = 'contain',
   style = {},
-  loaderSize= ''
+  loaderSize = '',
 }: ImageSafeProps) => {
   return iconSource ? (
-    <Loader isDataLoaded={isLoaded} size={loaderSize ? loaderSize : 'large' } color={colorBlueberry}>
+    <Loader
+      isDataLoaded={isLoaded}
+      size={loaderSize ? loaderSize : 'large'}
+      color={colorBlueberry}>
       <Image source={iconSource} resizeMode={resizeModeImg} style={style} />
     </Loader>
   ) : null;

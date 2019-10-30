@@ -1,39 +1,38 @@
 import * as React from 'react';
-import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
-import {connect} from 'react-redux';
-import Modal from 'react-native-modalbox';
-import {Dispatch} from 'redux';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   closeContestModal,
-  openContestQuizModal,
+  openContestQuizModal
 } from '../../pages/Contests/actions';
-import {Icon} from '../../components/Icon/Icon';
-import {ButtonStyled} from '../../components/ButtonStyled/ButtonStyled';
-import {ModalContestsProps} from './';
+import { Icon } from '../../components/Icon/Icon';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import { ModalContestsProps } from './';
 import styles from './ModalContests.styles';
-import {colorBlack} from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {ModalContestQuiz} from './ModalContestQuiz';
-import {ModalContestDesign} from './ModalContestDesign';
-import {ErrorModal} from '../ErrorState/ErrorState';
-import {ImageSafe} from '../ImageSafe/ImageSafe';
+import { colorBlack } from '../../variables';
+import { IGlobalState } from '../../coreTypes';
+import { ModalContestQuiz } from './ModalContestQuiz';
+import { ModalContestDesign } from './ModalContestDesign';
+import { ErrorModal } from '../ErrorState/ErrorState';
+import { ImageSafe } from '../ImageSafe/ImageSafe';
+import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ContestState.isModalShown,
   contestData: state.ContestState.contestData,
+  isFetchingContest: state.ContestState.isFetchingContest
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestModal: () => dispatch(closeContestModal()),
-  openContestQuizModal: () => dispatch(openContestQuizModal()),
+  openContestQuizModal: () => dispatch(openContestQuizModal())
 });
-
-const THRESHOLD = 200;
 
 export class Component extends React.PureComponent<ModalContestsProps> {
   state = {
-    heightDescription: 0,
+    heightDescription: 0
   };
 
   render() {
@@ -42,43 +41,32 @@ export class Component extends React.PureComponent<ModalContestsProps> {
       isModalShown,
       contestData,
       openContestQuizModal,
+      isFetchingContest
     } = this.props;
-
     return (
-      contestData && (
-        <Modal
-          position="bottom"
-          isOpen={isModalShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closeContestModal()}
-          style={[
-            styles.modal,
-            {
-              maxHeight: this.state.heightDescription + THRESHOLD,
-              height: '100%',
-              marginTop: 50,
-            },
-          ]}>
-          {Object.keys(contestData).length !== 0 ? (
-            <View style={styles.wrapModalContent}>
-              <View style={styles.swiperLine} />
-              <ScrollView>
+      <PepupModal
+        visible={isModalShown}
+        onRequestClose={() => closeContestModal()}
+        isLoading={isFetchingContest}
+        heightContent={this.state.heightDescription}>
+        {contestData && Object.keys(contestData).length !== 0 ? (
+          <View style={{ flex: 1, paddingHorizontal: 24 }}>
+            <View style={styles.swiperLine} />
+            <View style={styles.wrap}>
+              <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
                   <View
                     onLayout={event => {
-                      const {height} = event.nativeEvent.layout;
+                      const { height } = event.nativeEvent.layout;
                       Object.keys(contestData).length !== 0 &&
-                        this.setState({heightDescription: height});
+                        this.setState({ heightDescription: height });
                     }}>
                     <ImageSafe
                       isLoaded={!!contestData.contestImage}
                       style={styles.image}
                       iconSource={{
                         uri:
-                          contestData.mediaBasePath + contestData.contestImage,
+                          contestData.mediaBasePath + contestData.contestImage
                       }}
                       resizeModeImg="contain"
                     />
@@ -129,20 +117,20 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                 />
               </View>
             </View>
-          ) : null}
-          {contestData.type === 'QUIZ' ? (
-            <ModalContestQuiz />
-          ) : (
-            <ModalContestDesign />
-          )}
-          <ErrorModal />
-        </Modal>
-      )
+          </View>
+        ) : null}
+        {contestData && contestData.type === 'QUIZ' ? (
+          <ModalContestQuiz />
+        ) : contestData && contestData.type === 'PHOTO' ? (
+          <ModalContestDesign />
+        ) : null}
+        <ErrorModal />
+      </PepupModal>
     );
   }
 }
 
 export const ModalContests = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);

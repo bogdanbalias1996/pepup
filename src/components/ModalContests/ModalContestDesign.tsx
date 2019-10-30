@@ -1,48 +1,52 @@
 import * as React from 'react';
-import {TouchableOpacity, Text, View, ScrollView, Image} from 'react-native';
-import {LinearGradient} from 'expo-linear-gradient';
-import {connect} from 'react-redux';
-import ModalBox from 'react-native-modalbox';
-import {Dispatch} from 'redux';
-import {withFormik} from 'formik';
+import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
+import { withFormik } from 'formik';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
-import {Video} from 'expo-av';
+import { Video } from 'expo-av';
 
-import {closeContestQuizModal, submitEnrty} from '../../pages/Contests/actions';
-import {Icon} from '../Icon/Icon';
-import {ButtonStyled} from '../ButtonStyled/ButtonStyled';
-import {ModalContestQuizProps} from './';
+import {
+  closeContestQuizModal,
+  submitEnrty
+} from '../../pages/Contests/actions';
+import { Icon } from '../Icon/Icon';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { PepupModal } from '../PepupModal/PepupModal';
+import { ModalContestQuizProps } from './';
 import styles from './ModalContests.styles';
 import {
   colorBlack,
   colorLightGradStart,
-  colorLightGradEnd,
+  colorLightGradEnd
 } from '../../variables';
-import {IGlobalState} from '../../coreTypes';
-import {TextInputBorderStyled} from '../TextInputStyled/TextInputBorderStyled';
-import {SuccessfulAlert} from '../SuccessfulAlert/SuccessfulAlert';
-import {ErrorModal} from '../ErrorState/ErrorState';
+import { IGlobalState } from '../../coreTypes';
+import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
+import { ErrorModal } from '../ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
   contestData: state.ContestState.contestData,
   isFetching: state.ContestState.isFetching,
-  submitEntryData: state.ContestState.submitEntryData,
+  submitEntryData: state.ContestState.submitEntryData
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeContestQuizModal: () => dispatch(closeContestQuizModal()),
   submitEnrty: (values: any, id: string, type: string, contestType: string) =>
-    dispatch(submitEnrty(values, id, type, contestType) as any),
+    dispatch(submitEnrty(values, id, type, contestType) as any)
 });
 export class Component extends React.Component<ModalContestQuizProps> {
   state = {
     image: null,
+    heightDescription: 0
   };
 
   onImageChange = async () => {
-    const {setFieldValue, values, contestData} = this.props;
+    const { setFieldValue, values, contestData } = this.props;
 
     setTimeout(async () => {
       const hanlder = ImagePicker.launchImageLibraryAsync;
@@ -57,7 +61,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
           : ImagePicker.MediaTypeOptions.Videos,
         aspect: [4, 3],
         base64: true,
-        quality: 0.5,
+        quality: 0.5
       });
 
       if (!result.cancelled) {
@@ -70,8 +74,8 @@ export class Component extends React.Component<ModalContestQuizProps> {
                   result.base64
                 }`
               : result.uri,
-            type: mediaTypeImage ? 'image' : 'video',
-          },
+            type: mediaTypeImage ? 'image' : 'video'
+          }
         });
         setFieldValue('media', array);
       }
@@ -79,20 +83,20 @@ export class Component extends React.Component<ModalContestQuizProps> {
   };
 
   removeItem = (item: any) => {
-    const {setFieldValue, values} = this.props;
+    const { setFieldValue, values } = this.props;
 
     setFieldValue(
       'media',
       values.media.filter((val: any) => {
         return item.mediaItem.id !== val.mediaItem.id;
-      }),
+      })
     );
   };
 
   openModalWindow = async () => {
     const perms = [Permissions.CAMERA_ROLL];
 
-    const {status} = await Permissions.askAsync(...perms);
+    const { status } = await Permissions.askAsync(...perms);
 
     if (status === 'granted') {
       this.onImageChange();
@@ -101,16 +105,23 @@ export class Component extends React.Component<ModalContestQuizProps> {
 
   getMediaElement = (type: boolean, item: any) => {
     return type ? (
-      <Image style={styles.itemGallery} source={{uri: item}} />
+      <Image style={styles.itemGallery} source={{ uri: item }} />
     ) : (
       <Video
         source={{
-          uri: item,
+          uri: item
         }}
         resizeMode="cover"
         style={styles.itemGallery}
       />
     );
+  };
+
+  isAllFieldsFilled = (obj: any) => {
+    for (var i in obj) {
+      if (obj[i] === '' || obj[i].length === 0) return false;
+    }
+    return true;
   };
 
   render() {
@@ -122,7 +133,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
       values,
       handleSubmit,
       errors,
-      touched,
+      touched
     } = this.props;
     const requiresMedia =
       contestData.dataInfo['contest-info'].submissionInfo.requiresMedia;
@@ -141,25 +152,26 @@ export class Component extends React.Component<ModalContestQuizProps> {
       .join('. ');
 
     return (
-      <ModalBox
-        isOpen={isModalTestShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={false}
-        swipeArea={100}
-        onClosed={() => closeContestQuizModal()}
-        style={styles.modal}>
-        <View style={styles.wrapModalContent}>
+      <PepupModal
+        visible={isModalTestShown}
+        onRequestClose={() => closeContestQuizModal()}
+        heightContent={this.state.heightDescription}>
+        <View style={{ flex: 1, paddingHorizontal: 24 }}>
           <View style={styles.swiperLine} />
           <View style={styles.wrap}>
             <ScrollView showsVerticalScrollIndicator={false}>
-              <View style={styles.scrollContent}>
+              <View
+                style={styles.scrollContent}
+                onLayout={event => {
+                  const { height } = event.nativeEvent.layout;
+                  Object.keys(contestData).length !== 0 &&
+                    this.setState({ heightDescription: height });
+                }}>
                 <View style={styles.conTitle}>
                   <Image
                     style={styles.avatar}
                     source={{
-                      uri:
-                        contestData.mediaBasePath + contestData.organizerLogo,
+                      uri: contestData.mediaBasePath + contestData.organizerLogo
                     }}
                     resizeMode="cover"
                   />
@@ -173,7 +185,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                       </Text>
                     </View>
                   )}
-                  <View style={{justifyContent: 'space-between'}}>
+                  <View style={{ justifyContent: 'space-between' }}>
                     {contestData.dataInfo[
                       'contest-info'
                     ].submissionInfo.prompts.map((item: any, i: number) => {
@@ -183,7 +195,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                           <TextInputBorderStyled
                             name={`text${i}`}
                             label="Type your description here"
-                            inputStyle={{height: 100}}
+                            inputStyle={{ height: 100 }}
                             multiline={true}
                             numberOfLines={3}
                             formProps={this.props}
@@ -218,7 +230,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                                   <View style={styles.itemGalleryWrap}>
                                     {this.getMediaElement(
                                       mediaTypeImage,
-                                      item.mediaItem.uri,
+                                      item.mediaItem.uri
                                     )}
                                     <TouchableOpacity
                                       style={styles.btnDelete}
@@ -236,16 +248,21 @@ export class Component extends React.Component<ModalContestQuizProps> {
                 </View>
               </View>
             </ScrollView>
-            <View style={[styles.modalFooter, styles.modalFooterContest]}>
+            <View style={styles.modalFooter}>
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeContestQuizModal()}>
                 <Icon name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled
-                style={styles.btnSubmit}
+                style={[
+                  styles.btnSubmit,
+                  { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
+                ]}
                 loader={isFetching}
-                onPress={() => handleSubmit()}
+                onPress={() =>
+                  this.isAllFieldsFilled(values) ? handleSubmit() : {}
+                }
                 text="Submit"
               />
             </View>
@@ -253,7 +270,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
         </View>
         <SuccessfulAlert />
         <ErrorModal />
-      </ModalBox>
+      </PepupModal>
     );
   }
 }
@@ -263,23 +280,23 @@ const ContestForm = withFormik({
     const questions = props.contestData.dataInfo[
       'contest-info'
     ].submissionInfo.prompts.reduce((acc: any, current: any, i: number) => {
-      return {...acc, [`text${i}`]: ''};
+      return { ...acc, [`text${i}`]: '' };
     }, {});
 
-    return {...questions, media: []};
+    return { ...questions, media: [] };
   },
 
-  handleSubmit: (values, {props}) => {
+  handleSubmit: (values, { props }) => {
     props.submitEnrty(
       values,
       props.contestData.id,
       props.contestData.dataInfo['contest-info'].submissionInfo.mediaType,
-      props.contestData.type,
+      props.contestData.type
     );
-  },
+  }
 })(Component);
 
 export const ModalContestDesign = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(ContestForm);

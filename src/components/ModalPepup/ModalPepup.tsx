@@ -6,11 +6,10 @@ import {
   FlatList,
   ScrollView,
   Image,
-  ListRenderItem,
+  ListRenderItem
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import Modal from 'react-native-modalbox';
 import StarRating from 'react-native-star-rating';
 import { Video } from 'expo-av';
 
@@ -19,8 +18,9 @@ import {
   openPepupReqModal,
   openVideoModal,
   getAllReviews,
-  openReviewsModal,
+  openReviewsModal
 } from '../../pages/Pepups/actions';
+import { PepupModal } from '../PepupModal/PepupModal';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps, RenderItemMedia } from './';
@@ -38,17 +38,22 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
   celebData: state.PepupState.celebData,
   isFetching: state.PepupState.isFetching,
-  reviews: state.PepupState.reviews,
+  isFetchingCeleb: state.PepupState.isFetchingCeleb,
+  reviews: state.PepupState.reviews
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
   openVideoModal: () => dispatch(openVideoModal()),
   openReviewsModal: () => dispatch(openReviewsModal()),
-  getAllReviews: (id: string) => dispatch(getAllReviews(id) as any),
+  getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
 
 export class Component extends React.PureComponent<ModalPepupProps> {
+  state = {
+    heightDescription: 0
+  };
+
   getReviews = () => {
     const { celebData, openReviewsModal, getAllReviews } = this.props;
 
@@ -62,7 +67,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         <View style={styles.carouselAvatar}>
           <Video
             source={{
-              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
+              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
             }}
             rate={1.0}
             volume={1.0}
@@ -85,7 +90,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openPepupReqModal,
       isModalShown,
       celebData,
-      openVideoModal,
+      openVideoModal
     } = this.props;
 
     const videoUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
@@ -94,19 +99,22 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       : ['0', '0'];
 
     return (
-      celebData && (
-        <Modal
-          isOpen={isModalShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closePepupModal()}
-          style={styles.modal}>
-          <View style={styles.wrapModalContent}>
+      <PepupModal
+        visible={isModalShown}
+        isLoading={this.props.isFetchingCeleb}
+        onRequestClose={() => closePepupModal()}
+        heightContent={this.state.heightDescription}>
+        {!!celebData && (
+          <View style={{ paddingHorizontal: 24, flex: 1 }}>
             <View style={styles.swiperLine} />
-            <ScrollView style={styles.scrollview}>
-              <View style={styles.scrollContent}>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View
+                style={styles.scrollContent}
+                onLayout={event => {
+                  const { height } = event.nativeEvent.layout;
+                  Object.keys(celebData).length !== 0 &&
+                    this.setState({ heightDescription: height });
+                }}>
                 <View style={{ position: 'relative' }}>
                   <View>
                     <View style={styles.header}>
@@ -130,7 +138,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     <View
                       style={[
                         styles.avatar,
-                        { overflow: 'hidden', marginVertical: 20 },
+                        { overflow: 'hidden', marginVertical: 20 }
                       ]}>
                       <Loader
                         isDataLoaded={!!videoUrl}
@@ -138,7 +146,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                         color={colorBlueberry}>
                         <Video
                           source={{
-                            uri: videoUrl,
+                            uri: videoUrl
                           }}
                           rate={1.0}
                           volume={1.0}
@@ -179,7 +187,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     style={styles.carousel}
                     contentContainerStyle={{
                       alignItems: 'center',
-                      justifyContent: 'center',
+                      justifyContent: 'center'
                     }}
                   />
                   {celebData.dataInfo.review ? (
@@ -238,17 +246,17 @@ export class Component extends React.PureComponent<ModalPepupProps> {
               />
             </View>
           </View>
-          <ModalPepupReq />
-          <ModalVideo />
-          <ModalReviews />
-          <ErrorModal />
-        </Modal>
-      )
+        )}
+        <ModalPepupReq />
+        <ModalVideo />
+        <ModalReviews />
+        <ErrorModal />
+      </PepupModal>
     );
   }
 }
 
 export const ModalPepup = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
