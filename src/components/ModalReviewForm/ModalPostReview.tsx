@@ -167,7 +167,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                         style={styles.btnCancel}
                         onPress={() => closePostReviewModal()}
                       >
-                        <Icon size={24} name="cancel" color={colorBlack} />
+                        <Icon size={20} name="cancel" color={colorBlack} />
                       </TouchableOpacity>
                       <ButtonStyled
                         style={styles.btnSubmit}

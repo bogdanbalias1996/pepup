@@ -48,7 +48,7 @@ export const signupUser = (payload: SignupScreenFromData, setErrors: any, naviga
     })
       .then((res) => {
         dispatch(receiveSignUpUser(res));
-        navigate({ routeName: 'Profile' });
+        navigate({ routeName: 'PROFILE' });
       })
       .catch((err) => {
         dispatch(failureSignUpUser());

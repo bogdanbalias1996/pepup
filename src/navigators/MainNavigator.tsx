@@ -8,7 +8,7 @@ import {
   colorBlack,
   colorTextGray,
   colorShadow,
-  defaultFont,
+  semiboldFont,
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
@@ -21,29 +21,29 @@ import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 
 // Icons for BottomTabNavigator
-const Pepups = require('../../assets/pepups.png');
+const PEPUPS = require('../../assets/pepups.png');
 const PepupsActive = require('../../assets/pepupsActive.png');
 // const Events = require('../../assets/events.png');
 // const EventsActive = require('../../assets/eventsActive.png');
-const Contests = require('../../assets/contests.png');
+const CONTESTS = require('../../assets/contests.png');
 const ContestsActive = require('../../assets/contestsActive.png');
 // const Store = require('../../assets/store.png');
 // const StoreActive = require('../../assets/storeActive.png');
-const Profile = require('../../assets/profile.png');
+const PROFILE = require('../../assets/profile.png');
 const ProfileActive = require('../../assets/profileActive.png');
 
 const getActiveTabIconName = (routeName: string, focused: boolean) => {
   switch (routeName) {
-    case 'Pepups':
-      return focused ? PepupsActive : Pepups;
+    case 'PEPUPS':
+      return focused ? PepupsActive : PEPUPS;
     // case 'Events':
     //   return focused ? EventsActive : Events;
-    case 'Contests':
-      return focused ? ContestsActive : Contests;
+    case 'CONTESTS':
+      return focused ? ContestsActive : CONTESTS;
     // case 'Store':
     //   return focused ? StoreActive : Store;
-    case 'Profile':
-      return focused ? ProfileActive : Profile;
+    case 'PROFILE':
+      return focused ? ProfileActive : PROFILE;
     default:
       console.log(`Unsupported tab name: '${routeName}'`)
   }
@@ -62,14 +62,14 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
 
 export const TabsNavigator = createBottomTabNavigator(
   {
-    Pepups: formatScreenProps('Pepups', PepupsScreen),
+    PEPUPS: formatScreenProps('PEPUPS', PepupsScreen),
     // Events: formatScreenProps('Events', EventsScreen),
-    Contests: formatScreenProps('Contests', ContestsScreen),
+    CONTESTS: formatScreenProps('CONTESTS', ContestsScreen),
     // Store: formatScreenProps('Store', StoreScreen),
-    Profile: formatScreenProps('Profile', ProfileScreen),
+    PROFILE: formatScreenProps('PROFILE', ProfileScreen),
   },
   {
-    initialRouteName: 'Pepups',
+    initialRouteName: 'PEPUPS',
     tabBarOptions: {
       style: {
         height: 62,
@@ -89,7 +89,7 @@ export const TabsNavigator = createBottomTabNavigator(
         marginTop: 3,
         fontSize: 13,
         letterSpacing: 0.5,
-        fontFamily: defaultFont,
+        fontFamily: semiboldFont,
       },
       tabStyle: {
         justifyContent: 'center',

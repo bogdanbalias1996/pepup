@@ -77,7 +77,7 @@ export const loginUser = (
     })
       .then(res => {
         dispatch(receiveLoginUser(res));
-        navigate({routeName: 'Profile'});
+        navigate({routeName: 'PROFILE'});
       })
       .catch(err => {
         const {
