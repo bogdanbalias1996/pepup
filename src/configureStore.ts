@@ -13,6 +13,7 @@ import { ProfileReducer } from './pages/Profile/reducer';
 import { AlertReducer } from './pages/Alert/reducer';
 import { ErrorReducer } from './pages/ErrorModal/reducer';
 import { ConnectionReducer } from "./utils/connectionCheck/reducer";
+import { RecordVideoReducer } from './pages/RecordVideo/reducer'
 
 const getReducerObject = () => ({
   FontState: FontReducer,
@@ -24,7 +25,8 @@ const getReducerObject = () => ({
   ProfileState: ProfileReducer,
   AlertState: AlertReducer,
   ErrorState: ErrorReducer,
-  ConnectionState: ConnectionReducer
+  ConnectionState: ConnectionReducer,
+  RecordVideoState: RecordVideoReducer
 });
 
 const configureReducers = () =>

@@ -10,7 +10,6 @@ export type ProgressBarProps = {
 
 export type ProgressBarState = {
   currentTimeValue: Animated.Value;
-  isRunning: boolean;
 }
 
 export class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressBarState> {
@@ -18,42 +17,30 @@ export class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressB
     super(props);
 
     this.state = {
-      currentTimeValue: new Animated.Value(100),
-      isRunning: false
+      currentTimeValue: new Animated.Value(0)
     }
-  }
-
-  static getDerivedStateFromProps(props: ProgressBarProps, state: ProgressBarState) {
-    if (props.isRunning !== state.isRunning) {
-      return {
-        isRunning: props.isRunning
-      }
-    }
-
-    return null;
   }
 
   render() {
-    const { currentTimeValue, isRunning } = this.state;
-    const { seconds, style } = this.props;
+    const { currentTimeValue } = this.state;
+    const { seconds, style, isRunning } = this.props;
     const miliseconds = seconds * 1000;
-
     const anim = Animated.timing(
       currentTimeValue,
       {
-        toValue: 0,
+        toValue: 100,
         duration: miliseconds,
-        easing: Easing.linear
+        easing: (t) => t
       }
     )
 
     if (isRunning) {
-      anim.start()
+      (currentTimeValue as any)._value === 0 && anim.start();
     } else {
       currentTimeValue.stopAnimation((val) => {
-        if (val < 100) {
+        if (val !== 0) {
           this.setState({
-            currentTimeValue: new Animated.Value(100)
+            currentTimeValue: new Animated.Value(0)
           })
         }
       })
@@ -61,13 +48,15 @@ export class ProgressBar extends React.PureComponent<ProgressBarProps, ProgressB
 
     return (
       <View style={[styles.wrapper, style || {}]}>
-        <Animated.View style={{
-          ...styles.progress,
-          width: currentTimeValue.interpolate({
-            inputRange: [0, 100],
-            outputRange: ['100%', '0%']
-          })
-        }}></Animated.View>
+        <Animated.View
+          style={{
+            ...styles.progress,
+            width: currentTimeValue.interpolate({
+              inputRange: [0, 100],
+              outputRange: ['0%', '100%']
+            })
+          }}
+        />
       </View>
     )
   }

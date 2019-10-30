@@ -7,7 +7,7 @@ export default StyleSheet.create({
     height: '100%'
   },
   wrapper: {
-    height: `100%`,
+    flex: 1,
     backgroundColor: 'black'
   },
   cameraView: {

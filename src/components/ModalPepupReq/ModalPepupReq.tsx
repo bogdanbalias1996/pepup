@@ -150,6 +150,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                 multiline={true}
                                 numberOfLines={5}
                                 formProps={props}
+                                blurOnSubmit={true}
                               />
                               <View style={styles.checkboxWrap}>
                                 <CheckboxStyled

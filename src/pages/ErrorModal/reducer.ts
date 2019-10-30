@@ -31,7 +31,7 @@ export const ErrorReducer = (
       return {
         ...state,
         isErrorShown: true,
-        ...action.data
+        ...action.data,
       };
     case CLOSE_ERROR:
       return {

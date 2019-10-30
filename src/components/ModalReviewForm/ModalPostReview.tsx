@@ -140,6 +140,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                             multiline={true}
                             numberOfLines={5}
                             formProps={props}
+                            blurOnSubmit={true}
                           />
                         </View>
                         <View style={styles.starsWrap}>

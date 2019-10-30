@@ -1,33 +1,18 @@
-import {Dispatch} from 'redux';
-import {ApiOperation} from '../../api/api';
-import {request} from '../../api/network';
-import {IAction} from '../../coreTypes';
-import {openError, closeError} from '../ErrorModal/actions';
+import { Dispatch } from 'redux';
+import { ApiOperation } from '../../api/api';
+import { request } from '../../api/network';
+import { IAction } from '../../coreTypes';
+import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { closeVideoModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
+import { videoRecordModalClose } from '../RecordVideo/actions'
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
   return {
     type: RECEIVE_USER_PROFILE,
     data,
-  };
-};
-
-export const OPEN_VIDEO_RECORD_MODAL = 'OPEN_VIDEO_RECORD_MODAL';
-export const CLOSE_VIDEO_RECORD_MODAL = 'CLOSE_VIDEO_RECORD_MODAL';
-export const openVideoRecordModal = (): IAction<undefined> => {
-  return {
-    type: OPEN_VIDEO_RECORD_MODAL,
-    data: undefined,
-  };
-};
-
-export const closeVideoRecordModal = (): IAction<undefined> => {
-  return {
-    type: CLOSE_VIDEO_RECORD_MODAL,
-    data: undefined,
   };
 };
 
@@ -45,7 +30,7 @@ export const getProfile = (handle: string) => {
       .catch(err => {
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(closeError()); navigate({routeName: 'Login'}) }
+          onPress: () => { dispatch(closeError()); navigate({ routeName: 'Login' }) }
         }))
       });
   };
@@ -53,20 +38,21 @@ export const getProfile = (handle: string) => {
 
 export const fulfillPepupRequest = (video: any) => {
   return (dispatch: Dispatch) => {
-    const {uri, codec = 'mp4'} = video;
+    const { uri, codec = 'mp4' } = video;
+    const type = `video/${codec}`;
+
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
-        pepupId: '4dfbfa42-9728-4c33-ac9c-dd52c4ea79df',
         video: {
-          name: 'videoForPepupRequest',
-          type: `video/${codec}`,
-          uri,
-        },
+          name: `pepup.mp4`,
+          type,
+          uri
+        }
       },
       headers: {
-        'Content-Type': 'multipart/form-data',
-      },
+        'Content-Type': 'multipart/form-data'
+      }
     })
       .then(res => {
         dispatch(openAlert({
@@ -86,6 +72,45 @@ export const fulfillPepupRequest = (video: any) => {
         }))
         console.error(JSON.stringify(err, null, 2));
       });
+  };
+};
+
+export const updateCelebIntroVideo = (celebId: string, video: any) => {
+  return (dispatch: Dispatch) => {
+    const { uri, codec = 'mp4' } = video;
+    const type = `video/${codec}`;
+
+    request({
+      operation: ApiOperation.UpdateCelebIntroVideo,
+      variables: {
+        celebId,
+        video: {
+          name: `intro-video-${celebId}.mp4`,
+          type,
+          uri
+        }
+      },
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    .then(res => {
+      dispatch(videoRecordModalClose())
+      dispatch(openAlert({
+        title: 'Changes saved',
+        text: 'Updates to your profile have been saved.',
+        onPress: () => {
+          dispatch(closeAlert());
+        }
+      }));
+    })
+  .catch(err => {
+    dispatch(openError({
+      type: 'unknown',
+      onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
+    }))
+    console.log(JSON.stringify(err, null, 2));
+  });
   };
 };
 
