@@ -185,7 +185,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
 
   render() {
     const { isFetching, userPepups } = this.props;
-    console.log('userPepups', JSON.stringify(userPepups, null, 2));
+
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList

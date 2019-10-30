@@ -97,7 +97,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const [rating, totalRating] = celebData
       ? celebData.weightedRating.split('/')
       : ['0', '0'];
-    console.log('celebData', JSON.stringify(celebData, null, 2));
+
     return (
       <PepupModal
         visible={isModalShown}
