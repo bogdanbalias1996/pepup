@@ -61,6 +61,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           onPress: () => alert('Acc')
         };
       case 'unavailable':
+      case 'rejected':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
@@ -71,6 +72,13 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl')
+        };
+      default:
+        console.log(`Unsupported request status: '${normalizedStatus}'`)
+        return {
+          msg: ``,
+          statusColor: colorCompletedStatus,
+          onPress: () => {}
         };
     }
   };

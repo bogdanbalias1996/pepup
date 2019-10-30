@@ -56,42 +56,20 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
       {
         headerMode: 'screen'
       }
-    )
+    ),
+    navigationOptions: {
+      tabBarLabel: `${ScreenName}`.toUpperCase()
+    },
   };
 };
 
 export const TabsNavigator = createBottomTabNavigator(
   {
-    Pepups: {
-      screen: PepupsScreen,
-      navigationOptions: {
-        tabBarLabel: 'Pepups'.toUpperCase(),
-      },
-    },
-    Contests: {
-      screen: ContestsScreen,
-      navigationOptions: {
-        tabBarLabel: 'Constests'.toUpperCase(),
-      },
-    },
-    Profile: {
-      screen: ProfileScreen,
-      navigationOptions: {
-        tabBarLabel: 'Profile'.toUpperCase(),
-      },
-    },
-    // Events: {
-    //   screen: EventsScreen,
-    //   navigationOptions: {
-    //     tabBarLabel: 'Events'.toUpperCase(),
-    //   },
-    // },
-    // Store: {
-    //   screen: StoreScreen,
-    //   navigationOptions: {
-    //     tabBarLabel: 'Store'.toUpperCase(),
-    //   },
-    // }
+    Pepups: formatScreenProps('Pepups', PepupsScreen),
+    // Events: formatScreenProps('Events', EventsScreen),
+    Contests: formatScreenProps('Contests', ContestsScreen),
+    // Store: formatScreenProps('Store', StoreScreen),
+    Profile: formatScreenProps('Profile', ProfileScreen)
   },
   {
     initialRouteName: 'Pepups',
