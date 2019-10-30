@@ -7,7 +7,7 @@ import {
   colorTomato,
   boldFont,
   semiboldFont,
-  defaultFont,
+  defaultFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -16,60 +16,59 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flexGrow: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: 24
   },
   swiperLine: {
     width: 64,
     height: 4,
     backgroundColor: colorSwipeLine,
     marginVertical: 20,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   modal: {
     marginTop: 40,
     zIndex: 100,
     flex: 1,
     borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
+    borderTopRightRadius: 32
   },
   image: {
     width: '100%',
     height: 170,
     borderRadius: 8,
-    marginTop: 5,
+    marginTop: 5
   },
   descriptionTitle: {
     fontSize: 14,
     fontFamily: boldFont,
-    color: colorBlack,
-    lineHeight: 24,
+    color: colorBlack
   },
   title: {
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
     lineHeight: 24,
-    marginVertical: 16,
+    marginVertical: 16
   },
   infoBlock: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginTop: 24,
+    marginTop: 15
   },
   infoItem: {
     width: '33%',
-    paddingRight: 10,
+    paddingRight: 10
   },
   infoLabel: {
-    fontSize: 12,
-    fontFamily: defaultFont,
+    fontSize: 14,
+    fontFamily: boldFont,
     color: colorTextGray,
-    marginBottom: 8,
+    marginBottom: 8
   },
   infoValue: {
     fontSize: 16,
     fontFamily: defaultFont,
-    color: colorBlack,
+    color: colorBlack
   },
   modalFooter: {
     flexDirection: 'row',
@@ -80,93 +79,94 @@ export default StyleSheet.create({
     marginBottom: 30,
     backgroundColor: 'transparent',
     position: 'absolute',
-    bottom: 0,
+    bottom: 0
   },
   btnCancel: {
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 16
   },
   infoText: {
     color: colorTextGray,
     lineHeight: 22,
+    marginBottom: 10
   },
   btnSubmit: {
-    flex: 1,
+    flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   avatar: {
     width: 76,
     height: 76,
     borderRadius: 15,
-    marginRight: 10,
+    marginRight: 10
   },
   conTitle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   form: {
     marginTop: 20,
     flexGrow: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   formErrorContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   formError: {
     color: colorTomato,
     textAlign: 'center',
     paddingLeft: 40,
-    fontSize: 14,
+    fontSize: 14
   },
   itemWrap: {
-    marginTop: 25,
+    marginTop: 25
   },
   wrap: {
     flex: 1,
-    position: 'relative',
+    position: 'relative'
   },
   subTitle: {
     fontSize: 16,
     fontFamily: semiboldFont,
     color: colorBlack,
-    marginBottom: 10,
+    marginBottom: 10
   },
   scrollContent: { paddingBottom: 90 },
   mediaWrap: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   mediaGrad: {
     height: 130,
     width: 80,
-    borderRadius: 8,
+    borderRadius: 8
   },
   mediaBtn: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   itemGalleryWrap: {
     height: 130,
     width: 80,
     borderRadius: 8,
     position: 'relative',
-    marginLeft: 10,
+    marginLeft: 10
   },
   itemGallery: {
     height: 130,
     width: 80,
-    borderRadius: 8,
+    borderRadius: 8
   },
   btnDelete: {
     position: 'absolute',
@@ -178,6 +178,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     top: 0,
     right: 0,
-    zIndex: 20,
-  },
+    zIndex: 20
+  }
 });

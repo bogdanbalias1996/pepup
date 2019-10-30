@@ -173,7 +173,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                     source={{
                       uri: contestData.mediaBasePath + contestData.organizerLogo
                     }}
-                    resizeMode="cover"
+                    resizeMode="contain"
                   />
                   <Text style={styles.title}>{contestData.title}</Text>
                 </View>
@@ -199,6 +199,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                             multiline={true}
                             numberOfLines={3}
                             formProps={this.props}
+                            blurOnSubmit={true}
                           />
                         </View>
                       );
