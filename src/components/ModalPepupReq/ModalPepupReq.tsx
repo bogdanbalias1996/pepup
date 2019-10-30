@@ -117,13 +117,6 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                           </Text>
                         </View>
                         <View style={styles.form}>
-                          {Boolean(formattedErrorString) && (
-                            <View style={styles.formErrorContainer}>
-                              <Text style={styles.formError}>
-                                {formattedErrorString}
-                              </Text>
-                            </View>
-                          )}
                           <View style={{ justifyContent: 'space-between' }}>
                             <View style={styles.inputWrap}>
                               <Text style={styles.subTitle}>
