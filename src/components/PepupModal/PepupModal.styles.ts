@@ -1,8 +1,9 @@
 import { StyleSheet } from 'react-native';
+import { colorLightGray } from '../../variables';
 
 export default StyleSheet.create({
   wrapModalContent: {
-    backgroundColor: 'white',
+    backgroundColor: colorLightGray,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flex: 1,

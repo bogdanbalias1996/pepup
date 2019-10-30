@@ -68,7 +68,8 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={{
                   backgroundColor: 'transparent',
-                  marginBottom: 10
+                  marginBottom: 10,
+                  paddingLeft: 5
                 }}
               />
             )}

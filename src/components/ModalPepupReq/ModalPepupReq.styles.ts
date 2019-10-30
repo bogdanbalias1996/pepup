@@ -6,7 +6,7 @@ import {
   colorSwipeLine,
   colorTomato,
   semiboldFont,
-  defaultFont,
+  defaultFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -15,47 +15,63 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flexGrow: 1,
-    paddingHorizontal: 24,
+    paddingHorizontal: 24
   },
   avatar: {
-    width: 76,
-    height: 76,
-    borderRadius: 15,
-    marginRight: 10,
-    marginBottom: 10,
+    width: '100%',
+    height: '100%',
+    borderRadius: 15
+  },
+  avatarWrapper: {
+    padding: 4,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 96,
+    height: 96,
+    marginHorizontal: 10,
+    marginVertical: 10
   },
   title: {
     fontSize: 18,
     fontFamily: semiboldFont,
     color: colorBlack,
-    lineHeight: 25,
+    lineHeight: 25
   },
   subTitle: {
     fontSize: 14,
     fontFamily: semiboldFont,
     color: colorBlack,
-    marginBottom: 5,
+    marginBottom: 5
   },
   swiperLine: {
     width: 64,
     height: 4,
     backgroundColor: colorSwipeLine,
     marginVertical: 20,
-    alignSelf: 'center',
+    alignSelf: 'center'
   },
   disclaimerText: {
     color: colorTextGray,
-    backgroundColor: 'white',
     lineHeight: 22,
     alignSelf: 'flex-start',
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   modal: {
     marginTop: 20,
     zIndex: 100,
     flex: 1,
     borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
+    borderTopRightRadius: 32
   },
   modalFooter: {
     flexDirection: 'row',
@@ -65,57 +81,57 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   },
   btnCancel: {
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16,
+    marginRight: 16
   },
   btnSubmit: {
-    flex: 1,
+    flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
   reqTitle: {
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   form: {
     flexGrow: 1,
-    justifyContent: 'space-between',
+    justifyContent: 'space-between'
   },
   formErrorContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   formError: {
     color: colorTomato,
     textAlign: 'center',
     paddingLeft: 40,
-    fontSize: 14,
+    fontSize: 14
   },
   inputWrap: {
-    marginTop: 50,
+    marginTop: 30
   },
   wrap: {
-    flex: 1,
+    flex: 1
   },
   checkboxWrap: {
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 30,
-    marginBottom: 30,
+    marginBottom: 30
   },
   checkText: {
-    marginLeft: 10,
+    marginLeft: 10
   },
-  scrollContent: { paddingBottom: 90 },
+  scrollContent: { paddingBottom: 90 }
 });
