@@ -10,52 +10,58 @@ import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
 
-export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
-export const CLOSE_PEPUP_MODAL = 'CLOSE_PEPUP_MODAL';
-export const OPEN_PEPUP_REQ_MODAL = 'OPEN_PEPUP_REQ_MODAL';
-export const CLOSE_PEPUP_REQ_MODAL = 'CLOSE_PEPUP_REQ_MODAL';
 
+export const OPEN_PEPUP_MODAL = "OPEN_PEPUP_MODAL";
 export const openPepupModal = (): IAction<undefined> => {
   return {
     type: OPEN_PEPUP_MODAL,
     data: undefined
   };
 };
+
+export const CLOSE_PEPUP_MODAL = "CLOSE_PEPUP_MODAL";
 export const closePepupModal = (): IAction<undefined> => {
   return {
     type: CLOSE_PEPUP_MODAL,
     data: undefined
   };
 };
+
+export const OPEN_PEPUP_REQ_MODAL = "OPEN_PEPUP_REQ_MODAL";
 export const openPepupReqModal = (): IAction<undefined> => {
   return {
     type: OPEN_PEPUP_REQ_MODAL,
     data: undefined
   };
 };
+
+export const CLOSE_PEPUP_REQ_MODAL = "CLOSE_PEPUP_REQ_MODAL";
 export const closePepupReqModal = (): IAction<undefined> => {
   return {
     type: CLOSE_PEPUP_REQ_MODAL,
     data: undefined
   };
 };
-export const RECEIVE_ALL_ACTIVE_CATEGORIES = 'RECEIVE_ALL_ACTIVE_CATEGORIES';
-export const receiveAllActiveCategories = (
-  data: Array<Category>
-): IAction<Array<Category>> => {
+
+export const RECEIVE_ALL_ACTIVE_CATEGORIES = "RECEIVE_ALL_ACTIVE_CATEGORIES";
+export const receiveAllActiveCategories = (data: Array<Category>): IAction<Array<Category>> => {
   return {
     type: RECEIVE_ALL_ACTIVE_CATEGORIES,
     data
   };
 };
-export const REQUEST_ALL_ACTIVE_CATEGORIES = 'REQUEST_ALL_ACTIVE_CATEGORIES';
+
+
+export const REQUEST_ALL_ACTIVE_CATEGORIES = "REQUEST_ALL_ACTIVE_CATEGORIES";
 export const requestAllActiveCategories = (): IAction<undefined> => {
   return {
     type: REQUEST_ALL_ACTIVE_CATEGORIES,
     data: undefined
   };
 };
-export const FAILURE_ALL_ACTIVE_CATEGORIES = 'FAILURE_ALL_ACTIVE_CATEGORIES';
+
+
+export const FAILURE_ALL_ACTIVE_CATEGORIES = "FAILURE_ALL_ACTIVE_CATEGORIES";
 export const failureAllActiveCategories = (): IAction<undefined> => {
   return {
     type: FAILURE_ALL_ACTIVE_CATEGORIES,
@@ -304,13 +310,14 @@ export const setCategory = (data: string): IAction<string> => {
 };
 
 export const OPEN_VIDEO_MODAL = 'OPEN_VIDEO_MODAL';
-export const CLOSE_VIDEO_MODAL = 'CLOSE_VIDEO_MODAL';
 export const openVideoModal = (): IAction<undefined> => {
   return {
     type: OPEN_VIDEO_MODAL,
     data: undefined
   };
 };
+
+export const CLOSE_VIDEO_MODAL = 'CLOSE_VIDEO_MODAL';
 export const closeVideoModal = (): IAction<undefined> => {
   return {
     type: CLOSE_VIDEO_MODAL,
@@ -319,13 +326,14 @@ export const closeVideoModal = (): IAction<undefined> => {
 };
 
 export const OPEN_REVIEWS_MODAL = 'OPEN_REVIEWS_MODAL';
-export const CLOSE_REVIEWS_MODAL = 'CLOSE_REVIEWS_MODAL';
 export const openReviewsModal = (): IAction<undefined> => {
   return {
     type: OPEN_REVIEWS_MODAL,
     data: undefined
   };
 };
+
+export const CLOSE_REVIEWS_MODAL = 'CLOSE_REVIEWS_MODAL';
 export const closeReviewsModal = (): IAction<undefined> => {
   return {
     type: CLOSE_REVIEWS_MODAL,
@@ -394,13 +402,14 @@ export const getAllReviews = (userId: string) => {
 };
 
 export const OPEN_POST_REVIEW_MODAL = 'OPEN_POST_REVIEW_MODAL';
-export const CLOSE_POST_REVIEW_MODAL = 'CLOSE_POST_REVIEW_MODAL';
 export const openPostReviewModal = (): IAction<undefined> => {
   return {
     type: OPEN_POST_REVIEW_MODAL,
     data: undefined
   };
 };
+
+export const CLOSE_POST_REVIEW_MODAL = 'CLOSE_POST_REVIEW_MODAL';
 export const closePostReviewModal = (): IAction<undefined> => {
   return {
     type: CLOSE_POST_REVIEW_MODAL,

@@ -3,23 +3,25 @@ import { TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 import { Video } from 'expo-av';
 import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
+import { IGlobalState } from '../../coreTypes';
+import { Dispatch } from 'redux';
 
 import { closeVideoModal } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ModalVideoProps } from '.';
 import styles from './ModalVideo.styles';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: IGlobalState) => ({
   isVideoModalShown: state.PepupState.isVideoModalShown
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeVideoModal: () => dispatch(closeVideoModal())
 });
 
 export class Component extends React.PureComponent<ModalVideoProps> {
   videoRef: any;
-  constructor(props) {
+  constructor(props: ModalVideoProps) {
     super(props);
     this.videoRef = React.createRef();
   }
@@ -55,11 +57,13 @@ export class Component extends React.PureComponent<ModalVideoProps> {
             source={{
               uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
             }}
-            onPlaybackStatusUpdate={val => {
+            onPlaybackStatusUpdate={(val: any) => {
               val.isLoaded !== isLoaded &&
                 this.setState({ isLoaded: val.isLoaded });
+
               val.isPlaying !== isPlaying &&
                 this.setState({ isPlaying: val.isPlaying });
+
               val.didJustFinish && this.setState({ isEnd: true });
             }}
             rate={1.0}

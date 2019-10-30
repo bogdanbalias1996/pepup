@@ -2,8 +2,6 @@ import { IAction } from '../../coreTypes';
 
 import {
   RECEIVE_USER_PROFILE,
-  OPEN_VIDEO_RECORD_MODAL,
-  CLOSE_VIDEO_RECORD_MODAL,
   RECEIVE_USER_PEPUPS,
   REQUEST_USER_PEPUPS,
   FAILURE_USER_PEPUPS,
@@ -24,18 +22,21 @@ import {
 export class ProfileState {
   profileData: Profile | null;
   isFetching: boolean;
-  isModalShown: boolean;
   userPepups: Array<Pepup>;
   celebPepups: Array<Pepup>;
   pepups: Array<Pepup>;
 
+  isVideoRecordModalVisible: boolean;
+  recordedVideo: any;
+
   constructor() {
-    this.profileData = null,
-      this.isFetching = false,
-      this.isModalShown = false,
-      this.userPepups = [],
-      this.celebPepups = [],
-      this.pepups = []
+    this.profileData = null;
+    this.isFetching = false;
+    this.userPepups = [];
+    this.celebPepups = [];
+    this.pepups = [];
+    this.isVideoRecordModalVisible = false;
+    this.recordedVideo = undefined;
   }
 }
 
@@ -69,16 +70,7 @@ export const ProfileReducer = (
         ...state,
         isFetching: false,
       };
-    case OPEN_VIDEO_RECORD_MODAL:
-      return {
-        ...state,
-        isModalShown: true,
-      };
-    case CLOSE_VIDEO_RECORD_MODAL:
-      return {
-        ...state,
-        isModalShown: false,
-      };
+
     case RECEIVE_USER_PEPUPS:
       return {
         ...state,
