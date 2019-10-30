@@ -175,7 +175,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeEventModal()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
+                <Icon size={20} name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <View style={styles.changeItem}>
                 <Text

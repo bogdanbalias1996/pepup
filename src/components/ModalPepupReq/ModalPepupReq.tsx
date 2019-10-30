@@ -175,7 +175,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <TouchableOpacity
                         style={styles.btnCancel}
                         onPress={() => closePepupReqModal()}>
-                        <Icon size={24} name="cancel" color={colorBlack} />
+                        <Icon size={20} name="cancel" color={colorBlack} />
                       </TouchableOpacity>
                       <ButtonStyled
                         style={styles.btnSubmit}

@@ -44,6 +44,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
+
 export class Component extends React.PureComponent<ProfileScreenProps> {
   static navigationOptions = () => ({
     header: (props: any) => (

@@ -241,7 +241,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
                 <TouchableOpacity
                   style={styles.btnCancel}
                   onPress={() => closeStoreModal()}>
-                  <Icon size={24} name="cancel" color={colorBlack} />
+                  <Icon size={20} name="cancel" color={colorBlack} />
                 </TouchableOpacity>
                 <ButtonStyled
                   style={styles.btnSubmit}

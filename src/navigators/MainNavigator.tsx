@@ -8,7 +8,7 @@ import {
   colorBlack,
   colorTextGray,
   colorShadow,
-  defaultFont,
+  semiboldFont,
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
@@ -62,11 +62,36 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
 
 export const TabsNavigator = createBottomTabNavigator(
   {
-    Pepups: formatScreenProps('Pepups', PepupsScreen),
-    // Events: formatScreenProps('Events', EventsScreen),
-    Contests: formatScreenProps('Contests', ContestsScreen),
-    // Store: formatScreenProps('Store', StoreScreen),
-    Profile: formatScreenProps('Profile', ProfileScreen),
+    Pepups: {
+      screen: PepupsScreen,
+      navigationOptions: {
+        tabBarLabel: 'Pepups'.toUpperCase(),
+      },
+    },
+    Contests: {
+      screen: ContestsScreen,
+      navigationOptions: {
+        tabBarLabel: 'Constests'.toUpperCase(),
+      },
+    },
+    Profile: {
+      screen: ProfileScreen,
+      navigationOptions: {
+        tabBarLabel: 'Profile'.toUpperCase(),
+      },
+    },
+    // Events: {
+    //   screen: EventsScreen,
+    //   navigationOptions: {
+    //     tabBarLabel: 'Events'.toUpperCase(),
+    //   },
+    // },
+    // Store: {
+    //   screen: StoreScreen,
+    //   navigationOptions: {
+    //     tabBarLabel: 'Store'.toUpperCase(),
+    //   },
+    // }
   },
   {
     initialRouteName: 'Pepups',
@@ -89,7 +114,7 @@ export const TabsNavigator = createBottomTabNavigator(
         marginTop: 3,
         fontSize: 13,
         letterSpacing: 0.5,
-        fontFamily: defaultFont,
+        fontFamily: semiboldFont,
       },
       tabStyle: {
         justifyContent: 'center',

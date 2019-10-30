@@ -85,7 +85,7 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
                 <TouchableOpacity
                   style={styles.btnCancel}
                   onPress={() => closeNotifyModal()}>
-                  <Icon size={24} name="cancel" color={colorBlack} />
+                  <Icon size={20} name="cancel" color={colorBlack} />
                 </TouchableOpacity>
                 <ButtonStyled
                   style={styles.btnSubmit}

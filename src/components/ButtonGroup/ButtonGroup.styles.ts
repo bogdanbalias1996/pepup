@@ -18,7 +18,7 @@ export default StyleSheet.create({
     fontFamily: semiboldFont,
     textAlign: "left",
     lineHeight: 20,
-    letterSpacing: 0.5
+    letterSpacing: 2
   },
   itemFirst: {},
   itemLast: {},
@@ -31,7 +31,7 @@ export default StyleSheet.create({
     color: colorBlack,
     fontSize: 18,
     fontFamily: boldFont,
-    letterSpacing: 0.5,
+    letterSpacing: 2,
     lineHeight: 22
   }
 });

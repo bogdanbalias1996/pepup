@@ -26,6 +26,7 @@ import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getUserPepups } from './actions';
+import { capitalize } from '../../helpers';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userPepups: state.ProfileState.userPepups,
@@ -43,56 +44,29 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
     getUserPepups(userId);
   }
 
-  getStatusUser = (type: string, name: string) => {
-    switch (type) {
-      case 'PENDING':
-        return {
-          msg: `${name} has been notified.`,
-          statusColor: colorGreen,
-          onPress: () => alert('Pend')
-        };
-      case 'Accepted':
-        return {
-          msg: `${name} is working on your request.`,
-          statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc')
-        };
-      case 'Unavailable':
-        return {
-          msg: `Sorry. ${name} is unable to complete your request.`,
-          statusColor: colorTextRed,
-          onPress: () => alert('Unav')
-        };
-      case 'Completed':
-        return {
-          msg: `Hurray! Your pepup is ready.`,
-          statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl')
-        };
-    }
-  };
+  getStatusUser = (status: string, name: string) => {
+    const normalizedStatus = status.toLowerCase();
 
-  getStatusCeleb = (type: string, name: string) => {
-    switch (type) {
-      case 'Pending':
+    switch (normalizedStatus) {
+      case 'pending':
         return {
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
           onPress: () => alert('Pend')
         };
-      case 'Accepted':
+      case 'accepted':
         return {
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
           onPress: () => alert('Acc')
         };
-      case 'Unavailable':
+      case 'unavailable':
         return {
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
           onPress: () => alert('Unav')
         };
-      case 'Completed':
+      case 'completed':
         return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
@@ -104,21 +78,23 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
   renderItemUser = ({ item }: any) => {
     const { msg, statusColor, onPress } = this.getStatusUser(
       item.status,
-      item.requestFor
+      item.celebInfo.userInfo.name
     );
 
     return (
-      <TouchableOpacity onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>{item.type}</Text> -{' '}
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={{ color: statusColor }}>
+                {capitalize(item.status.toLowerCase())}
+              </Text>{' '}
+              - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
             </Text>
-            <Text style={styles.date}>{item.date}</Text>
+            <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.type === 'Completed' ? (
+            {item.status.toLowerCase() === 'completed' ? (
               <Text>
                 <Text style={styles.text}>{msg}</Text>{' '}
                 <Text
@@ -134,48 +110,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
               <Text style={styles.text}>{msg}</Text>
             )}
             <Text style={[styles.text, styles.reqDescription]}>
-              {item.text}
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-    );
-  };
-
-  renderItemCeleb = ({ item }: any) => {
-    const { msg, statusColor, onPress } = this.getStatusCeleb(
-      item.type,
-      item.name
-    );
-
-    return (
-      <TouchableOpacity onPress={() => onPress()}>
-        <View style={styles.card}>
-          <View style={styles.cardHeader}>
-            <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>{item.type}</Text> -{' '}
-              <Text style={styles.name}>{item.name}</Text>
-            </Text>
-            <Text style={styles.date}>{item.date}</Text>
-          </View>
-          <View>
-            {item.type === 'Completed' ? (
-              <Text>
-                <Text style={styles.text}>{msg}</Text>{' '}
-                <Text
-                  style={[
-                    styles.text,
-                    { color: statusColor },
-                    styles.completed
-                  ]}>
-                  Click to watch.
-                </Text>
-              </Text>
-            ) : (
-              <Text style={styles.text}>{msg}</Text>
-            )}
-            <Text style={[styles.text, styles.reqDescription]}>
-              {item.text}
+              {item.request}
             </Text>
           </View>
         </View>
@@ -232,11 +167,9 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
-    flexShrink: 1
+    color: colorTextGray
   },
   name: {
-    flexGrow: 1,
     fontSize: 14,
     fontFamily: defaultFont,
     color: colorBlack

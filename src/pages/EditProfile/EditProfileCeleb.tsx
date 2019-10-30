@@ -242,7 +242,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       <TouchableOpacity
                         style={styles.btnCancel}
                         onPress={() => navigate({ routeName: 'Profile' })}>
-                        <Icon size={24} name="cancel" color={colorBlack} />
+                        <Icon size={20} name="cancel" color={colorBlack} />
                       </TouchableOpacity>
                       <ButtonStyled
                         textBold={true}

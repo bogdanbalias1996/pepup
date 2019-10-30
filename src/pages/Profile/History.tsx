@@ -8,7 +8,6 @@ import {
   TouchableOpacity
 } from 'react-native';
 import { Dispatch } from 'redux';
-import { format } from 'date-fns';
 
 import { HistoryItemsProps, Pepup } from './';
 import {
@@ -65,7 +64,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
             <View style={styles.textWrap}>
               <View>
                 <Text style={styles.text}>
-                  {format(item.requestedOn, 'd MMM y')}
+                  {item.requestedOnDt}
                 </Text>
                 <Text
                   numberOfLines={1}

@@ -64,7 +64,7 @@ export class Component extends React.PureComponent<ErrorStateProps> {
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeError()}>
-                <Icon size={24} name="cancel" color={colorBlack} />
+                <Icon size={20} name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled
                 style={styles.btnSubmit}
