@@ -5,7 +5,7 @@ import {
   Text,
   TouchableOpacity,
   Keyboard,
-  ScrollView,
+  ScrollView
 } from 'react-native';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
@@ -20,7 +20,7 @@ import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import {
   EditProfileScreenProps,
   EditProfileScreenFromData,
-  EditProfileScreenFromFormik,
+  EditProfileScreenFromFormik
 } from '.';
 import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
@@ -29,33 +29,44 @@ import { navigate } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
 import { colorBlack, colorTextGray } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
+import { getCeleb } from '../Pepups/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
   isFetching: state.ProfileState.isFetching,
   userId: state.LoginState.userId,
+  celebData: state.PepupState.celebData
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
     dispatch(editProfile(data, setErrors) as any),
-    videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
+  videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
+  getCeleb: (id: string) => dispatch(getCeleb(id) as any)
 });
 
 const EditSchema = Yup.object().shape({
   email: Yup.string()
     .email('Invalid email')
-    .required('Email is required'),
+    .required('Email is required')
 });
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (props: any) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
+    header: (props: any) => (
+      <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
+    )
   });
 
   state = {
-    birthdayDatePickerVisible: false,
+    birthdayDatePickerVisible: false
   };
+
+  componentDidMount() {
+    const { getCeleb, userId } = this.props;
+
+    getCeleb(userId);
+  }
 
   handleSubmit = (values: EditProfileScreenFromFormik, { setErrors }: any) => {
     const { editProfile, userId } = this.props;
@@ -63,19 +74,25 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
     editProfile(
       {
         ...values,
-        userId,
+        userId
       },
-      setErrors,
+      setErrors
     );
 
     Keyboard.dismiss();
   };
 
   render() {
-    const { profileData, isFetching, videoRecordModalOpen } = this.props;
+    const {
+      profileData,
+      isFetching,
+      videoRecordModalOpen,
+      celebData
+    } = this.props;
 
     return (
-      profileData && (
+      profileData &&
+      celebData && (
         <PepupBackground>
           <View style={styles.wrapContent}>
             <Formik
@@ -84,15 +101,13 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 name: profileData.name,
                 newPasswd: '',
                 dob: '',
-                profileInfo: {
-                  address: '',
-                  country: '',
-                  city: '',
-                  phoneNumber: '',
-                  intro: '',
-                  bio: '',
-                  introVideo: '',
-                },
+                city: '',
+                address: '',
+                country: '',
+                phoneNumber: '',
+                intro: celebData.dataInfo.intro,
+                bio: celebData.dataInfo.who,
+                introVideo: ''
               }}
               validationSchema={EditSchema}
               onSubmit={this.handleSubmit}>
@@ -127,22 +142,23 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             formProps={props}
                           />
                           <TextInputStyledForEdit
-                            name="profileInfo.intro"
+                            name="intro"
                             label="intro"
                             formProps={props}
                           />
                           <TextInputStyledForEdit
-                            name="profileInfo.bio"
+                            name="bio"
                             label="bio"
                             formProps={props}
                             multiline={true}
                             numberOfLines={3}
+                            blurOnSubmit={true}
                             inputStyle={{ height: 120 }}
                           />
                           <TouchableOpacity
                             onPress={() => videoRecordModalOpen()}>
                             <TextInputStyledForEdit
-                              name="profileInfo.introVideo"
+                              name="introVideo"
                               pointerEvents="none"
                               editable={false}
                               label="click to record intro video"
@@ -158,7 +174,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             <TouchableOpacity
                               onPress={() =>
                                 this.setState({
-                                  birthdayDatePickerVisible: true,
+                                  birthdayDatePickerVisible: true
                                 })
                               }>
                               <TextInputStyledForEdit
@@ -174,39 +190,39 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               isVisible={this.state.birthdayDatePickerVisible}
                               onConfirm={date => {
                                 this.setState({
-                                  birthdayDatePickerVisible: false,
+                                  birthdayDatePickerVisible: false
                                 });
                                 setFieldValue(
                                   'dob',
-                                  format(date, 'd MMM yyyy').toString(),
+                                  format(date, 'd MMM yyyy').toString()
                                 );
                               }}
                               onCancel={() =>
                                 this.setState({
-                                  birthdayDatePickerVisible: false,
+                                  birthdayDatePickerVisible: false
                                 })
                               }
                             />
                             <TextInputStyledForEdit
-                              name="profileInfo.address"
+                              name="address"
                               label="address"
                               formProps={props}
                             />
                             <View
                               style={{
                                 flexDirection: 'row',
-                                width: '100%',
+                                width: '100%'
                               }}>
                               <View style={{ width: '50%' }}>
                                 <TextInputStyledForEdit
-                                  name="profileInfo.city"
+                                  name="city"
                                   label="city"
                                   formProps={props}
                                 />
                               </View>
                               <View style={{ width: '50%' }}>
                                 <TextInputStyledForEdit
-                                  name="profileInfo.country"
+                                  name="country"
                                   label="country"
                                   formProps={props}
                                 />
@@ -221,7 +237,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             />
 
                             <TextInputStyledForEdit
-                              name="profileInfo.phoneNumber"
+                              name="phoneNumber"
                               label="phone"
                               keyboardType="phone-pad"
                               formProps={props}
@@ -265,5 +281,5 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
 
 export const EditProfileCelebScreen = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
