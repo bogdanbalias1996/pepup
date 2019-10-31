@@ -56,6 +56,7 @@ export class PepupState {
   isModalNotifyShown: boolean;
   pepupData: UserRequest | null;
   pepupId: string;
+  videoUrl: string;
 
   constructor() {
     this.isModalShown = false;
@@ -74,6 +75,7 @@ export class PepupState {
     this.isModalNotifyShown = false;
     this.pepupData = null;
     this.pepupId = '';
+    this.videoUrl = '';
   }
 }
 
@@ -195,12 +197,14 @@ export const PepupReducer = (
     case OPEN_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: true
+        isVideoModalShown: true,
+        videoUrl: action.data
       };
     case CLOSE_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: false
+        isVideoModalShown: false,
+        videoUrl: ''
       };
     case OPEN_REVIEWS_MODAL:
       return {

@@ -314,10 +314,10 @@ export const setCategory = (data: string): IAction<string> => {
 };
 
 export const OPEN_VIDEO_MODAL = 'OPEN_VIDEO_MODAL';
-export const openVideoModal = (): IAction<undefined> => {
+export const openVideoModal = (data: string): IAction<string> => {
   return {
     type: OPEN_VIDEO_MODAL,
-    data: undefined
+    data
   };
 };
 

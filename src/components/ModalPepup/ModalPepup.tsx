@@ -44,7 +44,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
-  openVideoModal: () => dispatch(openVideoModal()),
+  openVideoModal: (videoUrl: string) => dispatch(openVideoModal(videoUrl)),
   openReviewsModal: () => dispatch(openReviewsModal()),
   getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
@@ -93,7 +93,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openVideoModal
     } = this.props;
 
-    const videoUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+    const videoUrl = celebData && celebData.dataInfo['intro-video']
+      ? `${celebData.mediaBasePath}${celebData.dataInfo['intro-video']}`
+      : ''
+
     const [rating, totalRating] = celebData
       ? celebData.weightedRating.split('/')
       : ['0', '0'];
@@ -143,9 +146,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     color={colorBlueberry}>
                     <View style={styles.avatarWrapper}>
                       <Video
-                        source={{
-                          uri: videoUrl
-                        }}
+                        source={{ uri: videoUrl }}
                         rate={1.0}
                         volume={1.0}
                         isMuted={false}
@@ -158,7 +159,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   </Loader>
                   <TouchableOpacity
                     style={styles.wrapVideo}
-                    onPress={() => openVideoModal()}>
+                    onPress={() => openVideoModal(videoUrl)}>
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={require('../../../assets/play.png')}
