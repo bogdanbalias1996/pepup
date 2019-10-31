@@ -33,7 +33,7 @@ export const failureEditUser = (): IAction<undefined> => {
 
 export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) => {
   return (dispatch: Dispatch) => {
-    const { email, newPasswd, name, dob, userId, profileInfo } = payload;
+    const { email, newPasswd, name, dob, userId, city, country, intro, bio, introVideo, address } = payload;
 
     dispatch(requestEditUser());
     request({
@@ -44,7 +44,14 @@ export const editProfile = (payload: EditProfileScreenFromData, setErrors: any) 
         name,
         dob,
         userId,
-        profileInfo
+        profileInfo : {
+          city,
+          country,
+          intro,
+          bio,
+          address,
+          introVideo
+        }
       },
       headers: {
         'Content-Type': 'multipart/form-data'

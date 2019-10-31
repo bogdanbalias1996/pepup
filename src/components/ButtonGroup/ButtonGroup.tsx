@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, FlatList} from 'react-native';
+import { Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from './ButtonGroup.styles';
-import {ButtonGroupProps, ButtonGroupItem} from './';
-
+import { ButtonGroupProps, ButtonGroupItem } from './';
 
 export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   state: {
@@ -18,27 +17,27 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
     this.state = {
       selectedItem:
         props.items.find(
-          (item: ButtonGroupItem) => item.value === props.value,
-        ) || props.items[0],
+          (item: ButtonGroupItem) => item.value === props.value
+        ) || props.items[0]
     };
   }
 
   handlePress = (item: ButtonGroupItem, index: number) => {
     this.setState({
-      selectedItem: item,
+      selectedItem: item
     });
 
     this.btnGroupRef.current.scrollToIndex({
       animated: true,
       index,
-      viewPosition: 0.5,
+      viewPosition: 0.5
     });
 
     if (item.onPress) item.onPress();
   };
 
-  renderItem = ({item, index}: any) => {
-    const {selectedItem} = this.state;
+  renderItem = ({ item, index }: any) => {
+    const { selectedItem } = this.state;
     const {
       items,
       stylesFirstItem = {},
@@ -47,7 +46,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
       stylesSelectedItem = {},
       stylesItemText = {},
       stylesSelectedItemText = {},
-      getActiveIndicator = () => null,
+      getActiveIndicator = () => null
     } = this.props;
 
     const isFirst = index === 0;
@@ -60,7 +59,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
       .concat(isSelected ? [styles.itemSelected, stylesSelectedItem] : {});
 
     const stylesbuttonGroupItemText = [styles.itemText, stylesItemText].concat(
-      isSelected ? [styles.itemSelectedText, stylesSelectedItemText] : {},
+      isSelected ? [styles.itemSelectedText, stylesSelectedItemText] : {}
     );
 
     const content = item.component ? (
@@ -82,10 +81,13 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   };
 
   render() {
-    const {items, style = {}} = this.props;
+    const { items, style = {} } = this.props;
 
     return (
       <FlatList
+        contentContainerStyle={{
+          alignItems: 'center'
+        }}
         showsHorizontalScrollIndicator={false}
         horizontal
         data={items}
