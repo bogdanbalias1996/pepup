@@ -82,7 +82,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorCompletedStatus,
+          statusColor: colorBlueberry,
           onPress: () => {}
         };
     }

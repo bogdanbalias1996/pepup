@@ -1,14 +1,11 @@
 import { StyleSheet } from "react-native";
 import {
     colorBlack,
-    colorTextGray,
     colorLightGray,
-    colorSwipeLine,
-    colorTomato,
     semiboldFont,
-    defaultFont,
     colorItalic,
-    italicFont
+    italicFont,
+    boldFont
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -23,27 +20,18 @@ export default StyleSheet.create({
         width: 76,
         height: 76,
         borderRadius: 15,
-        marginRight: 10,
-        marginBottom: 10
     },
     title: {
         fontSize: 18,
-        fontFamily: semiboldFont,
+        fontFamily: boldFont,
         color: colorBlack,
-        lineHeight: 25
+        lineHeight: 20
     },
     subTitle: {
         fontSize: 14,
         fontFamily: semiboldFont,
         color: colorBlack,
         marginBottom: 5
-    },
-    swiperLine: {
-        width: 64,
-        height: 4,
-        backgroundColor: colorSwipeLine,
-        marginVertical: 20,
-        alignSelf: "center"
     },
     modal: {
         marginTop: 20,
@@ -53,11 +41,15 @@ export default StyleSheet.create({
         borderTopRightRadius: 32
     },
     modalFooter: {
-        flexDirection: "row",
+        flexDirection: 'row',
         marginTop: 15,
-        marginBottom: 50,
-        backgroundColor: "transparent",
-        alignItems: 'flex-end'
+        marginBottom: 30,
+        marginHorizontal: 24,
+        backgroundColor: 'transparent',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        right: 0
     },
     btnCancel: {
         width: 48,
@@ -66,10 +58,12 @@ export default StyleSheet.create({
         backgroundColor: colorLightGray,
         justifyContent: "center",
         alignItems: "center",
-        marginRight: 16
     },
     btnSubmit: {
         flex: 1
+    },
+    btnReject: {
+        marginHorizontal: 10
     },
     reqTitle: {
         justifyContent: 'center',
@@ -81,9 +75,12 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
+    scrollContent: {
+        paddingBottom: 90, position: 'relative'
+    },
     wrap: {
         flex: 1,
-        marginBottom: 10
+        paddingHorizontal: 24
     },
     textBlock: {
         marginVertical: 10

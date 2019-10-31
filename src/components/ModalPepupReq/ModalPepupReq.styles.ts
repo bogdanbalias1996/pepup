@@ -131,7 +131,8 @@ export default StyleSheet.create({
     marginBottom: 30
   },
   checkText: {
-    marginLeft: 10
+    marginLeft: 10,
+    marginTop: 8
   },
   scrollContent: { paddingBottom: 90 }
 });

@@ -5,7 +5,7 @@ export type ModalRecordVideoProps = {
   isVideoRecordModalVisible: boolean;
   durationInSeconds: number | null;
   recordOptions?: any;
-  onVideoSave: (video: any) => void;
+  onVideoSave?: (video: any) => void;
 };
 
 export type ModalRecordVideoState = {

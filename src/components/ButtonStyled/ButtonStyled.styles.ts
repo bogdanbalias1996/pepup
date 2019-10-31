@@ -12,7 +12,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 48,
+    height: 50,
     paddingVertical: 16
   },
   btnShadow: {
@@ -48,7 +48,6 @@ export default StyleSheet.create({
     textAlign: 'center',
     fontSize: 16,
     letterSpacing: 1
-    // marginHorizontal: 10
   },
   image: {
     width: 24,

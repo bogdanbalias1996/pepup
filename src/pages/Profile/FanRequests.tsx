@@ -5,10 +5,10 @@ import {
   View,
   FlatList,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity
 } from 'react-native';
 
-import {FanRequestsProps, Pepup} from './';
+import { FanRequestsProps, Pepup } from './';
 import {
   colorTextGray,
   colorBlack,
@@ -19,21 +19,28 @@ import {
   colorTextRed,
   colorCompletedStatus,
   italicFont,
-  semiboldFont,
   colorBlueberry,
+  boldFont
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getCelebPepups } from './actions';
+import { capitalize } from '../../helpers';
+import { openNotifyModal, getPepupNotification } from '../Pepups/actions';
+import { videoRecordModalOpen } from '../RecordVideo/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
   userId: state.LoginState.userId,
   isFetching: state.ProfileState.isFetching,
+  pepupId: state.PepupState.pepupId
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
+  openNotifyModal: () => dispatch(openNotifyModal()),
+  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
+  videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
 });
 
 export class Component extends React.PureComponent<FanRequestsProps> {
@@ -43,71 +50,97 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     getCelebPepups(userId);
   }
 
-  getStatusCeleb = (status: string, name: string) => {
+  getModal = () => {
+    const {openNotifyModal, getPepupNotification, pepupId } = this.props
+
+    openNotifyModal();
+    getPepupNotification('ec0a723a-8b35-4893-bbc1-f431bf6005bb');//temporary solution, just for testing
+  };
+
+  getStatusCeleb = (status: string, date: string) => {
     const normalizedStatus = status.toLowerCase();
+    const today = new Date();
+    const requestedOn = new Date(date);
+    const roundedDays = (
+      (today.getTime() - requestedOn.getTime()) /
+      (1000 * 3600 * 24)
+    )
+      .toFixed(0)
+      .toString();
 
     switch (normalizedStatus) {
       case 'pending':
         return {
-          msg: `${name} has been notified.`,
+          msg: `${
+            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
+          } remaining.`,
           statusColor: colorGreen,
-          onPress: () => alert('Pend'),
+          onPress: () => this.getModal(),
+          linkText: 'View Details.'
         };
       case 'accepted':
         return {
-          msg: `${name} is working on your request.`,
+          msg: `${
+            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
+          } remaining.`,
           statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc'),
+          onPress: () => this.props.videoRecordModalOpen(),
+          linkText: 'Click to record video.'
         };
-      case 'unavailable':
+      case 'rejected':
         return {
-          msg: `Sorry. ${name} is unable to complete your request.`,
+          msg: `You rejected this request.`,
           statusColor: colorTextRed,
-          onPress: () => alert('Unav'),
+          onPress: () => alert('rej'),
+          linkText: ''
         };
       case 'completed':
         return {
-          msg: `Hurray! Your pepup is ready.`,
+          msg: `Hurray! Your pepup was sent.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl'),
+          linkText: 'Click to watch.'
+        };
+      default:
+        console.log(`Unsupported request status: '${normalizedStatus}'`);
+        return {
+          status,
+          msg: ``,
+          statusColor: colorBlueberry,
+          onPress: () => {},
+          linkText: ''
         };
     }
   };
 
   renderItemCeleb = ({ item }: any) => {
-    const { msg, statusColor, onPress } = this.getStatusCeleb(
+    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(
       item.status,
-      item.name,
+      item.requestedOnDt
     );
 
     return (
-      <TouchableOpacity onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>{item.type}</Text> -{' '}
-              <Text style={styles.name}>{item.name}</Text>
+              <Text style={{ color: statusColor }}>
+                {capitalize(item.status.toLowerCase())}
+              </Text>{' '}
+              - <Text style={styles.name}>{item.requestedByInfo.name}</Text>
             </Text>
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {item.status.toLowerCase() === 'completed' ? (
-              <Text>
-                <Text style={styles.text}>{msg}</Text>{' '}
-                <Text
-                  style={[
-                    styles.text,
-                    { color: statusColor },
-                    styles.completed,
-                  ]}>
-                  Click to watch.
-                </Text>
+            <Text style={styles.textWrapper}>
+              <Text style={styles.text}>{msg}</Text>       
+              <Text
+                style={[styles.text, { color: statusColor }, styles.completed]}>
+                {linkText}               
               </Text>
-            ) : (
-              <Text style={styles.text}>{msg}</Text>
-            )}
+            </Text>
             <Text style={[styles.text, styles.reqDescription]}>
-              {item.text}
+              {item.request}
             </Text>
           </View>
         </View>
@@ -116,7 +149,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   };
 
   render() {
-    const { isFetching, celebPepups } = this.props;
+    const { isFetching, celebPepups, pepupId } = this.props;
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
@@ -133,7 +166,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
 
 export const FanRequests = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
 
 const styles = StyleSheet.create({
@@ -141,39 +174,42 @@ const styles = StyleSheet.create({
     paddingVertical: 16,
     paddingRight: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground,
+    borderColor: colorInputBackground
   },
   cardHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 8
   },
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGray
   },
   completed: {
-    fontFamily: semiboldFont,
+    fontFamily: boldFont
   },
   reqDescription: {
     fontSize: 12,
-    fontFamily: italicFont,
+    fontFamily: italicFont
   },
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
     color: colorTextGray,
-    flexShrink: 1,
+    flexShrink: 1
   },
   name: {
     flexGrow: 1,
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorBlack,
+    color: colorBlack
   },
   notificationStatus: {
     flexDirection: 'row',
-    fontFamily: defaultFont,
+    fontFamily: defaultFont
   },
+  textWrapper: {
+    justifyContent: 'flex-start'
+  }
 });
