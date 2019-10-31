@@ -25,6 +25,7 @@ import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader'
+import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -178,6 +179,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         </View>
         <ModalRecordVideo onVideoSave={this.handleVideoSave} />
         <ModalPepup />
+        <ModalPepupNotification />
       </PepupBackground>
     );
   }

@@ -1,8 +1,9 @@
-import { Celeb } from "../../pages/Pepups";
+import { UserRequest } from "../../pages/Profile";
 
 export type PepupNotificationProps = {
     closeNotifyModal: () => void, 
+    getPepupNotification: (id: string) => Promise<any>,
     isModalNotifyShown: boolean, 
     isFetching: boolean, 
-    celebData: Celeb | null
+    pepupData?: UserRequest | null
 }

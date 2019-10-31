@@ -78,21 +78,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
               {(props: any) => {
                 const {
                   handleSubmit,
-                  errors,
-                  touched,
                   setFieldValue,
                   values
                 } = props;
-
-                const formattedErrorString = Object.keys(errors)
-                  .reduce((acc: Array<string>, key: string) => {
-                    const value = (errors as any)[key];
-                    if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                      acc.push(value);
-                    }
-                    return acc;
-                  }, [])
-                  .join('. ');
 
                 return (
                   <View style={styles.wrap}>
@@ -143,7 +131,6 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                 multiline={true}
                                 numberOfLines={5}
                                 formProps={props}
-                                blurOnSubmit={true}
                               />
                               <View style={styles.checkboxWrap}>
                                 <CheckboxStyled

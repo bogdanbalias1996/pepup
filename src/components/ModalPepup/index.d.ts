@@ -5,6 +5,7 @@ export type ModalPepupProps = {
   openVideoModal: () => void;
   isModalShown: boolean;
   isFetching?: boolean;
+  isFetchingCeleb: boolean;
   openPepupReqModal: () => void;
   celebData: Celeb | null;
   openReviewsModal: () => void;

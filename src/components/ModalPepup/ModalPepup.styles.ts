@@ -177,10 +177,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     zIndex: 30
   },
-  rate: { flexDirection: 'row' },
+  rate: { flexDirection: 'row', alignItems: 'center' },
   rateText: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 5
   },
   actualR: {
     fontSize: 12,

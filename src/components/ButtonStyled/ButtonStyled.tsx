@@ -14,7 +14,11 @@ import {
   colorOrangeStart,
   colorOrangeEnd,
   boldFont,
-  defaultFont
+  defaultFont,
+  colorLightGray,
+  colorTextGray,
+  colorCoolGrey,
+  colorDotGray
 } from '../../variables';
 import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { Loader } from '../Loader/Loader';
@@ -42,6 +46,8 @@ const getColorButton = (type: string) => {
       return [colorVioletStart, colorVioletEnd];
     case 'white':
       return ['white', 'white'];
+    case 'grey':
+      return [colorCoolGrey, colorDotGray];
     default:
       return [colorVioletStart, colorVioletEnd];
   }
@@ -54,7 +60,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   text = '',
   style = '',
   textBold = false,
-  type = 'violet',
+  type = '',
   loader = false
 }): JSX.Element => {
   return (
