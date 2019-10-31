@@ -50,6 +50,7 @@ export class PepupState {
   reviews: Array<Review>;
   isModalPostReviewShown: boolean;
   isModalNotifyShown: boolean;
+  videoUrl: string;
 
   constructor() {
     this.isModalShown = false;
@@ -66,6 +67,7 @@ export class PepupState {
     this.reviews = [];
     this.isModalPostReviewShown = false;
     this.isModalNotifyShown = false;
+    this.videoUrl = '';
   }
 }
 
@@ -170,12 +172,14 @@ export const PepupReducer = (
     case OPEN_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: true
+        isVideoModalShown: true,
+        videoUrl: action.data
       };
     case CLOSE_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: false
+        isVideoModalShown: false,
+        videoUrl: ''
       };
     case OPEN_REVIEWS_MODAL:
       return {

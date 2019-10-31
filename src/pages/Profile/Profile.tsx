@@ -19,7 +19,7 @@ import {
   updateCelebIntroVideo,
   getUserPepups
 } from './actions';
-import { ProfileScreenProps, HeaderProps } from '.';
+import { ProfileScreenProps } from '.';
 import { NotificationItems } from './NotificationItems';
 import { History } from './History';
 import { FanRequests } from './FanRequests';
@@ -75,6 +75,10 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
   tabsConfigCeleb = [
     {
+      title: 'Fan Requests',
+      component: () => <FanRequests />,
+    },
+    {
       title: 'My Requests',
       component: () => <NotificationItems />,
     },
@@ -82,14 +86,10 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
       title: 'Notifications',
       component: () => <NotificationItems />,
     },
-    {
-      title: 'Fan Requests',
-      component: () => <FanRequests />,
-    },
-    {
-      title: 'History',
-      component: () => <History />,
-    },
+    // {
+    //   title: 'History',
+    //   component: () => <History />,
+    // },
   ];
 
   componentDidMount = () => {
@@ -153,6 +153,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         <View style={styles.titleWrap}>
           <Text style={styles.title}>{profileData && profileData.name || ' '}</Text>
           <TouchableOpacity
+            style={styles.icon}
             onPress={() => navigate({
               routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
             })
