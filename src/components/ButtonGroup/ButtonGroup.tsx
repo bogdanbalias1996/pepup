@@ -1,13 +1,24 @@
 import * as React from 'react';
-import {Text, TouchableOpacity, FlatList} from 'react-native';
+import { Text, TouchableOpacity, FlatList } from 'react-native';
 import styles from './ButtonGroup.styles';
-import {ButtonGroupProps, ButtonGroupItem} from './';
-
+import { ButtonGroupProps, ButtonGroupItem } from './';
 
 export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
-  state: {
-    selectedItem: ButtonGroupItem;
-  };
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.value && nextProps.value !== prevState.selectedItem) {
+  //     return {
+  //       selectedItem:
+  //         nextProps.items.find(
+  //           (item: ButtonGroupItem) => item.value === nextProps.value
+  //         ) || nextProps.items[0]
+  //     };
+  //   }
+  //   return null;
+  // }
+
+  // state: {
+  //   selectedItem: ButtonGroupItem;
+  // };
   btnGroupRef: any;
 
   constructor(props: ButtonGroupProps) {
@@ -15,30 +26,29 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
 
     this.btnGroupRef = React.createRef();
 
-    this.state = {
-      selectedItem:
-        props.items.find(
-          (item: ButtonGroupItem) => item.value === props.value,
-        ) || props.items[0],
-    };
+    // this.state = {
+    //   selectedItem:
+    //     props.items.find(
+    //       (item: ButtonGroupItem) => item.value === props.value
+    //     ) || props.items[0]
+    // };
   }
 
   handlePress = (item: ButtonGroupItem, index: number) => {
-    this.setState({
-      selectedItem: item,
-    });
+    // this.setState({
+    //   selectedItem: item
+    // });
 
     this.btnGroupRef.current.scrollToIndex({
       animated: true,
       index,
-      viewPosition: 0.5,
+      viewPosition: 0.5
     });
 
-    if (item.onPress) item.onPress();
+    if (item.onPress) item.onPress(index);
   };
 
-  renderItem = ({item, index}: any) => {
-    const {selectedItem} = this.state;
+  renderItem = ({ item, index }: any) => {
     const {
       items,
       stylesFirstItem = {},
@@ -47,12 +57,12 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
       stylesSelectedItem = {},
       stylesItemText = {},
       stylesSelectedItemText = {},
-      getActiveIndicator = () => null,
+      getActiveIndicator = () => null
     } = this.props;
 
     const isFirst = index === 0;
     const isLast = index === items.length - 1;
-    const isSelected = item.value === selectedItem.value;
+    const isSelected = item.value === this.props.value;
 
     const stylesbuttonGroupItem = [styles.item, stylesItem]
       .concat(isFirst ? [styles.itemFirst, stylesFirstItem] : {})
@@ -60,7 +70,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
       .concat(isSelected ? [styles.itemSelected, stylesSelectedItem] : {});
 
     const stylesbuttonGroupItemText = [styles.itemText, stylesItemText].concat(
-      isSelected ? [styles.itemSelectedText, stylesSelectedItemText] : {},
+      isSelected ? [styles.itemSelectedText, stylesSelectedItemText] : {}
     );
 
     const content = item.component ? (
@@ -82,7 +92,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   };
 
   render() {
-    const {items, style = {}} = this.props;
+    const { items, style = {} } = this.props;
 
     return (
       <FlatList

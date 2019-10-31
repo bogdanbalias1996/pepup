@@ -1,8 +1,8 @@
-import * as React from "react";
-import { View, StyleSheet } from "react-native";
-import { TabsProps, Tab } from "./";
-import { ButtonGroup } from "../../components/ButtonGroup/ButtonGroup";
-import { ButtonGroupItem } from "../../components/ButtonGroup";
+import * as React from 'react';
+import { View, StyleSheet } from 'react-native';
+import { TabsProps, Tab } from './';
+import { ButtonGroup } from '../../components/ButtonGroup/ButtonGroup';
+import { ButtonGroupItem } from '../../components/ButtonGroup';
 
 export class Tabs extends React.PureComponent<TabsProps> {
   state = {
@@ -26,16 +26,16 @@ export class Tabs extends React.PureComponent<TabsProps> {
       config: Array<Tab>
     ): Array<ButtonGroupItem> => {
       return config.map((item: Tab, index: number) => {
-        
         return {
           value: index,
-          title: item.title || "",
+          title: item.title || '',
           component: item.titleComponent
             ? (isActive: boolean) => item.titleComponent(isActive)
             : null,
-          onPress: () => {
-            if (item.onPress) item.onPress();
-            this.setState({ activeTabIndex: index });
+          onPress: indexTab => {
+            console.log('state', indexTab);
+            if (item.onPress) item.onPress(indexTab);
+            this.setState({ activeTabIndex: indexTab });
           }
         };
       });
@@ -62,7 +62,7 @@ export const defaultTabsStyles = StyleSheet.create({
   roundedTabs: {
     flex: 0,
     borderRadius: 24,
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     marginRight: 13,
     paddingTop: 5,
     paddingBottom: 5

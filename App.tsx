@@ -15,10 +15,11 @@ import * as Font from 'expo-font';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import { getStore } from './src/configureStore';
-import { setTopLevelNavigator, navigate } from './src/navigationService';
+import { setTopLevelNavigator, navigate, push } from './src/navigationService';
 import { Loader } from './src/components/Loader/Loader';
 import { IGlobalState } from './src/coreTypes';
 import SplashScreen from 'react-native-splash-screen';
+import NotificationPopup from 'react-native-push-notification-popup';
 
 import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
 import { MainNavigator } from './src/navigators/MainNavigator';
@@ -88,7 +89,7 @@ export default class App extends Component {
       'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
       'ss-bold': require('./assets/fonts/samsung-sharp/ss-bold.ttf'),
       'ss-regular': require('./assets/fonts/samsung-sharp/ss-regular.ttf'),
-      'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.ttf'),
+      'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.ttf')
     });
 
     getStore().dispatch({
@@ -105,31 +106,38 @@ export default class App extends Component {
     this.notificationOpenedListener();
   }
 
-  notificationListener:any;
-  notificationOpenedListener:any;
+  notificationListener: any;
+  notificationOpenedListener: any;
 
   // TODO: Handle notifications
   async createNotificationListeners() {
     this.notificationListener = firebase
       .notifications()
       .onNotification(notification => {
-        const { title, body } = notification;
-        this.showAlert(title, body);
+        // console.log(2, notification._data);
+        const { title, body, data } = notification;
+        this.showAlert(title, body, data);
       });
 
     this.notificationOpenedListener = firebase
       .notifications()
       .onNotificationOpened(notificationOpen => {
-        const { title, body } = notificationOpen.notification;
-        this.showAlert(title, body);
+        console.log(5, notificationOpen.notification.data.activeTab);
+        navigate(
+          {
+            routeName: 'Profile',
+            params: { activeTab: notificationOpen.notification.data.activeTab }
+          },
+          true
+        );
       });
 
     const notificationOpen = await firebase
       .notifications()
       .getInitialNotification();
     if (notificationOpen) {
-      const { title, body } = notificationOpen.notification;
-      this.showAlert(title, body);
+      const { title, body, data } = notificationOpen.notification;
+      this.showAlert(title, body, data);
     }
 
     this.messageListener = firebase.messaging().onMessage(message => {
@@ -137,14 +145,20 @@ export default class App extends Component {
     });
   }
 
-  // TODO: Remove this. This is not production code
-  showAlert(title: any, body: any) {
-    Alert.alert(
-      title,
-      body,
-      [{ text: 'OK', onPress: () => console.log('OK Pressed') }],
-      { cancelable: false }
-    );
+  showAlert(title: any, body: any, data: any) {
+    this.popup.show({
+      onPress: function() {
+        navigate(
+          { routeName: 'Profile', params: { activeTab: data.activeTab } },
+          true
+        );
+      },
+      appIconSource: require('./assets/logo2x.png'),
+      appTitle: 'Pepup',
+      title: title,
+      body: body,
+      slideOutTime: 10000
+    });
   }
 
   async checkPermission() {
@@ -183,6 +197,7 @@ export default class App extends Component {
         <AppWithFontLoaded />
         <SuccessfulAlert />
         <ErrorModal />
+        <NotificationPopup ref={ref => (this.popup = ref)} />
       </Provider>
     );
   }

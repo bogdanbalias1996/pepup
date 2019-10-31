@@ -1,4 +1,4 @@
-package com.pepup;
+package in.bitsport.pepup;
 
 import android.os.Bundle;
 import com.facebook.react.ReactActivity;

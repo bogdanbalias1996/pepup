@@ -1,18 +1,18 @@
-import { ButtonGroupStylesProps } from '../ButtonGroup'
+import { ButtonGroupStylesProps } from '../ButtonGroup';
 
 export type Tab = {
-  title: string
-  titleComponent?: (isActive: boolean) => JSX.Element
-  component: any
-  tabStyles?: any
-  tabTitleStyles?: any
-  onPress?: Function
-}
+  title: string;
+  titleComponent?: (isActive: boolean) => JSX.Element;
+  component: any;
+  tabStyles?: any;
+  tabTitleStyles?: any;
+  onPress?: (index: number) => void;
+};
 
 export type TabsComponentProps = {
-  config: Array<Tab>
-  stylesTabsContainer?: any
-  activeTabIndex?: number
-}
+  config: Array<Tab>;
+  stylesTabsContainer?: any;
+  activeTabIndex?: number;
+};
 
-export type TabsProps = TabsComponentProps & ButtonGroupStylesProps
+export type TabsProps = TabsComponentProps & ButtonGroupStylesProps;
