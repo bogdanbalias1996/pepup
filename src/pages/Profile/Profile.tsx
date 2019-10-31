@@ -180,6 +180,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
         <ModalRecordVideo onVideoSave={this.handleVideoSave} />
         <ModalPepup />
         <ModalPepupNotification />
+        <ModalRecordVideo />
       </PepupBackground>
     );
   }

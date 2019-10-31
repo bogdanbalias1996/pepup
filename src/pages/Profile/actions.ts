@@ -109,7 +109,6 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
       type: 'unknown',
       onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
     }))
-    console.log(JSON.stringify(err, null, 2));
   });
   };
 };

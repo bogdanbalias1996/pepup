@@ -550,7 +550,6 @@ export const getPepupNotification = (pepupId: string) => {
         dispatch(receivePepupNotification(res));
       })
       .catch(err => {
-        console.log(JSON.stringify(err,null, 2));
         dispatch(failurePepupNotification());
         dispatch(
           openError({

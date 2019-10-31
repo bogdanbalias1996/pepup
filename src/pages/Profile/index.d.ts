@@ -92,6 +92,7 @@ export type FanRequestsProps = {
   getCelebPepups: (id: string) => Promise<any>;
   openNotifyModal: () => void;
   getPepupNotification: (id: string) => Promise<any>;
+  videoRecordModalOpen: () => void;
 };
 
 export type HistoryItemsProps = {

@@ -28,7 +28,7 @@ import { Loader } from '../../components/Loader/Loader';
 import { getCelebPepups } from './actions';
 import { capitalize } from '../../helpers';
 import { openNotifyModal, getPepupNotification } from '../Pepups/actions';
-import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
+import { videoRecordModalOpen } from '../RecordVideo/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
@@ -39,7 +39,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
   openNotifyModal: () => dispatch(openNotifyModal()),
-  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any)
+  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
+  videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
 });
 
 export class Component extends React.PureComponent<FanRequestsProps> {
@@ -53,7 +54,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const {openNotifyModal, getPepupNotification, pepupId } = this.props
 
     openNotifyModal();
-    getPepupNotification('ec0a723a-8b35-4893-bbc1-f431bf6005bb');
+    getPepupNotification('ec0a723a-8b35-4893-bbc1-f431bf6005bb');//temporary solution, just for testing
   };
 
   getStatusCeleb = (status: string, date: string) => {
@@ -83,7 +84,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
             roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
           } remaining.`,
           statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc'),
+          onPress: () => this.props.videoRecordModalOpen(),
           linkText: 'Click to record video.'
         };
       case 'rejected':
@@ -149,7 +150,6 @@ export class Component extends React.PureComponent<FanRequestsProps> {
 
   render() {
     const { isFetching, celebPepups, pepupId } = this.props;
-    console.log('fanReq: ',pepupId);
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
