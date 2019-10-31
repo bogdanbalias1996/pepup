@@ -26,16 +26,19 @@ export default StyleSheet.create({
   },
   titleWrap: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  icon: {
+    marginBottom: 10
   },
   title: {
     fontSize: 20,
     fontFamily: semiboldFont,
     color: 'white',
+    alignItems: 'center',
     textAlign: 'center',
-    marginBottom: 24,
     marginHorizontal: 10,
-    flexShrink: 1
   },
   wrapContent: {
     backgroundColor: colorLightGray,
