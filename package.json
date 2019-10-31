@@ -15,7 +15,6 @@
     "@expo/vector-icons": "^10.0.5",
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/cameraroll": "^1.2.1",
-    "@react-native-community/datetimepicker": "^2.1.0",
     "@react-native-community/netinfo": "^4.4.0",
     "@types/jest": "^24.0.18",
     "@types/react": "^16.9.5",
