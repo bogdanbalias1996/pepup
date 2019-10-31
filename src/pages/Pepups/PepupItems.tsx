@@ -4,10 +4,9 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  View,
-  Animated
+  View
 } from 'react-native';
-
+import FastImage from 'react-native-fast-image'
 import { connect } from 'react-redux';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Dispatch } from 'redux';
@@ -59,10 +58,14 @@ export class Component extends React.PureComponent<PepupItemsProps> {
           activeOpacity={1}>
           <Loader color={colorPastelPurple} size="large" isDataLoaded={!!item}>
             <View style={styles.avatarWrapper}>
-              <Animated.Image
+              <FastImage
                 style={styles.avatar}
-                source={{ uri: item.userInfo.icon }}
-                resizeMode="cover"/>
+                source={{
+                  uri: item.userInfo.icon,
+                  priority: FastImage.priority.normal
+                }}
+                resizeMode={FastImage.resizeMode.cover}
+              />
               <LinearGradient
                 start={[0.5, 0.3]}
                 end={[0.5, 1]}
