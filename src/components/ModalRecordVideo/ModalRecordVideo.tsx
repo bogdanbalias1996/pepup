@@ -16,8 +16,8 @@ import { Video } from 'expo-av';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
 import styles from './ModalRecordVideo.styles';
 
-const minAcceptableVideoDuration = 5;
-const maxAcceptableVideoDuration = 10;
+const minAcceptableVideoDuration = 30;
+const maxAcceptableVideoDuration = 60;
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoRecordModalVisible: state.RecordVideoState.isVideoRecordModalVisible,

@@ -1,5 +1,6 @@
 export type ModalVideoStateProps = {
   isVideoModalShown: boolean;
+  videoUrl: string;
 };
 
 export type ModalVideoDispatchProps = {
