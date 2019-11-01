@@ -7,6 +7,7 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
@@ -94,7 +95,12 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
       profileData &&
       celebData && (
         <PepupBackground>
-          <View style={styles.wrapContent}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={styles.wrapContent}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
+            bounces={false}
+          >
             <Formik
               initialValues={{
                 email: profileData.email,
@@ -272,7 +278,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 );
               }}
             </Formik>
-          </View>
+          </KeyboardAwareScrollView>
         </PepupBackground>
       )
     );
