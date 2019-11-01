@@ -32,7 +32,8 @@ const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
   eventData: state.EventState.eventData,
   isFetching: state.EventState.isFetching,
-  quantity: state.EventState.selectedQuantity
+  quantity: state.EventState.selectedQuantity,
+  isFetchingEvent: state.EventState.isFetchingEvent
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -79,6 +80,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
       eventData,
       quantity,
       setQuantity,
+      isFetchingEvent,
       isFetching,
       purchaseEventTicket
     } = this.props;
@@ -86,73 +88,76 @@ export class Component extends React.PureComponent<ModalEventsProps> {
     return (
       <PepupModal
         visible={isModalShown}
-        isLoading={isFetching}
+        isLoading={isFetchingEvent}
         onRequestClose={() => closeEventModal()}
         heightContent={this.state.heightDescription}>
         {!!eventData && (
           <View style={styles.wrapModalContent}>
             <ScrollView style={styles.scrollView}>
-              <View
-                style={styles.scrollContent}
-                onLayout={event => {
-                  const { height } = event.nativeEvent.layout;
-                  Object.keys(eventData).length !== 0 &&
-                    this.setState({ heightDescription: height });
-                }}>
-                <View style={styles.insidePadding}>
-                  <View style={styles.wrapTitle}>
-                    <Image
-                      style={styles.imageLogo}
-                      source={{
-                        uri: eventData.mediaBasePath + eventData.organizerLogo
-                      }}
-                      resizeMode="contain"
+              <View style={styles.scrollContent}>
+                <View
+                  onLayout={event => {
+                    const { height } = event.nativeEvent.layout;
+                    Object.keys(eventData).length !== 0 &&
+                      this.setState({ heightDescription: height });
+                  }}>
+                  <View style={styles.insidePadding}>
+                    <View style={styles.wrapTitle}>
+                      <Image
+                        style={styles.imageLogo}
+                        source={{
+                          uri: eventData.mediaBasePath + eventData.organizerLogo
+                        }}
+                        resizeMode="contain"
+                      />
+                      <Text style={styles.title}>{eventData.title}</Text>
+                    </View>
+                    <Text style={[styles.text, styles.infoText]}>
+                      {eventData.dataInfo.details}
+                    </Text>
+                    <View style={styles.infoBlock}>
+                    <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Price</Text>
+                        <Text style={styles.infoValue}>
+                          {`${eventData.pricePerSeat} ${eventData.currency}`}
+                        </Text>
+                      </View>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Places Left</Text>
+                        <Text style={styles.infoValue}>
+                          {eventData.remainingSeats}
+                        </Text>
+                      </View>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Date</Text>
+                        <Text style={styles.infoValue}>
+                          {eventData.startDt}
+                        </Text>
+                      </View>
+                      <View style={styles.infoItem}>
+                        <Text style={styles.infoLabel}>Entries</Text>
+                        <Text style={styles.infoValue}>
+                          {eventData.soldSeats}
+                        </Text>
+                      </View>
+                      <View style={styles.infoLocation}>
+                        <Text style={styles.infoLabel}>Location</Text>
+                        <Text style={styles.infoLocationValue}>
+                          {eventData.eventLoc}
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.imgSet}>
+                    <FlatList
+                      horizontal={true}
+                      showsHorizontalScrollIndicator={false}
+                      data={eventData.dataInfo.images}
+                      renderItem={this.renderItem}
+                      keyExtractor={(item: Event) => item.id}
+                      style={styles.carousel}
                     />
-                    <Text style={styles.title}>{eventData.title}</Text>
                   </View>
-                  <Text style={[styles.text, styles.infoText]}>
-                    {eventData.dataInfo.details}
-                  </Text>
-                  <View style={styles.infoBlock}>
-                    <View style={styles.infoItem}>
-                      <Text style={styles.infoLabel}>Date</Text>
-                      <Text style={styles.infoValue}>{eventData.startDt}</Text>
-                    </View>
-                    <View style={styles.infoItem}>
-                      <Text style={styles.infoLabel}>Price</Text>
-                      <Text style={styles.infoValue}>
-                        {`${eventData.pricePerSeat} ${eventData.currency}`}
-                      </Text>
-                    </View>
-                    <View style={styles.infoItem}>
-                      <Text style={styles.infoLabel}>Places Left</Text>
-                      <Text style={styles.infoValue}>
-                        {eventData.remainingSeats}
-                      </Text>
-                    </View>
-                    <View style={styles.infoItem}>
-                      <Text style={styles.infoLabel}>Participants</Text>
-                      <Text style={styles.infoValue}>
-                        {eventData.soldSeats}
-                      </Text>
-                    </View>
-                    <View style={styles.infoLocation}>
-                      <Text style={styles.infoLabel}>Location</Text>
-                      <Text style={styles.infoLocationValue}>
-                        {eventData.eventLoc}
-                      </Text>
-                    </View>
-                  </View>
-                </View>
-                <View style={styles.imgSet}>
-                  <FlatList
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={eventData.dataInfo.images}
-                    renderItem={this.renderItem}
-                    keyExtractor={(item: Event) => item.id}
-                    style={styles.carousel}
-                  />
                 </View>
               </View>
             </ScrollView>

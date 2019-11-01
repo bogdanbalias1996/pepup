@@ -6,6 +6,7 @@ export type ModalEventsProps = {
   eventData: Event | null;
   setQuantity: (val: string) => void;
   quantity: string;
+  isFetchingEvent: boolean;
   isFetching: boolean;
   purchaseEventTicket: (id: string, quantity: string) => Promise<any>;
 };

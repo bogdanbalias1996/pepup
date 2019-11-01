@@ -4,9 +4,9 @@ import {
   colorTextGray,
   colorLightGray,
   colorTextViolet,
-  colorSwipeLine,
   semiboldFont,
-  defaultFont
+  defaultFont,
+  boldFont
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -27,7 +27,6 @@ export default StyleSheet.create({
   wrapTitle: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
     marginVertical: 24,
     alignItems: "center"
   },
@@ -37,11 +36,12 @@ export default StyleSheet.create({
     marginRight: 16
   },
   title: {
-    flex: 1,
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
-    lineHeight: 24
+    lineHeight: 24,
+    height: 24,
+    marginVertical: 16,
   },
   carousel: {
     marginTop: 0,
@@ -76,8 +76,9 @@ export default StyleSheet.create({
   infoLabelQnt: {
     position: 'absolute',
     bottom: 40,
+    textAlign: 'center',
     flexWrap: 'nowrap',
-    width: 101
+    width: 110
   },
   infoValue: {
     fontSize: 16,
@@ -97,8 +98,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
-    marginTop: 15,
+    right: 0
   },
   btnCancel: {
     width: 48,
@@ -109,15 +109,15 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   infoText: {
-    color: colorTextGray
+    color: colorTextGray,
+    lineHeight: 22,
   },
   btnSubmit: {
     flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
-    lineHeight: 20
+    fontFamily: defaultFont
   },
   imgSet: {
     flexDirection: "row",

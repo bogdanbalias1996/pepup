@@ -16,8 +16,8 @@ import {
   colorTextGray,
   colorBlack,
   defaultFont,
-  semiboldFont,
-  colorBlueberry
+  colorBlueberry,
+  boldFont
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Loader } from '../../components/Loader/Loader';
@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   title: {
     flex: 1,
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
     lineHeight: 24
   },
