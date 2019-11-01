@@ -29,8 +29,8 @@ const getTypeButton = (type: string) => {
       return [styles.shadowBlue, styles.btnShadow];
     case 'orange':
       return [styles.shadowOrange, styles.btnShadow];
-    case 'grey': 
-      return [styles.shadowGrey, styles.btnShadow]  
+    case 'grey':
+      return [styles.shadowGrey, styles.btnShadow];
     default:
       return [styles.shadowViolet, styles.btnShadow];
   }
@@ -72,18 +72,16 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 },
-        ]}
-      >
+          type === 'border' && { padding: 1 }
+        ]}>
         <TouchableOpacity
           activeOpacity={type === 'border' ? 1 : 0.5}
           style={[
             styles.btn,
             type === 'border' && { backgroundColor: 'white', height: 46 }
           ]}
-          onPress={() => onPress()}
-        >
-          <Loader color='white' size='small' isDataLoaded={!loader}>
+          onPress={() => onPress()}>
+          <Loader color="white" size="small" isDataLoaded={!loader}>
             <Icon
               name={iconName}
               color="white"
@@ -93,12 +91,18 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
             <Text
               style={[
                 styles.btnText,
-                { color: type === 'border' ? colorBlack: type === 'white' ? colorVioletEnd : 'white' },
+                {
+                  color:
+                    type === 'border'
+                      ? colorBlack
+                      : type === 'white'
+                      ? colorVioletEnd
+                      : 'white'
+                },
                 {
                   fontFamily: textBold ? boldFont : defaultFont
                 }
-              ]}
-            >
+              ]}>
               {text}
             </Text>
             <ImageSafe style={styles.image} iconSource={iconSource} />
