@@ -2,7 +2,6 @@ import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
-  colorLightGray,
   colorSwipeLine,
   colorTomato,
   semiboldFont,
@@ -24,19 +23,6 @@ export default StyleSheet.create({
     borderRadius: 15
   },
   avatarWrapper: {
-    padding: 4,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
     width: 96,
     height: 96,
     marginHorizontal: 10,

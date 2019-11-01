@@ -24,15 +24,16 @@ import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps, RenderItemMedia } from './';
 import styles from './ModalPepup.styles';
-import { colorBlack, colorBlueberry } from '../../variables';
+import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Pepup } from '../../pages/Profile';
-import { Loader } from '../Loader/Loader';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -58,7 +59,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const { celebData, openReviewsModal, getAllReviews } = this.props;
 
     openReviewsModal();
-    celebData ? getAllReviews(celebData.userInfo.id) : () => { };
+    celebData ? getAllReviews(celebData.userInfo.id) : () => {};
   };
 
   renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
@@ -93,9 +94,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openVideoModal
     } = this.props;
 
-    const videoUrl = celebData && celebData.dataInfo['intro-video']
-      ? `${celebData.mediaBasePath}${celebData.dataInfo['intro-video']}`
-      : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+    const videoUrl =
+      celebData && celebData.dataInfo['intro-video']
+        ? `${celebData.mediaBasePath}${celebData.dataInfo['intro-video']}`
+        : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
 
     const [rating, totalRating] = celebData
       ? celebData.weightedRating.split('/')
@@ -139,37 +141,20 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     {`${celebData.totalPepupsFulfilled} Pepups`}
                   </Text>
                 </View>
-                <View style={{ overflow: 'hidden' }}>
-                  <Loader
-                    isDataLoaded={!!videoUrl}
-                    size="large"
-                    color={colorBlueberry}>
-                    <View style={styles.avatarWrapper}>
-                      <LinearGradient
-                        start={[0.5, 0.3]}
-                        end={[0.5, 1]}
-                        colors={['rgba(42, 41, 46, 0)', 'rgba(42, 41, 46, 0.6)']}
-                        style={{
-                          position: 'absolute',
-                          top: 0,
-                          width: '100%',
-                          height: '100%',
-                          justifyContent: 'flex-end',
-                          borderRadius: 20,
-                        }}>
-                        <Video
-                          source={{ uri: videoUrl }}
-                          rate={1.0}
-                          volume={1.0}
-                          isMuted={false}
-                          isLooping={true}
-                          resizeMode="cover"
-                          useNativeControls={false}
-                          style={styles.avatar}
-                        />
-                      </LinearGradient>
-                    </View>
-                  </Loader>
+                <View style={{ overflow: 'hidden', position: 'relative' }}>
+                  <Card style={styles.avatarWrapper}>
+                    <CardGradient />
+                    <Video
+                      source={{ uri: videoUrl }}
+                      rate={1.0}
+                      volume={1.0}
+                      isMuted={false}
+                      isLooping={true}
+                      resizeMode="cover"
+                      useNativeControls={false}
+                      style={styles.avatar}
+                    />
+                  </Card>
                   <TouchableOpacity
                     style={styles.wrapVideo}
                     onPress={() => openVideoModal(videoUrl)}>

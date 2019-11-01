@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import FastImage from 'react-native-fast-image';
 
 import {
   closePepupReqModal,
@@ -22,6 +23,8 @@ import { AlertProps } from '../SuccessfulAlert';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -76,11 +79,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
               validationSchema={RequestSchema}
               onSubmit={this.handleSubmit}>
               {(props: any) => {
-                const {
-                  handleSubmit,
-                  setFieldValue,
-                  values
-                } = props;
+                const { handleSubmit, setFieldValue, values } = props;
 
                 return (
                   <View style={styles.wrap}>
@@ -93,17 +92,25 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                             this.setState({ heightDescription: height });
                         }}>
                         <View style={styles.reqTitle}>
-                          <View style={styles.avatarWrapper}>
-                            <Image
+                          <Card style={styles.avatarWrapper}>
+                            <CardGradient style={{ borderRadius: 15 }} />
+                            <FastImage
                               style={styles.avatar}
-                              source={{ uri: celebData.userInfo.icon }}
-                              resizeMode="cover"
+                              source={{
+                                uri: celebData.userInfo.icon,
+                                priority: FastImage.priority.normal
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
                             />
-                          </View>
-                          <Text style={[styles.title, {
-                            textAlign: 'center',
-                            fontFamily: boldFont
-                          }]}>
+                          </Card>
+                          <Text
+                            style={[
+                              styles.title,
+                              {
+                                textAlign: 'center',
+                                fontFamily: boldFont
+                              }
+                            ]}>
                             {celebData.userInfo.name}
                           </Text>
                         </View>
@@ -146,8 +153,10 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                   }
                                 />
                                 <Text
-                                  style={[ styles.subTitle, styles.checkText ]}
-                                  >{`Feature video on ${celebData.userInfo.name}'s Pepup Page`}</Text>
+                                  style={[
+                                    styles.subTitle,
+                                    styles.checkText
+                                  ]}>{`Feature video on ${celebData.userInfo.name}'s Pepup Page`}</Text>
                               </View>
                               <Text style={styles.disclaimerText}>
                                 NOTE: We will only charge you when we fulfill

@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { withFormik } from 'formik';
+import FastImage from 'react-native-fast-image';
 
 import {
   closeContestQuizModal,
@@ -18,7 +19,7 @@ import { RadioButtonsContest } from '../RadioButtons/RadioButtonsContest';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
-const alphabet = [...'abcdefghijklmnopqrstuvwxyz']
+const alphabet = [...'abcdefghijklmnopqrstuvwxyz'];
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -81,10 +82,13 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       this.setState({ heightDescription: height });
                   }}>
                   <View style={styles.conTitle}>
-                    <Image
+                    <FastImage
                       style={styles.avatar}
-                      source={{ uri: `${contestData.mediaBasePath}${contestData.organizerLogo}` }}
-                      resizeMode="contain"
+                      source={{
+                        uri: `${contestData.mediaBasePath}${contestData.organizerLogo}`,
+                        priority: FastImage.priority.normal
+                      }}
+                      resizeMode={FastImage.resizeMode.contain}
                     />
                     <Text style={styles.title}>{contestData.title}</Text>
                   </View>
@@ -97,9 +101,13 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                           (val: any, index: number) => {
                             return (
                               <RadioButtonsContest
-                                options={val.options.map((answer: string, index: number) => {
-                                  return `${alphabet[index].toUpperCase()}. ${answer}`
-                                })}
+                                options={val.options.map(
+                                  (answer: string, index: number) => {
+                                    return `${alphabet[
+                                      index
+                                    ].toUpperCase()}. ${answer}`;
+                                  }
+                                )}
                                 onPress={(item: any) => {
                                   setFieldValue(val.question, item);
                                 }}

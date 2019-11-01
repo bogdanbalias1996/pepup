@@ -11,7 +11,8 @@ import {
   semiboldFont,
   boldFont,
   defaultFont,
-  colorTextGreyIntro
+  colorTextGreyIntro,
+  colorPastelPurple
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -23,26 +24,14 @@ export default StyleSheet.create({
     paddingHorizontal: 24
   },
   avatar: {
+    flex: 1,
     width: '100%',
     height: '100%',
     borderRadius: 20,
     position: 'relative'
   },
   avatarWrapper: {
-    padding: 4,
     marginHorizontal: 24,
-    backgroundColor: 'white',
-    borderRadius: 20,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
     height: 390,
     marginVertical: 20
   },
