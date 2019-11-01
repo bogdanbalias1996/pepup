@@ -16,6 +16,7 @@ export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
       formProps,
       secure,
       handleIconClick = () => {},
+      iconSize,
       ...TextInputProps
     } = this.props;
 
@@ -44,7 +45,7 @@ export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
           onBlur={() => {
             value && setFieldTouched(name);
           }}
-          autoCorrect={false}
+          autoCorrect={true}
           {...TextInputProps}
           secureTextEntry={secure}
         />
@@ -52,7 +53,7 @@ export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
           <TouchableOpacity
             onPress={() => handleIconClick && handleIconClick()}
           >
-            <Icon size={27} name={iconName} color="#d4d0dd" />
+            <Icon size={iconSize ? iconSize : 27} name={iconName} color="#d4d0dd" />
           </TouchableOpacity>
         )}
       </View>

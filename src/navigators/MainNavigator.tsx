@@ -12,7 +12,7 @@ import {
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
-// import { EventsScreen } from '../pages/Events/Events';
+import { EventsScreen } from '../pages/Events/Events';
 import { ContestsScreen } from '../pages/Contests/Contests';
 import { ProfileScreen } from '../pages/Profile/Profile';
 import { SettingsScreen } from '../pages/Settings/Settings';
@@ -23,8 +23,8 @@ import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
 // Icons for BottomTabNavigator
 const Pepups = require('../../assets/pepups.png');
 const PepupsActive = require('../../assets/pepupsActive.png');
-// const Events = require('../../assets/events.png');
-// const EventsActive = require('../../assets/eventsActive.png');
+const Events = require('../../assets/events.png');
+const EventsActive = require('../../assets/eventsActive.png');
 const Contests = require('../../assets/contests.png');
 const ContestsActive = require('../../assets/contestsActive.png');
 // const Store = require('../../assets/store.png');
@@ -36,8 +36,8 @@ const getActiveTabIconName = (routeName: string, focused: boolean) => {
   switch (routeName) {
     case 'Pepups':
       return focused ? PepupsActive : Pepups;
-    // case 'Events':
-    //   return focused ? EventsActive : Events;
+    case 'Events':
+      return focused ? EventsActive : Events;
     case 'Contests':
       return focused ? ContestsActive : Contests;
     // case 'Store':
@@ -66,7 +66,7 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
 export const TabsNavigator = createBottomTabNavigator(
   {
     Pepups: formatScreenProps('Pepups', PepupsScreen),
-    // Events: formatScreenProps('Events', EventsScreen),
+    Events: formatScreenProps('Events', EventsScreen),
     Contests: formatScreenProps('Contests', ContestsScreen),
     // Store: formatScreenProps('Store', StoreScreen),
     Profile: formatScreenProps('Profile', ProfileScreen)

@@ -28,6 +28,7 @@ import { format } from 'date-fns';
 import { navigate } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
 import { colorBlack } from '../../variables';
+import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
 
 const Header = (
   props: JSX.IntrinsicAttributes & {
@@ -98,12 +99,10 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 name: profileData.name,
                 newPasswd: '',
                 dob: '',
-                profileInfo: {
-                  country: '',
-                  city: '',
-                  phoneNumber: '',
-                  address: ''
-                }
+                country: '',
+                city: '',
+                phoneNumber: '',
+                address: ''
               }}
               validationSchema={EditSchema}
               onSubmit={this.handleSubmit}>
@@ -168,7 +167,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             }
                           />
                           <TextInputStyledForEdit
-                            name="profileInfo.address"
+                            name="address"
                             label="address"
                             formProps={props}
                           />
@@ -179,14 +178,14 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             }}>
                             <View style={{ width: '50%' }}>
                               <TextInputStyledForEdit
-                                name="profileInfo.city"
+                                name="city"
                                 label="city"
                                 formProps={props}
                               />
                             </View>
                             <View style={{ width: '50%' }}>
                               <TextInputStyledForEdit
-                                name="profileInfo.country"
+                                name="country"
                                 label="country"
                                 formProps={props}
                               />
@@ -201,13 +200,13 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                           />
 
                           <TextInputStyledForEdit
-                            name="profileInfo.phoneNumber"
+                            name="phoneNumber"
                             label="phone"
                             keyboardType="phone-pad"
                             formProps={props}
                           />
 
-                          <TextInputStyledForEdit
+                          <TextInputPasswordForEdit
                             name="newPasswd"
                             label="new password"
                             keyboardType="numeric"

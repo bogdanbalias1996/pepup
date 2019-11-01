@@ -7,6 +7,7 @@ export class EventState {
   eventData: Event | null;
   isFetching: boolean;
   selectedQuantity: string;
+  isFetchingEvent: boolean;
 
   constructor() {
     this.isModalShown = false;
@@ -14,6 +15,7 @@ export class EventState {
     this.eventData = null;
     this.isFetching = false;
     this.selectedQuantity = '';
+    this.isFetchingEvent = false;
   }
 }
 
@@ -54,17 +56,17 @@ export const EventReducer = (
       return {
         ...state,
         eventData: action.data,
-        isFetching: false
+        isFetchingEvent: false
       };
     case REQUEST_EVENT:
       return {
         ...state,
-        isFetching: true
+        isFetchingEvent: true
       };
     case FAILURE_EVENT:
       return {
         ...state,
-        isFetching: false
+        isFetchingEvent: false
       };
     case SET_QUANTITY:
       return {

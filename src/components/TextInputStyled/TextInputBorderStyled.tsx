@@ -61,7 +61,7 @@ export class TextInputBorderStyled extends React.PureComponent<
           onBlur={() => {
             value && setFieldTouched(name);
           }}
-          autoCorrect={false}
+          autoCorrect={true}
           {...TextInputProps}
           secureTextEntry={secure}
         />

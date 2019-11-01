@@ -31,6 +31,7 @@ import { Icon } from '../../components/Icon/Icon';
 import { colorBlack, colorTextGray } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
 import { getCeleb } from '../Pepups/actions';
+import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -249,11 +250,10 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               formProps={props}
                             />
 
-                            <TextInputStyledForEdit
+                            <TextInputPasswordForEdit
                               name="newPasswd"
                               label="new password"
                               keyboardType="numeric"
-                              secure={true}
                               formProps={props}
                             />
                           </View>

@@ -91,7 +91,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginRight: 16
   },
-  infoText: {
+  infoText: { 
     color: colorTextGray,
     lineHeight: 22,
     marginBottom: 10
