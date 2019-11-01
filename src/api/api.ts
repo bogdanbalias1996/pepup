@@ -36,7 +36,8 @@ export enum ApiOperation {
   GetProdCategoryByType,
   GetProductById,
   BuyEventTicket,
-  UpdateCelebIntroVideo
+  UpdateCelebIntroVideo,
+  GetPepupById
 }
 
 export interface INetwork<C> {
@@ -140,6 +141,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetFeaturedCelebs:
       case ApiOperation.GetProdCategoryByType:
       case ApiOperation.GetProductById:
+      case ApiOperation.GetPepupById:  
         return ApiMethod.GET;
 
       default:
@@ -156,9 +158,9 @@ export class CitiznApi implements IApi<ApiOperation> {
       categoryId,
       handle,
       prodCatType,
-      productId
+      productId,
+      pepupId
     } = (this.getParams() || {}) as any;
-
     switch (this.operation) {
       case ApiOperation.LogIn:
         return `${host}/user/login`;
@@ -212,6 +214,8 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/pepup/event/purchase-ticket/${eventId}`;
       case ApiOperation.UpdateCelebIntroVideo:
         return `${host}/pepup/celeb/update-intro-video`;
+      case ApiOperation.GetPepupById:
+        return `${host}/pepup/${pepupId}`;  
       default:
         return '';
     }
@@ -260,6 +264,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProductById:
       case ApiOperation.BuyEventTicket:
       case ApiOperation.UpdateCelebIntroVideo:
+      case ApiOperation.GetPepupById:  
         return true;
 
       default:

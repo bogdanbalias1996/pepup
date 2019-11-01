@@ -1,8 +1,7 @@
 import * as React from 'react';
-import {View, TouchableOpacity, Text, TextInput} from 'react-native';
+import {View, Text, TextInput} from 'react-native';
 import {TextInputStyledProps} from '.';
 import styles from './TextInputStyledForEdit.styles';
-import {colorTextGray} from '../../variables';
 import { Icon } from '../Icon/Icon';
 
 export const TextInputStyledForEdit: React.SFC<TextInputStyledProps> = (

@@ -25,14 +25,16 @@ import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps, RenderItemMedia } from './';
 import styles from './ModalPepup.styles';
-import { colorBlack, colorBlueberry } from '../../variables';
+import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Pepup } from '../../pages/Profile';
-import { Loader } from '../Loader/Loader';
+import { LinearGradient } from 'expo-linear-gradient';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -44,7 +46,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
-  openVideoModal: () => dispatch(openVideoModal()),
+  openVideoModal: (videoUrl: string) => dispatch(openVideoModal(videoUrl)),
   openReviewsModal: () => dispatch(openReviewsModal()),
   getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
@@ -93,7 +95,11 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openVideoModal
     } = this.props;
 
-    const videoUrl = 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+    const videoUrl =
+      celebData && celebData.dataInfo['intro-video']
+        ? `${celebData.mediaBasePath}${celebData.dataInfo['intro-video']}`
+        : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
+
     const [rating, totalRating] = celebData
       ? celebData.weightedRating.split('/')
       : ['0', '0'];
@@ -136,29 +142,23 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     {`${celebData.totalPepupsFulfilled} Pepups`}
                   </Text>
                 </View>
-                <View style={{ overflow: 'hidden' }}>
-                  <Loader
-                    isDataLoaded={!!videoUrl}
-                    size="large"
-                    color={colorBlueberry}>
-                    <View style={styles.avatarWrapper}>
-                      <Video
-                        source={{
-                          uri: videoUrl
-                        }}
-                        rate={1.0}
-                        volume={1.0}
-                        isMuted={false}
-                        isLooping={true}
-                        resizeMode="cover"
-                        useNativeControls={false}
-                        style={styles.avatar}
-                      />
-                    </View>
-                  </Loader>
+                <View style={{ overflow: 'hidden', position: 'relative' }}>
+                  <Card style={styles.avatarWrapper}>
+                    <CardGradient />
+                    <Video
+                      source={{ uri: videoUrl }}
+                      rate={1.0}
+                      volume={1.0}
+                      isMuted={false}
+                      isLooping={true}
+                      resizeMode="cover"
+                      useNativeControls={false}
+                      style={styles.avatar}
+                    />
+                  </Card>
                   <TouchableOpacity
                     style={styles.wrapVideo}
-                    onPress={() => openVideoModal()}>
+                    onPress={() => openVideoModal(videoUrl)}>
                     <Image
                       style={{ width: 60, height: 60 }}
                       source={require('../../../assets/play.png')}

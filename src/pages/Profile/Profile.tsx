@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
 import { Dispatch } from 'redux';
+import FastImage from 'react-native-fast-image';
 
 import { IGlobalState } from '../../coreTypes';
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
@@ -11,6 +12,8 @@ import { Icon } from '../../components/Icon/Icon';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { navigate } from '../../navigationService';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 import styles from './Profile.styles';
 import {
@@ -19,12 +22,13 @@ import {
   updateCelebIntroVideo,
   getUserPepups
 } from './actions';
-import { ProfileScreenProps, HeaderProps } from '.';
+import { ProfileScreenProps } from '.';
 import { NotificationItems } from './NotificationItems';
 import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
+import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -70,49 +74,31 @@ export class Component extends React.Component<ProfileScreenProps> {
   tabsConfig = [
     {
       title: 'My Requests',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
       component: () => <NotificationItems />
     },
     {
       title: 'Notifications',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
       component: () => <NotificationItems />
     }
   ];
 
   tabsConfigCeleb = [
     {
+      title: 'Fan Requests',
+      component: () => <FanRequests />
+    },
+    {
       title: 'My Requests',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
       component: () => <NotificationItems />
     },
     {
       title: 'Notifications',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
       component: () => <NotificationItems />
-    },
-    {
-      title: 'Fan Requests',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
-      component: () => <FanRequests />
-    },
-    {
-      title: 'History',
-      onPress: (activeTabIndex: number) => {
-        this.setState({ activeTabIndex });
-      },
-      component: () => <History />
     }
+    // {
+    //   title: 'History',
+    //   component: () => <History />,
+    // },
   ];
 
   componentDidMount = () => {
@@ -180,24 +166,33 @@ export class Component extends React.Component<ProfileScreenProps> {
       <PepupBackground>
         <View style={styles.avatarsWrap}>
           {profileData && (
-            <Image
-              style={styles.avatar}
-              source={
-                profileData.icon
-                  ? { uri: profileData.icon }
-                  : require('../../../assets/avatarPlaceholder.png')
-              }
-              resizeMode="cover"
-            />
+            <Card style={styles.avatar} radius={6}>
+              <CardGradient style={{ borderRadius: 6 }} />
+              <FastImage
+                style={styles.image}
+                source={
+                  profileData.icon
+                    ? {
+                        uri: profileData.icon,
+                        priority: FastImage.priority.normal
+                      }
+                    : require('../../../assets/avatarPlaceholder.png')
+                }
+                resizeMode={FastImage.resizeMode.cover}
+              />
+            </Card>
           )}
           {isCelebrity && (
-            <TouchableOpacity onPress={getModal}>
-              <Image
-                style={[styles.avatar, styles.avatarCeleb]}
-                source={require('../../../assets/celebAvatar.png')}
-                resizeMode="cover"
-              />
-            </TouchableOpacity>
+            <Card style={styles.avatar} radius={6}>
+              <CardGradient style={{ borderRadius: 6 }} />
+              <TouchableOpacity activeOpacity={1} onPress={getModal}>
+                <Image
+                  style={[styles.image, styles.avatarCeleb]}
+                  source={require('../../../assets/celebAvatar.png')}
+                  resizeMode="cover"
+                />
+              </TouchableOpacity>
+            </Card>
           )}
         </View>
 
@@ -225,11 +220,7 @@ export class Component extends React.Component<ProfileScreenProps> {
                 }
                 style={{ flex: 1 }}
                 stylesItem={defaultTabsStyles.roundedTabs}
-                activeTabIndex={
-                  this.state.activeTabIndex
-                    ? this.state.activeTabIndex
-                    : this.getActiveTab()
-                }
+                activeTabIndex={this.getActiveTab()}
                 stylesTabsContainer={{
                   backgroundColor: 'transparent',
                   marginBottom: 10
@@ -240,6 +231,8 @@ export class Component extends React.Component<ProfileScreenProps> {
         </View>
         <ModalRecordVideo onVideoSave={this.handleVideoSave} />
         <ModalPepup />
+        <ModalPepupNotification />
+        <ModalRecordVideo />
       </PepupBackground>
     );
   }

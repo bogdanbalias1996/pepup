@@ -5,33 +5,35 @@ export default StyleSheet.create({
   container: {
     marginTop: 14,
     flexGrow: 0,
-    flexShrink: 1
+    flexShrink: 1,
   },
   item: {
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    justifyContent: "center",
+    alignItems: "center",
     position: "relative"
   },
   itemText: {
     color: colorVioletGrey,
     fontSize: 16,
     fontFamily: semiboldFont,
-    textAlign: "left",
-    lineHeight: 20,
-    letterSpacing: 2
+    alignSelf: 'center',
+    textAlign: 'left',
+    letterSpacing: 0,
+    paddingTop: 4,
   },
   itemFirst: {},
   itemLast: {},
   itemSelected: {
     backgroundColor: "transparent",
-    justifyContent: "flex-start",
-    alignItems: "flex-start"
+    justifyContent: "center",
+    alignItems: "center"
   },
   itemSelectedText: {
+    paddingTop: 6,
     color: colorBlack,
     fontSize: 20,
     fontFamily: boldFont,
-    letterSpacing: 2,
-    lineHeight: 22
+    letterSpacing: 0,
+    alignSelf: 'center'
   }
 });

@@ -26,18 +26,18 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
 
     this.btnGroupRef = React.createRef();
 
-    // this.state = {
-    //   selectedItem:
-    //     props.items.find(
-    //       (item: ButtonGroupItem) => item.value === props.value
-    //     ) || props.items[0]
-    // };
+    this.state = {
+      selectedItem:
+        props.items.find(
+          (item: ButtonGroupItem) => item.value === props.value
+        ) || props.items[0]
+    };
   }
 
   handlePress = (item: ButtonGroupItem, index: number) => {
-    // this.setState({
-    //   selectedItem: item
-    // });
+    this.setState({
+      selectedItem: item
+    });
 
     this.btnGroupRef.current.scrollToIndex({
       animated: true,
@@ -49,6 +49,7 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
   };
 
   renderItem = ({ item, index }: any) => {
+    const { selectedItem } = this.state;
     const {
       items,
       stylesFirstItem = {},
@@ -96,6 +97,9 @@ export class ButtonGroup extends React.PureComponent<ButtonGroupProps> {
 
     return (
       <FlatList
+        contentContainerStyle={{
+          alignItems: 'center'
+        }}
         showsHorizontalScrollIndicator={false}
         horizontal
         data={items}

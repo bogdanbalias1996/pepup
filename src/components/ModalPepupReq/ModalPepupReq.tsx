@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import FastImage from 'react-native-fast-image';
 
 import {
   closePepupReqModal,
@@ -14,7 +15,7 @@ import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { TextInputBorderStyled } from '../../components/TextInputStyled/TextInputBorderStyled';
 import { RequestPepupProps, RequestPepupScreenFromData } from './';
 import styles from './ModalPepupReq.styles';
-import { colorBlack } from '../../variables';
+import { colorBlack, boldFont } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { CheckboxStyled } from '../CheckboxStyled/CheckboxStyled';
 import { openAlert } from '../../pages/Alert/actions';
@@ -22,6 +23,8 @@ import { AlertProps } from '../SuccessfulAlert';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
@@ -76,23 +79,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
               validationSchema={RequestSchema}
               onSubmit={this.handleSubmit}>
               {(props: any) => {
-                const {
-                  handleSubmit,
-                  errors,
-                  touched,
-                  setFieldValue,
-                  values
-                } = props;
-
-                const formattedErrorString = Object.keys(errors)
-                  .reduce((acc: Array<string>, key: string) => {
-                    const value = (errors as any)[key];
-                    if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                      acc.push(value);
-                    }
-                    return acc;
-                  }, [])
-                  .join('. ');
+                const { handleSubmit, setFieldValue, values } = props;
 
                 return (
                   <View style={styles.wrap}>
@@ -105,14 +92,25 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                             this.setState({ heightDescription: height });
                         }}>
                         <View style={styles.reqTitle}>
-                          <View style={styles.avatarWrapper}>
-                            <Image
+                          <Card style={styles.avatarWrapper}>
+                            <CardGradient style={{ borderRadius: 15 }} />
+                            <FastImage
                               style={styles.avatar}
-                              source={{ uri: celebData.userInfo.icon }}
-                              resizeMode="cover"
+                              source={{
+                                uri: celebData.userInfo.icon,
+                                priority: FastImage.priority.normal
+                              }}
+                              resizeMode={FastImage.resizeMode.cover}
                             />
-                          </View>
-                          <Text style={[styles.title, { textAlign: 'center' }]}>
+                          </Card>
+                          <Text
+                            style={[
+                              styles.title,
+                              {
+                                textAlign: 'center',
+                                fontFamily: boldFont
+                              }
+                            ]}>
                             {celebData.userInfo.name}
                           </Text>
                         </View>
@@ -136,14 +134,13 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="text"
-                                label="Type your request celebrity"
+                                label={`Type your request for ${celebData.userInfo.name} here. For eg. You can ask for birthday wishes, motivation, or to wish you the best of luck.`}
                                 inputStyle={{ height: 180 }}
                                 blurOnSubmit={true}
                                 returnKeyType="done"
                                 multiline={true}
                                 numberOfLines={5}
                                 formProps={props}
-                                blurOnSubmit={true}
                               />
                               <View style={styles.checkboxWrap}>
                                 <CheckboxStyled
@@ -159,7 +156,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                   style={[
                                     styles.subTitle,
                                     styles.checkText
-                                  ]}>{`Feature video on ${fullName[0]}'s Pepup Page`}</Text>
+                                  ]}>{`Feature video on ${celebData.userInfo.name}'s Pepup Page`}</Text>
                               </View>
                               <Text style={styles.disclaimerText}>
                                 NOTE: We will only charge you when we fulfill
@@ -180,7 +177,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       <ButtonStyled
                         style={styles.btnSubmit}
                         onPress={() => handleSubmit()}
-                        text={`Request for ${celebData.fee} INR`}
+                        text={`Request for ${celebData.fee} INR  `}
                         loader={isFetching}
                         iconSource={require('../../../assets/coins.png')}
                       />

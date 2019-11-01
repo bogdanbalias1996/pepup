@@ -90,7 +90,7 @@ export const TabsNavigator = createBottomTabNavigator(
       inactiveTintColor: colorTextGray,
       labelStyle: {
         marginTop: 3,
-        fontSize: 13,
+        fontSize: 11,
         letterSpacing: 1,
         fontFamily: semiboldFont,
       },

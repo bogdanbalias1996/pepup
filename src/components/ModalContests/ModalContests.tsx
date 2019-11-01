@@ -2,6 +2,7 @@ import * as React from 'react';
 import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
+import FastImage from 'react-native-fast-image';
 
 import {
   closeContestModal,
@@ -16,7 +17,6 @@ import { IGlobalState } from '../../coreTypes';
 import { ModalContestQuiz } from './ModalContestQuiz';
 import { ModalContestDesign } from './ModalContestDesign';
 import { ErrorModal } from '../ErrorState/ErrorState';
-import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
@@ -61,14 +61,14 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                       Object.keys(contestData).length !== 0 &&
                         this.setState({ heightDescription: height });
                     }}>
-                    <ImageSafe
-                      isLoaded={!!contestData.contestImage}
+                    <FastImage
                       style={styles.image}
-                      iconSource={{
+                      source={{
                         uri:
-                          contestData.mediaBasePath + contestData.contestImage
+                          contestData.mediaBasePath + contestData.contestImage,
+                        priority: FastImage.priority.normal
                       }}
-                      resizeModeImg="contain"
+                      resizeMode={FastImage.resizeMode.contain}
                     />
                     <Text style={styles.title}>{contestData.title}</Text>
                     <Text style={styles.descriptionTitle}>
@@ -89,15 +89,15 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                         </Text>
                       </View>
                       <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>End Date</Text>
+                        <Text style={styles.infoLabel}>Entries</Text>
                         <Text style={styles.infoValue}>
-                          {contestData.endDt}
+                          {contestData.entries}
                         </Text>
                       </View>
                       <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Participants</Text>
+                        <Text style={styles.infoLabel}>End Date</Text>
                         <Text style={styles.infoValue}>
-                          {contestData.entries}
+                          {contestData.endDt}
                         </Text>
                       </View>
                     </View>

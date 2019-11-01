@@ -10,6 +10,9 @@ import {
   RECEIVE_PEPUP,
   REQUEST_PEPUP,
   FAILURE_REQ_PEPUP,
+  RECEIVE_PEPUP_NOTIFICATION,
+  REQUEST_PEPUP_NOTIFICATION,
+  FAILURE_PEPUP_NOTIFICATION,
   REQUEST_CELEBS_BY_CATEGORY,
   FAILURE_CELEBS_BY_CATEGORY,
   SET_CATEGORY,
@@ -34,6 +37,7 @@ import {
   FAILURE_FEATURED_CELEBS
 } from './actions';
 import { Category, Celeb, Review } from '.';
+import { UserRequest } from '../Profile';
 
 export class PepupState {
   isModalShown: boolean;
@@ -50,6 +54,9 @@ export class PepupState {
   reviews: Array<Review>;
   isModalPostReviewShown: boolean;
   isModalNotifyShown: boolean;
+  pepupData: UserRequest | null;
+  pepupId: string;
+  videoUrl: string;
 
   constructor() {
     this.isModalShown = false;
@@ -66,6 +73,9 @@ export class PepupState {
     this.reviews = [];
     this.isModalPostReviewShown = false;
     this.isModalNotifyShown = false;
+    this.pepupData = null;
+    this.pepupId = '';
+    this.videoUrl = '';
   }
 }
 
@@ -147,10 +157,27 @@ export const PepupReducer = (
         ...state,
         isFetchingCeleb: false
       };
-    case RECEIVE_PEPUP:
+    case RECEIVE_PEPUP_NOTIFICATION:
+      return {
+        ...state,
+        pepupData: action.data,
+        isFetching: false
+      };
+    case REQUEST_PEPUP_NOTIFICATION:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FAILURE_PEPUP_NOTIFICATION:
       return {
         ...state,
         isFetching: false
+      };
+    case RECEIVE_PEPUP:
+      return {
+        ...state,
+        isFetching: false,
+        pepupId: action.data.id
       };
     case REQUEST_PEPUP:
       return {
@@ -170,12 +197,14 @@ export const PepupReducer = (
     case OPEN_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: true
+        isVideoModalShown: true,
+        videoUrl: action.data
       };
     case CLOSE_VIDEO_MODAL:
       return {
         ...state,
-        isVideoModalShown: false
+        isVideoModalShown: false,
+        videoUrl: ''
       };
     case OPEN_REVIEWS_MODAL:
       return {

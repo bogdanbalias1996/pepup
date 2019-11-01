@@ -88,7 +88,11 @@ export type FanRequestsProps = {
   getStatusCeleb?: () => void;
   isFetching: boolean,
   userId: string,
+  pepupId: string,
   getCelebPepups: (id: string) => Promise<any>;
+  openNotifyModal: () => void;
+  getPepupNotification: (id: string) => Promise<any>;
+  videoRecordModalOpen: () => void;
 };
 
 export type HistoryItemsProps = {

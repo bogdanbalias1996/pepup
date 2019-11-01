@@ -12,7 +12,8 @@ import { ModalVideoProps } from '.';
 import styles from './ModalVideo.styles';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  isVideoModalShown: state.PepupState.isVideoModalShown
+  isVideoModalShown: state.PepupState.isVideoModalShown,
+  videoUrl: state.PepupState.videoUrl
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -33,7 +34,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
   };
 
   render() {
-    const { closeVideoModal, isVideoModalShown } = this.props;
+    const { closeVideoModal, isVideoModalShown, videoUrl } = this.props;
     const { isPlaying, isLoaded, isEnd } = this.state;
 
     return (
@@ -54,9 +55,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
         >
           <Video
             ref={this.videoRef}
-            source={{
-              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-            }}
+            source={{ uri: videoUrl }}
             onPlaybackStatusUpdate={(val: any) => {
               val.isLoaded !== isLoaded &&
                 this.setState({ isLoaded: val.isLoaded });

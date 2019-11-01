@@ -11,7 +11,8 @@ import {
   semiboldFont,
   boldFont,
   defaultFont,
-  colorTextGreyIntro
+  colorTextGreyIntro,
+  colorPastelPurple
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -23,31 +24,19 @@ export default StyleSheet.create({
     paddingHorizontal: 24
   },
   avatar: {
+    flex: 1,
     width: '100%',
     height: '100%',
     borderRadius: 20,
     position: 'relative'
   },
   avatarWrapper: {
-    padding: 4,
     marginHorizontal: 24,
-    backgroundColor: 'white',
-    borderRadius: 24,
-    shadowColor: 'black',
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
     height: 390,
     marginVertical: 20
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     fontFamily: boldFont,
     color: colorBlack
   },
@@ -55,7 +44,8 @@ export default StyleSheet.create({
     fontSize: 14,
     color: colorTextGreyIntro,
     fontFamily: semiboldFont,
-    marginTop: 3
+    marginTop: 3,
+    fontWeight: 'bold'
   },
   nopepups: {
     textAlign: 'center',
@@ -177,10 +167,11 @@ export default StyleSheet.create({
     justifyContent: 'center',
     zIndex: 30
   },
-  rate: { flexDirection: 'row' },
+  rate: { flexDirection: 'row', alignItems: 'center' },
   rateText: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 5
   },
   actualR: {
     fontSize: 12,
