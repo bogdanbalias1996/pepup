@@ -3,7 +3,8 @@ import {
   semiboldFont,
   colorBlack,
   defaultFont,
-  colorTextAlert
+  colorTextAlert,
+  colorTextGreyIntro
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -44,7 +45,8 @@ export default StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: defaultFont,
-    color: colorTextAlert,
+    // color: colorTextAlert,
+    color: colorTextGreyIntro,
     textAlign: 'center'
   }
 });

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import {
   colorEndButtonInput,
   colorLightGray,
-  semiboldFont
+  boldFont
 } from '../../variables';
 import { deviceInfoCheck } from '../../helpers';
 
@@ -34,7 +34,7 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: 'white',
     alignItems: 'center',
     textAlign: 'center',

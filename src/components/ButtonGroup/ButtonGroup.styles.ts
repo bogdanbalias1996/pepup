@@ -17,8 +17,8 @@ export default StyleSheet.create({
     fontSize: 16,
     fontFamily: semiboldFont,
     alignSelf: 'center',
-    textAlign: "left",
-    letterSpacing: 2,
+    textAlign: 'left',
+    letterSpacing: 0,
     paddingTop: 4,
   },
   itemFirst: {},
@@ -33,7 +33,7 @@ export default StyleSheet.create({
     color: colorBlack,
     fontSize: 20,
     fontFamily: boldFont,
-    letterSpacing: 2,
+    letterSpacing: 0,
     alignSelf: 'center'
   }
 });

@@ -32,7 +32,7 @@ export default StyleSheet.create({
     padding: 4,
     marginHorizontal: 24,
     backgroundColor: 'white',
-    borderRadius: 24,
+    borderRadius: 20,
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -47,7 +47,7 @@ export default StyleSheet.create({
     marginVertical: 20
   },
   title: {
-    fontSize: 26,
+    fontSize: 22,
     fontFamily: boldFont,
     color: colorBlack
   },
@@ -55,7 +55,8 @@ export default StyleSheet.create({
     fontSize: 14,
     color: colorTextGreyIntro,
     fontFamily: semiboldFont,
-    marginTop: 3
+    marginTop: 3,
+    fontWeight: 'bold'
   },
   nopepups: {
     textAlign: 'center',

@@ -89,15 +89,15 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                         </Text>
                       </View>
                       <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>End Date</Text>
+                        <Text style={styles.infoLabel}>Entries</Text>
                         <Text style={styles.infoValue}>
-                          {contestData.endDt}
+                          {contestData.entries}
                         </Text>
                       </View>
                       <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Participants</Text>
+                        <Text style={styles.infoLabel}>End Date</Text>
                         <Text style={styles.infoValue}>
-                          {contestData.entries}
+                          {contestData.endDt}
                         </Text>
                       </View>
                     </View>
