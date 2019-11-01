@@ -5,16 +5,15 @@ import {
   View,
   FlatList,
   StyleSheet,
-  Image,
   TouchableOpacity
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { Dispatch } from 'redux';
 import { openContestModal, getContest, getContestsByCategory } from './actions';
 import { ContestItemsProps, Contest } from './';
 import {
   colorBlack,
   defaultFont,
-  semiboldFont,
   boldFont,
   colorBlueberry,
   colorTextGreyIntro
@@ -59,10 +58,13 @@ export class Component extends React.PureComponent<ContestItemsProps> {
           <Text style={styles.text}>{`Ends: ${item.endDt}`}</Text>
         </View>
         <View style={styles.wrapTitle}>
-          <Image
+          <FastImage
             style={styles.imageLogo}
-            source={{ uri: item.mediaBasePath + item.organizerLogo }}
-            resizeMode="contain"
+            source={{
+              uri: item.mediaBasePath + item.organizerLogo,
+              priority: FastImage.priority.normal
+            }}
+            resizeMode={FastImage.resizeMode.contain}
           />
           <Text style={styles.title}>{item.title}</Text>
         </View>
@@ -74,7 +76,10 @@ export class Component extends React.PureComponent<ContestItemsProps> {
     const { isFetching, contests, categoryId } = this.props;
 
     return (
-      <Loader isDataLoaded={(contests && contests[categoryId]) || !isFetching} color={colorBlueberry} size="large">
+      <Loader
+        isDataLoaded={(contests && contests[categoryId]) || !isFetching}
+        color={colorBlueberry}
+        size="large">
         <FlatList
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}

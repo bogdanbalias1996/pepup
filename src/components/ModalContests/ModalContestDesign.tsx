@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -7,6 +7,7 @@ import { withFormik } from 'formik';
 import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { Video } from 'expo-av';
+import FastImage from 'react-native-fast-image';
 
 import {
   closeContestQuizModal,
@@ -105,7 +106,14 @@ export class Component extends React.Component<ModalContestQuizProps> {
 
   getMediaElement = (type: boolean, item: any) => {
     return type ? (
-      <Image style={styles.itemGallery} source={{ uri: item }} />
+      <FastImage
+        style={styles.itemGallery}
+        source={{
+          uri: item,
+          priority: FastImage.priority.normal
+        }}
+        resizeMode={FastImage.resizeMode.cover}
+      />
     ) : (
       <Video
         source={{
@@ -168,12 +176,14 @@ export class Component extends React.Component<ModalContestQuizProps> {
                     this.setState({ heightDescription: height });
                 }}>
                 <View style={styles.conTitle}>
-                  <Image
+                  <FastImage
                     style={styles.avatar}
                     source={{
-                      uri: contestData.mediaBasePath + contestData.organizerLogo
+                      uri:
+                        contestData.mediaBasePath + contestData.organizerLogo,
+                      priority: FastImage.priority.normal
                     }}
-                    resizeMode="contain"
+                    resizeMode={FastImage.resizeMode.contain}
                   />
                   <Text style={styles.title}>{contestData.title}</Text>
                 </View>

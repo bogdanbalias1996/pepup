@@ -1,9 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-  colorEndButtonInput,
-  colorLightGray,
-  boldFont
-} from '../../variables';
+import { colorEndButtonInput, colorLightGray, boldFont } from '../../variables';
 import { deviceInfoCheck } from '../../helpers';
 
 export default StyleSheet.create({
@@ -11,8 +7,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignSelf: 'center',
     justifyContent: 'space-between',
-    width: 155,
-    height: 64,
     marginVertical: 24
   },
   avatar: {
@@ -21,24 +15,29 @@ export default StyleSheet.create({
     borderRadius: 8,
     marginHorizontal: 5
   },
+  image: {
+    width: '100%',
+    height: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 6
+  },
   avatarCeleb: {
     backgroundColor: 'white'
   },
   titleWrap: {
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
-  },
-  icon: {
+    alignItems: 'flex-start',
     marginBottom: 10
   },
   title: {
     fontSize: 20,
     fontFamily: boldFont,
     color: 'white',
-    alignItems: 'center',
     textAlign: 'center',
-    marginHorizontal: 10,
+    lineHeight: 28,
+    marginHorizontal: 10
   },
   wrapContent: {
     backgroundColor: colorLightGray,
