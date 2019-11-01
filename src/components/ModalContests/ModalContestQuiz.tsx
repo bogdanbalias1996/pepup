@@ -103,7 +103,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                                 onPress={(item: any) => {
                                   setFieldValue(val.question, item);
                                 }}
-                                question={val.question}
+                                question={`${index+1}. ${val.question}`}
                                 value={values[val.question]}
                                 key={index}
                               />
