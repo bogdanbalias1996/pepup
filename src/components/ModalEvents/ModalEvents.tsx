@@ -27,6 +27,10 @@ import { ErrorModal } from '../ErrorState/ErrorState';
 import { Event } from '../../pages/Events';
 import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { PepupModal } from '../PepupModal/PepupModal';
+import { Card } from '../../components/Card/Card';
+import { CardGradient } from '../../components/CardGradient/CardGradient';
+import FastImage from 'react-native-fast-image';
+
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
@@ -61,14 +65,17 @@ export class Component extends React.PureComponent<ModalEventsProps> {
 
     return (
       eventData && (
-        <View style={styles.imageCarouselWrap}>
-          <ImageSafe
+        <Card style={styles.imageCarouselWrap} radius={8}>
+          <CardGradient style={{ borderRadius: 8 }} />
+          <FastImage
             style={styles.imageCarousel}
-            iconSource={{ uri: eventData.mediaBasePath + item.link }}
-            resizeModeImg="cover"
-            isLoaded={!!item.link}
+            source={{
+              uri: `${eventData.mediaBasePath}${item.link}`,
+              priority: FastImage.priority.normal
+            }}
+            resizeMode={FastImage.resizeMode.cover}
           />
-        </View>
+        </Card>
       )
     );
   };
@@ -116,7 +123,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                       {eventData.dataInfo.details}
                     </Text>
                     <View style={styles.infoBlock}>
-                    <View style={styles.infoItem}>
+                      <View style={styles.infoItem}>
                         <Text style={styles.infoLabel}>Price</Text>
                         <Text style={styles.infoValue}>
                           {`${eventData.pricePerSeat} ${eventData.currency}`}

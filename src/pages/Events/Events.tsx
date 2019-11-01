@@ -1,53 +1,17 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {View} from 'react-native';
-import {Dispatch} from 'redux';
+import { View } from 'react-native';
 
-import {ModalEvents} from '../../components/ModalEvents/ModalEvents';
-import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
-import {EventsScreenProps} from '.';
-import {EventItems} from './EventItems';
-import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
-import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { EventsScreenProps } from '.';
+import { EventItems } from './EventItems';
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
-import {IGlobalState} from '../../coreTypes';
 
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation?: any;
-    title?: any;
-    getLeftComponent?: () => any;
-    getRightComponent?: () => any;
-  },
-) => <HeaderRounded {...props} title={'Events'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null,
-)(Header);
-
-const mapStateToProps = (state: IGlobalState) => ({});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
-
-export class Component extends React.PureComponent<EventsScreenProps> {
-  static navigationOptions = ({navigation}: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes &
-        Pick<
-          JSX.IntrinsicAttributes & {
-            navigation?: any;
-            title?: any;
-            getLeftComponent?: (() => any);
-            getRightComponent?: () => any;
-          },
-          | 'title'
-          | 'key'
-          | 'navigation'
-          | 'getLeftComponent'
-          | 'getRightComponent'
-        >,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+export class EventsScreen extends React.PureComponent<EventsScreenProps> {
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (props: any) => <HeaderRounded {...props} title={'Events'.toUpperCase()} />
   });
 
   state = {
@@ -55,7 +19,7 @@ export class Component extends React.PureComponent<EventsScreenProps> {
   };
 
   toggleModal = () => {
-    this.setState({isModalVisible: !this.state.isModalVisible});
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
   render() {
@@ -87,11 +51,12 @@ export class Component extends React.PureComponent<EventsScreenProps> {
         <View style={styles.wrapContent}>
           <Tabs
             config={tabsConfig}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
-              marginBottom: 5,
+              marginBottom: 10,
+              paddingLeft: 5
             }}
           />
         </View>
@@ -100,8 +65,3 @@ export class Component extends React.PureComponent<EventsScreenProps> {
     );
   }
 }
-
-export const EventsScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Component);

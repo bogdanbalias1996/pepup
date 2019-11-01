@@ -26,7 +26,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
       config: Array<Tab>
     ): Array<ButtonGroupItem> => {
       return config.map((item: Tab, index: number) => {
-        
+
         return {
           value: index,
           title: item.title || "",

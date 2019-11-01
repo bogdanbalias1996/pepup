@@ -44,10 +44,12 @@ export default StyleSheet.create({
     marginVertical: 16,
   },
   carousel: {
-    marginTop: 0,
-    marginLeft: 24,
+    marginTop: 0
   },
-  imageCarouselWrap: {width: Dimensions.get("window").width - 48, marginRight: 10},
+  imageCarouselWrap: {
+    width: Dimensions.get("window").width - 48,
+    marginRight: 10
+  },
   imageCarousel: {
     width: Dimensions.get("window").width - 48,
     flex: 1,
@@ -121,7 +123,7 @@ export default StyleSheet.create({
   },
   imgSet: {
     flexDirection: "row",
-    flex: 1,
+    flex: 1
   },
   insidePadding: { position: 'relative' },
   modalCancelStyle: {
