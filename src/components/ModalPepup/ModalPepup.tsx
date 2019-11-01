@@ -122,7 +122,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 <View style={{ paddingHorizontal: 24 }}>
                   <View style={styles.header}>
                     <Text style={styles.title}>{celebData.userInfo.name}</Text>
-                    <View style={styles.rate}>
+                    {/* <View style={styles.rate}>
                       <Image
                         style={styles.rateImg}
                         source={require('../../../assets/fullStar.png')}
@@ -131,7 +131,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                         <Text style={styles.actualR}>{`${rating}/`}</Text>
                         <Text style={styles.generalR}>{totalRating}</Text>
                       </View>
-                    </View>
+                    </View> */}
                   </View>
                   <Text style={[styles.text, styles.subTitle]}>
                     {celebData.dataInfo.intro}
@@ -198,14 +198,14 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                           <Text style={[styles.text, styles.commentTitle]}>
                             {celebData.dataInfo.review.submitterUserInfo.name}
                           </Text>
-                          <StarRating
+                          {/* <StarRating
                             disabled={true}
                             starSize={20}
                             maxStars={+totalRating}
                             emptyStar={require('../../../assets/emptyStar.png')}
                             fullStar={require('../../../assets/fullStar.png')}
                             rating={celebData.dataInfo.review.rating}
-                          />
+                          /> */}
                         </View>
                         <Text style={[styles.text, styles.commentText]}>
                           {celebData.dataInfo.review.review}

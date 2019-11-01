@@ -26,12 +26,12 @@ import {
 import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
-import { navigate } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
-import { colorBlack, colorTextGray } from '../../variables';
+import { colorTextGray } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
 import { getCeleb } from '../Pepups/actions';
 import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
+import { goBack } from '../../navigationService';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -56,7 +56,18 @@ const EditSchema = Yup.object().shape({
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (props: any) => (
-      <HeaderRounded {...props} title={'Profile'.toUpperCase()} />
+      <HeaderRounded
+        {...props}
+        navigation={navigation}
+        title={'Profile'.toUpperCase()}
+        getLeftComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Icon name="left" />
+            </TouchableOpacity>
+          );
+        }}
+      />
     )
   });
 
@@ -261,11 +272,6 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       </ScrollView>
                     </View>
                     <View style={styles.footer}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => navigate({ routeName: 'Profile' })}>
-                        <Icon size={20} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
                       <ButtonStyled
                         textBold={true}
                         style={styles.btnSubmit}

@@ -25,24 +25,9 @@ import {
 import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
-import { navigate } from '../../navigationService';
+import { goBack } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
-import { colorBlack } from '../../variables';
 import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
-
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation?: any;
-    title?: any;
-    getLeftComponent?: () => any;
-    getRightComponent?: () => any;
-  }
-) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null
-)(Header);
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -63,9 +48,20 @@ const EditSchema = Yup.object().shape({
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>
-    ) => <ConnectedHeader {...props} navigation={navigation} />
+    header: (props: any) => (
+      <HeaderRounded
+        {...props}
+        navigation={navigation}
+        title={'Profile'.toUpperCase()}
+        getLeftComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Icon name="left" />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )
   });
 
   state = {
@@ -217,11 +213,6 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       </ScrollView>
                     </View>
                     <View style={styles.footer}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => navigate({ routeName: 'Profile' })}>
-                        <Icon size={20} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
                       <ButtonStyled
                         textBold={true}
                         style={styles.btnSubmit}
