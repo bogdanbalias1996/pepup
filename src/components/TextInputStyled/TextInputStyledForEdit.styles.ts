@@ -17,7 +17,7 @@ export default StyleSheet.create({
   },
   inputWrap: {
     flexDirection: 'row',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   error: {
     borderBottomWidth: 1,

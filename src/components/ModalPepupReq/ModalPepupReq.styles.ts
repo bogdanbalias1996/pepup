@@ -8,6 +8,7 @@ import {
   semiboldFont,
   defaultFont
 } from '../../variables';
+import { wrap } from 'module';
 
 export default StyleSheet.create({
   wrapModalContent: {
@@ -131,8 +132,11 @@ export default StyleSheet.create({
     marginBottom: 30
   },
   checkText: {
+    flex: 1,
     marginLeft: 10,
-    marginTop: 8
+    marginTop: 8,
+    flexWrap: 'wrap',
+    alignItems: 'flex-start'
   },
   scrollContent: { paddingBottom: 90 }
 });
