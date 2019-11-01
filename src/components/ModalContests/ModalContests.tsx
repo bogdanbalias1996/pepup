@@ -51,7 +51,6 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         heightContent={this.state.heightDescription}>
         {contestData && Object.keys(contestData).length !== 0 ? (
           <View style={{ flex: 1, paddingHorizontal: 24 }}>
-            <View style={styles.swiperLine} />
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>

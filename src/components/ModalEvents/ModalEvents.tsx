@@ -5,16 +5,15 @@ import {
   View,
   FlatList,
   ScrollView,
-  Image,
+  Image
 } from 'react-native';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 import ModalSelector from 'react-native-modal-selector';
 
 import {
   closeEventModal,
   setQuantity,
-  purchaseEventTicket,
+  purchaseEventTicket
 } from '../../pages/Events/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
@@ -27,34 +26,33 @@ import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Event } from '../../pages/Events';
 import { ImageSafe } from '../ImageSafe/ImageSafe';
+import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
   eventData: state.EventState.eventData,
   isFetching: state.EventState.isFetching,
-  quantity: state.EventState.selectedQuantity,
+  quantity: state.EventState.selectedQuantity
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeEventModal: () => dispatch(closeEventModal()),
   setQuantity: (val: string) => dispatch(setQuantity(val) as any),
   purchaseEventTicket: (id: string, qnt: ModalEventsFromDataProps) =>
-    dispatch(purchaseEventTicket(id, qnt) as any),
+    dispatch(purchaseEventTicket(id, qnt) as any)
 });
-
-const THRESHOLD = 350;
 
 const quantityOptions = [
   { key: 1, label: '1' },
   { key: 2, label: '2' },
   { key: 3, label: '3' },
   { key: 4, label: '4' },
-  { key: 5, label: '5' },
+  { key: 5, label: '5' }
 ];
 
 export class Component extends React.PureComponent<ModalEventsProps> {
   state = {
-    heightDescription: 0,
+    heightDescription: 0
   };
 
   renderItem = ({ item }: any) => {
@@ -82,43 +80,31 @@ export class Component extends React.PureComponent<ModalEventsProps> {
       quantity,
       setQuantity,
       isFetching,
-      purchaseEventTicket,
+      purchaseEventTicket
     } = this.props;
 
     return (
-      eventData && (
-        <Modal
-          position="bottom"
-          isOpen={isModalShown}
-          swipeToClose={true}
-          coverScreen={true}
-          useNativeDriver={false}
-          swipeArea={100}
-          onClosed={() => closeEventModal()}
-          style={[
-            styles.modal,
-            {
-              maxHeight: this.state.heightDescription + THRESHOLD,
-              height: '100%',
-              marginTop: 50,
-            },
-          ]}>
+      <PepupModal
+        visible={isModalShown}
+        isLoading={isFetching}
+        onRequestClose={() => closeEventModal()}
+        heightContent={this.state.heightDescription}>
+        {!!eventData && (
           <View style={styles.wrapModalContent}>
-            <View style={styles.swiperLine} />
-
             <ScrollView style={styles.scrollView}>
-              <View style={styles.scrollContent}>
-                <View
-                  style={styles.insidePadding}
-                  onLayout={event => {
-                    const { height } = event.nativeEvent.layout;
+              <View
+                style={styles.scrollContent}
+                onLayout={event => {
+                  const { height } = event.nativeEvent.layout;
+                  Object.keys(eventData).length !== 0 &&
                     this.setState({ heightDescription: height });
-                  }}>
+                }}>
+                <View style={styles.insidePadding}>
                   <View style={styles.wrapTitle}>
                     <Image
                       style={styles.imageLogo}
                       source={{
-                        uri: eventData.mediaBasePath + eventData.organizerLogo,
+                        uri: eventData.mediaBasePath + eventData.organizerLogo
                       }}
                       resizeMode="contain"
                     />
@@ -166,7 +152,6 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                     renderItem={this.renderItem}
                     keyExtractor={(item: Event) => item.id}
                     style={styles.carousel}
-                    contentContainerStyle={{ marginBottom: 10 }}
                   />
                 </View>
               </View>
@@ -199,7 +184,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                     width: 100,
                     padding: 5,
                     height: 44,
-                    justifyContent: 'center',
+                    justifyContent: 'center'
                   }}
                   cancelText="Cancel"
                 />
@@ -212,15 +197,15 @@ export class Component extends React.PureComponent<ModalEventsProps> {
               />
             </View>
           </View>
-          <SuccessfulAlert />
-          <ErrorModal />
-        </Modal>
-      )
+        )}
+        <SuccessfulAlert />
+        <ErrorModal />
+      </PepupModal>
     );
   }
 }
 
 export const ModalEvents = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);

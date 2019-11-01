@@ -15,17 +15,9 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   wrapModalContent: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    flex: 1
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: "center"
+    flex: 1,
+    paddingHorizontal: 24,
+    position: 'relative'
   },
   modal: {
     zIndex: 100,
@@ -99,14 +91,14 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: "row",
-    marginBottom: 60,
-    paddingBottom: 20,
+    marginBottom: 30,
     marginHorizontal: 24,
     backgroundColor: 'transparent',
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    marginTop: 15,
   },
   btnCancel: {
     width: 48,
@@ -131,7 +123,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     flex: 1,
   },
-  insidePadding: { paddingHorizontal: 24, position: 'relative' },
+  insidePadding: { position: 'relative' },
   modalCancelStyle: {
     backgroundColor: "white",
     borderRadius: 12,

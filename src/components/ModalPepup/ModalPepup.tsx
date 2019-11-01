@@ -3,7 +3,6 @@ import {
   TouchableOpacity,
   Text,
   View,
-  FlatList,
   ScrollView,
   Image,
   ListRenderItem
