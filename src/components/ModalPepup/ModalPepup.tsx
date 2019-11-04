@@ -32,7 +32,6 @@ import { ErrorModal } from '../ErrorState/ErrorState';
 import { Pepup } from '../../pages/Profile';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
-import { getProfile } from '../../pages/Profile/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
