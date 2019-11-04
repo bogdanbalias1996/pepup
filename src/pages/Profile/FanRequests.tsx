@@ -49,17 +49,16 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const { getCelebPepups, userId } = this.props;
 
     getCelebPepups(userId);
-    console.log('Fan requests: ',this.props.pepupId);
   }
 
-  getModal = () => {
-    const { openNotifyModal, getPepupNotification, pepupId } = this.props;
+  getModal = (pepupId: string) => {
+    const { openNotifyModal, getPepupNotification } = this.props;
 
     openNotifyModal();
     getPepupNotification(pepupId);
   };
 
-  getStatusCeleb = (status: string, date: string) => {
+  getStatusCeleb = ({status, requestedOnDt: date, id}: any) => {      
     const normalizedStatus = status.toLowerCase();
     const today = new Date();
     const requestedOn = new Date(date);
@@ -77,7 +76,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
             roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
           } remaining.`,
           statusColor: colorGreen,
-          onPress: () => this.getModal(),
+          onPress: () => this.getModal(id),
           linkText: 'View Details.'
         };
       case 'accepted':
@@ -116,10 +115,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   };
 
   renderItemRequest = ({ item }: any) => {
-    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(
-      item.status,
-      item.requestedOnDt
-    );
+    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
