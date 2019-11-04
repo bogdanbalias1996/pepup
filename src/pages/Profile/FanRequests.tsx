@@ -34,7 +34,6 @@ const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
   userId: state.LoginState.userId,
   isFetching: state.ProfileState.isFetching,
-  pepupId: state.PepupState.pepupId
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),

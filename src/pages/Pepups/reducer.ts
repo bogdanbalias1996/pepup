@@ -55,7 +55,6 @@ export class PepupState {
   isModalPostReviewShown: boolean;
   isModalNotifyShown: boolean;
   pepupData: UserRequest | null;
-  pepupId: string;
   videoUrl: string;
 
   constructor() {
@@ -74,7 +73,6 @@ export class PepupState {
     this.isModalPostReviewShown = false;
     this.isModalNotifyShown = false;
     this.pepupData = null;
-    this.pepupId = '';
     this.videoUrl = '';
   }
 }
@@ -176,8 +174,7 @@ export const PepupReducer = (
     case RECEIVE_PEPUP:
       return {
         ...state,
-        isFetching: false,
-        pepupId: action.data.id,
+        isFetching: false
       };
     case REQUEST_PEPUP:
       return {
