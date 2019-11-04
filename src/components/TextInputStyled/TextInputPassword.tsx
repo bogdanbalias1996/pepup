@@ -20,7 +20,7 @@ export class TextInputPassword extends React.PureComponent<
       <TextInputStyled
         handleIconClick={() => this.toggle()}
         {...this.props}
-        iconNameClick={this.state.isTextVisible ? "show" : "hide"}
+        iconName={this.state.isTextVisible ? "show" : "hide"}
         secure={!this.state.isTextVisible}
         autoCorrect={true}
       />
