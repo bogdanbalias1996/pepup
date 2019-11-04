@@ -39,8 +39,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
   openNotifyModal: () => dispatch(openNotifyModal()),
-  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
-  videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
+  getPepupNotification: (id: string) =>
+    dispatch(getPepupNotification(id) as any),
+  videoRecordModalOpen: () => dispatch(videoRecordModalOpen())
 });
 
 export class Component extends React.PureComponent<FanRequestsProps> {
@@ -48,13 +49,14 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const { getCelebPepups, userId } = this.props;
 
     getCelebPepups(userId);
+    console.log('Fan requests: ',this.props.pepupId);
   }
 
   getModal = () => {
-    const {openNotifyModal, getPepupNotification, pepupId } = this.props
+    const { openNotifyModal, getPepupNotification, pepupId } = this.props;
 
     openNotifyModal();
-    getPepupNotification('ec0a723a-8b35-4893-bbc1-f431bf6005bb');//temporary solution, just for testing
+    getPepupNotification(pepupId);
   };
 
   getStatusCeleb = (status: string, date: string) => {
@@ -91,7 +93,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         return {
           msg: `You rejected this request.`,
           statusColor: colorTextRed,
-          onPress: () => alert('rej'),
+          onPress: () => {},
           linkText: ''
         };
       case 'completed':
@@ -113,7 +115,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     }
   };
 
-  renderItemCeleb = ({ item }: any) => {
+  renderItemRequest = ({ item }: any) => {
     const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(
       item.status,
       item.requestedOnDt
@@ -139,7 +141,10 @@ export class Component extends React.PureComponent<FanRequestsProps> {
                 {linkText}               
               </Text>
             </Text>
-            <Text style={[styles.text, styles.reqDescription]}>
+            <Text
+              numberOfLines={3}
+              ellipsizeMode="tail"
+              style={[styles.text, styles.reqDescription]}>
               {item.request}
             </Text>
           </View>
@@ -149,14 +154,15 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   };
 
   render() {
-    const { isFetching, celebPepups, pepupId } = this.props;
+    const { isFetching, celebPepups } = this.props;
+
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={celebPepups}
-          renderItem={this.renderItemCeleb}
+          renderItem={this.renderItemRequest}
           keyExtractor={(item: Pepup) => item.id}
         />
       </Loader>

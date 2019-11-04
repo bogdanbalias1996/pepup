@@ -177,7 +177,7 @@ export const PepupReducer = (
       return {
         ...state,
         isFetching: false,
-        pepupId: action.data.id
+        pepupId: action.data.id,
       };
     case REQUEST_PEPUP:
       return {

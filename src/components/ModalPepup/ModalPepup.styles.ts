@@ -3,7 +3,6 @@ import {
   colorBlack,
   colorTextGray,
   colorTextViolet,
-  colorLightGray,
   colorVioletGrey,
   colorSwipeLine,
   colorGreen,
@@ -12,7 +11,6 @@ import {
   boldFont,
   defaultFont,
   colorTextGreyIntro,
-  colorPastelPurple
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -157,8 +155,6 @@ export default StyleSheet.create({
     flex: 1
   },
   btnSubmitClose: {
-    // flex: 1,
-    // alignItems: 'center',
     width: 120
   },
   text: {

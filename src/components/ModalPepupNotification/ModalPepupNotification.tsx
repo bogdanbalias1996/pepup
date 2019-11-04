@@ -2,11 +2,9 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 
 import {
   closeNotifyModal,
-  getPepupNotification
 } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
@@ -24,8 +22,6 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeNotifyModal: () => dispatch(closeNotifyModal()),
-  getPepupNotification: (id: string) =>
-    dispatch(getPepupNotification(id) as any)
 });
 
 export class Component extends React.PureComponent<PepupNotificationProps> {

@@ -53,14 +53,14 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           status,
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => alert('Pend')
+          onPress: () => {}
         };
       case 'accepted':
         return {
           status,
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => alert('Acc')
+          onPress: () => {}
         };
       case 'unavailable':
       case 'rejected':
@@ -68,7 +68,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           status: 'unavailable',
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => alert('Unav')
+          onPress: () => {}
         };
       case 'completed':
         return {
@@ -78,7 +78,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           onPress: () => alert('Compl')
         };
       default:
-        console.log(`Unsupported request status: '${normalizedStatus}'`)
+        console.log(`Unsupported request status: '${normalizedStatus}'`);
         return {
           status,
           msg: ``,
@@ -88,7 +88,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
     }
   };
 
-  renderItemUser = ({ item }: any) => {
+  renderItemRequest = ({ item }: any) => {
     const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
       item.celebInfo.userInfo.name
@@ -122,7 +122,10 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
             ) : (
               <Text style={styles.text}>{msg}</Text>
             )}
-            <Text style={[styles.text, styles.reqDescription]}>
+            <Text
+              numberOfLines={3}
+              ellipsizeMode="tail"
+              style={[styles.text, styles.reqDescription]}>
               {item.request}
             </Text>
           </View>
@@ -140,7 +143,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={userPepups}
-          renderItem={this.renderItemUser}
+          renderItem={this.renderItemRequest}
           keyExtractor={(item: any) => item.id}
         />
       </Loader>
