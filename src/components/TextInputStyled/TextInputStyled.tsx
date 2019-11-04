@@ -51,6 +51,7 @@ export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
         />
         {iconName && (
           <TouchableOpacity
+          activeOpacity={1}
             onPress={() => handleIconClick && handleIconClick()}
           >
             <Icon size={iconSize ? iconSize : 27} name={iconName} color="#d4d0dd" />

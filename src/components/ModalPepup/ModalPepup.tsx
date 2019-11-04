@@ -9,7 +9,6 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import StarRating from 'react-native-star-rating';
 import { Video } from 'expo-av';
 
 import {
@@ -31,7 +30,6 @@ import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Pepup } from '../../pages/Profile';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
 
@@ -40,7 +38,8 @@ const mapStateToProps = (state: IGlobalState) => ({
   celebData: state.PepupState.celebData,
   isFetching: state.PepupState.isFetching,
   isFetchingCeleb: state.PepupState.isFetchingCeleb,
-  reviews: state.PepupState.reviews
+  reviews: state.PepupState.reviews,
+  userId: state.LoginState.userId
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
@@ -59,8 +58,8 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     const { celebData, openReviewsModal, getAllReviews } = this.props;
 
     openReviewsModal();
-    celebData ? getAllReviews(celebData.userInfo.id) : () => {};
-  };
+    celebData && getAllReviews(celebData.userInfo.id);
+  }
 
   renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
     return (
@@ -91,17 +90,14 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openPepupReqModal,
       isModalShown,
       celebData,
-      openVideoModal
+      openVideoModal,
+      userId
     } = this.props;
 
     const videoUrl =
       celebData && celebData.dataInfo['intro-video']
         ? `${celebData.mediaBasePath}${celebData.dataInfo['intro-video']}`
         : 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4';
-
-    const [rating, totalRating] = celebData
-      ? celebData.weightedRating.split('/')
-      : ['0', '0'];
 
     return (
       <PepupModal
@@ -122,16 +118,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 <View style={{ paddingHorizontal: 24 }}>
                   <View style={styles.header}>
                     <Text style={styles.title}>{celebData.userInfo.name}</Text>
-                    {/* <View style={styles.rate}>
-                      <Image
-                        style={styles.rateImg}
-                        source={require('../../../assets/fullStar.png')}
-                      />
-                      <View style={styles.rateText}>
-                        <Text style={styles.actualR}>{`${rating}/`}</Text>
-                        <Text style={styles.generalR}>{totalRating}</Text>
-                      </View>
-                    </View> */}
                   </View>
                   <Text style={[styles.text, styles.subTitle]}>
                     {celebData.dataInfo.intro}
@@ -181,15 +167,15 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       justifyContent: 'center'
                     }}
                   /> */}
-                  {celebData.dataInfo.review ? (
+                  {celebData.dataInfo.review && (
                     <View style={styles.reviews}>
                       <View style={styles.rewiewsHeader}>
                         <Text style={[styles.text, styles.numberRewiewsText]}>
-                          {`${celebData.reviews} reviews`}
+                          {`${celebData.reviews} reactions`}
                         </Text>
                         <TouchableOpacity onPress={() => this.getReviews()}>
                           <Text style={[styles.text, styles.allRewiewsButton]}>
-                            Check all reviews
+                            Check all reactions
                           </Text>
                         </TouchableOpacity>
                       </View>
@@ -198,35 +184,38 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                           <Text style={[styles.text, styles.commentTitle]}>
                             {celebData.dataInfo.review.submitterUserInfo.name}
                           </Text>
-                          {/* <StarRating
-                            disabled={true}
-                            starSize={20}
-                            maxStars={+totalRating}
-                            emptyStar={require('../../../assets/emptyStar.png')}
-                            fullStar={require('../../../assets/fullStar.png')}
-                            rating={celebData.dataInfo.review.rating}
-                          /> */}
                         </View>
                         <Text style={[styles.text, styles.commentText]}>
                           {celebData.dataInfo.review.review}
                         </Text>
                       </View>
                     </View>
-                  ) : null}
+                  )}
                 </View>
               </View>
             </ScrollView>
             <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closePepupModal()}>
-                <Icon size={20} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
-              <ButtonStyled
-                style={styles.btnSubmit}
-                onPress={() => openPepupReqModal()}
-                text="Fill out request form"
-              />
+              {userId === celebData.mappedUserId ? (
+                <ButtonStyled
+                  style={styles.btnSubmitClose}
+                  onPress={() => closePepupModal()}
+                  text="CLOSE"
+                  textBold={true}
+                />
+              ) : (
+                <>
+                  <TouchableOpacity
+                    style={styles.btnCancel}
+                    onPress={() => closePepupModal()}>
+                    <Icon size={20} name="cancel" color={colorBlack} />
+                  </TouchableOpacity>
+                  <ButtonStyled
+                    style={styles.btnSubmit}
+                    onPress={() => openPepupReqModal()}
+                    text="Fill out request form"
+                  />
+                </>
+              )}
             </View>
           </View>
         )}

@@ -28,6 +28,7 @@ export type Celeb = {
   dataInfo: any,
   isChecked?: boolean,
   weightedRating: string,
+  celebId: string
 }
 
 export type CelebsResponseType = {

@@ -131,6 +131,7 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: 'row',
+    justifyContent: 'center',
     marginTop: 15,
     marginBottom: 30,
     marginHorizontal: 24,
@@ -154,6 +155,11 @@ export default StyleSheet.create({
   },
   btnSubmit: {
     flex: 1
+  },
+  btnSubmitClose: {
+    // flex: 1,
+    // alignItems: 'center',
+    width: 120
   },
   text: {
     fontSize: 14,

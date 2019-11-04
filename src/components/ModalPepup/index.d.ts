@@ -1,10 +1,12 @@
 import { Celeb, Review } from "../../pages/Pepups";
+import { Profile } from "../../pages/Profile";
 
 export type ModalPepupProps = {
   closePepupModal: () => void;
   openVideoModal: (videoUrl: string) => void;
   isModalShown: boolean;
   isFetching?: boolean;
+  userId: string;
   isFetchingCeleb: boolean;
   openPepupReqModal: () => void;
   celebData: Celeb | null;
