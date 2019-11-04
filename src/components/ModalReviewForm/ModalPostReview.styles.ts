@@ -11,11 +11,7 @@ import {
 
 export default StyleSheet.create({
     wrapModalContent: {
-        backgroundColor: "white",
-        borderTopLeftRadius: 32,
-        borderTopRightRadius: 32,
-        flexGrow: 1,
-        paddingHorizontal: 24
+        flex: 1, paddingHorizontal: 24, position: 'relative'
     },
     title: {
         fontSize: 18,
@@ -51,9 +47,13 @@ export default StyleSheet.create({
     modalFooter: {
         flexDirection: "row",
         marginTop: 15,
-        marginBottom: 60,
+        marginBottom: 30,
         backgroundColor: "transparent",
-        alignItems: 'flex-end'
+        left: 0,
+        right: 0,
+        marginHorizontal: 24,
+        position: 'absolute',
+        bottom: 0
     },
     btnCancel: {
         width: 48,
@@ -103,7 +103,7 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    wrap: { flex: 1, marginBottom: 10 },
+    // wrap: { flex: 1, position: 'relative' },
     checkboxWrap: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -111,5 +111,6 @@ export default StyleSheet.create({
     },
     checkText: {
         marginLeft: 10
-    }
+    },
+    scrollContent: { paddingBottom: 90 }
 });

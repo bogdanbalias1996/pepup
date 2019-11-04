@@ -250,7 +250,6 @@ export const PepupReducer = (
         ...state,
         isFetching: true
       };
-
     case FAILURE_REVIEW:
       return {
         ...state,
