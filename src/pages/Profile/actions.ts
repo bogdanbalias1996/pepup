@@ -332,7 +332,6 @@ export const acceptPepupRequest = (pepupId:string) => {
         dispatch(closeNotifyModal());
       })
       .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
         dispatch(failureAccept());
         dispatch(
           openError({
@@ -387,7 +386,6 @@ export const denyPepupRequest = (pepupId:string) => {
         dispatch(closeNotifyModal());
       })
       .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
         dispatch(failureDeny());
         dispatch(
           openError({
