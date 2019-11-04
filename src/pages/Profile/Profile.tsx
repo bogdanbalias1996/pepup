@@ -158,11 +158,9 @@ export class Component extends React.Component<ProfileScreenProps> {
       profileData
     } = this.props;
 
-    if (!profileData) return;
+    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
 
-    const isCelebrity = profileData.role === ROLE_CELEB;
-
-    isCelebrity
+    profileData && isCelebrity
       ? updateCelebIntroVideo(profileData.id, video)
       : fulfillPepupRequest(video);
   };
@@ -179,34 +177,25 @@ export class Component extends React.Component<ProfileScreenProps> {
     };
 
     return (
-      <PepupBackground>
-        <View style={styles.avatarsWrap}>
-          {profileData && (
-            <Card style={styles.avatar} radius={6}>
-              <CardGradient style={{ borderRadius: 6 }} />
-              <FastImage
-                style={styles.image}
-                source={
-                  profileData.icon
-                    ? {
-                        uri: profileData.icon,
-                        priority: FastImage.priority.normal
-                      }
-                    : require('../../../assets/avatarPlaceholder.png')
-                }
-                resizeMode={FastImage.resizeMode.cover}
-              />
-            </Card>
-          )}
-          {isCelebrity && (
-            <Card style={styles.avatar} radius={6}>
-              <CardGradient style={{ borderRadius: 6 }} />
-              <TouchableOpacity activeOpacity={1} onPress={getModal}>
-                <Image
-                  style={[styles.image, styles.avatarCeleb]}
-                  source={require('../../../assets/celebAvatar.png')}
-                  resizeMode="cover"
+      profileData && (
+        <PepupBackground>
+          <View style={styles.avatarsWrap}>
+            {profileData && (
+              <Card style={styles.avatar} radius={6}>
+                <CardGradient style={{ borderRadius: 6 }} />
+                <FastImage
+                  style={styles.image}
+                  source={
+                    profileData.icon
+                      ? {
+                          uri: profileData.icon,
+                          priority: FastImage.priority.normal
+                        }
+                      : require('../../../assets/avatarPlaceholder.png')
+                  }
+                  resizeMode={FastImage.resizeMode.cover}
                 />
+<<<<<<< HEAD
               </TouchableOpacity>
             </Card>
           )}
@@ -243,13 +232,61 @@ export class Component extends React.Component<ProfileScreenProps> {
                   marginBottom: 10
                 }}
               />
+=======
+              </Card>
+>>>>>>> master
             )}
-          </Loader>
-        </View>
-        <ModalRecordVideo onVideoSave={this.handleVideoSave} />
-        <ModalPepup />
-        <ModalPepupNotification />
-      </PepupBackground>
+            {isCelebrity && (
+              <Card style={styles.avatar} radius={6}>
+                <CardGradient style={{ borderRadius: 6 }} />
+                <TouchableOpacity activeOpacity={1} onPress={getModal}>
+                  <Image
+                    style={[styles.image, styles.avatarCeleb]}
+                    source={require('../../../assets/celebAvatar.png')}
+                    resizeMode="cover"
+                  />
+                </TouchableOpacity>
+              </Card>
+            )}
+          </View>
+
+          <View style={styles.titleWrap}>
+            <Text style={styles.title}>
+              {(profileData && profileData.name) || ' '}
+            </Text>
+            <TouchableOpacity
+              onPress={() =>
+                navigate({
+                  routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
+                })
+              }>
+              <Icon name="edit" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.wrapContent}>
+            <Loader isDataLoaded={!!profileData}>
+              {!!profileData && (
+                <Tabs
+                  config={
+                    profileData.role === ROLE_CELEB
+                      ? this.tabsConfigCeleb
+                      : this.tabsConfig
+                  }
+                  style={{ flex: 1 }}
+                  stylesItem={defaultTabsStyles.roundedTabs}
+                  stylesTabsContainer={{
+                    backgroundColor: 'transparent',
+                    marginBottom: 10
+                  }}
+                />
+              )}
+            </Loader>
+          </View>
+          <ModalRecordVideo onVideoSave={this.handleVideoSave} />
+          <ModalPepup />
+          <ModalPepupNotification />
+        </PepupBackground>
+      )
     );
   }
 }

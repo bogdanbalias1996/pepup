@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import StarRating from 'react-native-star-rating';
 
 import { closeReviewsModal } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
@@ -35,10 +34,6 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
       celebData
     } = this.props;
 
-    const [rating, totalRating] = celebData
-      ? celebData.weightedRating.split('/')
-      : ['0', '0'];
-
     return (
       celebData &&
       reviews && (
@@ -59,24 +54,18 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
                 <View style={styles.headerReviews}>
                   <View style={styles.header}>
                     <Text style={styles.title}>{celebData.userInfo.name}</Text>
-                    {/* <View style={styles.rate}>
-                      <Image
-                        style={styles.rateImg}
-                        source={require('../../../assets/fullStar.png')}
-                      />
-                      <View style={styles.rateText}>
-                        <Text style={styles.actualR}>{`${rating}/`}</Text>
-                        <Text style={styles.generalR}>{totalRating}</Text>
-                      </View>
-                    </View> */}
                   </View>
                   <Text style={[styles.text, styles.subTitle]}>
-                    {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}
+                    {celebData.dataInfo.intro}
+                  </Text>
+                  <Text
+                    style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
+                    {`${celebData.totalPepupsFulfilled} Pepups`}
                   </Text>
                 </View>
                 <View style={styles.rewiewsNumber}>
                   <Text style={[styles.text, styles.numberRewiewsText]}>
-                    {`${celebData.reviews} reviews`}
+                    {`${celebData.reviews} reactions`}
                   </Text>
                 </View>
                 <View>
