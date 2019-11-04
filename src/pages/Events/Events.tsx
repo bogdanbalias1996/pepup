@@ -1,85 +1,52 @@
 import * as React from 'react';
-import {connect} from 'react-redux';
-import {View} from 'react-native';
-import {Dispatch} from 'redux';
+import { View } from 'react-native';
 
-import {ModalEvents} from '../../components/ModalEvents/ModalEvents';
-import {PepupBackground} from '../../components/PepupBackground/PepupBackground';
-import {EventsScreenProps} from '.';
-import {EventItems} from './EventItems';
-import {HeaderRounded} from '../../components/HeaderRounded/HeaderRounded';
-import {Tabs, defaultTabsStyles} from '../../components/Tabs/Tabs';
+import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { EventsScreenProps } from '.';
+import { EventItems } from './EventItems';
+import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
+import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
-import {IGlobalState} from '../../coreTypes';
 
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation?: any;
-    title?: any;
-    getLeftComponent?: () => any;
-    getRightComponent?: () => any;
-  },
-) => <HeaderRounded {...props} title={'Events'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null,
-)(Header);
-
-const mapStateToProps = (state: IGlobalState) => ({});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
-
-export class Component extends React.PureComponent<EventsScreenProps> {
-  static navigationOptions = ({navigation}: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes &
-        Pick<
-          JSX.IntrinsicAttributes & {
-            navigation?: any;
-            title?: any;
-            getLeftComponent?: (() => any);
-            getRightComponent?: () => any;
-          },
-          | 'title'
-          | 'key'
-          | 'navigation'
-          | 'getLeftComponent'
-          | 'getRightComponent'
-        >,
-    ) => <ConnectedHeader {...props} navigation={navigation} />,
+export class EventsScreen extends React.PureComponent<EventsScreenProps> {
+  static navigationOptions = ({ navigation }: any) => ({
+    header: (props: any) => (
+      <HeaderRounded {...props} title={'Events'.toUpperCase()} />
+    )
   });
 
   state = {
     isModalVisible: false,
+    activeTabIndex: 0
   };
 
   toggleModal = () => {
-    this.setState({isModalVisible: !this.state.isModalVisible});
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
   render() {
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <EventItems categoryId="Past" />,
+        component: () => <EventItems categoryId="Past" />
       },
       {
         title: 'Today',
-        component: () => <EventItems categoryId="Today" />,
+        component: () => <EventItems categoryId="Today" />
       },
       {
         title: 'Featured',
-        component: () => <EventItems categoryId="Featured" />,
+        component: () => <EventItems categoryId="Featured" />
       },
       {
         title: 'Upcoming',
-        component: () => <EventItems categoryId="Upcoming" />,
+        component: () => <EventItems categoryId="Upcoming" />
       },
       {
         title: 'Hot',
-        component: () => <EventItems categoryId="Hot" />,
-      },
+        component: () => <EventItems categoryId="Hot" />
+      }
     ];
 
     return (
@@ -87,11 +54,14 @@ export class Component extends React.PureComponent<EventsScreenProps> {
         <View style={styles.wrapContent}>
           <Tabs
             config={tabsConfig}
-            style={{flex: 1}}
+            style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
+            changeIndex={index => this.setState({ activeTabIndex: index })}
+            activeTabIndex={this.state.activeTabIndex}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
-              marginBottom: 5,
+              marginBottom: 10,
+              paddingLeft: 5
             }}
           />
         </View>
@@ -100,8 +70,3 @@ export class Component extends React.PureComponent<EventsScreenProps> {
     );
   }
 }
-
-export const EventsScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Component);

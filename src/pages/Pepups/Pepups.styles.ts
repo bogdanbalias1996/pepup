@@ -10,7 +10,7 @@ export default StyleSheet.create({
     paddingTop: 16,
     paddingHorizontal: 14,
     flexGrow: 1,
-    marginTop: deviceInfoCheck() ? 10 : 0,
+    marginTop: deviceInfoCheck() ? 10 : 0
   },
   wrapHeaderRight: {
     flexDirection: 'row',

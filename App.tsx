@@ -114,7 +114,6 @@ export default class App extends Component {
     this.notificationListener = firebase
       .notifications()
       .onNotification(notification => {
-        // console.log(2, notification._data);
         const { title, body, data } = notification;
         this.showAlert(title, body, data);
       });
@@ -122,7 +121,6 @@ export default class App extends Component {
     this.notificationOpenedListener = firebase
       .notifications()
       .onNotificationOpened(notificationOpen => {
-        console.log(5, notificationOpen.notification.data.activeTab);
         navigate(
           {
             routeName: 'Profile',
@@ -136,8 +134,13 @@ export default class App extends Component {
       .notifications()
       .getInitialNotification();
     if (notificationOpen) {
-      const { title, body, data } = notificationOpen.notification;
-      this.showAlert(title, body, data);
+      navigate(
+        {
+          routeName: 'Profile',
+          params: { activeTab: notificationOpen.notification.data.activeTab }
+        },
+        true
+      );
     }
 
     this.messageListener = firebase.messaging().onMessage(message => {

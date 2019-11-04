@@ -13,6 +13,7 @@ export type TabsComponentProps = {
   config: Array<Tab>;
   stylesTabsContainer?: any;
   activeTabIndex?: number;
+  changeIndex: (index: number) => void;
 };
 
 export type TabsProps = TabsComponentProps & ButtonGroupStylesProps;

@@ -35,7 +35,7 @@ export default StyleSheet.create({
   },
   btnSubmit: {
     width: 120,
-    fontFamily: semiboldFont,
+    fontFamily: semiboldFont
   },
   footer: {
     flexDirection: 'row',

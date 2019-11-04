@@ -3,7 +3,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import { removeSession } from '../../pages/Login/actions';
 import { navigate } from '../../navigationService';
 import { setUserId, setHandleName } from '../../pages/Login/actions';
-import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding'
+import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding';
 
 export const ACCESS_TOKEN_NAME = 'access_token';
 export const ACCESS_HANDLE_NAME = 'handle_name';
@@ -16,7 +16,7 @@ export const clearLocalStorage = async (omittedNames?: String[]) => {
     const allKeys = await AsyncStorage.getAllKeys();
     const keysToDelete = allKeys.filter(key => !omittedNames.includes(key));
 
-    await AsyncStorage.multiRemove(keysToDelete)
+    await AsyncStorage.multiRemove(keysToDelete);
   } catch (e) {
     console.error('Failed to clear localStorage:', e);
     return null;
@@ -75,7 +75,7 @@ export const getToken = async () => {
     }
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(
-      ACCESS_TOKEN_NAME,
+      ACCESS_TOKEN_NAME
     );
 
     accessToken = accessTokenFromLocaleStorage
@@ -89,7 +89,7 @@ export const authenticate = async () => {
   const token = await getToken();
 
   if (!token) {
-    const isOnboardingPassed = await getLocalStorage(IS_ONBOARDING_PASSED)
+    const isOnboardingPassed = await getLocalStorage(IS_ONBOARDING_PASSED);
 
     getStore().dispatch(removeSession());
     navigate({ routeName: isOnboardingPassed ? 'Auth' : 'Onboarding' });

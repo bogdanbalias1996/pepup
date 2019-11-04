@@ -10,12 +10,12 @@ import {
 } from '../../variables';
 
 export class Tabs extends React.PureComponent<TabsProps> {
-  state = {
-    index: this.props.activeTabIndex ? this.props.activeTabIndex : 0
-  };
+  // state = {
+  //   index: this.props.activeTabIndex ? this.props.activeTabIndex : 0
+  // };
 
   render() {
-    const { config, style = {} } = this.props;
+    const { config, style = {}, changeIndex, activeTabIndex } = this.props;
 
     const parseConfigToScenes = (config: Array<Tab>) =>
       config.reduce((acc: { [key: string]: string }, cur, index) => {
@@ -34,11 +34,11 @@ export class Tabs extends React.PureComponent<TabsProps> {
         <TabView
           lazy
           navigationState={{
-            ...this.state,
+            index: activeTabIndex ? activeTabIndex : 0,
             routes: parseConfigToRoutes(config)
           }}
           renderScene={SceneMap(parseConfigToScenes(config))}
-          onIndexChange={index => this.setState({ index })}
+          onIndexChange={index => changeIndex(index)}
           initialLayout={{ width: Dimensions.get('window').width }}
           swipeEnabled={true}
           renderTabBar={props => (

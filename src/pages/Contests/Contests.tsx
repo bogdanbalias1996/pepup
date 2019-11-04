@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
 import { View } from 'react-native';
 
 import { ModalContests } from '../../components/ModalContests/ModalContests';
@@ -9,14 +8,9 @@ import { ContestItems } from './ContestItems';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Contests.styles';
-import { Dispatch } from 'redux';
-import { IGlobalState } from '../../coreTypes';
 import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
-const mapStateToProps = (state: IGlobalState) => ({});
-const mapDispatchToProps = (dispatch: Dispatch) => ({});
-
-export class Component extends React.PureComponent<ContestsScreenProps> {
+export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (props: any) => (
       <HeaderRounded
@@ -28,7 +22,8 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    activeTabIndex: 0
   };
 
   toggleModal = () => {
@@ -58,9 +53,11 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
             config={tabsConfig}
             style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
+            changeIndex={index => this.setState({ activeTabIndex: index })}
+            activeTabIndex={this.state.activeTabIndex}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
-              marginBottom: 5,
+              marginBottom: 10,
               paddingLeft: 5
             }}
           />
@@ -71,8 +68,3 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
     );
   }
 }
-
-export const ContestsScreen = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Component);

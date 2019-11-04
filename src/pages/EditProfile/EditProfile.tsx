@@ -25,23 +25,9 @@ import {
 import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
-import { navigate } from '../../navigationService';
+import { goBack } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
-import { colorBlack } from '../../variables';
-
-const Header = (
-  props: JSX.IntrinsicAttributes & {
-    navigation?: any;
-    title?: any;
-    getLeftComponent?: () => any;
-    getRightComponent?: () => any;
-  }
-) => <HeaderRounded {...props} title={'Profile'.toUpperCase()} />;
-
-const ConnectedHeader = connect(
-  null,
-  null
-)(Header);
+import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -62,9 +48,20 @@ const EditSchema = Yup.object().shape({
 
 export class Component extends React.PureComponent<EditProfileScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (
-      props: JSX.IntrinsicAttributes & Pick<any, string | number | symbol>
-    ) => <ConnectedHeader {...props} navigation={navigation} />
+    header: (props: any) => (
+      <HeaderRounded
+        {...props}
+        navigation={navigation}
+        title={'Profile'.toUpperCase()}
+        getLeftComponent={() => {
+          return (
+            <TouchableOpacity onPress={() => goBack()}>
+              <Icon name="left" />
+            </TouchableOpacity>
+          );
+        }}
+      />
+    )
   });
 
   state = {
@@ -98,12 +95,10 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 name: profileData.name,
                 newPasswd: '',
                 dob: '',
-                profileInfo: {
-                  country: '',
-                  city: '',
-                  phoneNumber: '',
-                  address: ''
-                }
+                country: '',
+                city: '',
+                phoneNumber: '',
+                address: ''
               }}
               validationSchema={EditSchema}
               onSubmit={this.handleSubmit}>
@@ -168,7 +163,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             }
                           />
                           <TextInputStyledForEdit
-                            name="profileInfo.address"
+                            name="address"
                             label="address"
                             formProps={props}
                           />
@@ -179,14 +174,14 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             }}>
                             <View style={{ width: '50%' }}>
                               <TextInputStyledForEdit
-                                name="profileInfo.city"
+                                name="city"
                                 label="city"
                                 formProps={props}
                               />
                             </View>
                             <View style={{ width: '50%' }}>
                               <TextInputStyledForEdit
-                                name="profileInfo.country"
+                                name="country"
                                 label="country"
                                 formProps={props}
                               />
@@ -201,13 +196,13 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                           />
 
                           <TextInputStyledForEdit
-                            name="profileInfo.phoneNumber"
+                            name="phoneNumber"
                             label="phone"
                             keyboardType="phone-pad"
                             formProps={props}
                           />
 
-                          <TextInputStyledForEdit
+                          <TextInputPasswordForEdit
                             name="newPasswd"
                             label="new password"
                             keyboardType="numeric"
@@ -218,11 +213,6 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                       </ScrollView>
                     </View>
                     <View style={styles.footer}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => navigate({ routeName: 'Profile' })}>
-                        <Icon size={20} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
                       <ButtonStyled
                         textBold={true}
                         style={styles.btnSubmit}

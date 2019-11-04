@@ -4,9 +4,9 @@ import {
   colorTextGray,
   colorLightGray,
   colorTextViolet,
-  colorSwipeLine,
   semiboldFont,
-  defaultFont
+  defaultFont,
+  boldFont
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -15,17 +15,9 @@ export default StyleSheet.create({
     marginBottom: 10
   },
   wrapModalContent: {
-    backgroundColor: "white",
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    flex: 1
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: "center"
+    flex: 1,
+    paddingHorizontal: 24,
+    position: 'relative'
   },
   modal: {
     zIndex: 100,
@@ -35,7 +27,6 @@ export default StyleSheet.create({
   wrapTitle: {
     flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
     marginVertical: 24,
     alignItems: "center"
   },
@@ -45,17 +36,20 @@ export default StyleSheet.create({
     marginRight: 16
   },
   title: {
-    flex: 1,
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
-    lineHeight: 24
+    lineHeight: 24,
+    height: 24,
+    marginVertical: 16,
   },
   carousel: {
-    marginTop: 0,
-    marginLeft: 24,
+    marginTop: 0
   },
-  imageCarouselWrap: {width: Dimensions.get("window").width - 48, marginRight: 10},
+  imageCarouselWrap: {
+    width: Dimensions.get("window").width - 48,
+    marginRight: 10
+  },
   imageCarousel: {
     width: Dimensions.get("window").width - 48,
     flex: 1,
@@ -84,8 +78,9 @@ export default StyleSheet.create({
   infoLabelQnt: {
     position: 'absolute',
     bottom: 40,
+    textAlign: 'center',
     flexWrap: 'nowrap',
-    width: 101
+    width: 110
   },
   infoValue: {
     fontSize: 16,
@@ -99,8 +94,7 @@ export default StyleSheet.create({
   },
   modalFooter: {
     flexDirection: "row",
-    marginBottom: 60,
-    paddingBottom: 20,
+    marginBottom: 30,
     marginHorizontal: 24,
     backgroundColor: 'transparent',
     position: 'absolute',
@@ -117,21 +111,21 @@ export default StyleSheet.create({
     alignItems: "center",
   },
   infoText: {
-    color: colorTextGray
+    color: colorTextGray,
+    lineHeight: 22,
   },
   btnSubmit: {
     flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
-    lineHeight: 20
+    fontFamily: defaultFont
   },
   imgSet: {
     flexDirection: "row",
-    flex: 1,
+    flex: 1
   },
-  insidePadding: { paddingHorizontal: 24, position: 'relative' },
+  insidePadding: { position: 'relative' },
   modalCancelStyle: {
     backgroundColor: "white",
     borderRadius: 12,

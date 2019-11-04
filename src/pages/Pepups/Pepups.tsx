@@ -33,7 +33,8 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    activeTabIndex: 0
   };
 
   componentDidMount = () => {
@@ -65,6 +66,8 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
               <Tabs
                 config={tabsConfig}
                 style={{ flex: 1 }}
+                changeIndex={index => this.setState({ activeTabIndex: index })}
+                activeTabIndex={this.state.activeTabIndex}
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={{
                   backgroundColor: 'transparent',
