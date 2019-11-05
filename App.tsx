@@ -7,7 +7,7 @@
  */
 
 import React, { Component } from 'react';
-import { Alert, StatusBar, YellowBox } from 'react-native';
+import { StatusBar, YellowBox } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from 'react-native-firebase';
 import NetInfo from '@react-native-community/netinfo';
@@ -15,7 +15,7 @@ import * as Font from 'expo-font';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { Provider, connect } from 'react-redux';
 import { getStore } from './src/configureStore';
-import { setTopLevelNavigator, navigate, push } from './src/navigationService';
+import { setTopLevelNavigator, navigate } from './src/navigationService';
 import { Loader } from './src/components/Loader/Loader';
 import { IGlobalState } from './src/coreTypes';
 import SplashScreen from 'react-native-splash-screen';
@@ -100,7 +100,6 @@ export default class App extends Component {
     this.createNotificationListeners();
   }
 
-  // TODO: Handle correctly when component is unmounted.
   componentWillUnmount() {
     this.notificationListener();
     this.notificationOpenedListener();
@@ -109,7 +108,6 @@ export default class App extends Component {
   notificationListener: any;
   notificationOpenedListener: any;
 
-  // TODO: Handle notifications
   async createNotificationListeners() {
     this.notificationListener = firebase
       .notifications()
@@ -183,7 +181,6 @@ export default class App extends Component {
     }
   }
 
-  // TODO: Remove the console log and dispatch an event to firebase analytics
   async requestPermission() {
     try {
       await firebase.messaging().requestPermission();

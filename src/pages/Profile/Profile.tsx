@@ -49,13 +49,13 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
-const celebTabs = {
+const celebTabs: { [key: string]: number } = {
   funRequests: 0,
   myRequests: 1,
   notifications: 2
 };
 
-const userTabs = {
+const userTabs: { [key: string]: number } = {
   myRequests: 0,
   notifications: 1
 };
@@ -77,13 +77,12 @@ export class Component extends React.Component<ProfileScreenProps> {
     userId && !profileData && getUserPepups(userId);
 
     if (params && profileData) {
-      let activeTabIndex;
       if (
         isCelebrity &&
         params.activeTab &&
         celebTabs[params.activeTab] !== prevState.activeTabIndex
       ) {
-        activeTabIndex = celebTabs[params.activeTab];
+        const activeTabIndex = celebTabs[params.activeTab];
         navigation.setParams({ activeTab: null });
         return { activeTabIndex };
       } else if (
@@ -91,7 +90,7 @@ export class Component extends React.Component<ProfileScreenProps> {
         params.activeTab &&
         userTabs[params.activeTab] !== prevState.activeTabIndex
       ) {
-        activeTabIndex = userTabs[params.activeTab];
+        const activeTabIndex = userTabs[params.activeTab];
         navigation.setParams({ activeTab: null });
         return { activeTabIndex };
       }
@@ -167,8 +166,6 @@ export class Component extends React.Component<ProfileScreenProps> {
 
   render() {
     const { profileData, openPepupModal, getCeleb } = this.props;
-    // console.log('AAA', this.props.userId, this.props.handle);
-
     const isCelebrity = profileData && profileData.role === ROLE_CELEB;
 
     const getModal = () => {
@@ -195,46 +192,7 @@ export class Component extends React.Component<ProfileScreenProps> {
                   }
                   resizeMode={FastImage.resizeMode.cover}
                 />
-<<<<<<< HEAD
-              </TouchableOpacity>
-            </Card>
-          )}
-        </View>
-
-        <View style={styles.titleWrap}>
-          <Text style={styles.title}>
-            {(profileData && profileData.name) || ' '}
-          </Text>
-          <TouchableOpacity
-            onPress={() =>
-              navigate({
-                routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
-              })
-            }>
-            <Icon name="edit" />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.wrapContent}>
-          <Loader isDataLoaded={!!profileData}>
-            {!!profileData && (
-              <Tabs
-                config={
-                  profileData.role === ROLE_CELEB
-                    ? this.tabsConfigCeleb
-                    : this.tabsConfig
-                }
-                changeIndex={index => this.setState({ activeTabIndex: index })}
-                style={{ flex: 1 }}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                activeTabIndex={this.state.activeTabIndex}
-                stylesTabsContainer={{
-                  backgroundColor: 'transparent',
-                  marginBottom: 10
-                }}
-              />
-=======
               </Card>
->>>>>>> master
             )}
             {isCelebrity && (
               <Card style={styles.avatar} radius={6}>
@@ -272,8 +230,12 @@ export class Component extends React.Component<ProfileScreenProps> {
                       ? this.tabsConfigCeleb
                       : this.tabsConfig
                   }
+                  changeIndex={index =>
+                    this.setState({ activeTabIndex: index })
+                  }
                   style={{ flex: 1 }}
                   stylesItem={defaultTabsStyles.roundedTabs}
+                  activeTabIndex={this.state.activeTabIndex}
                   stylesTabsContainer={{
                     backgroundColor: 'transparent',
                     marginBottom: 10

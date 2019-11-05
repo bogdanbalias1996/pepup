@@ -10,10 +10,6 @@ import {
 } from '../../variables';
 
 export class Tabs extends React.PureComponent<TabsProps> {
-  // state = {
-  //   index: this.props.activeTabIndex ? this.props.activeTabIndex : 0
-  // };
-
   render() {
     const { config, style = {}, changeIndex, activeTabIndex } = this.props;
 
