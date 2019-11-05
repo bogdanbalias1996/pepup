@@ -29,6 +29,7 @@ import { format } from 'date-fns';
 import { Icon } from '../../components/Icon/Icon';
 import { colorTextGray } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
+import { VideoType } from '../../components/ModalRecordVideo/';
 import { getCeleb } from '../Pepups/actions';
 import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
 import { goBack } from '../../navigationService';
@@ -43,7 +44,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
     dispatch(editProfile(data, setErrors) as any),
-  videoRecordModalOpen: () => dispatch(videoRecordModalOpen()),
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) => dispatch(videoRecordModalOpen(entityId, videoType)),
   getCeleb: (id: string) => dispatch(getCeleb(id) as any)
 });
 
@@ -174,7 +175,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             inputStyle={{ height: 120 }}
                           />
                           <TouchableOpacity
-                            onPress={() => videoRecordModalOpen()}>
+                            onPress={() => videoRecordModalOpen(celebData.mappedUserId, 'celebIntroVideo')}>
                             <TextInputStyledForEdit
                               name="introVideo"
                               pointerEvents="none"

@@ -16,12 +16,7 @@ import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 import styles from './Profile.styles';
-import {
-  getProfile,
-  fulfillPepupRequest,
-  updateCelebIntroVideo,
-  getUserPepups
-} from './actions';
+import { getProfile, getUserPepups } from './actions';
 import { ProfileScreenProps } from '.';
 import { NotificationItems } from './NotificationItems';
 import { History } from './History';
@@ -39,11 +34,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (handle: string) => dispatch(getProfile(handle) as any),
   openPepupModal: () => dispatch(openPepupModal()),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  fulfillPepupRequest: (video: any) =>
-    dispatch(fulfillPepupRequest(video) as any),
-  updateCelebIntroVideo: (celebId: string, video: any) =>
-    dispatch(updateCelebIntroVideo(celebId, video) as any),
+  getCeleb: (val: string) => dispatch(getCeleb(val) as any),    
   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
 });
 
@@ -102,20 +93,6 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
     handle && this.props.getProfile(handle);
     userId && this.props.getUserPepups(userId);
-  };
-
-  handleVideoSave = (video: any) => {
-    const {
-      fulfillPepupRequest,
-      updateCelebIntroVideo,
-      profileData
-    } = this.props;
-
-    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
-
-    profileData && isCelebrity
-      ? updateCelebIntroVideo(profileData.id, video)
-      : fulfillPepupRequest(video);
   };
 
   render() {
@@ -195,7 +172,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
               )}
             </Loader>
           </View>
-          <ModalRecordVideo onVideoSave={this.handleVideoSave} />
+          <ModalRecordVideo />
           <ModalPepup />
           <ModalPepupNotification />
         </PepupBackground>

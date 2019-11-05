@@ -2,17 +2,20 @@ import { RecordOptions } from 'react-native-camera';
 
 export type ModalRecordVideoProps = {
   videoRecordModalClose: () => void;
+  updateCelebIntroVideo: (entityId: string, video: any) => void;
+  fulfillPepupRequest: (entityId: string, video: any) => void;
+  entityId: string;
   isVideoRecordModalVisible: boolean;
-  durationInSeconds: number | null;
-  recordOptions?: any;
-  onVideoSave?: (video: any) => void;
+  isSendingVideo: boolean;  
+  videoType: VideoType;
 };
 
 export type ModalRecordVideoState = {
   isRecording: boolean;
-  durationInSeconds: number;
   isVideoDurationAceptable: boolean;
   recordOptions: RecordOptions;
   videoData: any;
   isReadyForPost: boolean;
 }
+
+export type VideoType = '' | 'celebIntroVideo' | 'fulfillPepupRequest';
