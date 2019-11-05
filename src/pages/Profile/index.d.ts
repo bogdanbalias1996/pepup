@@ -1,5 +1,6 @@
 import { NavigationScreenProp, NavigationScreenOptions } from 'react-navigation';
 import { Celeb } from '../Pepups';
+import { VideoType } from '../../components/ModalRecordVideo/'
 
 export type Profile = {
   email: string,
@@ -85,18 +86,19 @@ export type MyRequestsProps = {
 
 export type NotificationItemsProps = {
   isFetching: boolean
-},
+}
 
 export type FanRequestsProps = {
   celebPepups: Array<Pepup>,
   getStatusCeleb?: () => void,
   isFetching: boolean,
   userId: string,
+  pepupId: string,
   getCelebPepups: (id: string) => Promise<any>,
   openNotifyModal: () => void,
-  videoRecordModalOpen: () => void,
-  getPepupNotification: (id: string) => Promise<any>
-}
+  getPepupNotification: (id: string) => Promise<any>,
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void  
+};
 
 export type HistoryItemsProps = {
   pepups: Array<Pepup>,

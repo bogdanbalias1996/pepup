@@ -6,8 +6,8 @@ import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { closeVideoModal, closeNotifyModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
-import { videoRecordModalClose } from '../RecordVideo/actions'
-import { UserRequest } from '.';
+import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
+import { Pepup } from '.';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -37,16 +37,18 @@ export const getProfile = (handle: string) => {
   };
 };
 
-export const fulfillPepupRequest = (video: any) => {
+export const fulfillPepupRequest = (entityId: string, video: any) => {
   return (dispatch: Dispatch) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
+        pepupId: entityId,
         video: {
-          name: `pepup.mp4`,
+          name: `pepup-${entityId}.mp4`,
           type,
           uri
         }
@@ -56,6 +58,8 @@ export const fulfillPepupRequest = (video: any) => {
       }
     })
       .then(res => {
+        dispatch(videoRecordModalUpload(false));
+        dispatch(videoRecordModalClose())
         dispatch(openAlert({
           title: 'Pepup Sent',
           text:
@@ -68,12 +72,12 @@ export const fulfillPepupRequest = (video: any) => {
           }
         }));
       })
-      .catch(err => {
+      .catch(err => {      
+        dispatch(videoRecordModalUpload(false));
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-        }))
-        console.error(JSON.stringify(err, null, 2));
+          onPress: () => { dispatch(fulfillPepupRequest(entityId, video) as any) }
+        }))        
       });
   };
 };
@@ -83,6 +87,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.UpdateCelebIntroVideo,
       variables: {
@@ -98,6 +103,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
       }
     })
       .then(res => {
+        dispatch(videoRecordModalUpload(false))
         dispatch(videoRecordModalClose())
         dispatch(openAlert({
           title: 'Changes saved',
@@ -108,16 +114,17 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
         }));
       })
       .catch(err => {
+        dispatch(videoRecordModalUpload(false))
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
+          onPress: () => { dispatch(fulfillPepupRequest(celebId, video) as any) }
         }))
       });
   };
 };
 
 export const RECEIVE_USER_PEPUPS = 'RECEIVE_USER_PEPUPS';
-export const receiveUserPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveUserPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_USER_PEPUPS,
     data,
@@ -177,7 +184,7 @@ export const getUserPepups = (userId: string) => {
 };
 
 export const RECEIVE_CELEB_PEPUPS = 'RECEIVE_CELEB_PEPUPS';
-export const receiveCelebPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveCelebPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_CELEB_PEPUPS,
     data,
@@ -237,7 +244,7 @@ export const getCelebPepups = (userId: string) => {
 };
 
 export const RECEIVE_ALL_PEPUPS = 'RECEIVE_ALL_PEPUPS';
-export const receiveAllPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveAllPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_ALL_PEPUPS,
     data,

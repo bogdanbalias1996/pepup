@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 import { ProgressBar } from '../ProgressBar/ProgressBar'
 import { Countdown } from '../Countdown/Countdown'
 import { videoRecordModalClose } from '../../pages/RecordVideo/actions';
+import {
+  fulfillPepupRequest,
+  updateCelebIntroVideo,
+} from '../../pages/Profile/actions';
 import { Icon } from '../Icon/Icon';
 import { ModalRecordVideoProps, ModalRecordVideoState } from '.';
 
@@ -15,22 +19,26 @@ import { RNCamera } from 'react-native-camera';
 import { Video } from 'expo-av';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
 import styles from './ModalRecordVideo.styles';
+import { colorBlueberry } from '../../variables'
 
 const minAcceptableVideoDuration = 30;
 const maxAcceptableVideoDuration = 60;
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoRecordModalVisible: state.RecordVideoState.isVideoRecordModalVisible,
-  durationInSeconds: maxAcceptableVideoDuration
+  videoType: state.RecordVideoState.videoType,
+  entityId: state.RecordVideoState.entityId,
+  isSendingVideo: state.RecordVideoState.isSendingVideo
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  videoRecordModalClose: () => dispatch(videoRecordModalClose())
+  videoRecordModalClose: () => dispatch(videoRecordModalClose()),  
+  updateCelebIntroVideo: (entityId: string, video: any) => dispatch(updateCelebIntroVideo(entityId, video) as any),
+  fulfillPepupRequest: (entityId: string, video: any) => dispatch(fulfillPepupRequest(entityId, video) as any)
 });
 
 const initialState = {
   isRecording: false,
-  durationInSeconds: maxAcceptableVideoDuration,
   isVideoDurationAceptable: false,
   recordOptions: {
     mirrorVideo: true
@@ -44,8 +52,8 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
   camera = React.createRef<RNCamera>();
   video = React.createRef<Video>();
 
-  static getDerivedStateFromProps(props: ModalRecordVideoProps){
-    if(!props.isVideoRecordModalVisible) {
+  static getDerivedStateFromProps(props: ModalRecordVideoProps) {
+    if (!props.isVideoRecordModalVisible) {
       return initialState
     }
 
@@ -68,7 +76,15 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
   }
 
   postVideo = () => {
-    this.props.onVideoSave(this.state.videoData);
+    const { videoType, entityId, updateCelebIntroVideo, fulfillPepupRequest } = this.props;
+    const { videoData } = this.state;    
+
+    switch(videoType) {
+      case 'celebIntroVideo':
+        return updateCelebIntroVideo(entityId, videoData)
+      case 'fulfillPepupRequest':
+        return fulfillPepupRequest(entityId, videoData)
+    }
   }
 
   acceptVideo = () => {
@@ -195,14 +211,14 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
   }
 
   render() {
-    const { videoRecordModalClose, isVideoRecordModalVisible } = this.props;
+    const { videoRecordModalClose, isVideoRecordModalVisible, isSendingVideo } = this.props;
     const {
-      durationInSeconds,
       videoData,
       isRecording,
       isVideoDurationAceptable,
       isReadyForPost
     } = this.state;
+    const durationInSeconds = maxAcceptableVideoDuration;
 
     return (
       <Modal
@@ -271,6 +287,8 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
                         textBold={true}
                         style={{ width: 128 }}
                         onPress={this.postVideo}
+                        loader={isSendingVideo}
+                        loaderColor={colorBlueberry}
                       />
                     )
                     : (

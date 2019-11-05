@@ -1,6 +1,6 @@
-package com.pepup;
+package in.bitsport.pepup;
 
-import com.pepup.generated.BasePackageList;
+import in.bitsport.pepup.generated.BasePackageList;
 
 import android.app.Application;
 import android.content.Context;

@@ -29,18 +29,19 @@ import { getCelebPepups } from './actions';
 import { capitalize } from '../../helpers';
 import { openNotifyModal, getPepupNotification } from '../Pepups/actions';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
+import { VideoType } from '../../components/ModalRecordVideo';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
   userId: state.LoginState.userId,
   isFetching: state.ProfileState.isFetching,
 });
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
   openNotifyModal: () => dispatch(openNotifyModal()),
-  getPepupNotification: (id: string) =>
-    dispatch(getPepupNotification(id) as any),
-  videoRecordModalOpen: () => dispatch(videoRecordModalOpen())
+  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) => dispatch(videoRecordModalOpen(entityId, videoType))
 });
 
 export class Component extends React.PureComponent<FanRequestsProps> {
@@ -51,13 +52,13 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   }
 
   getModal = (pepupId: string) => {
-    const { openNotifyModal, getPepupNotification } = this.props;
+    const { openNotifyModal, getPepupNotification } = this.props
 
     openNotifyModal();
     getPepupNotification(pepupId);
   };
 
-  getStatusCeleb = ({status, requestedOnDt: date, id}: any) => {      
+  getStatusCeleb = ({ status, requestedOnDt: date, id }: any) => {
     const normalizedStatus = status.toLowerCase();
     const today = new Date();
     const requestedOn = new Date(date);
@@ -73,7 +74,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         return {
           msg: `${
             roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-          } remaining.`,
+            } remaining.`,
           statusColor: colorGreen,
           onPress: () => this.getModal(id),
           linkText: 'View Details.'
@@ -82,9 +83,9 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         return {
           msg: `${
             roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-          } remaining.`,
+            } remaining.`,
           statusColor: colorOrangeStatus,
-          onPress: () => this.props.videoRecordModalOpen(),
+          onPress: () => this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
           linkText: 'Click to record video.'
         };
       case 'rejected':
@@ -107,7 +108,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           status,
           msg: ``,
           statusColor: colorBlueberry,
-          onPress: () => {},
+          onPress: () => { },
           linkText: ''
         };
     }
@@ -130,10 +131,10 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           </View>
           <View>
             <Text style={styles.textWrapper}>
-              <Text style={styles.text}>{msg}</Text>       
+              <Text style={styles.text}>{msg}</Text>
               <Text
                 style={[styles.text, { color: statusColor }, styles.completed]}>
-                {linkText}               
+                {linkText}
               </Text>
             </Text>
             <Text

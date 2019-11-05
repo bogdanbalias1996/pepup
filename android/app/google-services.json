@@ -1,41 +1,77 @@
 {
   "project_info": {
-    "project_number": "724660922075",
-    "firebase_url": "https://pepup-ecb75.firebaseio.com",
-    "project_id": "pepup-ecb75",
-    "storage_bucket": "pepup-ecb75.appspot.com"
+    "project_number": "688006228248",
+    "firebase_url": "https://pepup-99c46.firebaseio.com",
+    "project_id": "pepup-99c46",
+    "storage_bucket": "pepup-99c46.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:724660922075:android:3ccefa1f7d41a6ddec4efe",
+        "mobilesdk_app_id": "1:688006228248:android:6e1fea0526dcb9e139966d",
         "android_client_info": {
           "package_name": "com.pepup"
         }
       },
       "oauth_client": [
         {
-          "client_id": "724660922075-mcncak3sfr3trid9ntoo5rdlhlbkb9m7.apps.googleusercontent.com",
+          "client_id": "688006228248-bqr90ihaben8jpslsmer3iaeae8l2um4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyA4s_mbrBB0JuBZvumCadixJfVKgYqh7Xo"
+          "current_key": "AIzaSyAqEQU9gExnc8dw-OfVNGS1cYO2YB8tXYA"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "724660922075-mcncak3sfr3trid9ntoo5rdlhlbkb9m7.apps.googleusercontent.com",
+              "client_id": "688006228248-bqr90ihaben8jpslsmer3iaeae8l2um4.apps.googleusercontent.com",
               "client_type": 3
             },
             {
-              "client_id": "724660922075-ceo947mnrir11f0rkra03cigmorl0j7o.apps.googleusercontent.com",
+              "client_id": "688006228248-8l0sn1koejkt6drfc1t5ge65ifkshsr3.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "org.reactjs.native.example.pepup"
+                "bundle_id": "in.bitsport.pepup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688006228248:android:abcfdaa84af83f0639966d",
+        "android_client_info": {
+          "package_name": "in.bitsport.pepup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688006228248-bqr90ihaben8jpslsmer3iaeae8l2um4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqEQU9gExnc8dw-OfVNGS1cYO2YB8tXYA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688006228248-bqr90ihaben8jpslsmer3iaeae8l2um4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "688006228248-8l0sn1koejkt6drfc1t5ge65ifkshsr3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "in.bitsport.pepup"
               }
             }
           ]
