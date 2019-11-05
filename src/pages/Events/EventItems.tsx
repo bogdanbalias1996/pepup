@@ -76,13 +76,19 @@ export class Component extends React.PureComponent<EventItemsProps> {
   };
 
   render() {
-    const { isFetching, events } = this.props;
+    const { isFetching, events, categoryId } = this.props;
+    const categoryName = categoryId.toLowerCase();
+    const eventsArr = events[categoryName];
+
     return (
-      <Loader isDataLoaded={!isFetching} color={colorBlueberry} size="large">
+      <Loader
+        isDataLoaded={(eventsArr && eventsArr.length) || !isFetching}
+        color={colorBlueberry}
+        size="large">
         <FlatList
           style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
-          data={events}
+          data={eventsArr}
           renderItem={this.renderItem}
           keyExtractor={(item: Event) => item.id}
         />

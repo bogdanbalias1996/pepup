@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
@@ -7,7 +7,7 @@ import {
   semiboldFont,
   defaultFont,
   boldFont
-} from "../../variables";
+} from '../../variables';
 
 export default StyleSheet.create({
   scrollView: {
@@ -26,13 +26,13 @@ export default StyleSheet.create({
   },
   wrapTitle: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: 'row',
     marginVertical: 24,
-    alignItems: "center"
+    alignItems: 'center'
   },
   imageLogo: {
     width: 72,
-    height: "100%",
+    height: '100%',
     marginRight: 16
   },
   title: {
@@ -41,33 +41,35 @@ export default StyleSheet.create({
     color: colorBlack,
     lineHeight: 24,
     height: 24,
-    marginVertical: 16,
+    marginVertical: 16
   },
   carousel: {
     marginTop: 0
   },
   imageCarouselWrap: {
-    width: Dimensions.get("window").width - 48,
-    marginRight: 10
+    width: Dimensions.get('window').width - 64,
+    marginHorizontal: 10,
+    height: 170,
+    marginVertical: 10
   },
   imageCarousel: {
-    width: Dimensions.get("window").width - 48,
+    width: '100%',
     flex: 1,
-    height: 170,
+    height: '100%',
     borderRadius: 8
   },
   infoBlock: {
-    flexDirection: "row",
-    flexWrap: "wrap",
+    flexDirection: 'row',
+    flexWrap: 'wrap',
     marginTop: 24
   },
   infoItem: {
-    width: "33%",
+    width: '33%',
     paddingRight: 10,
     marginBottom: 24
   },
   infoLocation: {
-    width: "67%"
+    width: '67%'
   },
   infoLabel: {
     fontSize: 12,
@@ -93,7 +95,7 @@ export default StyleSheet.create({
     color: colorTextViolet
   },
   modalFooter: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginBottom: 30,
     marginHorizontal: 24,
     backgroundColor: 'transparent',
@@ -106,13 +108,13 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: 'white',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   infoText: {
     color: colorTextGray,
-    lineHeight: 22,
+    lineHeight: 22
   },
   btnSubmit: {
     flex: 1
@@ -122,34 +124,34 @@ export default StyleSheet.create({
     fontFamily: defaultFont
   },
   imgSet: {
-    flexDirection: "row",
+    flexDirection: 'row',
     flex: 1
   },
   insidePadding: { position: 'relative' },
   modalCancelStyle: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 12,
     paddingVertical: 15
   },
   modalOverlayStyle: {
-    backgroundColor: "rgba(0,0,0,0.4)",
+    backgroundColor: 'rgba(0,0,0,0.4)',
     padding: 10,
     paddingTop: 300,
-    justifyContent: "flex-end"
+    justifyContent: 'flex-end'
   },
   modalCancelTextStyle: {
-    color: "#1d7ee2",
+    color: '#1d7ee2',
     fontFamily: semiboldFont,
     fontSize: 20
   },
   modalOptionContainer: {
-    backgroundColor: "white",
+    backgroundColor: 'white',
     borderRadius: 12,
-    paddingHorizontal: 0,
+    paddingHorizontal: 0
   },
   modalOptionTextStyle: {
     color: colorBlack,
-    fontSize: 20,
+    fontSize: 20
   },
   changeItem: {
     alignItems: 'center',
