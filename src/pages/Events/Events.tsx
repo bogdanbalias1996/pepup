@@ -11,11 +11,14 @@ import styles from './Events.styles';
 
 export class EventsScreen extends React.PureComponent<EventsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
-    header: (props: any) => <HeaderRounded {...props} title={'Events'.toUpperCase()} />
+    header: (props: any) => (
+      <HeaderRounded {...props} title={'Events'.toUpperCase()} />
+    )
   });
 
   state = {
     isModalVisible: false,
+    activeTabIndex: 0
   };
 
   toggleModal = () => {
@@ -26,24 +29,24 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
     const tabsConfig = [
       {
         title: 'Past',
-        component: () => <EventItems categoryId="Past" />,
+        component: () => <EventItems categoryId="Past" />
       },
       {
         title: 'Today',
-        component: () => <EventItems categoryId="Today" />,
+        component: () => <EventItems categoryId="Today" />
       },
       {
         title: 'Featured',
-        component: () => <EventItems categoryId="Featured" />,
+        component: () => <EventItems categoryId="Featured" />
       },
       {
         title: 'Upcoming',
-        component: () => <EventItems categoryId="Upcoming" />,
+        component: () => <EventItems categoryId="Upcoming" />
       },
       {
         title: 'Hot',
-        component: () => <EventItems categoryId="Hot" />,
-      },
+        component: () => <EventItems categoryId="Hot" />
+      }
     ];
 
     return (
@@ -53,6 +56,8 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
             config={tabsConfig}
             style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
+            changeIndex={index => this.setState({ activeTabIndex: index })}
+            activeTabIndex={this.state.activeTabIndex}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
               marginBottom: 10,

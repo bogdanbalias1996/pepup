@@ -49,7 +49,60 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
-export class Component extends React.PureComponent<ProfileScreenProps> {
+const celebTabs: { [key: string]: number } = {
+  funRequests: 0,
+  myRequests: 1,
+  notifications: 2
+};
+
+const userTabs: { [key: string]: number } = {
+  myRequests: 0,
+  notifications: 1
+};
+
+export class Component extends React.Component<ProfileScreenProps> {
+  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+    const {
+      profileData,
+      navigation,
+      getProfile,
+      getUserPepups,
+      handle,
+      userId
+    } = nextProps;
+    const { params } = nextProps.navigation.state;
+    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
+
+    handle && !profileData && getProfile(handle);
+    userId && !profileData && getUserPepups(userId);
+
+    if (params && profileData) {
+      if (
+        isCelebrity &&
+        params.activeTab &&
+        celebTabs[params.activeTab] !== prevState.activeTabIndex
+      ) {
+        const activeTabIndex = celebTabs[params.activeTab];
+        navigation.setParams({ activeTab: null });
+        return { activeTabIndex };
+      } else if (
+        !isCelebrity &&
+        params.activeTab &&
+        userTabs[params.activeTab] !== prevState.activeTabIndex
+      ) {
+        const activeTabIndex = userTabs[params.activeTab];
+        navigation.setParams({ activeTab: null });
+        return { activeTabIndex };
+      }
+    }
+
+    return null;
+  }
+
+  state = {
+    activeTabIndex: 0
+  };
+
   static navigationOptions = () => ({
     header: (props: any) => (
       <HeaderRounded
@@ -97,13 +150,6 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     // },
   ];
 
-  componentDidMount = () => {
-    const { userId, handle } = this.props;
-
-    handle && this.props.getProfile(handle);
-    userId && this.props.getUserPepups(userId);
-  };
-
   handleVideoSave = (video: any) => {
     const {
       fulfillPepupRequest,
@@ -120,7 +166,6 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
 
   render() {
     const { profileData, openPepupModal, getCeleb } = this.props;
-
     const isCelebrity = profileData && profileData.role === ROLE_CELEB;
 
     const getModal = () => {
@@ -185,8 +230,12 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
                       ? this.tabsConfigCeleb
                       : this.tabsConfig
                   }
+                  changeIndex={index =>
+                    this.setState({ activeTabIndex: index })
+                  }
                   style={{ flex: 1 }}
                   stylesItem={defaultTabsStyles.roundedTabs}
+                  activeTabIndex={this.state.activeTabIndex}
                   stylesTabsContainer={{
                     backgroundColor: 'transparent',
                     marginBottom: 10

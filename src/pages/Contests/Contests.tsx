@@ -22,7 +22,8 @@ export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
   });
 
   state = {
-    isModalVisible: false
+    isModalVisible: false,
+    activeTabIndex: 0
   };
 
   toggleModal = () => {
@@ -52,6 +53,8 @@ export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
             config={tabsConfig}
             style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
+            changeIndex={index => this.setState({ activeTabIndex: index })}
+            activeTabIndex={this.state.activeTabIndex}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
               marginBottom: 10,

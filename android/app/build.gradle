@@ -128,7 +128,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.pepup"
+        applicationId "in.bitsport.pepup"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

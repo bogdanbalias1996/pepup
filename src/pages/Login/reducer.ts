@@ -1,24 +1,24 @@
-import {IAction} from '../../coreTypes';
-import { IS_ONBOARDING_PASSED } from '../Onboarding/Onboarding'
+import { IAction } from '../../coreTypes';
+import { IS_ONBOARDING_PASSED } from '../Onboarding/Onboarding';
 import {
   RECEIVE_LOGIN_USER,
   REMOVE_SESSION,
   REQUEST_LOGIN_USER,
   FAILURE_LOGIN_USER,
   SET_USER_ID,
-  SET_HANDLE_NAME,
+  SET_HANDLE_NAME
 } from './actions';
 
 import {
   REQUEST_SIGNUP_USER,
   FAILURE_SIGNUP_USER,
-  RECEIVE_SIGNUP_USER,
+  RECEIVE_SIGNUP_USER
 } from '../SignUp/actions';
 
 import {
   REQUEST_RESETPASSWORD_USER,
   FAILURE_RESETPASSWORD_USER,
-  RECEIVE_RESETPASSWORD_USER,
+  RECEIVE_RESETPASSWORD_USER
 } from '../ForgotPassword/actions';
 
 import {
@@ -46,7 +46,7 @@ export const initialState = new LoginState();
 
 export const LoginReducer = (
   state: LoginState = initialState,
-  action: IAction<any>,
+  action: IAction<any>
 ): LoginState => {
   switch (action.type) {
     case RECEIVE_LOGIN_USER:
@@ -58,19 +58,19 @@ export const LoginReducer = (
         accessToken: action.data.accessToken,
         userId: action.data.id,
         isFetching: false,
-        handle: action.data.handle,
+        handle: action.data.handle
       };
 
     case REQUEST_LOGIN_USER:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case FAILURE_LOGIN_USER:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case REMOVE_SESSION:
@@ -80,13 +80,13 @@ export const LoginReducer = (
     case REQUEST_SIGNUP_USER:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case FAILURE_SIGNUP_USER:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case RECEIVE_SIGNUP_USER:
@@ -98,36 +98,36 @@ export const LoginReducer = (
         accessToken: action.data.accessToken,
         isFetching: false,
         userId: action.data.id,
-        handle: action.data.handle,
+        handle: action.data.handle
       };
 
     case REQUEST_RESETPASSWORD_USER:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case RECEIVE_RESETPASSWORD_USER:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case FAILURE_RESETPASSWORD_USER:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case SET_USER_ID:
       return {
         ...state,
-        userId: action.data,
+        userId: action.data
       };
     case SET_HANDLE_NAME:
       return {
         ...state,
-        handle: action.data,
+        handle: action.data
       };
     default:
       return state;
