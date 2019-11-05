@@ -1,4 +1,4 @@
-package com.pepup.generated;
+package in.bitsport.pepup.generated;
 
 import java.util.Arrays;
 import java.util.List;
