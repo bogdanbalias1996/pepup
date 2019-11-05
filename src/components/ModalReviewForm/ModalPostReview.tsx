@@ -20,7 +20,7 @@ import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalPostReviewShown: state.PepupState.isModalPostReviewShown,
-  celebData: state.PepupState.celebData,
+  pepupData: state.PepupState.pepupData,
   isFetching: state.PepupState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -50,21 +50,21 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
       closePostReviewModal,
       isModalPostReviewShown,
       isFetching,
-      celebData
+      pepupData
     } = this.props;
 
-    const [, totalRating] = celebData
-      ? celebData.weightedRating.split('/')
+    const [, totalRating] = pepupData
+      ? pepupData.celebInfo.weightedRating.split('/')
       : [, ''];
 
     return (
-      celebData && (
+      pepupData && (
         <PepupModal
           visible={isModalPostReviewShown}
           onRequestClose={() => closePostReviewModal()}
           isLoading={isFetching}
           heightContent={this.state.heightDescription}>
-          {celebData && Object.keys(celebData).length !== 0 && (
+          {pepupData && Object.keys(pepupData).length !== 0 && (
             <View style={styles.wrapModalContent}>
               <Formik
                 initialValues={{
@@ -100,24 +100,17 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                             style={styles.form}
                             onLayout={event => {
                               const { height } = event.nativeEvent.layout;
-                              Object.keys(celebData).length !== 0 &&
+                              Object.keys(pepupData).length !== 0 &&
                                 this.setState({ heightDescription: height });
                             }}>
-                            {Boolean(formattedErrorString) && (
-                              <View style={styles.formErrorContainer}>
-                                <Text style={styles.formError}>
-                                  {formattedErrorString}
-                                </Text>
-                              </View>
-                            )}
                             <View style={{ justifyContent: 'space-between' }}>
                               <View style={styles.inputWrap}>
                                 <Text style={styles.subTitle}>
-                                  {`Say Thanks to ${celebData.userInfo.name}`}
+                                  {`Say Thanks to ${pepupData.celebInfo.userInfo.name}`}
                                 </Text>
                                 <TextInputBorderStyled
                                   name="review"
-                                  label="Type your review here"
+                                  label="Type your reaction here"
                                   inputStyle={{ height: 180 }}
                                   multiline={true}
                                   numberOfLines={5}
@@ -128,6 +121,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                               <View style={styles.starsWrap}>
                                 <StarRating
                                   name="rating"
+                                  activeOpacity={1}
                                   disabled={false}
                                   starSize={45}
                                   maxStars={+totalRating}

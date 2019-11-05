@@ -23,12 +23,14 @@ import {
   getUserPepups
 } from './actions';
 import { ProfileScreenProps } from '.';
-import { NotificationItems } from './NotificationItems';
+import { MyRequests } from './MyRequests';
 import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
+import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
+import { NotificationItems } from './NotificationItems';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -70,7 +72,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
   tabsConfig = [
     {
       title: 'My Requests',
-      component: () => <NotificationItems />
+      component: () => <MyRequests />
     },
     {
       title: 'Notifications',
@@ -85,7 +87,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
     },
     {
       title: 'My Requests',
-      component: () => <NotificationItems />
+      component: () => <MyRequests />
     },
     {
       title: 'Notifications',
@@ -197,6 +199,7 @@ export class Component extends React.PureComponent<ProfileScreenProps> {
           </View>
           <ModalRecordVideo onVideoSave={this.handleVideoSave} />
           <ModalPepup />
+          <ModalPostReview />
           <ModalPepupNotification />
         </PepupBackground>
       )

@@ -60,6 +60,8 @@ export const colorDots = '#a1a8b5';
 export const colorTextAlert = '#302c48';
 export const colorStat = '#a02e9e';
 export const colorTextGreyIntro = '#675899';
+export const colorMessageBorder = '#c6c6ca';
+export const colorAllRead = '#b63580';
 
 export const defaultFont = 'ss-medium';
 export const semiboldFont = 'ss-medium';

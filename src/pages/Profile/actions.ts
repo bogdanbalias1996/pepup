@@ -59,7 +59,9 @@ export const fulfillPepupRequest = (video: any) => {
         dispatch(openAlert({
           title: 'Pepup Sent',
           text:
-            'This Pepup is now on it’s way to its requestor. It may also be featured on your page.',
+            res.sharePublicly 
+            ? `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It will also be featured on your page.`
+            : `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It won't be featured on your page.`,
           onPress: () => {
             dispatch(closeAlert());
             dispatch(closeVideoModal());
@@ -95,22 +97,22 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then(res => {
-      dispatch(videoRecordModalClose())
-      dispatch(openAlert({
-        title: 'Changes saved',
-        text: 'Updates to your profile have been saved.',
-        onPress: () => {
-          dispatch(closeAlert());
-        }
-      }));
-    })
-  .catch(err => {
-    dispatch(openError({
-      type: 'unknown',
-      onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-    }))
-  });
+      .then(res => {
+        dispatch(videoRecordModalClose())
+        dispatch(openAlert({
+          title: 'Changes saved',
+          text: 'Updates to your profile have been saved.',
+          onPress: () => {
+            dispatch(closeAlert());
+          }
+        }));
+      })
+      .catch(err => {
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
+        }))
+      });
   };
 };
 
@@ -315,7 +317,7 @@ export const failureAccept = (): IAction<undefined> => {
   };
 };
 
-export const acceptPepupRequest = (pepupId:string) => {
+export const acceptPepupRequest = (pepupId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestAccept());
     request({
@@ -369,7 +371,7 @@ export const failureDeny = (): IAction<undefined> => {
   };
 };
 
-export const denyPepupRequest = (pepupId:string) => {
+export const denyPepupRequest = (pepupId: string) => {
   return (dispatch: Dispatch) => {
     dispatch(requestDeny());
     request({
@@ -383,7 +385,14 @@ export const denyPepupRequest = (pepupId:string) => {
     })
       .then(res => {
         dispatch(receiveDeny());
-        dispatch(closeNotifyModal());
+        dispatch(openAlert({
+          title: 'Request Rejected',
+          text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeNotifyModal());
+          }
+        }))
       })
       .catch(err => {
         dispatch(failureDeny());
