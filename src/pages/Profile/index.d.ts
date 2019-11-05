@@ -93,7 +93,7 @@ export type FanRequestsProps = {
   getStatusCeleb?: () => void,
   isFetching: boolean,
   userId: string,
-  pepupId: string,
+  pepupId?: string,
   getCelebPepups: (id: string) => Promise<any>,
   openNotifyModal: () => void,
   getPepupNotification: (id: string) => Promise<any>,

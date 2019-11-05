@@ -130,8 +130,8 @@ export class Component extends React.PureComponent<FanRequestsProps> {
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            <Text style={styles.textWrapper}>
-              <Text style={styles.text}>{msg}</Text>
+            <Text>
+              <Text style={styles.text}>{msg}{' '}</Text>
               <Text
                 style={[styles.text, { color: statusColor }, styles.completed]}>
                 {linkText}
@@ -155,7 +155,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
-          style={{ flex: 1 }}
+          style={{ flex: 1, paddingLeft: 16 }}
           showsVerticalScrollIndicator={false}
           data={celebPepups}
           renderItem={this.renderItemRequest}
@@ -189,7 +189,7 @@ const styles = StyleSheet.create({
     color: colorTextGray
   },
   completed: {
-    fontFamily: boldFont
+    fontFamily: boldFont,
   },
   reqDescription: {
     fontSize: 12,
@@ -210,8 +210,5 @@ const styles = StyleSheet.create({
   notificationStatus: {
     flexDirection: 'row',
     fontFamily: defaultFont
-  },
-  textWrapper: {
-    justifyContent: 'flex-start'
   }
 });

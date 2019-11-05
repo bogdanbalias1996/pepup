@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   gradient: {
     borderRadius: 8,
     padding: 1,
-    marginVertical: 10
+    marginVertical: 5
   },
   messageText: {
     textAlign: 'left',

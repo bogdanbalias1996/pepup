@@ -140,7 +140,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
-          style={{ flex: 1 }}
+          style={{ flex: 1, paddingLeft: 16 }}
           showsVerticalScrollIndicator={false}
           data={userPepups}
           renderItem={this.renderItemRequest}

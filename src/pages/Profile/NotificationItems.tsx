@@ -95,11 +95,11 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           <TouchableOpacity
             style={styles.allReadWrap}
             activeOpacity={1}
-            onPress={() => this.setState({isRead: true})}>
+            onPress={() => !this.state.isRead && this.setState({isRead: true})}>
             <Text style={styles.allRead}>Mark All as Read</Text>
           </TouchableOpacity>
           <FlatList
-            style={{ flex: 1 }}
+            style={{ flex: 1, paddingLeft: 16 }}
             showsVerticalScrollIndicator={false}
             data={mock}
             renderItem={this.renderNotification}

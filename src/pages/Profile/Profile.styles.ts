@@ -44,7 +44,6 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 16,
-    paddingLeft: 16,
     flex: 1,
     marginTop: deviceInfoCheck() ? 10 : 0
   },
