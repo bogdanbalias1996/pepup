@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { Dispatch } from 'redux';
+import DeviceInfo from 'react-native-device-info';
 
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { goBack } from '../../navigationService';
@@ -9,24 +10,32 @@ import { PepupBackground } from '../../components/PepupBackground/PepupBackgroun
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { colorLightGreyBlue } from '../../variables';
+import {
+  colorVioletStart,
+  colorVioletEnd
+} from '../../variables';
 import { logoutUser } from '../Login/actions';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const ListItem = ({
   title = '',
   onPress = () => {},
-  withIcon = false,
   style = {},
   styleText = {}
 }) => {
   return (
-    <TouchableOpacity
-      style={[styles.listItem, style]}
-      onPress={() => !!onPress && onPress()}
-    >
-      <Text style={[styles.listItemText, styleText]}>{title}</Text>
-      {!!withIcon && <Icon name="next" color={colorLightGreyBlue} />}
-    </TouchableOpacity>
+    <LinearGradient
+      start={[0, 0.5]}
+      end={[1, 0.5]}
+      colors={[colorVioletStart, colorVioletEnd]}
+      style={styles.gradient}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.listItem, style]}
+        onPress={() => !!onPress && onPress()}>
+        <Text style={[styles.listItemText, styleText]}>{title}</Text>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 
@@ -59,34 +68,14 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
       <PepupBackground>
         <View style={styles.wrapContent}>
           <ScrollView>
-            <View style={styles.listItemGroup}>
-              <ListItem
-                title="Settings page"
-                onPress={() => {}}
-                withIcon={true}
-              />
-              <ListItem
-                title="Email notifications"
-                onPress={() => {}}
-                withIcon={true}
-              />
-              <ListItem title="Account" onPress={() => {}} withIcon={true} />
-            </View>
-            <View style={styles.listItemGroup}>
-              <ListItem
-                title="Clear image cache"
-                onPress={() => {}}
-                style={{ borderTopWidth: 1 }}
-              />
-              <ListItem title="Clear all caches" onPress={() => {}} />
-            </View>
-            <View style={styles.listItemGroup}>
-              <ListItem
-                title="Sign Out"
-                onPress={() => logoutUser()}
-                styleText={styles.signOutText}
-                style={{ borderTopWidth: 1 }}
-              />
+            <View style={styles.listItemsWrap}>
+              <ListItem title="About Pepup" onPress={() => alert('Click!')} />
+              <ListItem title="Partners &amp; Charities" onPress={() => alert('Click!')} />
+              <ListItem title="Privacy Policy" onPress={() => alert('Click!')} />
+              <ListItem title="Terms of Service" onPress={() => alert('Click!')} />
+              <ListItem title="Provide Feedback" onPress={() => alert('Click!')} />
+              <ListItem title={`App Version - ${DeviceInfo.getVersion()}`} onPress={() => alert('Click!')} />
+              <ListItem title="Sign Out" onPress={() => logoutUser()} />
             </View>
           </ScrollView>
         </View>

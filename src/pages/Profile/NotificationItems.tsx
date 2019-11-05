@@ -83,7 +83,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
         message={item.message}
         date={item.date}
         onPress={() => alert('Click!')}
-        isRead={true}
+        isRead={false}
       />
     );
   };

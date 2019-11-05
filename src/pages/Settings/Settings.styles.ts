@@ -1,41 +1,38 @@
 import { StyleSheet } from 'react-native';
 import {
-  colorLightGray,
-  colorSwipeLine,
-  colorTextGray,
-  defaultFont,
   semiboldFont,
+  colorBlack,
 } from '../../variables';
-import { deviceInfoCheck } from '../../helpers';
 
 export default StyleSheet.create({
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    paddingTop: 16,
+    paddingHorizontal: 24,
     flex: 1,
-    marginTop: deviceInfoCheck() ? 10 : 0,
+    marginTop: 15,
   },
-  listItemGroup: {
-    marginBottom: 32,
+  listItemsWrap: {
+    marginTop: 40
   },
   listItem: {
-    padding: 16,
+    paddingHorizontal: 16,
+    paddingVertical: 20,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    borderBottomWidth: 1,
-    borderColor: colorSwipeLine,
+    justifyContent: 'flex-start',
+    backgroundColor: 'white',
+    borderRadius: 24
   },
   listItemText: {
-    color: colorTextGray,
-    fontSize: 14,
-    fontFamily: defaultFont,
-  },
-  signOutText: {
-    fontSize: 14,
-    color: colorTextGray,
+    color: colorBlack,
+    fontSize: 16,
     fontFamily: semiboldFont,
   },
+  gradient: {
+    borderRadius: 24,
+    padding: 1,
+    marginVertical: 10
+  }
 });
