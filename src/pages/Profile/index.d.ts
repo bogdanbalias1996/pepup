@@ -3,22 +3,22 @@ import { Celeb } from '../Pepups';
 import { VideoType } from '../../components/ModalRecordVideo/'
 
 export type Profile = {
-  email: string;
-  fbConnected: boolean;
-  flagged: boolean;
-  followerCnt: number;
-  following: boolean;
-  followingCnt: number;
-  handle: string;
-  id: string;
-  icon: string;
-  name: string;
-  profileInfo: Object;
-  role: string;
-  status: string;
-  twitterConnected: boolean;
-  verified: boolean;
-};
+  email: string,
+  fbConnected: boolean,
+  flagged: boolean,
+  followerCnt: number,
+  following: boolean,
+  followingCnt: number,
+  handle: string,
+  id: string,
+  icon: string,
+  name: string,
+  profileInfo: Object,
+  role: string,
+  status: string,
+  twitterConnected: boolean,
+  verified: boolean,
+}
 
 export type Pepup = {
   id: string,
@@ -37,18 +37,18 @@ export type Pepup = {
 
 export type UserRequest = {
   id: string,
-  fulfilled: false,
+  fulfilled: boolean,
   status: string,
   paymentStatus: string,
-  featured: false,
+  featured: boolean,
   request: string,
   category: string,
   requestFor: string,
-  requestDenied: false,
-  sharePublicly: true,
+  requestDenied: boolean,
+  sharePublicly: boolean,
   requestedOf: string,
   requestedBy: string,
-  markedForDelete: false,
+  markedForDelete: boolean,
   mediaBasePath: string,
   requestedByInfo: any,
   celebInfo: Celeb,
@@ -56,55 +56,58 @@ export type UserRequest = {
 }
 
 export type ProfileScreenStateProps = {
-  navigation: NavigationScreenProp<any, any>;
-  userId: string;
-  handle: string;
-  profileData: Profile | null;
-  userPepups: Array<Pepup>;
-  celebPepups: Array<Pepup>;
-  pepups: Array<Pepup>;
-  isFetching: boolean;
-};
+  navigation: NavigationScreenProp<any, any>,
+  userId: string,
+  handle: string,
+  profileData: Profile | null,
+  userPepups: Array<Pepup>,
+  celebPepups: Array<Pepup>,
+  pepups: Array<Pepup>,
+  isFetching: boolean,
+}
 
 export type ProfileScreenDispatchProps = {
-  getProfile: (handle: string) => Promise<any>;
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void;    
-  getUserPepups: (id: string) => Promise<any>;
-  openPepupModal: () => void;
-  getCeleb: (id: string) => Promise<any>;
-};
+  getProfile: (handle: string) => Promise<any>,
+  videoRecordModalOpen: () => void,
+  fulfillPepupRequest: (video: any) => void,
+  updateCelebIntroVideo: (celebId: string, video: any) => void,
+  getUserPepups: (id: string) => Promise<any>,
+  openPepupModal: () => void,
+  getCeleb: (id: string) => Promise<any>,
+}
+
+export type MyRequestsProps = {
+  userPepups: Array<Pepup>,
+  getStatusUser?: () => void,
+  isFetching: boolean,
+  userId: string,
+  getUserPepups: (id: string) => Promise<any>
+}
 
 export type NotificationItemsProps = {
-  userPepups: Array<Pepup>;
-  getStatusUser?: () => void;
-  isFetching: boolean,
-  userId: string,
-  getUserPepups: (id: string) => Promise<any>;
-};
+  isFetching: boolean
+}
 
 export type FanRequestsProps = {
-  celebPepups: Array<Pepup>
-  getStatusCeleb?: () => void;
+  celebPepups: Array<Pepup>,
+  getStatusCeleb?: () => void,
   isFetching: boolean,
   userId: string,
-  pepupId: string,
-  getCelebPepups: (id: string) => Promise<any>;
-  openNotifyModal: () => void;
-  getPepupNotification: (id: string) => Promise<any>;
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void;    
+  pepupId?: string,
+  getCelebPepups: (id: string) => Promise<any>,
+  openNotifyModal: () => void,
+  getPepupNotification: (id: string) => Promise<any>,
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void  
 };
 
 export type HistoryItemsProps = {
-  pepups: Array<Pepup>;
-  profileData: Profile | null;
-  celebData: Celeb | null;
+  pepups: Array<Pepup>,
+  profileData: Profile | null,
+  celebData: Celeb | null,
   isFetching: boolean,
   getCeleb: (id: string) => Promise<any>
-  getAllPepups: () => Promise<any>;
+  getAllPepups: () => Promise<any>,
 }
 
-export type ProfileScreenProps = ProfileScreenStateProps &
-  ProfileScreenDispatchProps;
+export type ProfileScreenProps = ProfileScreenStateProps & ProfileScreenDispatchProps;
 
-export type HeaderProps = {
-}

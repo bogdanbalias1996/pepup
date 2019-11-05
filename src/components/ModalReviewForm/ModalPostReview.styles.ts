@@ -2,39 +2,24 @@ import { StyleSheet } from "react-native";
 import {
     colorBlack,
     colorTextGray,
-    colorLightGray,
-    colorSwipeLine,
     colorTomato,
     semiboldFont,
-    defaultFont
+    defaultFont,
+    boldFont
 } from "../../variables";
 
 export default StyleSheet.create({
     wrapModalContent: {
-        backgroundColor: "white",
-        borderTopLeftRadius: 32,
-        borderTopRightRadius: 32,
-        flexGrow: 1,
-        paddingHorizontal: 24
-    },
-    title: {
-        fontSize: 18,
-        fontFamily: semiboldFont,
-        color: colorBlack,
-        lineHeight: 25
+        flex: 1, 
+        paddingHorizontal: 24, 
+        position: 'relative',
+        paddingTop: 15
     },
     subTitle: {
         fontSize: 14,
-        fontFamily: semiboldFont,
+        fontFamily: boldFont,
         color: colorBlack,
-        marginBottom: 10
-    },
-    swiperLine: {
-        width: 64,
-        height: 4,
-        backgroundColor: colorSwipeLine,
-        marginVertical: 20,
-        alignSelf: "center"
+        marginBottom: 10,
     },
     disclaimerText: {
         color: colorTextGray,
@@ -51,15 +36,19 @@ export default StyleSheet.create({
     modalFooter: {
         flexDirection: "row",
         marginTop: 15,
-        marginBottom: 60,
+        marginBottom: 30,
         backgroundColor: "transparent",
-        alignItems: 'flex-end'
+        left: 0,
+        right: 0,
+        marginHorizontal: 24,
+        position: 'absolute',
+        bottom: 0
     },
     btnCancel: {
         width: 48,
         height: 48,
         borderRadius: 30,
-        backgroundColor: colorLightGray,
+        backgroundColor: 'white',
         justifyContent: "center",
         alignItems: "center",
         marginRight: 16
@@ -103,7 +92,7 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    wrap: { flex: 1, marginBottom: 10 },
+    wrap: { flex: 1, position: 'relative' },
     checkboxWrap: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -111,5 +100,6 @@ export default StyleSheet.create({
     },
     checkText: {
         marginLeft: 10
-    }
+    },
+    scrollContent: { paddingBottom: 90 }
 });

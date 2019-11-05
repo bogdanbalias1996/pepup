@@ -4,9 +4,10 @@ import { request } from '../../api/network';
 import { IAction } from '../../coreTypes';
 import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
-import { closeVideoModal } from '../Pepups/actions';
+import { closeVideoModal, closeNotifyModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
 import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
+import { Pepup } from '.';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -62,7 +63,9 @@ export const fulfillPepupRequest = (entityId: string, video: any) => {
         dispatch(openAlert({
           title: 'Pepup Sent',
           text:
-            'This Pepup is now on it’s way to its requestor. It may also be featured on your page.',
+            res.sharePublicly 
+            ? `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It will also be featured on your page.`
+            : `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It won't be featured on your page.`,
           onPress: () => {
             dispatch(closeAlert());
             dispatch(closeVideoModal());
@@ -121,7 +124,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
 };
 
 export const RECEIVE_USER_PEPUPS = 'RECEIVE_USER_PEPUPS';
-export const receiveUserPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveUserPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_USER_PEPUPS,
     data,
@@ -181,7 +184,7 @@ export const getUserPepups = (userId: string) => {
 };
 
 export const RECEIVE_CELEB_PEPUPS = 'RECEIVE_CELEB_PEPUPS';
-export const receiveCelebPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveCelebPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_CELEB_PEPUPS,
     data,
@@ -241,7 +244,7 @@ export const getCelebPepups = (userId: string) => {
 };
 
 export const RECEIVE_ALL_PEPUPS = 'RECEIVE_ALL_PEPUPS';
-export const receiveAllPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveAllPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_ALL_PEPUPS,
     data,
@@ -292,6 +295,121 @@ export const getAllPepups = () => {
               dispatch(getAllPepups() as any);
             },
           }),
+        );
+      });
+  };
+};
+
+export const REQUEST_ACCEPT = 'REQUEST_ACCEPT';
+export const requestAccept = (): IAction<undefined> => {
+  return {
+    type: REQUEST_ACCEPT,
+    data: undefined
+  };
+};
+
+export const RECEIVE_ACCEPT = 'RECEIVE_ACCEPT';
+export const receiveAccept = (): IAction<undefined> => {
+  return {
+    type: RECEIVE_ACCEPT,
+    data: undefined
+  };
+};
+
+export const FAILURE_ACCEPT = 'FAILURE_ACCEPT';
+export const failureAccept = (): IAction<undefined> => {
+  return {
+    type: FAILURE_ACCEPT,
+    data: undefined
+  };
+};
+
+export const acceptPepupRequest = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestAccept());
+    request({
+      operation: ApiOperation.AcceptRequest,
+      params: {
+        pepupId
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => {
+        dispatch(receiveAccept());
+        dispatch(closeNotifyModal());
+      })
+      .catch(err => {
+        dispatch(failureAccept());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(acceptPepupRequest(pepupId) as any);
+            }
+          })
+        );
+      });
+  };
+};
+
+export const REQUEST_DENY = 'REQUEST_DENY';
+export const requestDeny = (): IAction<undefined> => {
+  return {
+    type: REQUEST_DENY,
+    data: undefined
+  };
+};
+
+export const RECEIVE_DENY = 'RECEIVE_DENY';
+export const receiveDeny = (): IAction<undefined> => {
+  return {
+    type: RECEIVE_DENY,
+    data: undefined
+  };
+};
+
+export const FAILURE_DENY = 'FAILURE_DENY';
+export const failureDeny = (): IAction<undefined> => {
+  return {
+    type: FAILURE_DENY,
+    data: undefined
+  };
+};
+
+export const denyPepupRequest = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestDeny());
+    request({
+      operation: ApiOperation.DenyRequest,
+      params: {
+        pepupId
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => {
+        dispatch(receiveDeny());
+        dispatch(openAlert({
+          title: 'Request Rejected',
+          text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeNotifyModal());
+          }
+        }))
+      })
+      .catch(err => {
+        dispatch(failureDeny());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(denyPepupRequest(pepupId) as any);
+            }
+          })
         );
       });
   };

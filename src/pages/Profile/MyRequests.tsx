@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { FanRequestsProps, Pepup } from './';
+import { MyRequestsProps } from '.';
 import {
   colorTextGray,
   colorBlack,
@@ -19,88 +19,63 @@ import {
   colorTextRed,
   colorCompletedStatus,
   italicFont,
-  colorBlueberry,
-  boldFont
+  semiboldFont,
+  colorBlueberry
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
-import { getCelebPepups } from './actions';
+import { getUserPepups } from './actions';
 import { capitalize } from '../../helpers';
-import { openNotifyModal, getPepupNotification } from '../Pepups/actions';
-import { videoRecordModalOpen } from '../RecordVideo/actions';
-import { VideoType } from '../../components/ModalRecordVideo';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  celebPepups: state.ProfileState.celebPepups,
+  userPepups: state.ProfileState.userPepups,
   userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching,
+  isFetching: state.ProfileState.isFetching
 });
-
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
-  openNotifyModal: () => dispatch(openNotifyModal()),
-  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => dispatch(videoRecordModalOpen(entityId, videoType))
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
 });
 
-export class Component extends React.PureComponent<FanRequestsProps> {
+export class Component extends React.PureComponent<MyRequestsProps> {
   componentDidMount() {
-    const { getCelebPepups, userId } = this.props;
+    const { getUserPepups, userId } = this.props;
 
-    getCelebPepups(userId);
+    getUserPepups(userId);
   }
 
-  getModal = (pepupId: string) => {
-    const { openNotifyModal, getPepupNotification } = this.props
-
-    openNotifyModal();
-    getPepupNotification(pepupId);
-  };
-
-  getStatusCeleb = ({ status, requestedOnDt: date, id }: any) => {
+  getStatusUser = (status: string, name: string) => {
     const normalizedStatus = status.toLowerCase();
-    const today = new Date();
-    const requestedOn = new Date(date);
-    const roundedDays = (
-      (today.getTime() - requestedOn.getTime()) /
-      (1000 * 3600 * 24)
-    )
-      .toFixed(0)
-      .toString();
 
     switch (normalizedStatus) {
       case 'pending':
         return {
-          msg: `${
-            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-            } remaining.`,
+          status,
+          msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => this.getModal(id),
-          linkText: 'View Details.'
+          onPress: () => {}
         };
       case 'accepted':
         return {
-          msg: `${
-            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-            } remaining.`,
+          status,
+          msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
-          linkText: 'Click to record video.'
+          onPress: () => {}
         };
+      case 'unavailable':
       case 'rejected':
         return {
-          msg: `You rejected this request.`,
+          status: 'unavailable',
+          msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => {},
-          linkText: ''
+          onPress: () => {}
         };
       case 'completed':
         return {
-          msg: `Hurray! Your pepup was sent.`,
+          status,
+          msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl'),
-          linkText: 'Click to watch.'
+          onPress: () => alert('Compl')
         };
       default:
         console.log(`Unsupported request status: '${normalizedStatus}'`);
@@ -108,14 +83,16 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           status,
           msg: ``,
           statusColor: colorBlueberry,
-          onPress: () => { },
-          linkText: ''
+          onPress: () => {}
         };
     }
   };
 
   renderItemRequest = ({ item }: any) => {
-    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
+    const { msg, statusColor, onPress, status } = this.getStatusUser(
+      item.status,
+      item.celebInfo.userInfo.name
+    );
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
@@ -123,20 +100,28 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
               <Text style={{ color: statusColor }}>
-                {capitalize(item.status.toLowerCase())}
+                {capitalize(status.toLowerCase())}
               </Text>{' '}
-              - <Text style={styles.name}>{item.requestedByInfo.name}</Text>
+              - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
             </Text>
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            <Text>
-              <Text style={styles.text}>{msg}{' '}</Text>
-              <Text
-                style={[styles.text, { color: statusColor }, styles.completed]}>
-                {linkText}
+            {status.toLowerCase() === 'completed' ? (
+              <Text>
+                <Text style={styles.text}>{msg}</Text>{' '}
+                <Text
+                  style={[
+                    styles.text,
+                    { color: statusColor },
+                    styles.completed
+                  ]}>
+                  Click to watch.
+                </Text>
               </Text>
-            </Text>
+            ) : (
+              <Text style={styles.text}>{msg}</Text>
+            )}
             <Text
               numberOfLines={3}
               ellipsizeMode="tail"
@@ -150,23 +135,23 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   };
 
   render() {
-    const { isFetching, celebPepups } = this.props;
+    const { isFetching, userPepups } = this.props;
 
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <FlatList
           style={{ flex: 1, paddingLeft: 16 }}
           showsVerticalScrollIndicator={false}
-          data={celebPepups}
+          data={userPepups}
           renderItem={this.renderItemRequest}
-          keyExtractor={(item: Pepup) => item.id}
+          keyExtractor={(item: any) => item.id}
         />
       </Loader>
     );
   }
 }
 
-export const FanRequests = connect(
+export const MyRequests = connect(
   mapStateToProps,
   mapDispatchToProps
 )(Component);
@@ -189,7 +174,7 @@ const styles = StyleSheet.create({
     color: colorTextGray
   },
   completed: {
-    fontFamily: boldFont,
+    fontFamily: semiboldFont
   },
   reqDescription: {
     fontSize: 12,
@@ -198,11 +183,9 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
-    flexShrink: 1
+    color: colorTextGray
   },
   name: {
-    flexGrow: 1,
     fontSize: 14,
     fontFamily: defaultFont,
     color: colorBlack

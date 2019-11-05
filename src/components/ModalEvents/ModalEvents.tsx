@@ -98,7 +98,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
         isLoading={isFetchingEvent}
         onRequestClose={() => closeEventModal()}
         heightContent={this.state.heightDescription}>
-        {!!eventData && (
+        {!!eventData && Object.keys(eventData).length !== 0 && (
           <View style={styles.wrapModalContent}>
             <ScrollView style={styles.scrollView}>
               <View style={styles.scrollContent}>

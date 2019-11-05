@@ -49,7 +49,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         onRequestClose={() => closeContestModal()}
         isLoading={isFetchingContest}
         heightContent={this.state.heightDescription}>
-        {contestData && Object.keys(contestData).length !== 0 ? (
+        {contestData && Object.keys(contestData).length !== 0 && (
           <View style={{ flex: 1, paddingHorizontal: 24 }}>
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
@@ -117,7 +117,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               </View>
             </View>
           </View>
-        ) : null}
+        )}
         {contestData && contestData.type === 'QUIZ' ? (
           <ModalContestQuiz />
         ) : contestData && contestData.type === 'PHOTO' ? (

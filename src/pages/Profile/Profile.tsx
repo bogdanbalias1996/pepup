@@ -18,12 +18,14 @@ import { CardGradient } from '../../components/CardGradient/CardGradient';
 import styles from './Profile.styles';
 import { getProfile, getUserPepups } from './actions';
 import { ProfileScreenProps } from '.';
-import { NotificationItems } from './NotificationItems';
+import { MyRequests } from './MyRequests';
 import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
+import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
+import { NotificationItems } from './NotificationItems';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -114,7 +116,7 @@ export class Component extends React.Component<ProfileScreenProps> {
   tabsConfig = [
     {
       title: 'My Requests',
-      component: () => <NotificationItems />
+      component: () => <MyRequests />
     },
     {
       title: 'Notifications',
@@ -129,7 +131,7 @@ export class Component extends React.Component<ProfileScreenProps> {
     },
     {
       title: 'My Requests',
-      component: () => <NotificationItems />
+      component: () => <MyRequests />
     },
     {
       title: 'Notifications',
@@ -230,6 +232,7 @@ export class Component extends React.Component<ProfileScreenProps> {
           </View>
           <ModalRecordVideo />
           <ModalPepup />
+          <ModalPostReview />
           <ModalPepupNotification />
         </PepupBackground>
       )

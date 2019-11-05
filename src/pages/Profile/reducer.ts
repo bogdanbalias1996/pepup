@@ -11,6 +11,12 @@ import {
   RECEIVE_ALL_PEPUPS,
   REQUEST_ALL_PEPUPS,
   FAILURE_ALL_PEPUPS,
+  RECEIVE_ACCEPT,
+  REQUEST_ACCEPT,
+  FAILURE_ACCEPT,
+  RECEIVE_DENY,
+  REQUEST_DENY,
+  FAILURE_DENY,
 } from './actions';
 import { Profile, Pepup } from '.';
 import {
@@ -120,6 +126,36 @@ export const ProfileReducer = (
         isFetching: true,
       };
     case FAILURE_ALL_PEPUPS:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case RECEIVE_ACCEPT:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case REQUEST_ACCEPT:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case FAILURE_ACCEPT:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case RECEIVE_DENY:
+      return {
+        ...state,
+        isFetching: false,
+      };
+    case REQUEST_DENY:
+      return {
+        ...state,
+        isFetching: true,
+      };
+    case FAILURE_DENY:
       return {
         ...state,
         isFetching: false,
