@@ -43,6 +43,8 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
       denyPepupRequest
     } = this.props;
 
+    const normalizedStatus = pepupData && pepupData.status.toLowerCase();
+
     return (
       pepupData && (
         <PepupModal
@@ -106,7 +108,7 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
               </TouchableOpacity>
               <ButtonStyled
                 style={[styles.btnSubmit, styles.btnReject]}
-                onPress={() => pepupData.status.toLowerCase() !== 'rejected' && denyPepupRequest(pepupData.id)}
+                onPress={() => normalizedStatus !== 'rejected' && denyPepupRequest(pepupData.id)}
                 text="REJECT"
                 loader={isFetching}
                 type="grey"
