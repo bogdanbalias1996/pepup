@@ -78,7 +78,8 @@ export const getToken = async () => {
     if (!developerMode) {
       const ifDeveloper = await getLocalStorage('developerMode');
 
-      ifDeveloper && getStore().dispatch(setDeveloperMode(ifDeveloper));
+      ifDeveloper !== undefined &&
+        getStore().dispatch(setDeveloperMode(ifDeveloper));
     }
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(

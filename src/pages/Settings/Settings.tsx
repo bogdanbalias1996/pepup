@@ -73,7 +73,13 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
   };
 
   render() {
-    const { logoutUser, openAlert, closeAlert, setDeveloperMode } = this.props;
+    const {
+      logoutUser,
+      openAlert,
+      closeAlert,
+      setDeveloperMode,
+      developerMode
+    } = this.props;
 
     return (
       <PepupBackground>
@@ -101,15 +107,19 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
                 title={`App Version - ${DeviceInfo.getVersion()}`}
                 onPress={() => {
                   this.setState({ devIndicator: this.state.devIndicator + 1 });
-                  this.state.devIndicator === 6 &&
+                  if (this.state.devIndicator === 6) {
                     openAlert({
                       title: 'Developer info',
-                      text: 'Now you`re developer!',
+                      text: !developerMode
+                        ? 'Now you`re developer!'
+                        : 'Now you`re not developer.',
                       onPress: () => {
                         closeAlert();
-                        setDeveloperMode(true);
+                        setDeveloperMode(!developerMode ? true : false);
                       }
                     });
+                    this.setState({ devIndicator: 0 });
+                  }
                 }}
               />
               <ListItem title="Sign Out" onPress={() => logoutUser()} />
