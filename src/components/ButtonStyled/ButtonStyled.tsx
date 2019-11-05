@@ -61,7 +61,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   style = '',
   textBold = false,
   type = '',
-  loader = false
+  loader = false,
+  loaderColor = 'white'
 }): JSX.Element => {
   return (
     <View style={[getTypeButton(type)].concat(style)}>
@@ -80,8 +81,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
             styles.btn,
             type === 'border' && { backgroundColor: 'white', height: 46 }
           ]}
-          onPress={() => onPress()}>
-          <Loader color="white" size="small" isDataLoaded={!loader}>
+          onPress={() => !loader && onPress()}>
+          <Loader color={loaderColor} size="small" isDataLoaded={!loader}>
             <Icon
               name={iconName}
               color="white"

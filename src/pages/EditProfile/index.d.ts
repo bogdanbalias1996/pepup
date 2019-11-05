@@ -5,7 +5,7 @@ import {
 import { Profile } from "../Profile";
 import { AlertProps } from "../../components/SuccessfulAlert";
 import { Celeb } from "../Pepups";
-
+import { VideoType } from '../../components/ModalRecordVideo'
 
 export type EditProfileScreenStateProps = {
     navigationOptions?: NavigationScreenOptions;
@@ -20,7 +20,7 @@ export type EditProfileScreenFromData = EditProfileScreenStateProps & EditProfil
 export type EditProfileScreenDispatchProps = {
     editProfile: (data: EditProfileScreenFromData, setErrors: any) => Promise<any>;
     openAlert: (data: AlertProps) => Promise<any>;
-    videoRecordModalOpen: () => void;
+    videoRecordModalOpen: (entityId: string, videoType: VideoType) => void;
     getCeleb: (id: string) => Promise<any>;
 };
 

@@ -5,6 +5,7 @@ export type ButtonStyledProps = {
   iconName?: string;
   type?: string;
   loader?: boolean;
+  loaderColor?: string;
   iconSource?: any;
   textBold?: boolean;
   width?: string;

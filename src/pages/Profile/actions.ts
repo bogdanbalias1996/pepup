@@ -6,7 +6,7 @@ import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { closeVideoModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
-import { videoRecordModalClose } from '../RecordVideo/actions'
+import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -36,16 +36,18 @@ export const getProfile = (handle: string) => {
   };
 };
 
-export const fulfillPepupRequest = (video: any) => {
+export const fulfillPepupRequest = (entityId: string, video: any) => {
   return (dispatch: Dispatch) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
+        pepupId: entityId,
         video: {
-          name: `pepup.mp4`,
+          name: `pepup-${entityId}.mp4`,
           type,
           uri
         }
@@ -55,6 +57,8 @@ export const fulfillPepupRequest = (video: any) => {
       }
     })
       .then(res => {
+        dispatch(videoRecordModalUpload(false));
+        dispatch(videoRecordModalClose())
         dispatch(openAlert({
           title: 'Pepup Sent',
           text:
@@ -65,12 +69,12 @@ export const fulfillPepupRequest = (video: any) => {
           }
         }));
       })
-      .catch(err => {
+      .catch(err => {      
+        dispatch(videoRecordModalUpload(false));
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-        }))
-        console.error(JSON.stringify(err, null, 2));
+          onPress: () => { dispatch(fulfillPepupRequest(entityId, video) as any) }
+        }))        
       });
   };
 };
@@ -80,6 +84,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.UpdateCelebIntroVideo,
       variables: {
@@ -94,22 +99,24 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then(res => {
-      dispatch(videoRecordModalClose())
-      dispatch(openAlert({
-        title: 'Changes saved',
-        text: 'Updates to your profile have been saved.',
-        onPress: () => {
-          dispatch(closeAlert());
-        }
-      }));
-    })
-  .catch(err => {
-    dispatch(openError({
-      type: 'unknown',
-      onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-    }))
-  });
+      .then(res => {
+        dispatch(videoRecordModalUpload(false))
+        dispatch(videoRecordModalClose())
+        dispatch(openAlert({
+          title: 'Changes saved',
+          text: 'Updates to your profile have been saved.',
+          onPress: () => {
+            dispatch(closeAlert());
+          }
+        }));
+      })
+      .catch(err => {
+        dispatch(videoRecordModalUpload(false))
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(fulfillPepupRequest(celebId, video) as any) }
+        }))
+      });
   };
 };
 
