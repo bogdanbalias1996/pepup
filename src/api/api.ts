@@ -37,7 +37,9 @@ export enum ApiOperation {
   GetProductById,
   BuyEventTicket,
   UpdateCelebIntroVideo,
-  GetPepupById
+  GetPepupById,
+  AcceptRequest,
+  DenyRequest
 }
 
 export interface INetwork<C> {
@@ -122,6 +124,8 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.SubmitEntryContest:
       case ApiOperation.BuyEventTicket:
       case ApiOperation.UpdateCelebIntroVideo:
+      case ApiOperation.AcceptRequest:
+      case ApiOperation.DenyRequest:
         return ApiMethod.POST;
 
       case ApiOperation.GetProfile:
@@ -141,7 +145,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetFeaturedCelebs:
       case ApiOperation.GetProdCategoryByType:
       case ApiOperation.GetProductById:
-      case ApiOperation.GetPepupById:  
+      case ApiOperation.GetPepupById:
         return ApiMethod.GET;
 
       default:
@@ -215,7 +219,11 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.UpdateCelebIntroVideo:
         return `${host}/pepup/celeb/update-intro-video`;
       case ApiOperation.GetPepupById:
-        return `${host}/pepup/${pepupId}`;  
+        return `${host}/pepup/${pepupId}`;
+      case ApiOperation.AcceptRequest:
+        return `${host}/pepup/accept-request/${pepupId}`;
+      case ApiOperation.DenyRequest:
+        return `${host}/pepup/deny-request/${pepupId}`;
       default:
         return '';
     }
@@ -264,7 +272,9 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetProductById:
       case ApiOperation.BuyEventTicket:
       case ApiOperation.UpdateCelebIntroVideo:
-      case ApiOperation.GetPepupById:  
+      case ApiOperation.GetPepupById:
+      case ApiOperation.AcceptRequest:
+      case ApiOperation.DenyRequest:
         return true;
 
       default:

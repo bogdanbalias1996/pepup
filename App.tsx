@@ -60,6 +60,7 @@ const AppWithFontLoaded = connect((state: IGlobalState) => ({
 
 export default class App extends Component {
   messageListener!: () => any;
+  popup: any;
 
   async componentDidMount(): Promise<any> {
     SplashScreen.hide();

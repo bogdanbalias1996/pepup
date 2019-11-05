@@ -19,7 +19,8 @@ import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
 const mapStateToProps = (state: IGlobalState) => ({
   categories: state.PepupState.categories,
-  isFetchingCat: state.PepupState.isFetchingCat
+  isFetchingCat: state.PepupState.isFetchingCat,
+  developerMode: state.LoginState.developerMode
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getAllActiveCategories: () => dispatch(getAllActiveCategories() as any)
@@ -55,6 +56,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
         }))
       : null;
 
+    console.log(this.props.developerMode);
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>

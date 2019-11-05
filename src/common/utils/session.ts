@@ -1,6 +1,6 @@
 import { getStore } from '../../configureStore';
 import AsyncStorage from '@react-native-community/async-storage';
-import { removeSession } from '../../pages/Login/actions';
+import { removeSession, setDeveloperMode } from '../../pages/Login/actions';
 import { navigate } from '../../navigationService';
 import { setUserId, setHandleName } from '../../pages/Login/actions';
 import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding';
@@ -53,11 +53,13 @@ export const getToken = async () => {
   let accessToken: string | null = '';
   let userId: string | null = '';
   let handle: string | null = '';
+  let developerMode: boolean;
 
   try {
     accessToken = getStore().getState().LoginState.accessToken;
     userId = getStore().getState().LoginState.userId;
     handle = getStore().getState().LoginState.handle;
+    developerMode = getStore().getState().LoginState.developerMode;
 
     if (!accessToken) {
       const token = await getLocalStorage(ACCESS_TOKEN_NAME);
@@ -72,6 +74,11 @@ export const getToken = async () => {
       const handleStorage = await getLocalStorage('handle_name');
 
       getStore().dispatch(setHandleName(handleStorage));
+    }
+    if (!developerMode) {
+      const ifDeveloper = await getLocalStorage('developerMode');
+
+      ifDeveloper && getStore().dispatch(setDeveloperMode(ifDeveloper));
     }
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(

@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import { LoaderProps } from './';
-import { colorPastelPurple } from '../../variables';
 
 export const Loader = ({
   color = '#003980',

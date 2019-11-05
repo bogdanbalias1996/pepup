@@ -232,10 +232,10 @@ export const requestPepup = (): IAction<undefined> => {
 };
 
 export const RECEIVE_PEPUP = 'RECEIVE_PEPUP';
-export const receivePepup = (data: string): IAction<string> => {
+export const receivePepup = (): IAction<undefined> => {
   return {
     type: RECEIVE_PEPUP,
-    data
+    data: undefined
   };
 };
 
@@ -255,7 +255,7 @@ export const sendRequestForPepup = (
     const { name, text, shareCheckbox } = payload;
     const store = getStore().getState().PepupState;
     const { selectedCategory } = store;
-    const userId = store.celebData.mappedUserId;
+    const userId = store.celebData && store.celebData.mappedUserId;
 
     dispatch(requestPepup());
     request({
@@ -272,7 +272,7 @@ export const sendRequestForPepup = (
       }
     })
       .then(res => {
-        dispatch(receivePepup(res));
+        dispatch(receivePepup());
         dispatch(
           openAlert({
             title: 'Request Submitted',
@@ -451,7 +451,7 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
   return (dispatch: Dispatch, getState: () => IGlobalState) => {
     const { review, rating } = payload;
     const store = getState().PepupState;
-    const userId = store.celebData.userInfo.id;
+    const userId = store.celebData && store.celebData.userInfo.id;
 
     dispatch(requestReview());
     request({

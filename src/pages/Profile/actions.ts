@@ -4,9 +4,10 @@ import { request } from '../../api/network';
 import { IAction } from '../../coreTypes';
 import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
-import { closeVideoModal } from '../Pepups/actions';
+import { closeVideoModal, closeNotifyModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
-import { videoRecordModalClose } from '../RecordVideo/actions'
+import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
+import { Pepup } from '.';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -36,16 +37,18 @@ export const getProfile = (handle: string) => {
   };
 };
 
-export const fulfillPepupRequest = (video: any) => {
+export const fulfillPepupRequest = (entityId: string, video: any) => {
   return (dispatch: Dispatch) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
+        pepupId: entityId,
         video: {
-          name: `pepup.mp4`,
+          name: `pepup-${entityId}.mp4`,
           type,
           uri
         }
@@ -55,22 +58,26 @@ export const fulfillPepupRequest = (video: any) => {
       }
     })
       .then(res => {
+        dispatch(videoRecordModalUpload(false));
+        dispatch(videoRecordModalClose())
         dispatch(openAlert({
           title: 'Pepup Sent',
           text:
-            'This Pepup is now on it’s way to its requestor. It may also be featured on your page.',
+            res.sharePublicly 
+            ? `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It will also be featured on your page.`
+            : `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It won't be featured on your page.`,
           onPress: () => {
             dispatch(closeAlert());
             dispatch(closeVideoModal());
           }
         }));
       })
-      .catch(err => {
+      .catch(err => {      
+        dispatch(videoRecordModalUpload(false));
         dispatch(openError({
           type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-        }))
-        console.error(JSON.stringify(err, null, 2));
+          onPress: () => { dispatch(fulfillPepupRequest(entityId, video) as any) }
+        }))        
       });
   };
 };
@@ -80,6 +87,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
+    dispatch(videoRecordModalUpload(true))
     request({
       operation: ApiOperation.UpdateCelebIntroVideo,
       variables: {
@@ -94,27 +102,29 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
         'Content-Type': 'multipart/form-data'
       }
     })
-    .then(res => {
-      dispatch(videoRecordModalClose())
-      dispatch(openAlert({
-        title: 'Changes saved',
-        text: 'Updates to your profile have been saved.',
-        onPress: () => {
-          dispatch(closeAlert());
-        }
-      }));
-    })
-  .catch(err => {
-    dispatch(openError({
-      type: 'unknown',
-      onPress: () => { dispatch(fulfillPepupRequest(video) as any) }
-    }))
-  });
+      .then(res => {
+        dispatch(videoRecordModalUpload(false))
+        dispatch(videoRecordModalClose())
+        dispatch(openAlert({
+          title: 'Changes saved',
+          text: 'Updates to your profile have been saved.',
+          onPress: () => {
+            dispatch(closeAlert());
+          }
+        }));
+      })
+      .catch(err => {
+        dispatch(videoRecordModalUpload(false))
+        dispatch(openError({
+          type: 'unknown',
+          onPress: () => { dispatch(fulfillPepupRequest(celebId, video) as any) }
+        }))
+      });
   };
 };
 
 export const RECEIVE_USER_PEPUPS = 'RECEIVE_USER_PEPUPS';
-export const receiveUserPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveUserPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_USER_PEPUPS,
     data,
@@ -174,7 +184,7 @@ export const getUserPepups = (userId: string) => {
 };
 
 export const RECEIVE_CELEB_PEPUPS = 'RECEIVE_CELEB_PEPUPS';
-export const receiveCelebPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveCelebPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_CELEB_PEPUPS,
     data,
@@ -234,7 +244,7 @@ export const getCelebPepups = (userId: string) => {
 };
 
 export const RECEIVE_ALL_PEPUPS = 'RECEIVE_ALL_PEPUPS';
-export const receiveAllPepups = (data: Array<any>): IAction<Array<any>> => {
+export const receiveAllPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_ALL_PEPUPS,
     data,
@@ -285,6 +295,121 @@ export const getAllPepups = () => {
               dispatch(getAllPepups() as any);
             },
           }),
+        );
+      });
+  };
+};
+
+export const REQUEST_ACCEPT = 'REQUEST_ACCEPT';
+export const requestAccept = (): IAction<undefined> => {
+  return {
+    type: REQUEST_ACCEPT,
+    data: undefined
+  };
+};
+
+export const RECEIVE_ACCEPT = 'RECEIVE_ACCEPT';
+export const receiveAccept = (): IAction<undefined> => {
+  return {
+    type: RECEIVE_ACCEPT,
+    data: undefined
+  };
+};
+
+export const FAILURE_ACCEPT = 'FAILURE_ACCEPT';
+export const failureAccept = (): IAction<undefined> => {
+  return {
+    type: FAILURE_ACCEPT,
+    data: undefined
+  };
+};
+
+export const acceptPepupRequest = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestAccept());
+    request({
+      operation: ApiOperation.AcceptRequest,
+      params: {
+        pepupId
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => {
+        dispatch(receiveAccept());
+        dispatch(closeNotifyModal());
+      })
+      .catch(err => {
+        dispatch(failureAccept());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(acceptPepupRequest(pepupId) as any);
+            }
+          })
+        );
+      });
+  };
+};
+
+export const REQUEST_DENY = 'REQUEST_DENY';
+export const requestDeny = (): IAction<undefined> => {
+  return {
+    type: REQUEST_DENY,
+    data: undefined
+  };
+};
+
+export const RECEIVE_DENY = 'RECEIVE_DENY';
+export const receiveDeny = (): IAction<undefined> => {
+  return {
+    type: RECEIVE_DENY,
+    data: undefined
+  };
+};
+
+export const FAILURE_DENY = 'FAILURE_DENY';
+export const failureDeny = (): IAction<undefined> => {
+  return {
+    type: FAILURE_DENY,
+    data: undefined
+  };
+};
+
+export const denyPepupRequest = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestDeny());
+    request({
+      operation: ApiOperation.DenyRequest,
+      params: {
+        pepupId
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => {
+        dispatch(receiveDeny());
+        dispatch(openAlert({
+          title: 'Request Rejected',
+          text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeNotifyModal());
+          }
+        }))
+      })
+      .catch(err => {
+        dispatch(failureDeny());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(denyPepupRequest(pepupId) as any);
+            }
+          })
         );
       });
   };

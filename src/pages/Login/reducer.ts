@@ -6,7 +6,8 @@ import {
   REQUEST_LOGIN_USER,
   FAILURE_LOGIN_USER,
   SET_USER_ID,
-  SET_HANDLE_NAME
+  SET_HANDLE_NAME,
+  SET_DEVELOPER_MODE
 } from './actions';
 
 import {
@@ -33,12 +34,14 @@ export class LoginState {
   isFetching: boolean;
   userId: string;
   handle: string;
+  developerMode: any;
 
   constructor() {
     this.accessToken = '';
     this.isFetching = false;
     this.userId = '';
     this.handle = '';
+    this.developerMode = undefined;
   }
 }
 
@@ -128,6 +131,13 @@ export const LoginReducer = (
       return {
         ...state,
         handle: action.data
+      };
+    case SET_DEVELOPER_MODE:
+      setLocalStorage(action.data, 'developerMode');
+
+      return {
+        ...state,
+        developerMode: action.data
       };
     default:
       return state;

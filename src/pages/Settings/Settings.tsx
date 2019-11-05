@@ -2,6 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { Dispatch } from 'redux';
+import DeviceInfo from 'react-native-device-info';
 
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { goBack } from '../../navigationService';
@@ -9,29 +10,44 @@ import { PepupBackground } from '../../components/PepupBackground/PepupBackgroun
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { colorLightGreyBlue } from '../../variables';
-import { logoutUser } from '../Login/actions';
+import { colorVioletStart, colorVioletEnd } from '../../variables';
+import { logoutUser, setDeveloperMode } from '../Login/actions';
+import { LinearGradient } from 'expo-linear-gradient';
+import { SuccessfulAlert } from '../../components/SuccessfulAlert/SuccessfulAlert';
+import { openAlert, closeAlert } from '../Alert/actions';
+import { IGlobalState } from '../../coreTypes';
 
 const ListItem = ({
   title = '',
   onPress = () => {},
-  withIcon = false,
   style = {},
   styleText = {}
 }) => {
   return (
-    <TouchableOpacity
-      style={[styles.listItem, style]}
-      onPress={() => !!onPress && onPress()}
-    >
-      <Text style={[styles.listItemText, styleText]}>{title}</Text>
-      {!!withIcon && <Icon name="next" color={colorLightGreyBlue} />}
-    </TouchableOpacity>
+    <LinearGradient
+      start={[0, 0.5]}
+      end={[1, 0.5]}
+      colors={[colorVioletStart, colorVioletEnd]}
+      style={styles.gradient}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={[styles.listItem, style]}
+        onPress={() => !!onPress && onPress()}>
+        <Text style={[styles.listItemText, styleText]}>{title}</Text>
+      </TouchableOpacity>
+    </LinearGradient>
   );
 };
 
+const mapStateToProps = (state: IGlobalState) => ({
+  developerMode: state.LoginState.developerMode
+});
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logoutUser: () => dispatch(logoutUser() as any)
+  logoutUser: () => dispatch(logoutUser() as any),
+  openAlert: (data: any) => dispatch(openAlert(data) as any),
+  closeAlert: () => dispatch(closeAlert() as any),
+  setDeveloperMode: (data: boolean) => dispatch(setDeveloperMode(data) as any)
 });
 
 export class Component extends React.PureComponent<SettingsScreenProps> {
@@ -52,50 +68,61 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
     )
   });
 
+  state = {
+    devIndicator: 0
+  };
+
   render() {
-    const { logoutUser } = this.props;
+    const { logoutUser, openAlert, closeAlert, setDeveloperMode } = this.props;
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-          <ScrollView>
-            <View style={styles.listItemGroup}>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.listItemsWrap}>
+              <ListItem title="About Pepup" onPress={() => alert('Click!')} />
               <ListItem
-                title="Settings page"
-                onPress={() => {}}
-                withIcon={true}
+                title="Partners &amp; Charities"
+                onPress={() => alert('Click!')}
               />
               <ListItem
-                title="Email notifications"
-                onPress={() => {}}
-                withIcon={true}
+                title="Privacy Policy"
+                onPress={() => alert('Click!')}
               />
-              <ListItem title="Account" onPress={() => {}} withIcon={true} />
-            </View>
-            <View style={styles.listItemGroup}>
               <ListItem
-                title="Clear image cache"
-                onPress={() => {}}
-                style={{ borderTopWidth: 1 }}
+                title="Terms of Service"
+                onPress={() => alert('Click!')}
               />
-              <ListItem title="Clear all caches" onPress={() => {}} />
-            </View>
-            <View style={styles.listItemGroup}>
               <ListItem
-                title="Sign Out"
-                onPress={() => logoutUser()}
-                styleText={styles.signOutText}
-                style={{ borderTopWidth: 1 }}
+                title="Provide Feedback"
+                onPress={() => alert('Click!')}
               />
+              <ListItem
+                title={`App Version - ${DeviceInfo.getVersion()}`}
+                onPress={() => {
+                  this.setState({ devIndicator: this.state.devIndicator + 1 });
+                  this.state.devIndicator === 6 &&
+                    openAlert({
+                      title: 'Developer info',
+                      text: 'Now you`re developer!',
+                      onPress: () => {
+                        closeAlert();
+                        setDeveloperMode(true);
+                      }
+                    });
+                }}
+              />
+              <ListItem title="Sign Out" onPress={() => logoutUser()} />
             </View>
           </ScrollView>
         </View>
+        <SuccessfulAlert />
       </PepupBackground>
     );
   }
 }
 
 export const SettingsScreen = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(Component);
