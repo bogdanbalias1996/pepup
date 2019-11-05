@@ -189,8 +189,10 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                   cancelStyle={styles.modalCancelStyle}
                   overlayStyle={styles.modalOverlayStyle}
                   cancelTextStyle={styles.modalCancelTextStyle}
+                  cancelContainerStyle={styles.modalCancelContainerStyle}
                   optionContainerStyle={styles.modalOptionContainer}
                   optionTextStyle={styles.modalOptionTextStyle}
+                  optionStyle={styles.modalOptionStyle}
                   selectStyle={{
                     borderRadius: 30,
                     width: 100,
@@ -198,7 +200,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                     height: 44,
                     justifyContent: 'center'
                   }}
-                  cancelText="Cancel"
+                  cancelText="x"
                 />
               </View>
               <ButtonStyled
