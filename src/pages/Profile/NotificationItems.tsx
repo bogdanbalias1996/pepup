@@ -10,12 +10,6 @@ import {
 
 import { NotificationItemsProps } from '.';
 import {
-  colorTextGray,
-  colorBlack,
-  colorInputBackground,
-  defaultFont,
-  italicFont,
-  semiboldFont,
   colorBlueberry,
   boldFont,
   colorAllRead
@@ -74,6 +68,10 @@ const mock = [
 ];
 
 export class Component extends React.PureComponent<NotificationItemsProps> {
+  state = {
+    isRead: false
+  }
+
   componentDidMount() {}
 
   renderNotification = ({ item }: any) => {
@@ -82,8 +80,8 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
         title={item.title}
         message={item.message}
         date={item.date}
-        onPress={() => alert('Click!')}
-        isRead={false}
+        onPress={() => this.setState({isRead: !this.state.isRead})}
+        isRead={this.state.isRead}
       />
     );
   };
@@ -97,7 +95,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
           <TouchableOpacity
             style={styles.allReadWrap}
             activeOpacity={1}
-            onPress={() => alert('All are Read!')}>
+            onPress={() => this.setState({isRead: true})}>
             <Text style={styles.allRead}>Mark All as Read</Text>
           </TouchableOpacity>
           <FlatList
