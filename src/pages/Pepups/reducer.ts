@@ -39,7 +39,7 @@ export class PepupState {
   isModalReqShown: boolean;
   isVideoModalShown: boolean;
   categories: Array<Category>;
-  celebs: Array<Celeb>;
+  celebs: { [key: string]: Celeb };
   celebData: Celeb | null;
   isFetching: boolean;
   isFetchingCat: boolean;
@@ -54,7 +54,7 @@ export class PepupState {
     this.isModalShown = false;
     this.isModalReqShown = false;
     this.categories = [];
-    this.celebs = [];
+    this.celebs = {};
     this.celebData = null;
     this.isFetching = false;
     this.isFetchingCat = false;

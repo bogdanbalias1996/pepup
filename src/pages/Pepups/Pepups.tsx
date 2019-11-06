@@ -10,20 +10,18 @@ import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
-import { Dispatch } from 'redux';
-import { getAllActiveCategories } from './actions';
+
+import {
+  getAllActiveCategories,
+  getCelebsByCategory,
+  getCeleb,
+  setCategory,
+  getFeaturedCelebs
+} from './actions';
 import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
 import { colorBlueberry } from '../../variables';
-import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  categories: state.PepupState.categories,
-  isFetchingCat: state.PepupState.isFetchingCat
-});
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getAllActiveCategories: () => dispatch(getAllActiveCategories() as any)
-});
 
 export class Component extends React.PureComponent<PepupsScreenProps> {
   static navigationOptions = () => ({
@@ -37,14 +35,39 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
     activeTabIndex: 0
   };
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { getAllActiveCategories } = this.props;
-    getAllActiveCategories();
+
+    getAllActiveCategories()
+    this.fetchCategories('Featured')
   };
+
+  fetchCategories = (categoryId: string) => {
+    const {
+      getCelebsByCategory,
+      setCategory,
+      getFeaturedCelebs
+    } = this.props;
+
+    setCategory(categoryId);
+
+    categoryId === 'Featured'
+      ? getFeaturedCelebs()
+      : getCelebsByCategory(categoryId);
+  }
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+  handleChangeTab = (index: number) => {
+    const { categories } = this.props;
+
+    this.setState({ activeTabIndex: index });
+
+    const categoryId = categories[index].id;
+    this.fetchCategories(categoryId);
+  }
 
   render() {
     const { categories, isFetchingCat } = this.props;
@@ -66,7 +89,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
               <Tabs
                 config={tabsConfig}
                 style={{ flex: 1 }}
-                changeIndex={index => this.setState({ activeTabIndex: index })}
+                changeIndex={this.handleChangeTab}
                 activeTabIndex={this.state.activeTabIndex}
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={{
@@ -84,6 +107,18 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
     );
   }
 }
+
+const mapStateToProps = (state: IGlobalState) => ({
+  categories: state.PepupState.categories,
+  isFetchingCat: state.PepupState.isFetchingCat
+});
+const mapDispatchToProps = {
+  getAllActiveCategories,
+  getCelebsByCategory,
+  getCeleb,
+  setCategory,
+  getFeaturedCelebs
+};
 
 export const PepupsScreen = connect(
   mapStateToProps,

@@ -1,6 +1,19 @@
-import { IAction } from "../../coreTypes";
-import { OPEN_EVENT_MODAL, CLOSE_EVENT_MODAL, RECEIVE_ALL_EVENTS, RECEIVE_EVENT, REQUEST_ALL_EVENTS, FAILURE_ALL_EVENTS, REQUEST_EVENT, FAILURE_EVENT, SET_QUANTITY, RECEIVE_EVENT_PURCHASE, REQUEST_EVENT_PURCHASE, FAILURE_EVENT_PURCHASE } from "./actions";
-import { Event } from ".";
+import { IAction } from '../../coreTypes';
+import {
+  OPEN_EVENT_MODAL,
+  CLOSE_EVENT_MODAL,
+  RECEIVE_ALL_EVENTS,
+  RECEIVE_EVENT,
+  REQUEST_ALL_EVENTS,
+  FAILURE_ALL_EVENTS,
+  REQUEST_EVENT,
+  FAILURE_EVENT,
+  SET_QUANTITY,
+  RECEIVE_EVENT_PURCHASE,
+  REQUEST_EVENT_PURCHASE,
+  FAILURE_EVENT_PURCHASE
+} from './actions';
+import { Event } from '.';
 export class EventState {
   isModalShown: boolean;
   events: Array<Event>;
@@ -39,7 +52,10 @@ export const EventReducer = (
     case RECEIVE_ALL_EVENTS:
       return {
         ...state,
-        events: action.data,
+        events: {
+          ...state.events,
+          [(action.data.categoryId || '').toLowerCase()]: action.data.data
+        },
         isFetching: false
       };
     case REQUEST_ALL_EVENTS:
@@ -72,12 +88,12 @@ export const EventReducer = (
       return {
         ...state,
         selectedQuantity: action.data
-      }
+      };
     case RECEIVE_EVENT_PURCHASE:
       return {
         ...state,
-        isFetching: false,
-      }
+        isFetching: false
+      };
     case REQUEST_EVENT_PURCHASE:
       return {
         ...state,
@@ -92,4 +108,3 @@ export const EventReducer = (
       return state;
   }
 };
-

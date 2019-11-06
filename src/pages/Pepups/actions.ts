@@ -11,8 +11,7 @@ import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
 import { UserRequest } from '../Profile';
 
-
-export const OPEN_PEPUP_MODAL = "OPEN_PEPUP_MODAL";
+export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
 export const openPepupModal = (): IAction<undefined> => {
   return {
     type: OPEN_PEPUP_MODAL,
@@ -20,7 +19,7 @@ export const openPepupModal = (): IAction<undefined> => {
   };
 };
 
-export const CLOSE_PEPUP_MODAL = "CLOSE_PEPUP_MODAL";
+export const CLOSE_PEPUP_MODAL = 'CLOSE_PEPUP_MODAL';
 export const closePepupModal = (): IAction<undefined> => {
   return {
     type: CLOSE_PEPUP_MODAL,
@@ -28,7 +27,7 @@ export const closePepupModal = (): IAction<undefined> => {
   };
 };
 
-export const OPEN_PEPUP_REQ_MODAL = "OPEN_PEPUP_REQ_MODAL";
+export const OPEN_PEPUP_REQ_MODAL = 'OPEN_PEPUP_REQ_MODAL';
 export const openPepupReqModal = (): IAction<undefined> => {
   return {
     type: OPEN_PEPUP_REQ_MODAL,
@@ -36,7 +35,7 @@ export const openPepupReqModal = (): IAction<undefined> => {
   };
 };
 
-export const CLOSE_PEPUP_REQ_MODAL = "CLOSE_PEPUP_REQ_MODAL";
+export const CLOSE_PEPUP_REQ_MODAL = 'CLOSE_PEPUP_REQ_MODAL';
 export const closePepupReqModal = (): IAction<undefined> => {
   return {
     type: CLOSE_PEPUP_REQ_MODAL,
@@ -44,16 +43,17 @@ export const closePepupReqModal = (): IAction<undefined> => {
   };
 };
 
-export const RECEIVE_ALL_ACTIVE_CATEGORIES = "RECEIVE_ALL_ACTIVE_CATEGORIES";
-export const receiveAllActiveCategories = (data: Array<Category>): IAction<Array<Category>> => {
+export const RECEIVE_ALL_ACTIVE_CATEGORIES = 'RECEIVE_ALL_ACTIVE_CATEGORIES';
+export const receiveAllActiveCategories = (
+  data: Array<Category>
+): IAction<Array<Category>> => {
   return {
     type: RECEIVE_ALL_ACTIVE_CATEGORIES,
     data
   };
 };
 
-
-export const REQUEST_ALL_ACTIVE_CATEGORIES = "REQUEST_ALL_ACTIVE_CATEGORIES";
+export const REQUEST_ALL_ACTIVE_CATEGORIES = 'REQUEST_ALL_ACTIVE_CATEGORIES';
 export const requestAllActiveCategories = (): IAction<undefined> => {
   return {
     type: REQUEST_ALL_ACTIVE_CATEGORIES,
@@ -61,8 +61,7 @@ export const requestAllActiveCategories = (): IAction<undefined> => {
   };
 };
 
-
-export const FAILURE_ALL_ACTIVE_CATEGORIES = "FAILURE_ALL_ACTIVE_CATEGORIES";
+export const FAILURE_ALL_ACTIVE_CATEGORIES = 'FAILURE_ALL_ACTIVE_CATEGORIES';
 export const failureAllActiveCategories = (): IAction<undefined> => {
   return {
     type: FAILURE_ALL_ACTIVE_CATEGORIES,
@@ -70,27 +69,27 @@ export const failureAllActiveCategories = (): IAction<undefined> => {
   };
 };
 
-export const getAllActiveCategories = () => {
-  return (dispatch: Dispatch) => {
-    dispatch(requestAllActiveCategories());
-    request({
+export const getAllActiveCategories = () => async (dispatch: Dispatch) => {
+  dispatch(requestAllActiveCategories());
+
+  try {
+    const res = await request({
       operation: ApiOperation.GetAllActiveCategories
-    })
-      .then(res => {
-        dispatch(receiveAllActiveCategories(res));
+    });
+    dispatch(receiveAllActiveCategories(res));
+  } catch (err) {
+    dispatch(failureAllActiveCategories());
+
+    dispatch(
+      openError({
+        type: 'unknown',
+        onPress: () => {
+          dispatch(getAllActiveCategories() as any);
+        }
       })
-      .catch(err => {
-        dispatch(failureAllActiveCategories());
-        dispatch(
-          openError({
-            type: 'unknown',
-            onPress: () => {
-              dispatch(getAllActiveCategories() as any);
-            }
-          })
-        );
-      });
-  };
+    );
+  }
+
 };
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';
@@ -129,10 +128,12 @@ export const getCelebsByCategory = (categoryId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveCelebsByCategory({
-          categoryId,
-          data: res
-        }));
+        dispatch(
+          receiveCelebsByCategory({
+            categoryId,
+            data: res
+          })
+        );
         if (!res.length) {
           dispatch(
             openError({
@@ -498,6 +499,73 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
   };
 };
 
+export const OPEN_NOTIFY_MODAL = 'OPEN_NOTIFY_MODAL';
+export const CLOSE_NOTIFY_MODAL = 'CLOSE_NOTIFY_MODAL';
+export const openNotifyModal = (): IAction<undefined> => {
+  return {
+    type: OPEN_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+export const closeNotifyModal = (): IAction<undefined> => {
+  return {
+    type: CLOSE_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+
+export const RECEIVE_PEPUP_NOTIFICATION = 'RECEIVE_PEPUP_NOTIFICATION';
+export const receivePepupNotification = (
+  data: UserRequest
+): IAction<UserRequest> => {
+  return {
+    type: RECEIVE_PEPUP_NOTIFICATION,
+    data
+  };
+};
+
+export const REQUEST_PEPUP_NOTIFICATION = 'REQUEST_PEPUP_NOTIFICATION';
+export const requestPepupNotification = (): IAction<undefined> => {
+  return {
+    type: REQUEST_PEPUP_NOTIFICATION,
+    data: undefined
+  };
+};
+
+export const FAILURE_PEPUP_NOTIFICATION = 'FAILURE_PEPUP_NOTIFICATION';
+export const failurePepupNotification = (): IAction<undefined> => {
+  return {
+    type: FAILURE_PEPUP_NOTIFICATION,
+    data: undefined
+  };
+};
+
+export const getPepupNotification = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestPepupNotification());
+    request({
+      operation: ApiOperation.GetPepupById,
+      params: {
+        pepupId
+      }
+    })
+      .then(res => {
+        dispatch(receivePepupNotification(res));
+      })
+      .catch(err => {
+        dispatch(failurePepupNotification());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(closeError());
+              dispatch(getPepupNotification(pepupId) as any);
+            }
+          })
+        );
+      });
+  };
+};
 
 export const FAILURE_FEATURED_CELEBS = 'FAILURE_FEATURED_CELEBS';
 export const failureFeaturedCelebs = (): IAction<any> => {
@@ -515,10 +583,12 @@ export const getFeaturedCelebs = () => {
       operation: ApiOperation.GetFeaturedCelebs
     })
       .then(res => {
-        dispatch(receiveCelebsByCategory({
-          categoryId: 'featured',
-          data: res
-        }));
+        dispatch(
+          receiveCelebsByCategory({
+            categoryId: 'featured',
+            data: res
+          })
+        );
         if (!res.length) {
           dispatch(
             openError({
