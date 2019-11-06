@@ -72,31 +72,25 @@ export class Component extends React.PureComponent<FanRequestsProps> {
       (today.getTime() - requestedOn.getTime()) / (1000 * 3600 * 24)
     ).toFixed(0);
 
+    const getMessage = (days: number) => {
+      if (days > 0) {
+        return `${days > 1 ? `${days} days` : `${days} day`} remaining.`;
+      } else if (days === 0) {
+        return `Last day to fulfill.`;
+      } else return 'Expired!';
+    };
+
     switch (normalizedStatus) {
       case 'pending':
         return {
-          msg:
-            roundedDays > 0
-              ? `${
-                  roundedDays > 1 ? roundedDays + ' days' : roundedDays + ' day'
-                } remaining.`
-              : roundedDays === 0
-              ? `Last day to fulfill.`
-              : 'Expired!',
+          msg: getMessage(roundedDays),
           statusColor: colorGreen,
           onPress: () => this.getModal(id),
           linkText: 'View Details.'
         };
       case 'accepted':
         return {
-          msg:
-            roundedDays > 0
-              ? `${
-                  roundedDays > 1 ? roundedDays + ' days' : roundedDays + ' day'
-                } remaining.`
-              : roundedDays === 0
-              ? `Last day to fulfill.`
-              : 'Expired!',
+          msg: getMessage(roundedDays),
           statusColor: colorOrangeStatus,
           onPress: () =>
             this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
