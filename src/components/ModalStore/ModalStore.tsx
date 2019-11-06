@@ -25,7 +25,7 @@ import {
 import { IGlobalState } from '../../coreTypes';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
-import { ImageSafe } from '../ImageSafe/ImageSafe';
+import FastImage from 'react-native-fast-image';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.StoreState.isModalShown,
@@ -88,12 +88,14 @@ export class Component extends React.PureComponent<ModalStoreProps> {
 
     return (
       prodData && (
-        <ImageSafe
-          style={styles.imageCarousel}
-          iconSource={{ uri: prodData.mediaBasePath + item.link }}
-          resizeModeImg="contain"
-          isLoaded={!!item.link}
-        />
+        <FastImage
+            style={styles.imageCarousel}
+            source={{
+              uri: `${prodData.mediaBasePath}${item.link}`,
+              priority: FastImage.priority.normal
+            }}
+            resizeMode={FastImage.resizeMode.contain}
+          />
       )
     );
   };

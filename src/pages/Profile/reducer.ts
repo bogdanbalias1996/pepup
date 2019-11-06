@@ -17,8 +17,13 @@ import {
   RECEIVE_DENY,
   REQUEST_DENY,
   FAILURE_DENY,
+  RECEIVE_PEPUP_NOTIFICATION,
+  REQUEST_PEPUP_NOTIFICATION,
+  FAILURE_PEPUP_NOTIFICATION,
+  OPEN_NOTIFY_MODAL,
+  CLOSE_NOTIFY_MODAL
 } from './actions';
-import { Profile, Pepup } from '.';
+import { Profile, Pepup, UserRequest } from '.';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,
@@ -28,12 +33,15 @@ import {
 export class ProfileState {
   profileData: Profile | null;
   isFetching: boolean;
+  isFetchingNotifyA: boolean;
   userPepups: Array<Pepup>;
   celebPepups: Array<Pepup>;
   pepups: Array<Pepup>;
-
+  pepupData: UserRequest | null;
   isVideoRecordModalVisible: boolean;
   recordedVideo: any;
+  isModalNotifyShown: boolean;
+  isFetchingNotifyD: boolean;
 
   constructor() {
     this.profileData = null;
@@ -43,6 +51,10 @@ export class ProfileState {
     this.pepups = [];
     this.isVideoRecordModalVisible = false;
     this.recordedVideo = undefined;
+    this.isFetchingNotifyA = false;
+    this.pepupData = null;
+    this.isModalNotifyShown = false;
+    this.isFetchingNotifyD = false;
   }
 }
 
@@ -131,34 +143,64 @@ export const ProfileReducer = (
         isFetching: false,
       };
     case RECEIVE_ACCEPT:
+      state.celebPepups = state.celebPepups.map((item: UserRequest) => { return item.id === action.data.id ? action.data : item; });
       return {
         ...state,
-        isFetching: false,
+        isFetchingNotifyA: false,
+        pepupData: action.data
       };
     case REQUEST_ACCEPT:
       return {
         ...state,
-        isFetching: true,
+        isFetchingNotifyA: true,
       };
     case FAILURE_ACCEPT:
       return {
         ...state,
-        isFetching: false,
+        isFetchingNotifyA: false,
       };
     case RECEIVE_DENY:
+      state.celebPepups = state.celebPepups.map((item: UserRequest) => { return item.id === action.data.id ? action.data : item; });
       return {
         ...state,
-        isFetching: false,
+        isFetchingNotifyD: false,
+        pepupData: action.data
       };
     case REQUEST_DENY:
       return {
         ...state,
-        isFetching: true,
+        isFetchingNotifyD: true,
       };
     case FAILURE_DENY:
       return {
         ...state,
-        isFetching: false,
+        isFetchingNotifyD: false,
+      };
+    case RECEIVE_PEPUP_NOTIFICATION:
+      return {
+        ...state,
+        pepupData: action.data,
+        isFetching: false
+      };
+    case REQUEST_PEPUP_NOTIFICATION:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FAILURE_PEPUP_NOTIFICATION:
+      return {
+        ...state,
+        isFetching: false
+      };
+    case OPEN_NOTIFY_MODAL:
+      return {
+        ...state,
+        isModalNotifyShown: true
+      };
+    case CLOSE_NOTIFY_MODAL:
+      return {
+        ...state,
+        isModalNotifyShown: false
       };
     default:
       return state;

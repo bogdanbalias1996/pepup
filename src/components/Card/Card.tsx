@@ -5,7 +5,7 @@ import { colorPastelPurple } from '../../variables';
 
 export const Card = ({ children, style, radius = 20 }: CardProps) => {
   return (
-    <View style={[styles.wrapper, style]}>
+    <View style={[styles.wrapper, style, { borderRadius: radius }]}>
       <View style={[styles.purpleBack, { borderRadius: radius }]}>
         {children}
       </View>
@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
   wrapper: {
     padding: 4,
     backgroundColor: 'white',
-    borderRadius: 20,
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
@@ -33,7 +32,6 @@ const styles = StyleSheet.create({
   purpleBack: {
     width: '100%',
     height: '100%',
-    backgroundColor: colorPastelPurple,
-    borderRadius: 20
+    backgroundColor: colorPastelPurple
   }
 });

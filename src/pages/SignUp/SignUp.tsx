@@ -1,22 +1,22 @@
-import * as React from "react";
-import { connect } from "react-redux";
-import { Formik } from "formik";
-import * as Yup from "yup";
-import { Dispatch } from "redux";
-import { View, Text, TouchableOpacity, Image, Keyboard } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import * as React from 'react';
+import { connect } from 'react-redux';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { Dispatch } from 'redux';
+import { View, Text, TouchableOpacity, Image, Keyboard } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
-import { PepupBackground } from "../../components/PepupBackground/PepupBackground";
-import { TextInputPassword } from "../../components/TextInputStyled/TextInputPassword";
-import { TextInputStyled } from "../../components/TextInputStyled/TextInputStyled";
-import { ButtonStyled } from "../../components/ButtonStyled/ButtonStyled";
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
+import { TextInputPassword } from '../../components/TextInputStyled/TextInputPassword';
+import { TextInputStyled } from '../../components/TextInputStyled/TextInputStyled';
+import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 
-import { signupUser } from "./actions";
-import styles from "./SignUp.styles";
-import { SignupScreenFromData, SignupScreenProps } from "./";
-import { IGlobalState } from "../../coreTypes";
+import { signupUser } from './actions';
+import styles from './SignUp.styles';
+import { SignupScreenFromData, SignupScreenProps } from './';
+import { IGlobalState } from '../../coreTypes';
 
-const mapStateToProps = ( state: IGlobalState ) => ({
+const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.LoginState.isFetching
 });
 
@@ -27,12 +27,12 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 
 const SignupSchema = Yup.object().shape({
   email: Yup.string()
-    .email("Invalid email")
-    .required("Email is required"),
-  password: Yup.string().required("Password is required")
+    .email('Invalid email')
+    .required('Email is required'),
+  password: Yup.string().required('Password is required')
 });
 
-export const Component : React.SFC<SignupScreenProps> = ({
+export const Component: React.SFC<SignupScreenProps> = ({
   navigation,
   isFetching,
   signupUser
@@ -48,26 +48,30 @@ export const Component : React.SFC<SignupScreenProps> = ({
         contentContainerStyle={styles.container}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
-        bounces={false}
-      >
-          <View style={{flexGrow: 1, alignItems: "center", justifyContent: "center", paddingBottom: 20}}>
-            <Image
-              source={require("../../../assets/logo2x.png")}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
-          <View style={styles.wrapContent}>
+        bounces={false}>
+        <View
+          style={{
+            flexGrow: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingBottom: 20
+          }}>
+          <Image
+            source={require('../../../assets/logo2x.png')}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
+        <View style={styles.wrapContent}>
           <Text style={styles.title}>Sign Up</Text>
           <Formik
             initialValues={{
-              email: "",
-              name: "",
-              password: ""
+              email: '',
+              name: '',
+              password: ''
             }}
             validationSchema={SignupSchema}
-            onSubmit={handleSubmit}
-          >
+            onSubmit={handleSubmit}>
             {(props: any) => {
               const { handleSubmit, errors, touched } = props;
 
@@ -79,7 +83,7 @@ export const Component : React.SFC<SignupScreenProps> = ({
                   }
                   return acc;
                 }, [])
-                .join(". ");
+                .join('. ');
 
               return (
                 <View style={styles.form}>
@@ -121,11 +125,10 @@ export const Component : React.SFC<SignupScreenProps> = ({
           <TouchableOpacity
             style={styles.createAccountContainer}
             onPress={() => {
-              navigation.navigate("Login");
-            }}
-          >
+              navigation.navigate('Login');
+            }}>
             <Text style={styles.createAccountText}>
-              Already have an account?{" "}
+              Already have an account?{' '}
               <Text style={styles.createAccountLink}>Log In</Text>
             </Text>
           </TouchableOpacity>
@@ -152,6 +155,9 @@ export const Component : React.SFC<SignupScreenProps> = ({
   );
 };
 
-Component.displayName = "SignUp";
+Component.displayName = 'SignUp';
 
-export const SignUpScreen = connect(mapStateToProps, mapDispatchToProps)(Component);
+export const SignUpScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Component);

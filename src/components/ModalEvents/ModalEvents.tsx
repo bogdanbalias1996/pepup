@@ -25,12 +25,10 @@ import { Dispatch } from 'redux';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Event } from '../../pages/Events';
-import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { PepupModal } from '../PepupModal/PepupModal';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
 import FastImage from 'react-native-fast-image';
-
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.EventState.isModalShown,
@@ -100,7 +98,9 @@ export class Component extends React.PureComponent<ModalEventsProps> {
         heightContent={this.state.heightDescription}>
         {!!eventData && Object.keys(eventData).length !== 0 && (
           <View style={styles.wrapModalContent}>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              style={styles.scrollView}>
               <View style={styles.scrollContent}>
                 <View
                   onLayout={event => {
