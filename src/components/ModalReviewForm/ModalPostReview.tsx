@@ -20,7 +20,7 @@ import { PepupModal } from '../PepupModal/PepupModal';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalPostReviewShown: state.PepupState.isModalPostReviewShown,
-  pepupData: state.PepupState.pepupData,
+  pepupData: state.ProfileState.pepupData,
   isFetching: state.PepupState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({

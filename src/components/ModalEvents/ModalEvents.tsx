@@ -25,7 +25,6 @@ import { Dispatch } from 'redux';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Event } from '../../pages/Events';
-import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { PepupModal } from '../PepupModal/PepupModal';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
