@@ -15,7 +15,7 @@ export const openError = ({
         text:
           'Connection Failed. Could not connect to the network. Please try again.',
         buttonText: 'OK',
-        imgSource: require('../../../assets/connection.png')
+        imgSource: require('../../../assets/errorStates/connection.png')
       };
       break;
     case 'itemUnavailable':
@@ -24,7 +24,7 @@ export const openError = ({
         text:
           'Item Unavailable. There, there… we’ve got plenty else you don’t want to miss. ',
         buttonText: 'OK',
-        imgSource: require('../../../assets/item.png')
+        imgSource: require('../../../assets/errorStates/item.png')
       };
       break;
     case 'paymentFail':
@@ -32,7 +32,7 @@ export const openError = ({
         title: 'Ailaa!',
         text: 'Payment Rejected. Please verify you entered details correctly.',
         buttonText: 'TRY AGAIN',
-        imgSource: require('../../../assets/payment.png')
+        imgSource: require('../../../assets/errorStates/payment.png')
       };
       break;
     case 'noResults':
@@ -41,7 +41,7 @@ export const openError = ({
         text:
           'No Results. Dang! Sometimes s**t hits the fan but we’ll all come out alright.',
         buttonText: 'TRY AGAIN',
-        imgSource: require('../../../assets/results.png')
+        imgSource: require('../../../assets/errorStates/results.png')
       };
       break;
     default:
@@ -50,7 +50,7 @@ export const openError = ({
         text:
           'Unknown unknown. We are crunching a ton at the back. Please try again.',
         buttonText: 'TRY AGAIN',
-        imgSource: require('../../../assets/unknown.png')
+        imgSource: require('../../../assets/errorStates/unknown.png')
       };
   }
   return {
