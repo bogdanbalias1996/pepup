@@ -27,8 +27,9 @@ import { Profile, Pepup, UserRequest } from '.';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,
-  FAILURE_EDIT_USER,
+  FAILURE_EDIT_USER
 } from '../EditProfile/actions';
+import { REMOVE_SESSION } from '../Login/actions';
 
 export class ProfileState {
   profileData: Profile | null;
@@ -62,88 +63,90 @@ export const initialState = new ProfileState();
 
 export const ProfileReducer = (
   state: ProfileState = initialState,
-  action: IAction<any>,
+  action: IAction<any>
 ): ProfileState => {
   switch (action.type) {
     case RECEIVE_USER_PROFILE:
       return {
         ...state,
-        profileData: action.data,
+        profileData: action.data
       };
     case RECEIVE_EDIT_USER:
       return {
         ...state,
         profileData: action.data,
-        isFetching: false,
+        isFetching: false
       };
 
     case REQUEST_EDIT_USER:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case FAILURE_EDIT_USER:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case RECEIVE_USER_PEPUPS:
       return {
         ...state,
         userPepups: action.data,
-        isFetching: false,
+        isFetching: false
       };
 
     case REQUEST_USER_PEPUPS:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case FAILURE_USER_PEPUPS:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
 
     case RECEIVE_CELEB_PEPUPS:
       return {
         ...state,
         celebPepups: action.data,
-        isFetching: false,
+        isFetching: false
       };
 
     case REQUEST_CELEB_PEPUPS:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
 
     case FAILURE_CELEB_PEPUPS:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
     case RECEIVE_ALL_PEPUPS:
       return {
         ...state,
         pepups: action.data,
-        isFetching: false,
+        isFetching: false
       };
     case REQUEST_ALL_PEPUPS:
       return {
         ...state,
-        isFetching: true,
+        isFetching: true
       };
     case FAILURE_ALL_PEPUPS:
       return {
         ...state,
-        isFetching: false,
+        isFetching: false
       };
     case RECEIVE_ACCEPT:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => { return item.id === action.data.id ? action.data : item; });
+      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
+        return item.id === action.data.id ? action.data : item;
+      });
       return {
         ...state,
         isFetchingNotifyA: false,
@@ -152,15 +155,17 @@ export const ProfileReducer = (
     case REQUEST_ACCEPT:
       return {
         ...state,
-        isFetchingNotifyA: true,
+        isFetchingNotifyA: true
       };
     case FAILURE_ACCEPT:
       return {
         ...state,
-        isFetchingNotifyA: false,
+        isFetchingNotifyA: false
       };
     case RECEIVE_DENY:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => { return item.id === action.data.id ? action.data : item; });
+      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
+        return item.id === action.data.id ? action.data : item;
+      });
       return {
         ...state,
         isFetchingNotifyD: false,
@@ -169,12 +174,12 @@ export const ProfileReducer = (
     case REQUEST_DENY:
       return {
         ...state,
-        isFetchingNotifyD: true,
+        isFetchingNotifyD: true
       };
     case FAILURE_DENY:
       return {
         ...state,
-        isFetchingNotifyD: false,
+        isFetchingNotifyD: false
       };
     case RECEIVE_PEPUP_NOTIFICATION:
       return {
@@ -202,6 +207,8 @@ export const ProfileReducer = (
         ...state,
         isModalNotifyShown: false
       };
+    case REMOVE_SESSION:
+      return new ProfileState();
     default:
       return state;
   }
