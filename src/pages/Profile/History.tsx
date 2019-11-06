@@ -26,7 +26,7 @@ import { getAllPepups } from './actions';
 import { Loader } from '../../components/Loader/Loader';
 import { getCeleb } from '../Pepups/actions';
 import { kFormatter } from '../../helpers';
-import { ImageSafe } from '../../components/ImageSafe/ImageSafe';
+import FastImage from 'react-native-fast-image';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -53,19 +53,18 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
         <TouchableOpacity activeOpacity={1} onPress={() => alert('Open pepup')}>
           <View style={styles.card}>
             <View style={styles.avatarWrap}>
-              <ImageSafe
-                resizeModeImg="cover"
+              <FastImage
                 style={styles.avatar}
-                iconSource={{ uri: this.props.profileData.icon }}
-                isLoaded={!!this.props.profileData.icon}
-                loaderSize="small"
+                source={{
+                  uri: `${this.props.profileData.icon}`,
+                  priority: FastImage.priority.normal
+                }}
+                resizeMode={FastImage.resizeMode.cover}
               />
             </View>
             <View style={styles.textWrap}>
               <View>
-                <Text style={styles.text}>
-                  {item.requestedOnDt}
-                </Text>
+                <Text style={styles.text}>{item.requestedOnDt}</Text>
                 <Text
                   numberOfLines={1}
                   ellipsizeMode="tail"

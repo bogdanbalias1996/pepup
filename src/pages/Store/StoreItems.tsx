@@ -4,18 +4,18 @@ import {
   FlatList,
   StyleSheet,
   TouchableOpacity,
-  View,
+  View
 } from 'react-native';
-import {connect} from 'react-redux';
-import {Dispatch} from 'redux';
+import { connect } from 'react-redux';
+import { Dispatch } from 'redux';
 
 import {
   openStoreModal,
   setFilterValue,
   getProductsCategoryType,
-  getProduct,
+  getProduct
 } from './actions';
-import {StoreItemsProps, Product} from './';
+import { StoreItemsProps, Product } from './';
 import {
   colorBlack,
   colorTextRed,
@@ -26,17 +26,17 @@ import {
   colorBlueberry,
   colorLightGray
 } from '../../variables';
-import {RadioButtons} from '../../components/RadioButtons/RadioButtons';
-import {IGlobalState} from '../../coreTypes';
-import {Loader} from '../../components/Loader/Loader';
-import { ImageSafe } from '../../components/ImageSafe/ImageSafe';
+import { RadioButtons } from '../../components/RadioButtons/RadioButtons';
+import { IGlobalState } from '../../coreTypes';
+import { Loader } from '../../components/Loader/Loader';
+import FastImage from 'react-native-fast-image';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isFetchingCat: state.StoreState.isFetchingCat,
   filterValue: state.StoreState.filterValue,
   isFetching: state.StoreState.isFetching,
   goods: state.StoreState.goods,
-  dataType: state.StoreState.dataType,
+  dataType: state.StoreState.dataType
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -44,95 +44,96 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setFilterValue: (val: boolean) => dispatch(setFilterValue(val)),
   getProductsCategoryType: (type: string) =>
     dispatch(getProductsCategoryType(type) as any),
-  getProduct: (val: string) => dispatch(getProduct(val) as any),
+  getProduct: (val: string) => dispatch(getProduct(val) as any)
 });
 
 const options = [
   {
     key: '1',
-    text: 'All',
+    text: 'All'
   },
   {
     key: '2',
-    text: 'Featured',
+    text: 'Featured'
   },
   {
     key: '3',
-    text: 'Deals',
-  },
+    text: 'Deals'
+  }
 ];
 
 export class Component extends React.PureComponent<StoreItemsProps> {
   componentDidMount() {
-    const {getProductsCategoryType, prodCatType } = this.props;
+    const { getProductsCategoryType, prodCatType } = this.props;
 
     getProductsCategoryType(prodCatType);
   }
 
-  renderItem = ({item}: any) => {
-    const {openStoreModal, dataType, getProduct} = this.props;
+  renderItem = ({ item }: any) => {
+    const { openStoreModal, dataType, getProduct } = this.props;
     const getModal = () => {
       openStoreModal();
       getProduct(item.id);
     };
 
-    return (dataType &&
-      <View style={{ flex: 0.5 }}>
-        <TouchableOpacity
-          onPress={() => getModal()}
-          style={styles.card}
-          activeOpacity={1}
-        >
-          <ImageSafe
-            isLoaded={!!item.icon}
-            style={styles.avatar}
-            iconSource={{uri: dataType.mediaBasePath + item.icon}}
-            resizeModeImg="cover"
-          />
-          <View style={styles.wrapInfo}>
-            <Text style={styles.name}>{item.name}</Text>
-            {item.discount ? (
-              <View style={styles.wrapPrices}>
-                <Text
-                  style={
-                    styles.salePriceText
-                  }>{`${item.defaultCurrency} ${item.sellingPrice}`}</Text>
-                <Text
-                  style={
-                    styles.priceText
-                  }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
+    return (
+      dataType && (
+        <View style={{ flex: 0.5 }}>
+          <TouchableOpacity
+            onPress={() => getModal()}
+            style={styles.card}
+            activeOpacity={1}>
+            <FastImage
+              style={styles.avatar}
+              source={{
+                uri: `${dataType.mediaBasePath}${item.icon}`,
+                priority: FastImage.priority.normal
+              }}
+              resizeMode={FastImage.resizeMode.cover}
+            />
+            <View style={styles.wrapInfo}>
+              <Text style={styles.name}>{item.name}</Text>
+              {item.discount ? (
+                <View style={styles.wrapPrices}>
+                  <Text
+                    style={
+                      styles.salePriceText
+                    }>{`${item.defaultCurrency} ${item.sellingPrice}`}</Text>
+                  <Text
+                    style={
+                      styles.priceText
+                    }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
 
-                <View style={styles.wrapSale}>
-                  <Text style={styles.saleText}>{`${item.discount}% OFF`}</Text>
+                  <View style={styles.wrapSale}>
+                    <Text
+                      style={styles.saleText}>{`${item.discount}% OFF`}</Text>
+                  </View>
                 </View>
-              </View>
-            ) : (
-              <View style={styles.wrapPrices}>
-                <Text
-                  style={
-                    styles.salePriceText
-                  }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
-              </View>
-            )}
-          </View>
-        </TouchableOpacity>
-      </View>
+              ) : (
+                <View style={styles.wrapPrices}>
+                  <Text
+                    style={
+                      styles.salePriceText
+                    }>{`${item.defaultCurrency} ${item.markedPrice}`}</Text>
+                </View>
+              )}
+            </View>
+          </TouchableOpacity>
+        </View>
+      )
     );
   };
 
   render() {
-    const {filterValue, setFilterValue, goods, isFetching} = this.props;
+    const { filterValue, setFilterValue, goods, isFetching } = this.props;
     return (
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {/* <RadioButtons
           options={options}
           value={filterValue}
           onPress={val => setFilterValue(val)}
         /> */}
-        <Loader
-          isDataLoaded={!isFetching}
-          size="large"
-          color={colorBlueberry}>
+        <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
@@ -140,7 +141,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
             columnWrapperStyle={styles.row}
             data={goods}
             renderItem={this.renderItem}
-            keyExtractor={(item:Product) => item.id}
+            keyExtractor={(item: Product) => item.id}
           />
         </Loader>
       </View>
@@ -150,12 +151,12 @@ export class Component extends React.PureComponent<StoreItemsProps> {
 
 export const StoreItems = connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(Component);
 
 const styles = StyleSheet.create({
   row: {
-    flex: 1,
+    flex: 1
   },
   card: {
     flex: 0.5,
@@ -167,14 +168,14 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 3
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 2,
     justifyContent: 'flex-start',
     alignItems: 'center',
-    position: 'relative',
+    position: 'relative'
   },
   avatar: {
     width: '100%',
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
   wrapInfo: {
     width: '100%',
     justifyContent: 'space-between',
-    flex: 1,
+    flex: 1
   },
   name: {
     textAlign: 'center',
@@ -194,7 +195,7 @@ const styles = StyleSheet.create({
     fontFamily: defaultFont,
     color: colorBlack,
     marginVertical: 8,
-    lineHeight: 22,
+    lineHeight: 22
   },
   wrapPrices: {
     width: '100%',
@@ -202,19 +203,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 10,
     paddingHorizontal: 4,
-    flexWrap: 'wrap',
+    flexWrap: 'wrap'
   },
   salePriceText: {
     color: colorTextRed,
     fontSize: 14,
-    fontFamily: semiboldFont,
+    fontFamily: semiboldFont
   },
   priceText: {
     color: colorTextGray,
     fontSize: 14,
     paddingHorizontal: 5,
     fontFamily: defaultFont,
-    textDecorationLine: 'line-through',
+    textDecorationLine: 'line-through'
   },
   wrapSale: {
     backgroundColor: colorOrange,
@@ -223,11 +224,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 5,
+    marginTop: 5
   },
   saleText: {
     color: colorBlack,
     fontSize: 10,
-    fontFamily: defaultFont,
-  },
+    fontFamily: defaultFont
+  }
 });
