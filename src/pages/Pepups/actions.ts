@@ -10,7 +10,6 @@ import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
 import { UserRequest } from '../Profile';
-const isEqual = require('lodash.isequal');
 
 export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
 export const openPepupModal = (): IAction<undefined> => {

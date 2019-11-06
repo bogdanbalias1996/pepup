@@ -33,7 +33,6 @@
     "jetifier": "^1.6.4",
     "jwt-decode": "^2.2.0",
     "lodash.get": "^4.4.2",
-    "lodash.isequal": "^4.5.0",
     "ramda": "^0.26.1",
     "react": "16.9.0",
     "react-lifecycles-compat": "^3.0.4",
