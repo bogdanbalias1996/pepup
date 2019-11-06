@@ -18,16 +18,17 @@ import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getUserPepups } from './actions';
-import { NotificationItem } from '../../components/Notification/Notification';
+import { Notification } from '../../components/Notification/Notification';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userPepups: state.ProfileState.userPepups,
-  userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching
-});
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
-});
+// const mapStateToProps = (state: IGlobalState) => ({
+//   userPepups: state.ProfileState.userPepups,
+//   userId: state.LoginState.userId,
+//   isFetching: state.ProfileState.isFetching
+// });
+// const mapDispatchToProps = (dispatch: Dispatch) => ({
+//   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
+// });
+
 const mock = [
   {
     title: 'Pepup Sent!',
@@ -72,11 +73,9 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
     isRead: false
   }
 
-  componentDidMount() {}
-
   renderNotification = ({ item }: any) => {
     return (
-      <NotificationItem
+      <Notification
         title={item.title}
         message={item.message}
         date={item.date}
@@ -87,10 +86,10 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
   };
 
   render() {
-    const { isFetching } = this.props;
+    // const { isFetching } = this.props;
 
     return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+      // <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
         <View style={styles.wrapper}>
           <TouchableOpacity
             style={styles.allReadWrap}
@@ -103,18 +102,20 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
             showsVerticalScrollIndicator={false}
             data={mock}
             renderItem={this.renderNotification}
-            keyExtractor={(item: any) => item.id}
+            keyExtractor={(item: any, index: number) => `${index}`}
           />
         </View>
-      </Loader>
+      // </Loader>
     );
   }
 }
 
-export const NotificationItems = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Component);
+// export const Notifications = connect(
+//   mapStateToProps,
+//   mapDispatchToProps
+// )(Component);
+
+export const Notifications = Component;
 
 const styles = StyleSheet.create({
   wrapper: {

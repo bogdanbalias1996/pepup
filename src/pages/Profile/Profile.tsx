@@ -25,7 +25,7 @@ import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
-import { NotificationItems } from './NotificationItems';
+import { Notifications } from './Notifications';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -120,7 +120,7 @@ export class Component extends React.Component<ProfileScreenProps> {
     },
     {
       title: 'Notifications',
-      component: () => <NotificationItems />
+      component: () => <Notifications />
     }
   ];
 
@@ -135,7 +135,7 @@ export class Component extends React.Component<ProfileScreenProps> {
     },
     {
       title: 'Notifications',
-      component: () => <NotificationItems />
+      component: () => <Notifications />
     }
     // {
     //   title: 'History',
