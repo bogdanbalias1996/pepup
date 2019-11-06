@@ -6,7 +6,9 @@ import {
   colorTextViolet,
   semiboldFont,
   defaultFont,
-  boldFont
+  boldFont,
+  colorVioletGrey,
+  colorDotGray
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -146,7 +148,7 @@ export default StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalOptionStyle:{
-    borderBottomColor: colorTextViolet,
+    borderBottomColor: colorDotGray,
     borderBottomWidth: 1
   },
   modalCancelTextStyle: {
