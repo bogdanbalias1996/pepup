@@ -59,7 +59,9 @@ export const getToken = async () => {
     accessToken = getStore().getState().LoginState.accessToken;
     userId = getStore().getState().LoginState.userId;
     handle = getStore().getState().LoginState.handle;
-    developerMode = getStore().getState().LoginState.developerMode;
+    developerMode =
+      getStore().getState().LoginState.developerMode ||
+      (await getLocalStorage('developerMode'));
 
     if (!accessToken) {
       const token = await getLocalStorage(ACCESS_TOKEN_NAME);
@@ -75,12 +77,7 @@ export const getToken = async () => {
 
       getStore().dispatch(setHandleName(handleStorage));
     }
-    if (!developerMode) {
-      const ifDeveloper = await getLocalStorage('developerMode');
-
-      ifDeveloper !== undefined &&
-        getStore().dispatch(setDeveloperMode(ifDeveloper));
-    }
+    getStore().dispatch(setDeveloperMode(developerMode));
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(
       ACCESS_TOKEN_NAME

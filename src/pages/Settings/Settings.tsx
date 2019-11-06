@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View, TouchableOpacity, Text, ScrollView } from 'react-native';
+import {
+  View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  Linking
+} from 'react-native';
 import { Dispatch } from 'redux';
 import DeviceInfo from 'react-native-device-info';
 
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { goBack } from '../../navigationService';
+import { goBack, navigate } from '../../navigationService';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
@@ -86,22 +92,45 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
         <View style={styles.wrapContent}>
           <ScrollView showsVerticalScrollIndicator={false}>
             <View style={styles.listItemsWrap}>
-              <ListItem title="About Pepup" onPress={() => alert('Click!')} />
+              <ListItem
+                title="About Pepup"
+                onPress={() => Linking.openURL('https://facebook.github.io/')}
+              />
               <ListItem
                 title="Partners &amp; Charities"
-                onPress={() => alert('Click!')}
+                onPress={() =>
+                  navigate({
+                    routeName: 'WebViewPage',
+                    params: { uri: 'https://facebook.github.io/' }
+                  })
+                }
               />
               <ListItem
                 title="Privacy Policy"
-                onPress={() => alert('Click!')}
+                onPress={() =>
+                  navigate({
+                    routeName: 'WebViewPage',
+                    params: { uri: 'https://facebook.github.io/' }
+                  })
+                }
               />
               <ListItem
                 title="Terms of Service"
-                onPress={() => alert('Click!')}
+                onPress={() =>
+                  navigate({
+                    routeName: 'WebViewPage',
+                    params: { uri: 'https://facebook.github.io/' }
+                  })
+                }
               />
               <ListItem
                 title="Provide Feedback"
-                onPress={() => alert('Click!')}
+                onPress={() =>
+                  navigate({
+                    routeName: 'WebViewPage',
+                    params: { uri: 'https://facebook.github.io/' }
+                  })
+                }
               />
               <ListItem
                 title={`App Version - ${DeviceInfo.getVersion()}`}

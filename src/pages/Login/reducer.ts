@@ -34,14 +34,14 @@ export class LoginState {
   isFetching: boolean;
   userId: string;
   handle: string;
-  developerMode: any;
+  developerMode: boolean;
 
   constructor() {
     this.accessToken = '';
     this.isFetching = false;
     this.userId = '';
     this.handle = '';
-    this.developerMode = undefined;
+    this.developerMode = false;
   }
 }
 

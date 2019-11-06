@@ -55,6 +55,7 @@
     "react-native-star-rating": "^1.1.0",
     "react-native-tab-view": "^2.10.0",
     "react-native-unimodules": "^0.7.0-rc.1",
+    "react-native-webview": "^7.4.3",
     "react-navigation": "^3.11.1",
     "react-redux": "^7.1.1",
     "redux-thunk": "^2.3.0",
