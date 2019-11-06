@@ -77,7 +77,8 @@ export type PepupItemsProps = {
   isFetching: boolean;
 
   route: {
-    key: string
+    key: string;
+    title: string;
   }
 };
 
