@@ -25,23 +25,28 @@ import {
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
-import { getCelebPepups } from './actions';
 import { capitalize } from '../../helpers';
-import { openNotifyModal, getPepupNotification } from '../Pepups/actions';
+import {
+  openNotifyModal,
+  getPepupNotification,
+  getCelebPepups
+} from './actions';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
 import { VideoType } from '../../components/ModalRecordVideo';
 
 const mapStateToProps = (state: IGlobalState) => ({
   celebPepups: state.ProfileState.celebPepups,
   userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching,
+  isFetching: state.ProfileState.isFetching
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getCelebPepups: (id: string) => dispatch(getCelebPepups(id) as any),
   openNotifyModal: () => dispatch(openNotifyModal()),
-  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any),
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => dispatch(videoRecordModalOpen(entityId, videoType))
+  getPepupNotification: (id: string) =>
+    dispatch(getPepupNotification(id) as any),
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) =>
+    dispatch(videoRecordModalOpen(entityId, videoType))
 });
 
 export class Component extends React.PureComponent<FanRequestsProps> {
@@ -51,8 +56,14 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     getCelebPepups(userId);
   }
 
+  // componentDidUpdate() {
+  //   const { getCelebPepups, userId } = this.props;
+
+  //   getCelebPepups(userId);
+  // }
+
   getModal = (pepupId: string) => {
-    const { openNotifyModal, getPepupNotification } = this.props
+    const { openNotifyModal, getPepupNotification } = this.props;
 
     openNotifyModal();
     getPepupNotification(pepupId);
@@ -62,30 +73,39 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const normalizedStatus = status.toLowerCase();
     const today = new Date();
     const requestedOn = new Date(date);
-    const roundedDays = (
-      (today.getTime() - requestedOn.getTime()) /
-      (1000 * 3600 * 24)
-    )
-      .toFixed(0)
-      .toString();
+    const roundedDays = +(
+      7 -
+      (today.getTime() - requestedOn.getTime()) / (1000 * 3600 * 24)
+    ).toFixed(0);
 
     switch (normalizedStatus) {
       case 'pending':
         return {
-          msg: `${
-            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-            } remaining.`,
+          msg:
+            roundedDays > 0
+              ? `${
+                  roundedDays > 1 ? roundedDays + ' days' : roundedDays + ' day'
+                } remaining.`
+              : roundedDays === 0
+              ? `Last day to fulfill.`
+              : 'Expired!',
           statusColor: colorGreen,
           onPress: () => this.getModal(id),
           linkText: 'View Details.'
         };
       case 'accepted':
         return {
-          msg: `${
-            roundedDays !== '1' ? roundedDays + ' days' : roundedDays + ' day'
-            } remaining.`,
+          msg:
+            roundedDays > 0
+              ? `${
+                  roundedDays > 1 ? roundedDays + ' days' : roundedDays + ' day'
+                } remaining.`
+              : roundedDays === 0
+              ? `Last day to fulfill.`
+              : 'Expired!',
           statusColor: colorOrangeStatus,
-          onPress: () => this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
+          onPress: () =>
+            this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
           linkText: 'Click to record video.'
         };
       case 'rejected':
@@ -108,7 +128,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           status,
           msg: ``,
           statusColor: colorBlueberry,
-          onPress: () => { },
+          onPress: () => {},
           linkText: ''
         };
     }
@@ -131,7 +151,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           </View>
           <View>
             <Text>
-              <Text style={styles.text}>{msg}{' '}</Text>
+              <Text style={styles.text}>{msg} </Text>
               <Text
                 style={[styles.text, { color: statusColor }, styles.completed]}>
                 {linkText}
@@ -153,15 +173,17 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const { isFetching, celebPepups } = this.props;
 
     return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
-        <FlatList
-          style={{ flex: 1, paddingLeft: 16 }}
-          showsVerticalScrollIndicator={false}
-          data={celebPepups}
-          renderItem={this.renderItemRequest}
-          keyExtractor={(item: Pepup) => item.id}
-        />
-      </Loader>
+      celebPepups && (
+        <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+          <FlatList
+            style={{ flex: 1, paddingLeft: 16 }}
+            showsVerticalScrollIndicator={false}
+            data={celebPepups}
+            renderItem={this.renderItemRequest}
+            keyExtractor={(item: Pepup) => item.id}
+          />
+        </Loader>
+      )
     );
   }
 }
@@ -189,7 +211,7 @@ const styles = StyleSheet.create({
     color: colorTextGray
   },
   completed: {
-    fontFamily: boldFont,
+    fontFamily: boldFont
   },
   reqDescription: {
     fontSize: 12,

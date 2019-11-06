@@ -7,7 +7,6 @@ import {
   semiboldFont,
   defaultFont,
   boldFont,
-  colorVioletGrey,
   colorDotGray
 } from "../../variables";
 
