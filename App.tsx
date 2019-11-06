@@ -183,7 +183,6 @@ export default class App extends Component {
   }
 
   async requestPermission() {
-    console.log('request permissi0n');
     try {
       await firebase.messaging().requestPermission();
       this.getToken();
