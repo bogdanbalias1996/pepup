@@ -144,10 +144,9 @@ export class Component extends React.Component<ProfileScreenProps> {
   ];
 
   componentDidMount = () => {
-    const { userId, handle } = this.props;
+    const { handle, getProfile } = this.props;
 
-    handle && this.props.getProfile(handle);
-    userId && this.props.getUserPepups(userId);
+    handle && getProfile(handle);
   };
 
   render() {

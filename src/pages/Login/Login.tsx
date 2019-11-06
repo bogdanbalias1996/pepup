@@ -48,8 +48,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
         contentContainerStyle={styles.container}
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
-        bounces={false}
-      >
+        bounces={false}>
         <View style={styles.imageWrapper}>
           <Image
             source={require('../../../assets/logo2x.png')}
@@ -67,8 +66,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
             validationSchema={LoginSchema}
             onSubmit={handleSubmit}
             validateOnChange={false}
-            validateOnBlur={false}
-          >
+            validateOnBlur={false}>
             {(props: any) => {
               const { handleSubmit, errors, touched } = props;
 
@@ -103,8 +101,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
                     formProps={props}
                   />
                   <TouchableOpacity
-                    onPress={() => navigation.navigate('ForgotPassword')}
-                  >
+                    onPress={() => navigation.navigate('ForgotPassword')}>
                     <Text style={styles.btnForgetPasswordText}>
                       Forgot Password?
                     </Text>
@@ -124,8 +121,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
             style={styles.createAccountContainer}
             onPress={() => {
               navigation.navigate('SignUp');
-            }}
-          >
+            }}>
             <Text style={styles.createAccountText}>
               Don’t have an account?{' '}
               <Text style={styles.createAccountLink}>Sign Up</Text>

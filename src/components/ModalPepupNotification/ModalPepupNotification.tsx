@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
-import { TouchableOpacity, Text, View, ScrollView, Image } from 'react-native';
+import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
+import FastImage from 'react-native-fast-image';
 
-import { closeNotifyModal } from '../../pages/Pepups/actions';
+import { closeNotifyModal } from '../../pages/Profile/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import styles from './ModalPepupNotification.styles';
@@ -16,11 +17,14 @@ import {
   acceptPepupRequest,
   denyPepupRequest
 } from '../../pages/Profile/actions';
+import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 
 const mapStateToProps = (state: IGlobalState) => ({
-  isModalNotifyShown: state.PepupState.isModalNotifyShown,
+  isModalNotifyShown: state.ProfileState.isModalNotifyShown,
+  isFetchingNotifyA: state.ProfileState.isFetchingNotifyA,
+  isFetchingNotifyD: state.ProfileState.isFetchingNotifyD,
   isFetching: state.ProfileState.isFetching,
-  pepupData: state.PepupState.pepupData
+  pepupData: state.ProfileState.pepupData
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closeNotifyModal: () => dispatch(closeNotifyModal()),
@@ -37,6 +41,8 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
     const {
       closeNotifyModal,
       isModalNotifyShown,
+      isFetchingNotifyA,
+      isFetchingNotifyD,
       isFetching,
       pepupData,
       acceptPepupRequest,
@@ -49,7 +55,7 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
       pepupData && (
         <PepupModal
           visible={isModalNotifyShown}
-          isLoading={this.props.isFetching}
+          isLoading={isFetching}
           onRequestClose={() => closeNotifyModal()}
           heightContent={this.state.heightDescription}>
           <View style={{ flex: 1, paddingTop: 20 }}>
@@ -63,10 +69,13 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
                 }}>
                 <View>
                   <View style={styles.reqTitle}>
-                    <Image
+                    <FastImage
                       style={styles.avatar}
-                      source={{ uri: pepupData.celebInfo.userInfo.icon }}
-                      resizeMode="cover"
+                      source={{
+                        uri: pepupData.celebInfo.userInfo.icon,
+                        priority: FastImage.priority.normal
+                      }}
+                      resizeMode={FastImage.resizeMode.cover}
                     />
                     <Text style={[styles.title, { textAlign: 'center' }]}>
                       {'\n'}
@@ -110,18 +119,19 @@ export class Component extends React.PureComponent<PepupNotificationProps> {
                 style={[styles.btnSubmit, styles.btnReject]}
                 onPress={() => normalizedStatus !== 'rejected' && denyPepupRequest(pepupData.id)}
                 text="REJECT"
-                loader={isFetching}
+                loader={isFetchingNotifyD}
                 type="grey"
               />
               <ButtonStyled
                 style={styles.btnSubmit}
                 onPress={() => pepupData.status.toLowerCase() !== 'accepted' && acceptPepupRequest(pepupData.id)}
                 text="ACCEPT"
-                loader={isFetching}
+                loader={isFetchingNotifyA}
               />
             </View>
           </View>
           <ErrorModal />
+          <SuccessfulAlert />
         </PepupModal>
       )
     );

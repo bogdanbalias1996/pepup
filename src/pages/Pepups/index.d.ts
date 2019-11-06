@@ -55,6 +55,10 @@ export type PepupsScreenStateProps = {
 
 export type PepupsScreenDispatchProps = {
   getAllActiveCategories: () => Promise<any>;
+  getCelebsByCategory: (id: string) => Promise<any>;
+  getCeleb: () => Promise<any>;
+  setCategory: (categoryid: string) => void;
+  getFeaturedCelebs: () => Promise<any>;
 };
 
 export type PepupsItemsScreenStateProps = {
@@ -64,13 +68,18 @@ export type PepupsItemsScreenStateProps = {
 
 export type PepupItemsProps = {
   getFeaturedCelebs: () => Promise<any>
-  setCategory: (categoryid: string) => void;
+  
   celebs: { [key: string]: Array<Celeb> };
   openPepupModal: () => void;
   categoryId: string;
-  getCelebsByCategory: (id: string) => Promise<any>;
+  
   getCeleb: (userId: string) => Promise<any>;
   isFetching: boolean;
+
+  route: {
+    key: string;
+    title: string;
+  }
 };
 
 export type PepupsScreenProps = PepupsScreenStateProps &

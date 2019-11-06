@@ -29,32 +29,35 @@ import { Loader } from '../../components/Loader/Loader';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  celebs: state.PepupState.celebs,
-  isFetching: state.PepupState.isFetching
-});
+export class Component extends React.Component<PepupItemsProps> {
+  keyExstractor = (item: Celeb) => item.mappedUserId;
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openPepupModal: () => dispatch(openPepupModal()),
-  getCelebsByCategory: (id: string) => dispatch(getCelebsByCategory(id) as any),
-  getFeaturedCelebs: () => dispatch(getFeaturedCelebs() as any),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  setCategory: (cat: string) => dispatch(setCategory(cat) as any)
-});
+  shouldComponentUpdate(nextProps: PepupItemsProps) {
+    const oldCelebs = this.extractCelebsByCategory(this.props.celebs, this.props.route.key);
+    const newCelebs = this.extractCelebsByCategory(nextProps.celebs, nextProps.route.key);
 
-export class Component extends React.PureComponent<PepupItemsProps> {
+    return newCelebs.length !== oldCelebs.length;
+  }
+
+  extractCelebsByCategory(celebs: { [key: string]: Array<Celeb> }, category: string): Celeb[]  {
+    const categoryName = category.toLowerCase();
+    const categoryCelebs = celebs[categoryName] || [];
+
+    return categoryCelebs;
+  }
+
   renderItem = ({ item }: any) => {
     const { openPepupModal, getCeleb } = this.props;
     const getModal = () => {
       openPepupModal();
       getCeleb(item.userInfo.id);
     };
-
+    
     return (
       <View style={{ flex: 0.5 }}>
         <Card style={styles.card}>
           <TouchableOpacity
-            onPress={() => getModal()}
+            onPress={getModal}
             style={styles.avatarWrapper}
             activeOpacity={1}>
             <FastImage
@@ -82,30 +85,14 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     );
   };
 
-  componentDidMount() {
-    const {
-      getCelebsByCategory,
-      categoryId,
-      setCategory,
-      getFeaturedCelebs
-    } = this.props;
-
-    setCategory(categoryId);
-
-    categoryId === 'Featured'
-      ? getFeaturedCelebs()
-      : getCelebsByCategory(categoryId);
-  }
-
   render() {
-    const { celebs, isFetching, categoryId } = this.props;
-    const categoryName = categoryId.toLowerCase();
-    const celebsArr = celebs[categoryName];
+    const { celebs, route } = this.props;
+    const celebsArr = this.extractCelebsByCategory(celebs, route.key);
 
     return (
       <View style={styles.celebsWrapper}>
         <Loader
-          isDataLoaded={(celebsArr && celebsArr.length) || !isFetching}
+          isDataLoaded={Boolean(celebsArr.length)}
           color={colorBlueberry}
           size="large">
           <FlatList
@@ -115,13 +102,26 @@ export class Component extends React.PureComponent<PepupItemsProps> {
             columnWrapperStyle={styles.row}
             data={celebsArr}
             renderItem={this.renderItem}
-            keyExtractor={(item: Celeb) => item.mappedUserId}
+            keyExtractor={this.keyExstractor}
           />
         </Loader>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state: IGlobalState) => ({
+  celebs: state.PepupState.celebs,
+  isFetching: state.PepupState.isFetching
+});
+
+const mapDispatchToProps = {
+  openPepupModal,
+  getCelebsByCategory,
+  getFeaturedCelebs,
+  getCeleb,
+  setCategory
+};
 
 export const PepupItems = connect(
   mapStateToProps,

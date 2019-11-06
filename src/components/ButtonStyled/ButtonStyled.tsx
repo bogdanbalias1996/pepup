@@ -15,13 +15,11 @@ import {
   colorOrangeEnd,
   boldFont,
   defaultFont,
-  colorLightGray,
-  colorTextGray,
   colorCoolGrey,
   colorDotGray
 } from '../../variables';
-import { ImageSafe } from '../ImageSafe/ImageSafe';
 import { Loader } from '../Loader/Loader';
+import FastImage from 'react-native-fast-image';
 
 const getTypeButton = (type: string) => {
   switch (type) {
@@ -106,7 +104,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
               ]}>
               {text}
             </Text>
-            <ImageSafe style={styles.image} iconSource={iconSource} />
+            {iconSource && <FastImage style={styles.image} source={iconSource} />}
           </Loader>
         </TouchableOpacity>
       </LinearGradient>

@@ -1,14 +1,14 @@
 import * as React from 'react';
 import {
   createStackNavigator,
-  createBottomTabNavigator,
+  createBottomTabNavigator
 } from 'react-navigation';
 import { Image, View } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
   colorShadow,
-  semiboldFont,
+  semiboldFont
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
@@ -19,6 +19,7 @@ import { SettingsScreen } from '../pages/Settings/Settings';
 // import { StoreScreen } from '../pages/Store/Store';
 import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
+import { WebViewPageScreen } from '../pages/WebViewPage/WebViewPage';
 
 // Icons for BottomTabNavigator
 const Pepups = require('../../assets/pepups.png');
@@ -45,9 +46,9 @@ const getActiveTabIconName = (routeName: string, focused: boolean) => {
     case 'Profile':
       return focused ? ProfileActive : Profile;
     default:
-      console.log(`Unsupported tab name: '${routeName}'`)
+      console.log(`Unsupported tab name: '${routeName}'`);
   }
-}
+};
 
 const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
   return {
@@ -59,7 +60,7 @@ const formatScreenProps = (ScreenName: any, ScreenComponent: any) => {
     ),
     navigationOptions: {
       tabBarLabel: `${ScreenName}`.toUpperCase()
-    },
+    }
   };
 };
 
@@ -80,11 +81,11 @@ export const TabsNavigator = createBottomTabNavigator(
         shadowColor: colorShadow,
         shadowOffset: {
           width: 0,
-          height: 4,
+          height: 4
         },
         shadowOpacity: 0.3,
         shadowRadius: 5,
-        elevation: 7,
+        elevation: 7
       },
       activeTintColor: colorBlack,
       inactiveTintColor: colorTextGray,
@@ -92,13 +93,13 @@ export const TabsNavigator = createBottomTabNavigator(
         marginTop: 3,
         fontSize: 11,
         letterSpacing: 1,
-        fontFamily: semiboldFont,
+        fontFamily: semiboldFont
       },
       tabStyle: {
         justifyContent: 'center',
         alignItems: 'center',
         paddingTop: 5,
-        paddingBottom: 7,
+        paddingBottom: 7
       }
     },
     defaultNavigationOptions: ({ navigation }) => ({
@@ -114,19 +115,23 @@ export const TabsNavigator = createBottomTabNavigator(
             />
           </View>
         );
-      },
-    }),
-  },
+      }
+    })
+  }
 );
 
-export const MainNavigator = createStackNavigator({
-  Tabs: TabsNavigator,
-  Settings: SettingsScreen,
-  EditProfile: EditProfileScreen,
-  EditProfileCeleb: EditProfileCelebScreen
-}, {
-  headerMode: 'screen',
-  defaultNavigationOptions: {
-    header: null
+export const MainNavigator = createStackNavigator(
+  {
+    Tabs: TabsNavigator,
+    Settings: SettingsScreen,
+    EditProfile: EditProfileScreen,
+    EditProfileCeleb: EditProfileCelebScreen,
+    WebViewPage: WebViewPageScreen
+  },
+  {
+    headerMode: 'screen',
+    defaultNavigationOptions: {
+      header: null
+    }
   }
-});
+);
