@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
@@ -6,30 +6,29 @@ import {
   colorTextViolet,
   colorTomato,
   defaultFont
-} from "../../variables";
+} from '../../variables';
 
 export default StyleSheet.create({
   container: {
     paddingTop: 45,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     flexGrow: 1
   },
   logo: {
     height: 110,
-    alignSelf: "center"
+    alignSelf: 'center'
   },
   wrapContent: {
     backgroundColor: colorLightGray,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24,
-    paddingBottom: 40,
     flexShrink: 1
   },
   title: {
     fontFamily: defaultFont,
     color: colorBlack,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24
   },
   form: {
@@ -40,13 +39,14 @@ export default StyleSheet.create({
     marginTop: 24
   },
   createAccountContainer: {
-    marginTop: 24
+    marginTop: 24,
+    marginBottom: 40
   },
   createAccountText: {
     color: colorTextGray,
     fontFamily: defaultFont,
     fontSize: 14,
-    textAlign: "center"
+    textAlign: 'center'
   },
   createAccountLink: {
     fontFamily: defaultFont,
@@ -56,24 +56,24 @@ export default StyleSheet.create({
     color: colorBlack,
     fontFamily: defaultFont,
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     marginTop: 35
   },
   wrapSocialBtns: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     flex: 1,
-    marginTop: 15,
+    marginTop: 15
     //marginBottom: 20
   },
   formErrorContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   formError: {
     color: colorTomato,
-    textAlign: "center",
+    textAlign: 'center',
     padding: 5,
     fontSize: 14
   }

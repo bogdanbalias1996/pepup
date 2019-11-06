@@ -1,4 +1,5 @@
 import { SuperAgentRequest } from 'superagent';
+import { getStore } from '../configureStore';
 
 export enum ApiMethod {
   UNKNOWN = 1,
@@ -154,7 +155,10 @@ export class CitiznApi implements IApi<ApiOperation> {
   }
 
   getUrl(): string {
-    const host = 'https://dev.pepupyo.com/mz';
+    const developerMode = getStore().getState().LoginState.developerMode;
+    const host = developerMode
+      ? 'https://dev.pepupyo.com/mz'
+      : 'https://dev.pepupyo.com/mz';
     const {
       userId,
       eventId,
