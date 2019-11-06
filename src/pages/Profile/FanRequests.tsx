@@ -53,7 +53,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
   componentDidMount() {
     const { getCelebPepups, userId } = this.props;
 
-    getCelebPepups(userId);
+    userId && getCelebPepups(userId);
   }
 
   getModal = (pepupId: string) => {

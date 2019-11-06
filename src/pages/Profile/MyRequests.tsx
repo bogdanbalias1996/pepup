@@ -41,7 +41,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
   componentDidMount() {
     const { getUserPepups, userId } = this.props;
 
-    getUserPepups(userId);
+    userId && getUserPepups(userId);
   }
 
   getStatusUser = (status: string, name: string) => {
