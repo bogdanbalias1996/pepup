@@ -6,7 +6,8 @@ import {
   colorTextViolet,
   semiboldFont,
   defaultFont,
-  boldFont
+  boldFont,
+  colorDotGray
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -128,10 +129,18 @@ export default StyleSheet.create({
     flex: 1
   },
   insidePadding: { position: 'relative' },
+  modalCancelContainerStyle: {
+    justifyContent: 'center',
+    flexDirection: 'row',
+    paddingBottom: 15
+  },
   modalCancelStyle: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    paddingVertical: 15
+    width: 48,
+    height: 48,
+    borderRadius: 30,
+    backgroundColor: colorLightGray,
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   modalOverlayStyle: {
     backgroundColor: 'rgba(0,0,0,0.4)',
@@ -139,23 +148,30 @@ export default StyleSheet.create({
     paddingTop: 300,
     justifyContent: 'flex-end'
   },
+  modalOptionStyle: {
+    borderBottomColor: colorDotGray,
+    borderBottomWidth: 1
+  },
   modalCancelTextStyle: {
-    color: '#1d7ee2',
+    color: colorBlack,
     fontFamily: semiboldFont,
-    fontSize: 20
+    fontSize: 24
   },
   modalOptionContainer: {
     backgroundColor: 'white',
-    borderRadius: 12,
+    borderRadius: 32,
     paddingHorizontal: 0
   },
   modalOptionTextStyle: {
     color: colorBlack,
-    fontSize: 20
+    fontSize: 20,
+    fontFamily: semiboldFont
   },
   changeItem: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     position: 'relative'
   },
   scrollContent: { paddingBottom: 90 }
