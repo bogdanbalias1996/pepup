@@ -97,7 +97,9 @@ export default class App extends Component {
       type: 'FONT_LOADED'
     });
 
-    this.checkPermission();
+    console.log(!!getStore().getState().LoginState.accessToken.length);
+    !!getStore().getState().LoginState.accessToken.length &&
+      this.checkPermission();
     this.createNotificationListeners();
   }
 
@@ -183,6 +185,7 @@ export default class App extends Component {
   }
 
   async requestPermission() {
+    console.log('request permissi0n');
     try {
       await firebase.messaging().requestPermission();
       this.getToken();

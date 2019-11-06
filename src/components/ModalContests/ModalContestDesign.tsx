@@ -8,6 +8,7 @@ import * as Permissions from 'expo-permissions';
 import * as ImagePicker from 'expo-image-picker';
 import { Video } from 'expo-av';
 import FastImage from 'react-native-fast-image';
+import firebase from 'react-native-firebase';
 
 import {
   closeContestQuizModal,
@@ -101,6 +102,9 @@ export class Component extends React.Component<ModalContestQuizProps> {
 
     if (status === 'granted') {
       this.onImageChange();
+      firebase.analytics().logEvent('permissions_gallery_accepted');
+    } else {
+      firebase.analytics().logEvent('permissions_gallery_denied');
     }
   };
 

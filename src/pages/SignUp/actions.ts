@@ -5,6 +5,7 @@ import { SignupScreenFromData, AuthResponse } from './';
 import { navigate } from '../../navigationService';
 import { IAction } from '../../coreTypes';
 import { openError } from '../ErrorModal/actions';
+import firebase from 'react-native-firebase';
 
 export const REQUEST_SIGNUP_USER = 'REQUEST_SIGNUP_USER';
 export const requestSignUpUser = (): IAction<undefined> => {
@@ -55,6 +56,7 @@ export const signupUser = (
       .then(res => {
         dispatch(receiveSignUpUser(res));
         navigate({ routeName: 'Pepups' });
+        firebase.analytics().logEvent('new_signup');
       })
       .catch(err => {
         dispatch(failureSignUpUser());
