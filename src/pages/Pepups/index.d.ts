@@ -75,6 +75,10 @@ export type PepupItemsProps = {
   
   getCeleb: (userId: string) => Promise<any>;
   isFetching: boolean;
+
+  route: {
+    key: string
+  }
 };
 
 export type PepupsScreenProps = PepupsScreenStateProps &

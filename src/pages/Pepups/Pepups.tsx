@@ -10,6 +10,7 @@ import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
+import { createSelector } from 'reselect'
 
 import {
   getAllActiveCategories,
@@ -71,10 +72,12 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
   render() {
     const { categories, isFetchingCat } = this.props;
+
     const tabsConfig: Array<Tab> | null = categories.length
       ? categories.map(cat => ({
           title: cat.id,
-          component: () => <PepupItems categoryId={cat.id} />
+          id: cat.id,
+          component: PepupItems
         }))
       : null;
 
@@ -88,15 +91,11 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
             {tabsConfig && (
               <Tabs
                 config={tabsConfig}
-                style={{ flex: 1 }}
+                style={styles.tabsComponent}
                 changeIndex={this.handleChangeTab}
                 activeTabIndex={this.state.activeTabIndex}
                 stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={{
-                  backgroundColor: 'transparent',
-                  marginBottom: 10,
-                  paddingLeft: 5
-                }}
+                stylesTabsContainer={styles.stylesTabsContainer}
               />
             )}
           </Loader>

@@ -49,7 +49,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
       openPepupModal();
       getCeleb(item.userInfo.id);
     };
-
+    
     return (
       <View style={{ flex: 0.5 }}>
         <Card style={styles.card}>
@@ -85,8 +85,8 @@ export class Component extends React.PureComponent<PepupItemsProps> {
 
 
   render() {
-    const { celebs, isFetching, categoryId } = this.props;
-    const categoryName = categoryId.toLowerCase();
+    const { celebs, isFetching, route } = this.props;
+    const categoryName = route.key.toLowerCase();
     const celebsArr = celebs[categoryName];
 
     return (
