@@ -56,12 +56,6 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     getCelebPepups(userId);
   }
 
-  // componentDidUpdate() {
-  //   const { getCelebPepups, userId } = this.props;
-
-  //   getCelebPepups(userId);
-  // }
-
   getModal = (pepupId: string) => {
     const { openNotifyModal, getPepupNotification } = this.props;
 
