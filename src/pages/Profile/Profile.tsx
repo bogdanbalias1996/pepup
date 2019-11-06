@@ -36,7 +36,7 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getProfile: (handle: string) => dispatch(getProfile(handle) as any),
   openPepupModal: () => dispatch(openPepupModal()),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),    
+  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
 });
 

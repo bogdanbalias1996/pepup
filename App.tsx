@@ -97,9 +97,7 @@ export default class App extends Component {
       type: 'FONT_LOADED'
     });
 
-    console.log(!!getStore().getState().LoginState.accessToken.length);
-    !!getStore().getState().LoginState.accessToken.length &&
-      this.checkPermission();
+    this.checkPermission();
     this.createNotificationListeners();
   }
 
