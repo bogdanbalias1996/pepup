@@ -108,7 +108,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     justifyContent: "center",
     alignItems: "center",
   },
@@ -170,7 +170,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     position: 'relative'
   },
   scrollContent: { paddingBottom: 90 }
