@@ -263,7 +263,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
               <TouchableOpacity
                 style={styles.btnCancel}
                 onPress={() => closeContestQuizModal()}>
-                <Icon name="cancel" color={colorBlack} />
+                <Icon size={20} name="cancel" color={colorBlack} />
               </TouchableOpacity>
               <ButtonStyled
                 style={[

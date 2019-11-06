@@ -6,7 +6,9 @@ import {
   colorTextViolet,
   semiboldFont,
   defaultFont,
-  boldFont
+  boldFont,
+  colorVioletGrey,
+  colorDotGray
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -106,7 +108,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     justifyContent: "center",
     alignItems: "center",
   },
@@ -146,7 +148,7 @@ export default StyleSheet.create({
     justifyContent: "flex-end",
   },
   modalOptionStyle:{
-    borderBottomColor: colorTextViolet,
+    borderBottomColor: colorDotGray,
     borderBottomWidth: 1
   },
   modalCancelTextStyle: {
@@ -168,7 +170,7 @@ export default StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 10,
+    marginHorizontal: 5,
     position: 'relative'
   },
   scrollContent: { paddingBottom: 90 }
