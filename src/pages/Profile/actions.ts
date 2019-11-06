@@ -4,10 +4,10 @@ import { request } from '../../api/network';
 import { IAction } from '../../coreTypes';
 import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
-import { closeVideoModal, closeNotifyModal } from '../Pepups/actions';
+import { closeVideoModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
 import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
-import { Pepup } from '.';
+import { Pepup, UserRequest } from '.';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -309,10 +309,10 @@ export const requestAccept = (): IAction<undefined> => {
 };
 
 export const RECEIVE_ACCEPT = 'RECEIVE_ACCEPT';
-export const receiveAccept = (): IAction<undefined> => {
+export const receiveAccept = (data: UserRequest): IAction<UserRequest> => {
   return {
     type: RECEIVE_ACCEPT,
-    data: undefined
+    data
   };
 };
 
@@ -337,8 +337,15 @@ export const acceptPepupRequest = (pepupId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveAccept());
-        dispatch(closeNotifyModal());
+        dispatch(receiveAccept(res));
+        dispatch(openAlert({
+          title: 'Request Accepted',
+          text: `Yay! ${res.requestedByInfo.name} will be happy to receive the Pepup.`,
+          onPress: () => {
+            dispatch(closeAlert());
+            dispatch(closeNotifyModal());
+          }
+        }));
       })
       .catch(err => {
         dispatch(failureAccept());
@@ -363,10 +370,10 @@ export const requestDeny = (): IAction<undefined> => {
 };
 
 export const RECEIVE_DENY = 'RECEIVE_DENY';
-export const receiveDeny = (): IAction<undefined> => {
+export const receiveDeny = (data: UserRequest): IAction<UserRequest> => {
   return {
     type: RECEIVE_DENY,
-    data: undefined
+    data
   };
 };
 
@@ -391,7 +398,7 @@ export const denyPepupRequest = (pepupId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveDeny());
+        dispatch(receiveDeny(res));
         dispatch(openAlert({
           title: 'Request Rejected',
           text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
@@ -408,6 +415,72 @@ export const denyPepupRequest = (pepupId: string) => {
             type: 'unknown',
             onPress: () => {
               dispatch(denyPepupRequest(pepupId) as any);
+            }
+          })
+        );
+      });
+  };
+};
+
+export const OPEN_NOTIFY_MODAL = 'OPEN_NOTIFY_MODAL';
+export const CLOSE_NOTIFY_MODAL = 'CLOSE_NOTIFY_MODAL';
+export const openNotifyModal = (): IAction<undefined> => {
+  return {
+    type: OPEN_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+export const closeNotifyModal = (): IAction<undefined> => {
+  return {
+    type: CLOSE_NOTIFY_MODAL,
+    data: undefined
+  };
+};
+
+export const RECEIVE_PEPUP_NOTIFICATION = 'RECEIVE_PEPUP_NOTIFICATION';
+export const receivePepupNotification = (data: UserRequest): IAction<UserRequest> => {
+  return {
+    type: RECEIVE_PEPUP_NOTIFICATION,
+    data
+  };
+};
+
+export const REQUEST_PEPUP_NOTIFICATION = 'REQUEST_PEPUP_NOTIFICATION';
+export const requestPepupNotification = (): IAction<undefined> => {
+  return {
+    type: REQUEST_PEPUP_NOTIFICATION,
+    data: undefined
+  };
+};
+
+export const FAILURE_PEPUP_NOTIFICATION = 'FAILURE_PEPUP_NOTIFICATION';
+export const failurePepupNotification = (): IAction<undefined> => {
+  return {
+    type: FAILURE_PEPUP_NOTIFICATION,
+    data: undefined
+  };
+};
+
+export const getPepupNotification = (pepupId: string) => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestPepupNotification());
+    request({
+      operation: ApiOperation.GetPepupById,
+      params: {
+        pepupId
+      }
+    })
+      .then(res => {
+        dispatch(receivePepupNotification(res));
+      })
+      .catch(err => {
+        dispatch(failurePepupNotification());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(closeError());
+              dispatch(getPepupNotification(pepupId) as any);
             }
           })
         );

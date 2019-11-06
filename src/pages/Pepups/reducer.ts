@@ -10,9 +10,6 @@ import {
   RECEIVE_PEPUP,
   REQUEST_PEPUP,
   FAILURE_REQ_PEPUP,
-  RECEIVE_PEPUP_NOTIFICATION,
-  REQUEST_PEPUP_NOTIFICATION,
-  FAILURE_PEPUP_NOTIFICATION,
   REQUEST_CELEBS_BY_CATEGORY,
   FAILURE_CELEBS_BY_CATEGORY,
   SET_CATEGORY,
@@ -32,8 +29,6 @@ import {
   FAILURE_ALL_ACTIVE_CATEGORIES,
   REQUEST_CELEB,
   FAILURE_CELEB,
-  OPEN_NOTIFY_MODAL,
-  CLOSE_NOTIFY_MODAL,
   FAILURE_FEATURED_CELEBS
 } from './actions';
 import { Category, Celeb, Review } from '.';
@@ -53,8 +48,6 @@ export class PepupState {
   isModalReviewShown: boolean;
   reviews: Array<Review>;
   isModalPostReviewShown: boolean;
-  isModalNotifyShown: boolean;
-  pepupData: UserRequest | null;
   videoUrl: string;
 
   constructor() {
@@ -71,8 +64,6 @@ export class PepupState {
     this.isModalReviewShown = false;
     this.reviews = [];
     this.isModalPostReviewShown = false;
-    this.isModalNotifyShown = false;
-    this.pepupData = null;
     this.videoUrl = '';
   }
 }
@@ -154,22 +145,6 @@ export const PepupReducer = (
       return {
         ...state,
         isFetchingCeleb: false
-      };
-    case RECEIVE_PEPUP_NOTIFICATION:
-      return {
-        ...state,
-        pepupData: action.data,
-        isFetching: false
-      };
-    case REQUEST_PEPUP_NOTIFICATION:
-      return {
-        ...state,
-        isFetching: true
-      };
-    case FAILURE_PEPUP_NOTIFICATION:
-      return {
-        ...state,
-        isFetching: false
       };
     case RECEIVE_PEPUP:
       return {
@@ -254,16 +229,6 @@ export const PepupReducer = (
       return {
         ...state,
         isFetching: false
-      };
-    case OPEN_NOTIFY_MODAL:
-      return {
-        ...state,
-        isModalNotifyShown: true
-      };
-    case CLOSE_NOTIFY_MODAL:
-      return {
-        ...state,
-        isModalNotifyShown: false
       };
     case FAILURE_FEATURED_CELEBS:
       return {
