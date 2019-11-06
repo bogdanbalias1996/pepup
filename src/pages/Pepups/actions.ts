@@ -70,27 +70,27 @@ export const failureAllActiveCategories = (): IAction<undefined> => {
   };
 };
 
-export const getAllActiveCategories = () => {
-  return (dispatch: Dispatch) => {
-    dispatch(requestAllActiveCategories());
-    request({
+export const getAllActiveCategories = () => async (dispatch: Dispatch) => {
+  dispatch(requestAllActiveCategories());
+
+  try {
+    const res = await request({
       operation: ApiOperation.GetAllActiveCategories
-    })
-      .then(res => {
-        dispatch(receiveAllActiveCategories(res));
+    });
+    dispatch(receiveAllActiveCategories(res));
+  } catch (err) {
+    dispatch(failureAllActiveCategories());
+
+    dispatch(
+      openError({
+        type: 'unknown',
+        onPress: () => {
+          dispatch(getAllActiveCategories() as any);
+        }
       })
-      .catch(err => {
-        dispatch(failureAllActiveCategories());
-        dispatch(
-          openError({
-            type: 'unknown',
-            onPress: () => {
-              dispatch(getAllActiveCategories() as any);
-            }
-          })
-        );
-      });
-  };
+    );
+  }
+
 };
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';
