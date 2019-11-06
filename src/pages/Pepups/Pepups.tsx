@@ -4,13 +4,13 @@ import { View } from 'react-native';
 
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { PepupsScreenProps } from '.';
+import { PepupsScreenProps, Category } from '.';
 import { PepupItems } from './PepupItems';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
-import { createSelector } from 'reselect'
+import memoize from 'memoize-one';
 
 import {
   getAllActiveCategories,
@@ -70,16 +70,21 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
     this.fetchCategories(categoryId);
   }
 
-  render() {
-    const { categories, isFetchingCat } = this.props;
-
+  createTabsConfig = memoize((categories: Category[]): Array<Tab> | null => {
     const tabsConfig: Array<Tab> | null = categories.length
       ? categories.map(cat => ({
           title: cat.id,
-          id: cat.id,
           component: PepupItems
         }))
       : null;
+
+    return tabsConfig;
+  })
+
+  render() {
+    const { categories, isFetchingCat } = this.props;
+
+    const tabsConfig = this.createTabsConfig(categories);
 
     return (
       <PepupBackground>
