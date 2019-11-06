@@ -44,12 +44,7 @@ const AppContainer = createAppContainer(AppNavigator);
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
     <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
-      <AppContainer
-        ref={(navigatorRef: any) => {
-          setTopLevelNavigator(navigatorRef);
-          authenticate();
-        }}
-      />
+      <AppContainer ref={setTopLevelNavigator}/>
     </Loader>
   );
 };
@@ -99,6 +94,8 @@ export default class App extends Component {
 
     this.checkPermission();
     this.createNotificationListeners();
+    
+    await authenticate();
   }
 
   componentWillUnmount() {
