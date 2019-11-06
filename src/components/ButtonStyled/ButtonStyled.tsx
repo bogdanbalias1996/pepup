@@ -104,7 +104,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
               ]}>
               {text}
             </Text>
-            <FastImage style={styles.image} source={iconSource} />
+            {iconSource && <FastImage style={styles.image} source={iconSource} />}
           </Loader>
         </TouchableOpacity>
       </LinearGradient>
