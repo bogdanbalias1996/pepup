@@ -13,25 +13,25 @@ const slides = [
     key: '1',
     title: 'CONNECT',
     description: 'Get up-close and personal with your favorite stars',
-    imageSrc: require('../../../assets/connect.png')
+    imageSrc: require('../../../assets/onboarding/connect.png')
   },
   {
     key: '2',
     title: 'MINGLE',
     description: 'Attend exclusive events and party in style',
-    imageSrc: require('../../../assets/mungle.png')
+    imageSrc: require('../../../assets/onboarding/mungle.png')
   },
   {
     key: '3',
     title: 'DAZZLE',
     description: 'Participate in a variety of contests and win prizes',
-    imageSrc: require('../../../assets/dazzle.png')
+    imageSrc: require('../../../assets/onboarding/dazzle.png')
   },
   {
     key: '4',
     title: 'INDULGE',
     description: 'Collect original celebrity apparel & merchandize',
-    imageSrc: require('../../../assets/indulge.png')
+    imageSrc: require('../../../assets/onboarding/indulge.png')
   }
 ];
 
