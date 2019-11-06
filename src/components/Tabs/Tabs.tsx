@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import { TabsProps, Tab } from './';
+import { createSelector } from 'reselect';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
   colorVioletGrey,
@@ -10,53 +11,69 @@ import {
 } from '../../variables';
 
 export class Tabs extends React.PureComponent<TabsProps> {
-  render() {
-    const { config, style = {}, changeIndex, activeTabIndex } = this.props;
+  static defaultProps = {
+    style: {}
+  };
 
-    const parseConfigToScenes = (config: Array<Tab>) =>
-      config.reduce((acc: { [key: string]: string }, cur, index) => {
+  generateSceneConfig = createSelector(
+    (config: Array<Tab>) => {
+      const sceneData = config.reduce((acc: { [key: string]: string }, cur, index) => {
         acc[cur.title] = cur.component;
         return acc;
       }, {});
 
-    const parseConfigToRoutes = (config: Array<Tab>) =>
+      return SceneMap(sceneData as any);
+    },
+ 
+    (config: Array<Tab>) =>
       config.map((item: Tab, index: number) => ({
         key: item.title,
         title: item.title
-      }));
+      })),
+
+    (sceneMap, routes) => ({ sceneMap, routes })
+  )
+
+  renderLabel = ({ route, focused }: { route: { title: string }; focused: boolean }) => (
+    <Text
+      style={
+        focused
+          ? defaultTabsStyles.selectedLabel
+          : defaultTabsStyles.itemText
+      }>
+      {route.title}
+    </Text>
+  );
+
+  renderTabBar = (props: any) => (
+    <TabBar
+      {...props}
+      indicatorStyle={defaultTabsStyles.itemSelectedText}
+      style={defaultTabsStyles.tabsBar}
+      labelStyle={defaultTabsStyles.itemText}
+      scrollEnabled
+      tabStyle={defaultTabsStyles.tabBarTabStyle}
+      renderLabel={this.renderLabel}
+    />
+  );
+
+  render() {
+    const { config, style, changeIndex, activeTabIndex } = this.props;
+    const { sceneMap, routes } = this.generateSceneConfig(config);
 
     return (
       <View style={style}>
         <TabView
           lazy
           navigationState={{
-            index: activeTabIndex ? activeTabIndex : 0,
-            routes: parseConfigToRoutes(config)
+            index: activeTabIndex || 0,
+            routes
           }}
-          renderScene={SceneMap(parseConfigToScenes(config))}
-          onIndexChange={index => changeIndex(index)}
-          initialLayout={{ width: Dimensions.get('window').width }}
-          swipeEnabled={true}
-          renderTabBar={props => (
-            <TabBar
-              {...props}
-              indicatorStyle={defaultTabsStyles.itemSelectedText}
-              style={defaultTabsStyles.tabsBar}
-              labelStyle={defaultTabsStyles.itemText}
-              scrollEnabled
-              tabStyle={{ width: 'auto' }}
-              renderLabel={({ route, focused }) => (
-                <Text
-                  style={
-                    focused
-                      ? defaultTabsStyles.selectedLabel
-                      : defaultTabsStyles.itemText
-                  }>
-                  {route.title}
-                </Text>
-              )}
-            />
-          )}
+          renderScene={sceneMap}
+          onIndexChange={changeIndex}
+          initialLayout={defaultTabsStyles.initialLayout}
+          swipeEnabled
+          renderTabBar={this.renderTabBar}
         />
       </View>
     );
@@ -97,5 +114,11 @@ export const defaultTabsStyles = StyleSheet.create({
     textAlign: 'left',
     letterSpacing: 2,
     paddingTop: 4
+  },
+  initialLayout: {
+    width: Dimensions.get('window').width
+  },
+  tabBarTabStyle: {
+    width: 'auto'
   }
 });
