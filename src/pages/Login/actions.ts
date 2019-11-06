@@ -115,3 +115,11 @@ export const setHandleName = (data: string): IAction<string> => {
     data
   };
 };
+
+export const SET_DEVELOPER_MODE = 'SET_DEVELOPER_MODE';
+export const setDeveloperMode = (data: boolean) => {
+  return {
+    type: SET_DEVELOPER_MODE,
+    data
+  };
+};

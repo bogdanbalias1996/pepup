@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setCategory: (cat: string) => dispatch(setCategory(cat) as any)
 });
 
-export class Component extends React.PureComponent<PepupItemsProps> {
+export class Component extends React.Component<PepupItemsProps> {
   renderItem = ({ item }: any) => {
     const { openPepupModal, getCeleb } = this.props;
     const getModal = () => {
@@ -82,20 +82,7 @@ export class Component extends React.PureComponent<PepupItemsProps> {
     );
   };
 
-  componentDidMount() {
-    const {
-      getCelebsByCategory,
-      categoryId,
-      setCategory,
-      getFeaturedCelebs
-    } = this.props;
 
-    setCategory(categoryId);
-
-    categoryId === 'Featured'
-      ? getFeaturedCelebs()
-      : getCelebsByCategory(categoryId);
-  }
 
   render() {
     const { celebs, isFetching, categoryId } = this.props;

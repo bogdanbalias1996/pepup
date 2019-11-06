@@ -1,15 +1,15 @@
-import { Dispatch } from "redux";
-import { ApiOperation } from "../../api/api";
-import { request } from "../../api/network";
-import { IAction } from "../../coreTypes";
-import { Event } from ".";
-import { openError, closeError } from "../ErrorModal/actions";
-import { navigate } from "../../navigationService";
-import { openAlert, closeAlert } from "../Alert/actions";
-import { ModalEventsFromDataProps } from "../../components/ModalEvents";
+import { Dispatch } from 'redux';
+import { ApiOperation } from '../../api/api';
+import { request } from '../../api/network';
+import { IAction } from '../../coreTypes';
+import { Event, EventsResponseType } from '.';
+import { openError, closeError } from '../ErrorModal/actions';
+import { navigate } from '../../navigationService';
+import { openAlert, closeAlert } from '../Alert/actions';
+import { ModalEventsFromDataProps } from '../../components/ModalEvents';
 
-export const OPEN_EVENT_MODAL = "OPEN_EVENT_MODAL";
-export const CLOSE_EVENT_MODAL = "CLOSE_EVENT_MODAL";
+export const OPEN_EVENT_MODAL = 'OPEN_EVENT_MODAL';
+export const CLOSE_EVENT_MODAL = 'CLOSE_EVENT_MODAL';
 
 export const openEventModal = (): IAction<undefined> => {
   return {
@@ -24,15 +24,17 @@ export const closeEventModal = (): IAction<undefined> => {
   };
 };
 
-export const RECEIVE_ALL_EVENTS = "RECEIVE_ALL_EVENTS";
-export const receiveAllEvents = (data: Array<Event>): IAction<Array<Event>> => {
+export const RECEIVE_ALL_EVENTS = 'RECEIVE_ALL_EVENTS';
+export const receiveAllEvents = (
+  data: EventsResponseType
+): IAction<EventsResponseType> => {
   return {
     type: RECEIVE_ALL_EVENTS,
     data
   };
 };
 
-export const REQUEST_ALL_EVENTS = "REQUEST_ALL_EVENTS";
+export const REQUEST_ALL_EVENTS = 'REQUEST_ALL_EVENTS';
 export const requestAllEvents = (): IAction<undefined> => {
   return {
     type: REQUEST_ALL_EVENTS,
@@ -40,7 +42,7 @@ export const requestAllEvents = (): IAction<undefined> => {
   };
 };
 
-export const FAILURE_ALL_EVENTS = "FAILURE_ALL_EVENTS";
+export const FAILURE_ALL_EVENTS = 'FAILURE_ALL_EVENTS';
 export const failureAllEvents = (): IAction<undefined> => {
   return {
     type: FAILURE_ALL_EVENTS,
@@ -58,25 +60,38 @@ export const getEventsByCategory = (categoryId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveAllEvents(res));
+        dispatch(
+          receiveAllEvents({
+            categoryId,
+            data: res
+          })
+        );
         if (!res.length) {
-          dispatch(openError({
-            type: 'noResults',
-            onPress: () => { dispatch(getEventsByCategory(categoryId) as any) }
-          }))
+          dispatch(
+            openError({
+              type: 'noResults',
+              onPress: () => {
+                dispatch(getEventsByCategory(categoryId) as any);
+              }
+            })
+          );
         }
       })
       .catch(err => {
         dispatch(failureAllEvents());
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(getEventsByCategory(categoryId) as any) }
-        }))
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getEventsByCategory(categoryId) as any);
+            }
+          })
+        );
       });
   };
 };
 
-export const RECEIVE_EVENT = "RECEIVE_EVENT";
+export const RECEIVE_EVENT = 'RECEIVE_EVENT';
 export const receiveEvent = (data: Event): IAction<Event> => {
   return {
     type: RECEIVE_EVENT,
@@ -84,7 +99,7 @@ export const receiveEvent = (data: Event): IAction<Event> => {
   };
 };
 
-export const REQUEST_EVENT = "REQUEST_EVENT";
+export const REQUEST_EVENT = 'REQUEST_EVENT';
 export const requestEvent = (): IAction<undefined> => {
   return {
     type: REQUEST_EVENT,
@@ -92,7 +107,7 @@ export const requestEvent = (): IAction<undefined> => {
   };
 };
 
-export const FAILURE_EVENT = "FAILURE_EVENT";
+export const FAILURE_EVENT = 'FAILURE_EVENT';
 export const failureEvent = (): IAction<undefined> => {
   return {
     type: FAILURE_EVENT,
@@ -102,7 +117,7 @@ export const failureEvent = (): IAction<undefined> => {
 
 export const getEvent = (eventId: string) => {
   return (dispatch: Dispatch) => {
-    dispatch(requestEvent())
+    dispatch(requestEvent());
     request({
       operation: ApiOperation.GetEvent,
       params: {
@@ -112,27 +127,33 @@ export const getEvent = (eventId: string) => {
       .then(res => {
         dispatch(receiveEvent(res));
         if (Object.keys(res).length === 0) {
-          dispatch(openError({
-            type: 'itemUnavailable',
-            onPress: () => { dispatch(getEvent(eventId) as any) }
-          }))
+          dispatch(
+            openError({
+              type: 'itemUnavailable',
+              onPress: () => {
+                dispatch(getEvent(eventId) as any);
+              }
+            })
+          );
         }
       })
       .catch(err => {
-        dispatch(failureEvent())
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => {
-            dispatch(closeError());
-            dispatch(closeEventModal());
-            navigate({ routeName: 'Main' });
-          }
-        }))
+        dispatch(failureEvent());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(closeError());
+              dispatch(closeEventModal());
+              navigate({ routeName: 'Main' });
+            }
+          })
+        );
       });
   };
 };
 
-export const SET_QUANTITY = "SET_QUANTITY";
+export const SET_QUANTITY = 'SET_QUANTITY';
 export const setQuantity = (data: string): IAction<string> => {
   return {
     type: SET_QUANTITY,
@@ -140,7 +161,7 @@ export const setQuantity = (data: string): IAction<string> => {
   };
 };
 
-export const REQUEST_EVENT_PURCHASE = "REQUEST_EVENT_PURCHASE";
+export const REQUEST_EVENT_PURCHASE = 'REQUEST_EVENT_PURCHASE';
 export const requestEventPurchase = (): IAction<undefined> => {
   return {
     type: REQUEST_EVENT_PURCHASE,
@@ -148,7 +169,7 @@ export const requestEventPurchase = (): IAction<undefined> => {
   };
 };
 
-export const RECEIVE_EVENT_PURCHASE = "RECEIVE_EVENT_PURCHASE";
+export const RECEIVE_EVENT_PURCHASE = 'RECEIVE_EVENT_PURCHASE';
 export const receiveEventPurchase = (data: boolean): IAction<boolean> => {
   return {
     type: RECEIVE_EVENT_PURCHASE,
@@ -156,7 +177,7 @@ export const receiveEventPurchase = (data: boolean): IAction<boolean> => {
   };
 };
 
-export const FAILURE_EVENT_PURCHASE = "FAILURE_EVENT_PURCHASE";
+export const FAILURE_EVENT_PURCHASE = 'FAILURE_EVENT_PURCHASE';
 export const failureEventPurchase = (): IAction<undefined> => {
   return {
     type: FAILURE_EVENT_PURCHASE,
@@ -164,7 +185,10 @@ export const failureEventPurchase = (): IAction<undefined> => {
   };
 };
 
-export const purchaseEventTicket = (eventId: string, payload: ModalEventsFromDataProps) => {
+export const purchaseEventTicket = (
+  eventId: string,
+  payload: ModalEventsFromDataProps
+) => {
   return (dispatch: Dispatch) => {
     const { quantity } = payload;
 
@@ -175,32 +199,36 @@ export const purchaseEventTicket = (eventId: string, payload: ModalEventsFromDat
         eventId
       },
       variables: {
-        quantity,
+        quantity
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
       }
     })
-      .then((res) => {
+      .then(res => {
         dispatch(receiveEventPurchase(res));
-        dispatch(openAlert({
-          title: 'Purchase Successful',
-          text:
-            'Thanks for purchasing the ticket. Look out for further details in your email. Don’t forget to bookmark your calendar!',
-          onPress: () => {
-            dispatch(closeAlert());
-            dispatch(closeEventModal());
-          }
-        }));
+        dispatch(
+          openAlert({
+            title: 'Purchase Successful',
+            text:
+              'Thanks for purchasing the ticket. Look out for further details in your email. Don’t forget to bookmark your calendar!',
+            onPress: () => {
+              dispatch(closeAlert());
+              dispatch(closeEventModal());
+            }
+          })
+        );
       })
-      .catch((err) => {
+      .catch(err => {
         dispatch(failureEventPurchase());
-        dispatch(openError({
-          type: 'paymentFail',
-          onPress: () => {
-            dispatch(purchaseEventTicket(eventId, payload) as any)
-          }
-        }));
-      })
-  }
-}
+        dispatch(
+          openError({
+            type: 'paymentFail',
+            onPress: () => {
+              dispatch(purchaseEventTicket(eventId, payload) as any);
+            }
+          })
+        );
+      });
+  };
+};
