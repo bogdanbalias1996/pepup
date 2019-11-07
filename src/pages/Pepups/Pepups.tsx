@@ -127,4 +127,4 @@ const mapDispatchToProps = {
 export const PepupsScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);
