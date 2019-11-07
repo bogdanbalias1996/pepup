@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 
+import { getEventsByCategory } from './actions';
 import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { EventsScreenProps } from '.';
@@ -9,7 +11,8 @@ import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
 
-export class EventsScreen extends React.PureComponent<EventsScreenProps> {
+
+class Component extends React.PureComponent<EventsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (props: any) => (
       <HeaderRounded {...props} title={'Events'.toUpperCase()} />
@@ -44,20 +47,35 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
     activeTabIndex: 0
   };
 
+  componentDidMount() {
+    const { getEventsByCategory } = this.props;
+    const initialCategory = Component.tabsConfig[0].title;
+
+    getEventsByCategory(initialCategory);
+  }
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  render() {
+  handleChangeTab = (index: number) => {
+    const { getEventsByCategory } = this.props;
 
+    this.setState({ activeTabIndex: index })
+
+    const category = Component.tabsConfig[index].title;
+    getEventsByCategory(category);
+  }
+
+  render() {
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Tabs
-            config={EventsScreen.tabsConfig}
+            config={Component.tabsConfig}
             style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
-            changeIndex={index => this.setState({ activeTabIndex: index })}
+            changeIndex={this.handleChangeTab}
             activeTabIndex={this.state.activeTabIndex}
             stylesTabsContainer={{
               backgroundColor: 'transparent',
@@ -71,3 +89,5 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
     );
   }
 }
+
+export const EventsScreen = connect<EventsScreenProps>(null, { getEventsByCategory })(Component);

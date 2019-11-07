@@ -33,7 +33,9 @@ export type EventsScreenStateProps = {
   isFetching: boolean;
 };
 
-export type EventsScreenDispatchProps = {};
+export type EventsScreenDispatchProps = {
+  getEventsByCategory: (categoryId: string) => Promise<void>
+};
 
 export type EventItemsProps = {
   events: Array<Event>;

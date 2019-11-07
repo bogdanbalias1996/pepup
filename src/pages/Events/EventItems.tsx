@@ -34,11 +34,6 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 export class Component extends React.PureComponent<EventItemsProps> {
-  componentDidMount() {
-    const { getEventsByCategory, route } = this.props;
-
-    getEventsByCategory(route.key);
-  }
 
   renderItem = ({ item }: any) => {
     const { openEventModal, getEvent, isFetching } = this.props;
