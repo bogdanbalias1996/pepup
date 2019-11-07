@@ -73,15 +73,11 @@ class Component extends React.PureComponent<EventsScreenProps> {
         <View style={styles.wrapContent}>
           <Tabs
             config={Component.tabsConfig}
-            style={{ flex: 1 }}
+            style={styles.tabs}
             stylesItem={defaultTabsStyles.roundedTabs}
             changeIndex={this.handleChangeTab}
             activeTabIndex={this.state.activeTabIndex}
-            stylesTabsContainer={{
-              backgroundColor: 'transparent',
-              marginBottom: 10,
-              paddingLeft: 5
-            }}
+            stylesTabsContainer={styles.stylesTabsContainer}
           />
         </View>
         <ModalEvents />
