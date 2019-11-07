@@ -38,7 +38,7 @@ export type EventsScreenDispatchProps = {
 };
 
 export type EventItemsProps = {
-  events: Array<Event>;
+  events: { [key: string]: Array<Event> };
   categoryId: string;
   getEventsByCategory: (id: string) => Promise<any>;
   openEventModal: () => void;
