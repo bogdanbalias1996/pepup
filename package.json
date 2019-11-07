@@ -84,6 +84,7 @@
     "metro-react-native-babel-preset": "^0.56.0",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.9.0",
+    "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "typescript": "^3.3.4000"
   },
