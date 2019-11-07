@@ -26,5 +26,13 @@ export default StyleSheet.create({
   rateIcon: {
     width: 20,
     height: 20
+  },
+  tabs: {
+    flex: 1
+  },
+  stylesTabsContainer: {
+    backgroundColor: 'transparent',
+    marginBottom: 10,
+    paddingLeft: 5
   }
 });

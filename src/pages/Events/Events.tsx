@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 
+import { getEventsByCategory } from './actions';
 import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { EventsScreenProps } from '.';
@@ -9,60 +11,73 @@ import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Events.styles';
 
-export class EventsScreen extends React.PureComponent<EventsScreenProps> {
+
+class Component extends React.PureComponent<EventsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (props: any) => (
       <HeaderRounded {...props} title={'Events'.toUpperCase()} />
     )
   });
 
+  private static readonly tabsConfig = [
+    {
+      title: 'Past',
+      component: EventItems
+    },
+    {
+      title: 'Today',
+      component: EventItems
+    },
+    {
+      title: 'Featured',
+      component: EventItems
+    },
+    {
+      title: 'Upcoming',
+      component: EventItems
+    },
+    {
+      title: 'Hot',
+      component: EventItems
+    }
+  ];
+
   state = {
     isModalVisible: false,
     activeTabIndex: 0
   };
 
+  componentDidMount() {
+    const { getEventsByCategory } = this.props;
+    const initialCategory = Component.tabsConfig[0].title;
+
+    getEventsByCategory(initialCategory);
+  }
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
-  render() {
-    const tabsConfig = [
-      {
-        title: 'Past',
-        component: () => <EventItems categoryId="Past" />
-      },
-      {
-        title: 'Today',
-        component: () => <EventItems categoryId="Today" />
-      },
-      {
-        title: 'Featured',
-        component: () => <EventItems categoryId="Featured" />
-      },
-      {
-        title: 'Upcoming',
-        component: () => <EventItems categoryId="Upcoming" />
-      },
-      {
-        title: 'Hot',
-        component: () => <EventItems categoryId="Hot" />
-      }
-    ];
+  handleChangeTab = (index: number) => {
+    const { getEventsByCategory } = this.props;
 
+    this.setState({ activeTabIndex: index })
+
+    const category = Component.tabsConfig[index].title;
+    getEventsByCategory(category);
+  }
+
+  render() {
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Tabs
-            config={tabsConfig}
-            style={{ flex: 1 }}
+            config={Component.tabsConfig}
+            style={styles.tabs}
             stylesItem={defaultTabsStyles.roundedTabs}
-            changeIndex={index => this.setState({ activeTabIndex: index })}
+            changeIndex={this.handleChangeTab}
             activeTabIndex={this.state.activeTabIndex}
-            stylesTabsContainer={{
-              backgroundColor: 'transparent',
-              marginBottom: 10,
-              paddingLeft: 5
-            }}
+            stylesTabsContainer={styles.stylesTabsContainer}
           />
         </View>
         <ModalEvents />
@@ -70,3 +85,5 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
     );
   }
 }
+
+export const EventsScreen = connect<EventsScreenProps>(null, { getEventsByCategory })(Component);

@@ -126,7 +126,7 @@ const mapDispatchToProps = {
 export const PepupItems = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);
 
 const styles = StyleSheet.create({
   row: {

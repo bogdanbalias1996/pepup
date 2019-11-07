@@ -22,32 +22,33 @@ import {
 import { IGlobalState } from '../../coreTypes';
 import { Loader } from '../../components/Loader/Loader';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  openEventModal: () => dispatch(openEventModal()),
-  getEventsByCategory: (id: string) => dispatch(getEventsByCategory(id) as any),
-  getEvent: (val: string) => dispatch(getEvent(val) as any)
-});
+export class Component extends React.Component<EventItemsProps> {
+  keyExstractor = (item: Event) => item.id;
 
-const mapStateToProps = (state: IGlobalState) => ({
-  isFetching: state.EventState.isFetching,
-  events: state.EventState.events
-});
+  extractEventsByCategory(celebs: { [key: string]: Array<Event> }, category: string): Event[]  {
+    const categoryName = category.toLowerCase();
+    const categoryEvent = celebs[categoryName] || [];
 
-export class Component extends React.PureComponent<EventItemsProps> {
-  componentDidMount() {
-    const { getEventsByCategory, categoryId } = this.props;
+    return categoryEvent;
+  }
 
-    getEventsByCategory(categoryId);
+  shouldComponentUpdate(nextProps: EventItemsProps): boolean {
+    const oldEvents = this.extractEventsByCategory(this.props.events, this.props.route.key);
+    const newEvents = this.extractEventsByCategory(nextProps.events, nextProps.route.key);
+
+    // TODO: implement shallow compersion by id
+    return newEvents.length !== oldEvents.length;
   }
 
   renderItem = ({ item }: any) => {
-    const { openEventModal, getEvent, isFetching } = this.props;
+    const { openEventModal, getEvent } = this.props;
     const getModal = () => {
       openEventModal();
       getEvent(item.id);
     };
+
     return (
-      <TouchableOpacity onPress={() => getModal()} activeOpacity={1}>
+      <TouchableOpacity onPress={getModal} activeOpacity={1}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.text}>
@@ -76,13 +77,13 @@ export class Component extends React.PureComponent<EventItemsProps> {
   };
 
   render() {
-    const { isFetching, events, categoryId } = this.props;
-    const categoryName = categoryId.toLowerCase();
-    const eventsArr = events[categoryName];
+    const { events, route } = this.props;
+
+    const eventsArr = this.extractEventsByCategory(events, route.key.toLowerCase());
 
     return (
       <Loader
-        isDataLoaded={(eventsArr && eventsArr.length) || !isFetching}
+        isDataLoaded={Boolean(eventsArr.length)}
         color={colorBlueberry}
         size="large">
         <FlatList
@@ -90,17 +91,29 @@ export class Component extends React.PureComponent<EventItemsProps> {
           showsVerticalScrollIndicator={false}
           data={eventsArr}
           renderItem={this.renderItem}
-          keyExtractor={(item: Event) => item.id}
+          keyExtractor={this.keyExstractor}
         />
       </Loader>
     );
   }
 }
 
+
+const mapStateToProps = (state: IGlobalState) => ({
+  isFetching: state.EventState.isFetching,
+  events: state.EventState.events
+});
+
+const mapDispatchToProps = {
+  openEventModal,
+  getEventsByCategory,
+  getEvent
+};
+
 export const EventItems = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);
 
 const styles = StyleSheet.create({
   card: {
