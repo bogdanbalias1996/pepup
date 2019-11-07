@@ -50,7 +50,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         isLoading={isFetchingContest}
         heightContent={this.state.heightDescription}>
         {contestData && Object.keys(contestData).length !== 0 && (
-          <View style={{ flex: 1, paddingHorizontal: 24 }}>
+          <View style={styles.upperWrap}>
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
@@ -69,7 +69,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                       }}
                       resizeMode={FastImage.resizeMode.contain}
                     />
-                    <Text style={styles.title}>{contestData.title}</Text>
+                    <View style={{flex: 1}}><Text style={styles.title}>{contestData.title}</Text></View>
                     <Text style={styles.descriptionTitle}>
                       Contest details:
                     </Text>

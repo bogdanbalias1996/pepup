@@ -12,12 +12,11 @@ export default StyleSheet.create({
     backgroundColor: colorLightGray,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    paddingTop: 16,
+    paddingTop: 20,
     flex: 1,
     marginTop: deviceInfoCheck() ? 10 : 0,
   },
   form: {
-    marginTop: 20,
     flex: 1,
     justifyContent: 'space-between',
     position: 'relative',

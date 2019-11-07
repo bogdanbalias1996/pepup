@@ -67,7 +67,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
           visible={isModalReqShown}
           onRequestClose={() => closePepupReqModal()}
           heightContent={this.state.heightDescription}>
-          <View style={{ paddingHorizontal: 24, flex: 1, paddingTop: 10 }}>
+          <View style={styles.upperWrap}>
             <Formik
               initialValues={{
                 name: '',

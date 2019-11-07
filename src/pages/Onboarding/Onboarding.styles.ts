@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions } from 'react-native'
 import {
   colorDotGray,
   colorDots,
@@ -36,8 +36,8 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: undefined,
-    height: undefined
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height
   },
   title: {
     fontSize: 38,
