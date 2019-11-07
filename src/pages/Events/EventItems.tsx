@@ -35,9 +35,9 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 export class Component extends React.PureComponent<EventItemsProps> {
   componentDidMount() {
-    const { getEventsByCategory, categoryId } = this.props;
+    const { getEventsByCategory, route } = this.props;
 
-    getEventsByCategory(categoryId);
+    getEventsByCategory(route.key);
   }
 
   renderItem = ({ item }: any) => {
@@ -76,8 +76,8 @@ export class Component extends React.PureComponent<EventItemsProps> {
   };
 
   render() {
-    const { isFetching, events, categoryId } = this.props;
-    const categoryName = categoryId.toLowerCase();
+    const { isFetching, events, route } = this.props;
+    const categoryName = route.key.toLowerCase();
     const eventsArr = events[categoryName];
 
     return (

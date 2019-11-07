@@ -42,6 +42,9 @@ export type EventItemsProps = {
   openEventModal: () => void;
   getEvent: (eventId: string) => Promise<any>;
   isFetching: boolean;
+  route: {
+    key: string;
+  }
 };
 
 export type EventsResponseType = {

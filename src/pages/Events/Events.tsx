@@ -16,6 +16,29 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
     )
   });
 
+  private static readonly tabsConfig = [
+    {
+      title: 'Past',
+      component: EventItems
+    },
+    {
+      title: 'Today',
+      component: EventItems
+    },
+    {
+      title: 'Featured',
+      component: EventItems
+    },
+    {
+      title: 'Upcoming',
+      component: EventItems
+    },
+    {
+      title: 'Hot',
+      component: EventItems
+    }
+  ];
+
   state = {
     isModalVisible: false,
     activeTabIndex: 0
@@ -26,34 +49,12 @@ export class EventsScreen extends React.PureComponent<EventsScreenProps> {
   };
 
   render() {
-    const tabsConfig = [
-      {
-        title: 'Past',
-        component: () => <EventItems categoryId="Past" />
-      },
-      {
-        title: 'Today',
-        component: () => <EventItems categoryId="Today" />
-      },
-      {
-        title: 'Featured',
-        component: () => <EventItems categoryId="Featured" />
-      },
-      {
-        title: 'Upcoming',
-        component: () => <EventItems categoryId="Upcoming" />
-      },
-      {
-        title: 'Hot',
-        component: () => <EventItems categoryId="Hot" />
-      }
-    ];
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
           <Tabs
-            config={tabsConfig}
+            config={EventsScreen.tabsConfig}
             style={{ flex: 1 }}
             stylesItem={defaultTabsStyles.roundedTabs}
             changeIndex={index => this.setState({ activeTabIndex: index })}
