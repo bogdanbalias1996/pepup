@@ -21,6 +21,7 @@ import {
 } from './actions';
 import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
+import CategoryViewer from '../../components/CategoryViewer';
 import { colorBlueberry } from '../../variables';
 
 
@@ -83,6 +84,9 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
   render() {
     const { categories, isFetchingCat } = this.props;
+    const { activeTabIndex } = this.state;
+
+    const isCategoriesLoaded = Boolean(categories && categories.length);
 
     const tabsConfig = this.createTabsConfig(categories);
 
@@ -92,8 +96,21 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
           <Loader
             size="large"
             color={colorBlueberry}
-            isDataLoaded={!isFetchingCat}>
-            {tabsConfig && (
+            isDataLoaded={!isFetchingCat}
+          >
+            {isCategoriesLoaded && (
+              <CategoryViewer
+                categories={categories}
+                activeTabIndex={activeTabIndex}
+                onTabChange={this.handleChangeTab}
+
+                style={styles.tabsComponent}
+                stylesItem={defaultTabsStyles.roundedTabs}
+                stylesTabsContainer={styles.stylesTabsContainer}
+              />
+            )}
+
+            {/* {tabsConfig && (
               <Tabs
                 config={tabsConfig}
                 style={styles.tabsComponent}
@@ -102,7 +119,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={styles.stylesTabsContainer}
               />
-            )}
+            )} */}
           </Loader>
         </View>
         <ModalPepup />
