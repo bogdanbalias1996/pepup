@@ -28,9 +28,6 @@ export default StyleSheet.create({
     width: 20,
     height: 20,
   },
-  tabsComponent: {
-    flex: 1,
-  },
   stylesTabsContainer: {
     backgroundColor: 'transparent',
     marginBottom: 10,

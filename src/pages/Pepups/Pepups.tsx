@@ -103,8 +103,6 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
                 categories={categories}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-
-                style={styles.tabsComponent}
                 stylesItem={defaultTabsStyles.roundedTabs}
                 stylesTabsContainer={styles.stylesTabsContainer}
               />

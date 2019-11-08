@@ -8,6 +8,9 @@ import {
 } from '../../variables';
 
 export default StyleSheet.create({
+  wrapper: {
+    flex: 1
+  },
   roundedTabs: {
     flex: 0,
     borderRadius: 24,

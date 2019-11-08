@@ -59,7 +59,7 @@ export class Tabs extends React.PureComponent<TabsProps> {
   render() {
     const { config, style, changeIndex, activeTabIndex } = this.props;
     const { sceneMap, routes } = this.generateSceneConfig(config);
-    // console.log({sceneMap, routes})
+
     return (
       <View style={style}>
         <TabView

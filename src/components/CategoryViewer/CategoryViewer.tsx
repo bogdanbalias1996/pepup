@@ -6,7 +6,7 @@ import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import { CategoryViewerProps } from './types';
 import { Category } from "../../pages/Pepups";
 
-import defaultTabsStyles from './CategoryViewer.styles';
+import styles from './CategoryViewer.styles';
 
 class CategoryViewer extends PureComponent<CategoryViewerProps> {
   static defaultProps = {
@@ -36,8 +36,8 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     <Text
       style={
         focused
-          ? defaultTabsStyles.selectedLabel
-          : defaultTabsStyles.itemText
+          ? styles.selectedLabel
+          : styles.itemText
       }>
       {route.title}
     </Text>
@@ -46,21 +46,21 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   renderTabBar = (props: any) => (
     <TabBar
       {...props}
-      indicatorStyle={defaultTabsStyles.itemSelectedText}
-      style={defaultTabsStyles.tabsBar}
-      labelStyle={defaultTabsStyles.itemText}
-      scrollEnabled
-      tabStyle={defaultTabsStyles.tabBarTabStyle}
+      indicatorStyle={styles.itemSelectedText}
+      style={styles.tabsBar}
+      labelStyle={styles.itemText}
+      tabStyle={styles.tabBarTabStyle}
       renderLabel={this.renderLabel}
+      scrollEnabled
     />
   );
 
   render() {
-    const { config, style, categories, onTabChange, activeTabIndex } = this.props;
+    const { config, categories, onTabChange, activeTabIndex } = this.props;
     const { sceneMap, routes } = this.generateSceneConfig(categories);
 
     return (
-      <View style={style}>
+      <View style={styles.wrapper}>
         <TabView
           navigationState={{
             index: activeTabIndex,
@@ -68,10 +68,8 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
           }}
           onIndexChange={onTabChange}
           renderScene={sceneMap}
-          
-          initialLayout={defaultTabsStyles.initialLayout}
-          
           renderTabBar={this.renderTabBar}
+          initialLayout={styles.initialLayout}
           lazy
           swipeEnabled
         />
