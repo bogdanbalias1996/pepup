@@ -40,13 +40,6 @@ export default StyleSheet.create({
     color: colorBlack,
     marginBottom: 5
   },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: 'center'
-  },
   disclaimerText: {
     color: colorTextGray,
     lineHeight: 22,
@@ -124,5 +117,10 @@ export default StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-start'
   },
-  scrollContent: { paddingBottom: 90 }
+  scrollContent: { paddingBottom: 90 },
+  upperWrap: {
+    paddingHorizontal: 24,
+    flex: 1,
+    paddingTop: 20
+  }
 });

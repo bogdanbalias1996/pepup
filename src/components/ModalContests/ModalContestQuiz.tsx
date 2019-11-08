@@ -70,8 +70,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
           visible={isModalTestShown}
           onRequestClose={() => closeContestQuizModal()}
           heightContent={this.state.heightDescription}>
-          <View style={{ flex: 1, paddingHorizontal: 24 }}>
-            <View style={styles.swiperLine} />
+          <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 20 }}>
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View

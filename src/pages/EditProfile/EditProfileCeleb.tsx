@@ -113,6 +113,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
             enableOnAndroid={true}
             keyboardShouldPersistTaps="handled"
             bounces={false}
+            enableAutomaticScroll={true}
           >
             <Formik
               initialValues={{
@@ -159,11 +160,13 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             name="name"
                             label="full name"
                             formProps={props}
+                            multiline={false}
                           />
                           <TextInputStyledForEdit
                             name="intro"
                             label="intro"
                             formProps={props}
+                            multiline={false}
                           />
                           <TextInputStyledForEdit
                             name="bio"
@@ -226,6 +229,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               name="address"
                               label="address"
                               formProps={props}
+                              multiline={false}
                             />
                             <View
                               style={{
@@ -237,6 +241,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                                   name="city"
                                   label="city"
                                   formProps={props}
+                                  multiline={false}
                                 />
                               </View>
                               <View style={{ width: '50%' }}>
@@ -244,6 +249,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                                   name="country"
                                   label="country"
                                   formProps={props}
+                                  multiline={false}
                                 />
                               </View>
                             </View>
@@ -253,6 +259,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               label="email"
                               keyboardType="email-address"
                               formProps={props}
+                              multiline={false}
                             />
 
                             <TextInputStyledForEdit
@@ -260,6 +267,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               label="phone"
                               keyboardType="phone-pad"
                               formProps={props}
+                              multiline={false}
                             />
 
                             <TextInputPasswordForEdit
@@ -267,6 +275,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               label="new password"
                               keyboardType="numeric"
                               formProps={props}
+                              multiline={false}
                             />
                           </View>
                         </View>

@@ -168,8 +168,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
         visible={isModalTestShown}
         onRequestClose={() => closeContestQuizModal()}
         heightContent={this.state.heightDescription}>
-        <View style={{ flex: 1, paddingHorizontal: 24 }}>
-          <View style={styles.swiperLine} />
+        <View style={styles.upperWrap}>
           <View style={styles.wrap}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View
@@ -218,7 +217,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                         </View>
                       );
                     })}
-                    {requiresMedia ? (
+                    {requiresMedia && (
                       <View style={styles.itemWrap}>
                         <Text style={styles.subTitle}>Upload your designs</Text>
                         <View style={styles.mediaWrap}>
@@ -258,7 +257,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
                           </ScrollView>
                         </View>
                       </View>
-                    ) : null}
+                    )}
                   </View>
                 </View>
               </View>
