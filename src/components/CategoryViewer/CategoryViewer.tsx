@@ -8,6 +8,8 @@ import { Category } from "../../pages/Pepups";
 
 import styles from './CategoryViewer.styles';
 
+import List from './List'; 
+
 class CategoryViewer extends PureComponent<CategoryViewerProps> {
   static defaultProps = {
     style: {}
@@ -16,7 +18,7 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   generateSceneConfig = createSelector(
     (categories: Category[]) => {
       const sceneData = categories.reduce((acc: { [key: string]: ComponentType }, cur, index) => {
-        acc[cur.id] = () => <View><Text>test</Text></View>;
+        acc[cur.id] = List;
         return acc;
       }, {});
 
@@ -31,6 +33,10 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
 
     (sceneMap, routes) => ({ sceneMap, routes })
   )
+
+  renderScene = ({ route }: { route: { key: string } }) => (
+    <List route={route} data={this.props.data} />
+  );
 
   renderLabel = ({ route, focused }: { route: { title: string }; focused: boolean }) => (
     <Text
@@ -48,16 +54,16 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
       {...props}
       indicatorStyle={styles.itemSelectedText}
       style={styles.tabsBar}
-      labelStyle={styles.itemText}
       tabStyle={styles.tabBarTabStyle}
+      labelStyle={styles.itemText}
       renderLabel={this.renderLabel}
       scrollEnabled
     />
   );
 
   render() {
-    const { config, categories, onTabChange, activeTabIndex } = this.props;
-    const { sceneMap, routes } = this.generateSceneConfig(categories);
+    const { data, categories, onTabChange, activeTabIndex } = this.props;
+    const { routes } = this.generateSceneConfig(categories);
 
     return (
       <View style={styles.wrapper}>
@@ -67,7 +73,7 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
             routes
           }}
           onIndexChange={onTabChange}
-          renderScene={sceneMap}
+          renderScene={this.renderScene}
           renderTabBar={this.renderTabBar}
           initialLayout={styles.initialLayout}
           lazy

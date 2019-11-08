@@ -51,6 +51,7 @@ export type PepupsScreenStateProps = {
   categories: Array<Category>;
   categoryId: string;
   isFetchingCat: boolean;
+  celebs: { [key: string]: Array<Celeb> };
 }
 
 export type PepupsScreenDispatchProps = {

@@ -83,7 +83,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
   })
 
   render() {
-    const { categories, isFetchingCat } = this.props;
+    const { categories, isFetchingCat, celebs } = this.props;
     const { activeTabIndex } = this.state;
 
     const isCategoriesLoaded = Boolean(categories && categories.length);
@@ -101,10 +101,11 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
             {isCategoriesLoaded && (
               <CategoryViewer
                 categories={categories}
+                data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={styles.stylesTabsContainer}
+                // stylesItem={defaultTabsStyles.roundedTabs}
+                // stylesTabsContainer={styles.stylesTabsContainer}
               />
             )}
 
@@ -129,7 +130,8 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
 const mapStateToProps = (state: IGlobalState) => ({
   categories: state.PepupState.categories,
-  isFetchingCat: state.PepupState.isFetchingCat
+  isFetchingCat: state.PepupState.isFetchingCat,
+  celebs: state.PepupState.celebs
 });
 const mapDispatchToProps = {
   getAllActiveCategories,
