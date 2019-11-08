@@ -85,3 +85,8 @@ export type PepupItemsProps = {
 
 export type PepupsScreenProps = PepupsScreenStateProps &
   PepupsScreenDispatchProps;
+
+export  interface  PepupsScreenState {
+  isModalVisible: boolean;
+  activeTabIndex: number;
+}
