@@ -2,7 +2,6 @@ import * as React from 'react';
 import {
   Text,
   FlatList,
-  StyleSheet,
   TouchableOpacity,
   View
 } from 'react-native';

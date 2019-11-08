@@ -15,24 +15,11 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     style: {}
   };
 
-  generateSceneConfig = createSelector(
-    (categories: Category[]) => {
-      const sceneData = categories.reduce((acc: { [key: string]: ComponentType }, cur, index) => {
-        acc[cur.id] = List;
-        return acc;
-      }, {});
-
-      return SceneMap(sceneData as any);
-    },
- 
-    (categories: Category[]) =>
-      categories.map((item: Category) => ({
-        key: item.id,
-        title: item.id
-      })),
-
-    (sceneMap, routes) => ({ sceneMap, routes })
-  )
+  generateRoutes = (categories: Category[]) =>
+    categories.map((item: Category) => ({
+      key: item.id,
+      title: item.id
+    }))
 
   renderScene = ({ route }: { route: { key: string } }) => (
     <List route={route} data={this.props.data} />
@@ -62,8 +49,9 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   );
 
   render() {
-    const { data, categories, onTabChange, activeTabIndex } = this.props;
-    const { routes } = this.generateSceneConfig(categories);
+    const { categories, onTabChange, activeTabIndex } = this.props;
+  
+    const routes = this.generateRoutes(categories);
 
     return (
       <View style={styles.wrapper}>
