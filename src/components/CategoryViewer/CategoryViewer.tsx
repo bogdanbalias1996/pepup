@@ -3,7 +3,7 @@ import { View, StyleSheet, Dimensions, Text } from 'react-native';
 import memoize from 'memoize-one';
 import { TabView, TabBar } from 'react-native-tab-view';
 
-import { CategoryViewerProps, ViewerCategory } from './types';
+import { CategoryViewerProps, ViewerCategory, ViewerRoute } from './types';
 
 import styles from './CategoryViewer.styles';
 
@@ -17,11 +17,12 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   generateRoutes = memoize((categories: ViewerCategory[]) =>
     categories.map((item: ViewerCategory) => ({
       key: item.title,
-      title: item.title
+      title: item.title,
+      component: item.component
     }))
   );
 
-  renderScene = ({ route }: { route: { key: string } }) => (
+  renderScene = ({ route }: { route: ViewerRoute }) => (
     <List route={route} data={this.props.data} />
   );
 

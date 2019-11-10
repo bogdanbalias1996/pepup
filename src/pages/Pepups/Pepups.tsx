@@ -24,6 +24,8 @@ import { Loader } from '../../components/Loader/Loader';
 import CategoryViewer from '../../components/CategoryViewer';
 import { colorBlueberry } from '../../variables';
 
+import CelebCard from './CelebCard';
+
 
 export class Component extends React.PureComponent<PepupsScreenProps, PepupsScreenState> {
   static navigationOptions = () => ({
@@ -72,7 +74,7 @@ export class Component extends React.PureComponent<PepupsScreenProps, PepupsScre
 
   createCategoryConfig = memoize((categories: Category[]) => categories.map(cat => ({
     title: cat.id,
-    component: () => <Text>{cat.id}</Text>
+    component: CelebCard
   })))
 
   render() {

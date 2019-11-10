@@ -6,6 +6,12 @@ export interface ViewerCategory {
   component: ComponentType<any>
 }
 
+export interface ViewerRoute {
+  key: string;
+  title: string;
+  component: ComponentType<any>;
+}
+
 export interface ViewerData {
   [key: string]: object[];
 }
@@ -19,7 +25,5 @@ export interface CategoryViewerProps {
 
 export interface ListProps {
   data: ViewerData;
-  route: {
-    key: string;
-  }
+  route: ViewerRoute;
 }

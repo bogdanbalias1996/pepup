@@ -1,25 +1,12 @@
-import * as React from 'react';
+import React, { Component } from 'react';
 import {
-  Text,
   FlatList,
-  TouchableOpacity,
   View
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
-
-// import {
-//   openPepupModal,
-//   getCelebsByCategory,
-//   getCeleb,
-//   setCategory,
-//   getFeaturedCelebs
-// } from '../../pages/Pepups/actions';
 
 import { colorBlueberry } from '../../variables';
 
 import { Loader } from '../../components/Loader/Loader';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 import { ListProps, ViewerData } from './types';
 import styles from './List.styles';
@@ -42,42 +29,9 @@ class List extends React.Component<ListProps> {
   }
 
   renderItem = ({ item }: any) => {
-    // const { openPepupModal, getCeleb } = this.props;
-    // const getModal = () => {
-    //   openPepupModal();
-    //   getCeleb(item.userInfo.id);
-    // };
-    
-    return (
-      <View style={{ flex: 0.5 }}>
-        <Card style={styles.card}>
-          <TouchableOpacity
-            // onPress={getModal}
-            style={styles.avatarWrapper}
-            activeOpacity={1}>
-            <FastImage
-              style={styles.avatar}
-              source={{
-                uri: item.userInfo.icon,
-                priority: FastImage.priority.normal
-              }}
-              resizeMode={FastImage.resizeMode.cover}
-            />
-            <CardGradient>
-              <Text style={styles.name} numberOfLines={2} ellipsizeMode="tail">
-                {item.userInfo.name}
-              </Text>
-              <Text
-                style={styles.status}
-                numberOfLines={1}
-                ellipsizeMode="tail">
-                {item.dataInfo.intro}
-              </Text>
-            </CardGradient>
-          </TouchableOpacity>
-        </Card>
-      </View>
-    );
+    const { route } = this.props
+
+    return <route.component item={item} />
   };
 
   render() {
