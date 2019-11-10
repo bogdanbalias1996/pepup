@@ -23,7 +23,11 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   );
 
   renderScene = ({ route }: { route: ViewerRoute }) => (
-    <List route={route} data={this.props.data} />
+    <List
+      route={route}
+      data={this.props.data}
+      keyExstractor={this.props.keyExstractor}  
+    />
   );
 
   renderLabel = ({ route, focused }: { route: { title: string }; focused: boolean }) => (

@@ -1,13 +1,11 @@
-import * as React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import { View, Text } from 'react-native';
 
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { PepupsScreenProps, Category, PepupsScreenState } from '.';
-import { PepupItems } from './PepupItems';
+import { PepupsScreenProps, Category, PepupsScreenState, Celeb } from '.';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
 import memoize from 'memoize-one';
@@ -27,7 +25,7 @@ import { colorBlueberry } from '../../variables';
 import CelebCard from './CelebCard';
 
 
-export class Component extends React.PureComponent<PepupsScreenProps, PepupsScreenState> {
+export class Component extends PureComponent<PepupsScreenProps, PepupsScreenState> {
   static navigationOptions = () => ({
     header: (props: any) => (
       <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />
@@ -59,6 +57,8 @@ export class Component extends React.PureComponent<PepupsScreenProps, PepupsScre
       ? getFeaturedCelebs()
       : getCelebsByCategory(categoryId);
   }
+
+  keyExstractor = (item: Celeb) => item.mappedUserId;
 
   toggleModal = () =>
     this.setState(({ isModalVisible }) => { isModalVisible: !isModalVisible });
@@ -98,6 +98,7 @@ export class Component extends React.PureComponent<PepupsScreenProps, PepupsScre
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
+                keyExstractor={this.keyExstractor}
                 // stylesItem={defaultTabsStyles.roundedTabs}
                 // stylesTabsContainer={styles.stylesTabsContainer}
               />

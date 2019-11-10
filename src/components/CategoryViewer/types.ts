@@ -1,5 +1,6 @@
 import { ComponentType } from 'react';
-import { Category } from "../../pages/Pepups";
+
+type keyExstractor = (item: object) => string | number;
 
 export interface ViewerCategory {
   title: string;
@@ -21,9 +22,11 @@ export interface CategoryViewerProps {
   activeTabIndex: number;
   categories: ViewerCategory[];
   data: ViewerData;
+  keyExstractor?: keyExstractor;
 }
 
 export interface ListProps {
   data: ViewerData;
   route: ViewerRoute;
+  keyExstractor?: keyExstractor;
 }

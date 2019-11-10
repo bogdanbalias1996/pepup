@@ -12,7 +12,7 @@ import { ListProps, ViewerData } from './types';
 import styles from './List.styles';
 
 class List extends React.Component<ListProps> {
-  keyExstractor = (item: { id: string }) => item.id;
+  static defaultKeyExstractor = (item: { id: string }) => item.id;
 
   shouldComponentUpdate(nextProps: ListProps) {
     const oldData = this.extractDataByCategory(this.props.data, this.props.route.key);
@@ -35,7 +35,7 @@ class List extends React.Component<ListProps> {
   };
 
   render() {
-    const { data, route } = this.props;
+    const { data, route, keyExstractor } = this.props;
     const dataArr = this.extractDataByCategory(data, route.key);
 
     return (
@@ -51,7 +51,7 @@ class List extends React.Component<ListProps> {
             columnWrapperStyle={styles.row}
             data={dataArr as any}
             renderItem={this.renderItem}
-            keyExtractor={this.keyExstractor}
+            keyExtractor={keyExstractor || List.defaultKeyExstractor as any}
           />
         </Loader>
       </View>
