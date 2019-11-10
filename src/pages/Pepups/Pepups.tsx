@@ -4,7 +4,7 @@ import { View, Text } from 'react-native';
 
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { PepupsScreenProps, Category, PepupsScreenState, Celeb } from '.';
+import { PepupsScreenProps, Category, PepupsScreenState, Celeb } from './types';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
@@ -17,7 +17,6 @@ import {
   setCategory,
   getFeaturedCelebs
 } from './actions';
-import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
 import CategoryViewer from '../../components/CategoryViewer';
 import { colorBlueberry } from '../../variables';
@@ -98,9 +97,7 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-                keyExstractor={this.keyExstractor}
-                // stylesItem={defaultTabsStyles.roundedTabs}
-                // stylesTabsContainer={styles.stylesTabsContainer}
+                keyExstractor={this.keyExstractor as any}
               />
             )}
           </Loader>

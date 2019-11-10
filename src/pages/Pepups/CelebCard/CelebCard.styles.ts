@@ -6,11 +6,14 @@ import {
   colorLightGray,
   boldFont,
   semiboldFont
-} from '../../variables';
+} from '../../../variables';
 
 export default StyleSheet.create({
   row: {
     flex: 1
+  },
+  wrapper: {
+    flex: 0.5
   },
   card: {
     marginVertical: 6,

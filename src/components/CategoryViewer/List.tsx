@@ -11,7 +11,7 @@ import { Loader } from '../../components/Loader/Loader';
 import { ListProps, ViewerData } from './types';
 import styles from './List.styles';
 
-class List extends React.Component<ListProps> {
+class List extends Component<ListProps> {
   static defaultKeyExstractor = (item: { id: string }) => item.id;
 
   shouldComponentUpdate(nextProps: ListProps) {
