@@ -1,6 +1,11 @@
 import { ComponentType } from 'react';
 import { Category } from "../../pages/Pepups";
 
+export interface ViewerCategory {
+  title: string;
+  component: ComponentType<any>
+}
+
 export interface ViewerData {
   [key: string]: object[];
 }
@@ -8,7 +13,7 @@ export interface ViewerData {
 export interface CategoryViewerProps {
   onTabChange: (tabIndex: number) => void;
   activeTabIndex: number;
-  categories: Category[];
+  categories: ViewerCategory[];
   data: ViewerData;
 }
 

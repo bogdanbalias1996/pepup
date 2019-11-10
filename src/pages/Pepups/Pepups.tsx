@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
@@ -70,12 +70,17 @@ export class Component extends React.PureComponent<PepupsScreenProps, PepupsScre
     this.fetchCategories(categoryId);
   }
 
+  createCategoryConfig = memoize((categories: Category[]) => categories.map(cat => ({
+    title: cat.id,
+    component: () => <Text>{cat.id}</Text>
+  })))
 
   render() {
     const { categories, isFetchingCat, celebs } = this.props;
     const { activeTabIndex } = this.state;
 
     const isCategoriesLoaded = Boolean(categories && categories.length);
+    const categoryConfig =  this.createCategoryConfig(categories)
 
     return (
       <PepupBackground>
@@ -87,7 +92,7 @@ export class Component extends React.PureComponent<PepupsScreenProps, PepupsScre
           >
             {isCategoriesLoaded && (
               <CategoryViewer
-                categories={categories}
+                categories={categoryConfig}
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
