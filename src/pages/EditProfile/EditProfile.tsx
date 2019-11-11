@@ -227,9 +227,8 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                     </View>
                     <View style={styles.footer}>
                       <ButtonStyled
-                        textBold={true}
                         style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
+                        onPress={handleSubmit}
                         text="SAVE"
                         loader={isFetching}
                       />

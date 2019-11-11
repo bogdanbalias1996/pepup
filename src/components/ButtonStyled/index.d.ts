@@ -7,6 +7,5 @@ export type ButtonStyledProps = {
   loader?: boolean;
   loaderColor?: string;
   iconSource?: any;
-  textBold?: boolean;
   width?: string;
 };

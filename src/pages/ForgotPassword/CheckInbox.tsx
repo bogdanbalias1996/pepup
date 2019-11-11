@@ -53,7 +53,6 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
                   navigate({ routeName: "Login" });
                 }}
                 text="Back to Login"
-                textBold={true}
               />
 
               <View style={styles.createAccountContainer}>

@@ -114,10 +114,9 @@ export const Component: React.SFC<SignupScreenProps> = ({
 
                   <ButtonStyled
                     style={styles.btnSubmit}
-                    onPress={() => handleSubmit()}
+                    onPress={handleSubmit}
                     text="Sign Up"
                     loader={isFetching}
-                    textBold={true}
                   />
                 </View>
               );

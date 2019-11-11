@@ -7,7 +7,10 @@ import {
   semiboldFont,
   defaultFont,
   boldFont,
-  colorDotGray
+  colorDotGray,
+  colorCancelButton,
+  colorModalTextGrey,
+  colorEventLabel
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -29,7 +32,7 @@ export default StyleSheet.create({
   wrapTitle: {
     flex: 1,
     flexDirection: 'row',
-    marginVertical: 24,
+    marginBottom: 10,
     alignItems: 'center'
   },
   imageLogo: {
@@ -76,7 +79,7 @@ export default StyleSheet.create({
   infoLabel: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGrey,
+    color: colorEventLabel,
     marginBottom: 8
   },
   infoLabelQnt: {
@@ -93,11 +96,13 @@ export default StyleSheet.create({
   },
   infoLocationValue: {
     fontSize: 16,
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   modalFooter: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    flexShrink: 1,
     marginBottom: 30,
     marginHorizontal: 24,
     backgroundColor: 'transparent',
@@ -110,16 +115,17 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    alignSelf: 'flex-end'
   },
   infoText: {
-    color: colorTextGrey,
+    color: colorModalTextGrey,
     lineHeight: 22
   },
   btnSubmit: {
-    flex: 1
+    flex: 0.7
   },
   text: {
     fontSize: 14,
@@ -169,10 +175,9 @@ export default StyleSheet.create({
     fontFamily: semiboldFont
   },
   changeItem: {
-    flex: 1,
+    marginHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
     position: 'relative'
   },
   scrollContent: { paddingBottom: 90 }

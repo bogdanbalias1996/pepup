@@ -98,10 +98,9 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
 
                       <ButtonStyled
                         style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
+                        onPress={handleSubmit}
                         text="Submit"
                         loader={isFetching}
-                        textBold={true}
                       />
                     </View>
                   );

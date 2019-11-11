@@ -52,13 +52,12 @@ export class OnboardingScreen extends React.Component {
             source={item.item.imageSrc}
             resizeMode={FastImage.resizeMode.cover}
           />
+          <Text style={styles.title}>{item.item.title}</Text>
         </Card>
-        <Text style={styles.title}>{item.item.title}</Text>
         <Text style={styles.description}>{item.item.description}</Text>
         {item.item.key === '4' && (
           <ButtonStyled
             style={styles.buttonStyle}
-            textBold={true}
             onPress={() => this._onDone()}
             text={'Get Started'.toUpperCase()}
             type="white"
@@ -74,14 +73,12 @@ export class OnboardingScreen extends React.Component {
   };
 
   onChange = (index: number) => {
-    index === slides.length - 1
-      ? this.setState({ lastSlide: true })
-      : this.setState({ lastSlide: false });
+    this.setState({ lastSlide: index === slides.length - 1 });
   };
 
   render() {
     return (
-      <PepupBackground>
+      <PepupBackground style={styles.background}>
         <AppIntroSlider
           renderItem={this._renderItem}
           slides={slides}

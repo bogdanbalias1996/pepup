@@ -10,6 +10,9 @@ import {
   boldFont,
   defaultFont,
   colorTextGreyIntro,
+  colorModalTextGrey,
+  colorCancelButton,
+  colorInput,
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -39,10 +42,9 @@ export default StyleSheet.create({
   },
   subTitle: {
     fontSize: 14,
-    color: colorTextGreyIntro,
+    color: colorModalTextGrey,
     fontFamily: semiboldFont,
-    marginTop: 3,
-    fontWeight: 'bold'
+    marginTop: 7
   },
   nopepups: {
     textAlign: 'center',
@@ -101,7 +103,7 @@ export default StyleSheet.create({
   },
   commentCard: {
     padding: 16,
-    backgroundColor: 'white',
+    backgroundColor: colorInput,
     borderRadius: 8
   },
   commentCardOnModal: {
@@ -116,7 +118,7 @@ export default StyleSheet.create({
     color: colorBlack
   },
   commentText: {
-    color: colorVioletGrey,
+    color: colorModalTextGrey,
     lineHeight: 22
   },
   modalFooter: {
@@ -138,7 +140,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16

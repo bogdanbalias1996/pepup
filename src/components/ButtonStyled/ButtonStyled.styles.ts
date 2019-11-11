@@ -3,7 +3,8 @@ import {
   colorBlueStart,
   colorVioletStart,
   colorOrangeStart,
-  colorCoolGrey
+  colorCoolGrey,
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -47,7 +48,8 @@ export default StyleSheet.create({
   btnText: {
     textAlign: 'center',
     fontSize: 16,
-    letterSpacing: 1
+    letterSpacing: 1,
+    fontFamily: boldFont
   },
   image: {
     width: 24,

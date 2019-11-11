@@ -2,12 +2,11 @@ import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGrey,
-  colorSwipeLine,
   colorTomato,
-  semiboldFont,
-  defaultFont
+  defaultFont,
+  boldFont,
+  colorCancelButton
 } from '../../variables';
-import { wrap } from 'module';
 
 export default StyleSheet.create({
   wrapModalContent: {
@@ -30,13 +29,14 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
-    lineHeight: 25
+    lineHeight: 25,
+    textAlign: 'left'
   },
   subTitle: {
-    fontSize: 14,
-    fontFamily: semiboldFont,
+    fontSize: 16,
+    fontFamily: boldFont,
     color: colorBlack,
     marginBottom: 5
   },
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16
@@ -77,11 +77,12 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont
+    fontFamily: defaultFont,
+    lineHeight: 22,
+    color: colorBlack
   },
   reqTitle: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   form: {
     flexGrow: 1,

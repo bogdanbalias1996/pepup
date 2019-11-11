@@ -7,7 +7,8 @@ import {
   colorOrange,
   colorSwipeLine,
   semiboldFont,
-  defaultFont
+  defaultFont,
+  colorCancelButton
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -93,7 +94,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: colorCancelButton,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 16

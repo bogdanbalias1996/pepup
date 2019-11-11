@@ -78,14 +78,6 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
                           <Text style={[styles.text, styles.commentTitle]}>
                             {item.submitterUserInfo.name}
                           </Text>
-                          {/* <StarRating
-                            disabled={true}
-                            starSize={20}
-                            maxStars={+totalRating}
-                            emptyStar={require('../../../assets/emptyStar.png')}
-                            fullStar={require('../../../assets/fullStar.png')}
-                            rating={item.rating}
-                          /> */}
                         </View>
                         <Text style={[styles.text, styles.commentText]}>
                           {item.review}

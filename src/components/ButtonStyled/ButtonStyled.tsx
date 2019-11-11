@@ -59,7 +59,6 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   iconSource,
   text = '',
   style = '',
-  textBold = false,
   type = '',
   loader = false,
   loaderColor = 'white'
@@ -99,9 +98,6 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
                       : type === 'white'
                       ? colorBlack
                       : 'white'
-                },
-                {
-                  fontFamily: textBold ? boldFont : defaultFont
                 }
               ]}>
               {text}

@@ -5,6 +5,7 @@ export type ModalPepupReqProps = {
   isModalReqShown: boolean;
   isFetching?: boolean;
   celebData: Celeb | null;
+  name: string;
   sendRequestForPepup: (req: any, reqFor: string) => Promise<any>;
   openAlert: (data: any) => Promise<any>;
 };

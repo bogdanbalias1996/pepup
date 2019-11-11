@@ -1,12 +1,13 @@
 import { getStore } from '../../configureStore';
 import AsyncStorage from '@react-native-community/async-storage';
-import { removeSession, setDeveloperMode } from '../../pages/Login/actions';
+import { removeSession, setDeveloperMode, setUserName } from '../../pages/Login/actions';
 import { navigate } from '../../navigationService';
 import { setUserId, setHandleName } from '../../pages/Login/actions';
 import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding';
 
 export const ACCESS_TOKEN_NAME = 'access_token';
 export const ACCESS_HANDLE_NAME = 'handle_name';
+export const ACCESS_USER_NAME = 'user_name'
 const jwtDecode = require('jwt-decode');
 
 export const clearLocalStorage = async (omittedNames?: String[]) => {
@@ -53,12 +54,14 @@ export const getToken = async () => {
   let accessToken: string | null = '';
   let userId: string | null = '';
   let handle: string | null = '';
+  let name: string | null = '';
   let developerMode: boolean;
 
   try {
     accessToken = getStore().getState().LoginState.accessToken;
     userId = getStore().getState().LoginState.userId;
     handle = getStore().getState().LoginState.handle;
+    name = getStore().getState().LoginState.name;
     developerMode =
       getStore().getState().LoginState.developerMode ||
       (await getLocalStorage('developerMode'));
@@ -77,6 +80,11 @@ export const getToken = async () => {
 
       getStore().dispatch(setHandleName(handleStorage));
     }
+    if (!name) {
+      const handleUserName = await getLocalStorage(ACCESS_USER_NAME);
+      getStore().dispatch(setUserName(handleUserName));
+    }
+
     getStore().dispatch(setDeveloperMode(developerMode));
   } catch (err) {
     const accessTokenFromLocaleStorage = await getLocalStorage(

@@ -147,7 +147,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                           </TouchableOpacity>
                           <ButtonStyled
                             style={styles.btnSubmit}
-                            onPress={() => handleSubmit()}
+                            onPress={handleSubmit}
                             text="SUBMIT"
                             loader={isFetching}
                           />

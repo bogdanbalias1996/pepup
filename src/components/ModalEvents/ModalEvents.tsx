@@ -109,6 +109,11 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                       this.setState({ heightDescription: height });
                   }}>
                   <View style={styles.insidePadding}>
+                    <TouchableOpacity
+                      style={styles.btnCancel}
+                      onPress={() => closeEventModal()}>
+                      <Icon size={20} name="cancel" color={colorBlack} />
+                    </TouchableOpacity>
                     <View style={styles.wrapTitle}>
                       <Image
                         style={styles.imageLogo}
@@ -169,11 +174,6 @@ export class Component extends React.PureComponent<ModalEventsProps> {
               </View>
             </ScrollView>
             <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closeEventModal()}>
-                <Icon size={20} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
               <View style={styles.changeItem}>
                 <Text
                   numberOfLines={1}

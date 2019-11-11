@@ -7,7 +7,8 @@ import {
   FAILURE_LOGIN_USER,
   SET_USER_ID,
   SET_HANDLE_NAME,
-  SET_DEVELOPER_MODE
+  SET_DEVELOPER_MODE,
+  SET_USER_NAME
 } from './actions';
 
 import {
@@ -26,7 +27,8 @@ import {
   setLocalStorage,
   clearLocalStorage,
   ACCESS_TOKEN_NAME,
-  ACCESS_HANDLE_NAME
+  ACCESS_HANDLE_NAME,
+  ACCESS_USER_NAME
 } from '../../common/utils/session';
 
 export class LoginState {
@@ -35,6 +37,7 @@ export class LoginState {
   userId: string;
   handle: string;
   developerMode: boolean;
+  name: string;
 
   constructor() {
     this.accessToken = '';
@@ -42,6 +45,7 @@ export class LoginState {
     this.userId = '';
     this.handle = '';
     this.developerMode = false;
+    this.name = '';
   }
 }
 
@@ -55,11 +59,13 @@ export const LoginReducer = (
     case RECEIVE_LOGIN_USER:
       setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
       setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
+      setLocalStorage(action.data.name, ACCESS_USER_NAME);
 
       return {
         ...state,
         accessToken: action.data.accessToken,
         userId: action.data.id,
+        name: action.data.name,
         isFetching: false,
         handle: action.data.handle
       };
@@ -131,6 +137,11 @@ export const LoginReducer = (
       return {
         ...state,
         handle: action.data
+      };
+    case SET_USER_NAME:
+      return {
+        ...state,
+        name: action.data
       };
     case SET_DEVELOPER_MODE:
       setLocalStorage(action.data, 'developerMode');

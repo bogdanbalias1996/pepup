@@ -7,7 +7,9 @@ import styles from './TextInputStyled.styles';
 import {
   colorTextGrey,
   colorVioletStart,
-  colorVioletEnd
+  colorVioletEnd,
+  colorInputBorderStart,
+  colorInputBorderEnd
 } from '../../variables';
 
 export class TextInputBorderStyled extends React.PureComponent<
@@ -46,7 +48,7 @@ export class TextInputBorderStyled extends React.PureComponent<
         colors={
           error && elIsTouched
             ? ['red', 'red']
-            : [colorVioletStart, colorVioletEnd]
+            : [colorInputBorderStart, colorInputBorderEnd]
         }
         style={styles.inputGradient}>
         <TextInput

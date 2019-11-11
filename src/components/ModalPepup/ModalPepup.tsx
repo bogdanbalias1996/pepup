@@ -200,7 +200,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   style={styles.btnSubmitClose}
                   onPress={() => closePepupModal()}
                   text="CLOSE"
-                  textBold={true}
                 />
               ) : (
                 <>

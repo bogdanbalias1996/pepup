@@ -4,33 +4,33 @@ import {
 } from '../../variables'
 
 export default StyleSheet.create({
-  card: {
-    height: 510,
-    width: 275,
-    marginHorizontal: 50,
-    marginTop: 100
+  background: {
+    // paddingTop: 
   },
   container: {
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     flex: 1,
     position: 'relative'
   },
-  paginationStyle: {
-    height: 155,
-    left: 24,
-    right: 24,
-    bottom: -70
+  card: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 1,
+    height: '72%',
+    width: '72%',
+    marginHorizontal: 50,
+    position: 'relative'
   },
   buttonStyle: {
     alignSelf: 'center',
     position: 'absolute',
     width: 245,
-    bottom: 40,
+    bottom: '8%',
     zIndex: 10,
   },
   image: {
-    flex: 1,
+    flexGrow: 1,
     height: '100%',
     width: '100%',
     borderRadius: 20
@@ -44,9 +44,12 @@ export default StyleSheet.create({
     letterSpacing: 2,
     zIndex: 10,
     position: 'absolute',
-    bottom: 190,
+    bottom: 0,
+    left: 0,
+    right: 0
   },
   description: {
+    flexGrow: 1,
     fontFamily: boldFont,
     color: 'white',
     fontSize: 20,
@@ -57,6 +60,12 @@ export default StyleSheet.create({
     textShadowColor: 'rgba(0, 0, 0, 0.5)',
     textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 4
+  },
+  paginationStyle: {
+    height: 155,
+    left: 0,
+    right: 0,
+    bottom: -100
   },
   dotStyle: {
     width: 4,

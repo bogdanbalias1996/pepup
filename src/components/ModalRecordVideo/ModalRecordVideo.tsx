@@ -284,7 +284,6 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
                       <ButtonStyled
                         type="border"
                         text="POST"
-                        textBold={true}
                         style={{ width: 128 }}
                         onPress={this.postVideo}
                         loader={isSendingVideo}

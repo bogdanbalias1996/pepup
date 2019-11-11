@@ -5,7 +5,8 @@ import {
     semiboldFont,
     colorItalic,
     italicFont,
-    boldFont
+    boldFont,
+    colorCancelButton
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -55,7 +56,7 @@ export default StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 30,
-        backgroundColor: colorLightGray,
+        backgroundColor: colorCancelButton,
         justifyContent: "center",
         alignItems: "center",
     },
