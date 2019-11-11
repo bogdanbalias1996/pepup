@@ -25,8 +25,7 @@ class List extends Component<ListProps> {
   }
 
   extractDataByCategory(data: ViewerData, category: string): Object[] {
-    const categoryName = category.toLowerCase();
-    const categoryCelebs = data[categoryName] || [];
+    const categoryCelebs = data[category] || data[category.toLowerCase()] || [];
 
     return categoryCelebs;
   }

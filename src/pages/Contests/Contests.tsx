@@ -1,16 +1,22 @@
 import * as React from 'react';
 import { View } from 'react-native';
+import { connect } from 'react-redux';
 
 import { ModalContests } from '../../components/ModalContests/ModalContests';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { ContestsScreenProps } from '.';
-import { ContestItems } from './ContestItems';
+import { ContestsScreenProps } from './types';
+
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
+
 import styles from './Contests.styles';
 import { ErrorModal } from '../../components/ErrorState/ErrorState';
+import CategoryViewer from '../../components/CategoryViewer';
+import { IGlobalState } from '../../coreTypes';
 
-export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
+import { getContestsByCategory } from './actions';
+import ContestItem from './ContestItem';
+
+export class Component extends React.PureComponent<ContestsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
     header: (props: any) => (
       <HeaderRounded
@@ -21,45 +27,59 @@ export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
     )
   });
 
+  private static readonly tabsConfig = [
+    {
+      title: 'Featured',
+      component: ContestItem
+    },
+    {
+      title: 'Active',
+      component: ContestItem
+    },
+    {
+      title: 'Past',
+      component: ContestItem
+    }
+  ];
+
   state = {
     isModalVisible: false,
     activeTabIndex: 0
   };
 
+  componentDidMount() {
+    const { getContestsByCategory } = this.props;
+
+    const initialTab = Component.tabsConfig[0].title;
+    getContestsByCategory(initialTab);
+  }
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
+  handleChangeTab = (index: number) => {
+    const { getContestsByCategory } = this.props;
+
+    this.setState({ activeTabIndex: index });
+
+    const categoryId = Component.tabsConfig[index].title;
+
+    getContestsByCategory(categoryId);
+  };
+
   render() {
-    const tabsConfig = [
-      {
-        title: 'Featured',
-        component: () => <ContestItems categoryId="Featured" />
-      },
-      {
-        title: 'Active',
-        component: () => <ContestItems categoryId="Active" />
-      },
-      {
-        title: 'Past',
-        component: () => <ContestItems categoryId="Past" />
-      }
-    ];
+    const { contests } = this.props;
+    const { activeTabIndex } = this.state;
 
     return (
       <PepupBackground>
         <View style={styles.wrapContent}>
-          <Tabs
-            config={tabsConfig}
-            style={{ flex: 1 }}
-            stylesItem={defaultTabsStyles.roundedTabs}
-            changeIndex={index => this.setState({ activeTabIndex: index })}
-            activeTabIndex={this.state.activeTabIndex}
-            stylesTabsContainer={{
-              backgroundColor: 'transparent',
-              marginBottom: 10,
-              paddingLeft: 5
-            }}
+          <CategoryViewer
+            categories={ContestsScreen.tabsConfig}
+            data={contests}
+            onTabChange={this.handleChangeTab}
+            activeTabIndex={activeTabIndex}
           />
         </View>
         <ModalContests />
@@ -68,3 +88,17 @@ export class ContestsScreen extends React.PureComponent<ContestsScreenProps> {
     );
   }
 }
+
+const mapStateToProps = (state: IGlobalState) => ({
+  isFetching: state.ContestState.isFetching,
+  contests: state.ContestState.contests
+});
+
+const mapDispatchToProps = {
+  getContestsByCategory
+};
+
+export const ContestsScreen = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Component as any);

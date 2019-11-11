@@ -14,8 +14,7 @@ import {
   REQUEST_SUBMIT_ENTRY,
   FAILURE_SUBMIT_ENTRY
 } from './actions';
-import { Contest } from '.';
-import { BlockOverflowProperty } from 'csstype';
+import { Contest } from './types';
 
 export class ContestState {
   isModalShown: boolean;

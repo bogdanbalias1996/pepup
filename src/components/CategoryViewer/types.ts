@@ -25,7 +25,6 @@ export interface CategoryViewerProps {
   activeTabIndex: number;
   categories: ViewerCategory[];
   data: ViewerData;
-  keyExstractor?: keyExtractorType;
   flatListStyle?: StyleProp<any>;
 }
 

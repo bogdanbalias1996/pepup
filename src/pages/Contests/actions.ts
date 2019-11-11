@@ -2,7 +2,7 @@ import { Dispatch } from 'redux';
 import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
 import { IAction } from '../../coreTypes';
-import { Contest, ContestResponseType } from '.';
+import { Contest, ContestResponseType } from './types';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
 import { openAlert, closeAlert } from '../Alert/actions';
@@ -62,10 +62,12 @@ export const getContestsByCategory = (categoryId: string) => {
       }
     })
       .then(res => {
-        dispatch(receiveAllContests({
-          categoryId,
-          data: res
-        }));
+        dispatch(
+          receiveAllContests({
+            categoryId,
+            data: res
+          })
+        );
 
         if (!res.length) {
           dispatch(
