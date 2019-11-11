@@ -25,7 +25,7 @@ import { IGlobalState } from '../../coreTypes';
 
 const ListItem = ({
   title = '',
-  onPress = () => {},
+  onPress = undefined,
   style = {},
   styleText = {}
 }) => {

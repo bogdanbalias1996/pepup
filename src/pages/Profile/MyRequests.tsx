@@ -54,14 +54,14 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           status,
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'accepted':
         return {
           status,
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'unavailable':
       case 'rejected':
@@ -69,7 +69,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           status: 'unavailable',
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'completed':
         return {

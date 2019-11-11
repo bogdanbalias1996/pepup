@@ -101,7 +101,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         return {
           msg: `You rejected this request.`,
           statusColor: colorTextRed,
-          onPress: () => {},
+          onPress: undefined,
           linkText: ''
         };
       case 'completed':
@@ -117,7 +117,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
           status,
           msg: ``,
           statusColor: colorAllRead,
-          onPress: () => {},
+          onPress: undefined,
           linkText: ''
         };
     }

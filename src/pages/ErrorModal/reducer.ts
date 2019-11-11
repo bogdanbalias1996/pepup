@@ -15,7 +15,7 @@ export class ErrorState {
     this.title = '';
     this.buttonText = '';
     this.text = '';
-    this.onPress = () => {};
+    this.onPress = undefined;
     this.imgSource = 0;
   }
 }

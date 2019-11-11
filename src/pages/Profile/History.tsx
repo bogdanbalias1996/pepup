@@ -44,7 +44,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const { getAllPepups, getCeleb, profileData } = this.props;
 
     getAllPepups();
-    profileData ? getCeleb(profileData.id) : () => {};
+    profileData ? getCeleb(profileData.id) : undefined;
   }
 
   renderItem = ({ item }: any) => {
