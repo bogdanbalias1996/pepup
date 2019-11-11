@@ -1,4 +1,4 @@
-import { Event } from "../../pages/Events/index"
+import { Event } from '../../pages/Events/types';
 
 export type ModalEventsProps = {
   closeEventModal: () => void;
@@ -13,9 +13,4 @@ export type ModalEventsProps = {
 
 export type ModalEventsFromDataProps = {
   quantity: string;
-}
-
-
-
-
-
+};

@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import {
   Text,
@@ -11,7 +10,7 @@ import {
 } from 'react-native';
 
 import { openEventModal, getEvent, getEventsByCategory } from './actions';
-import { EventItemsProps, Event } from './';
+import { EventItemsProps, Event } from './types';
 import {
   colorTextGrey,
   colorBlack,
@@ -25,7 +24,10 @@ import { Loader } from '../../components/Loader/Loader';
 export class Component extends React.Component<EventItemsProps> {
   keyExstractor = (item: Event) => item.id;
 
-  extractEventsByCategory(celebs: { [key: string]: Array<Event> }, category: string): Event[]  {
+  extractEventsByCategory(
+    celebs: { [key: string]: Array<Event> },
+    category: string
+  ): Event[] {
     const categoryName = category.toLowerCase();
     const categoryEvent = celebs[categoryName] || [];
 
@@ -33,8 +35,14 @@ export class Component extends React.Component<EventItemsProps> {
   }
 
   shouldComponentUpdate(nextProps: EventItemsProps): boolean {
-    const oldEvents = this.extractEventsByCategory(this.props.events, this.props.route.key);
-    const newEvents = this.extractEventsByCategory(nextProps.events, nextProps.route.key);
+    const oldEvents = this.extractEventsByCategory(
+      this.props.events,
+      this.props.route.key
+    );
+    const newEvents = this.extractEventsByCategory(
+      nextProps.events,
+      nextProps.route.key
+    );
 
     // TODO: implement shallow compersion by id
     return newEvents.length !== oldEvents.length;
@@ -79,7 +87,10 @@ export class Component extends React.Component<EventItemsProps> {
   render() {
     const { events, route } = this.props;
 
-    const eventsArr = this.extractEventsByCategory(events, route.key.toLowerCase());
+    const eventsArr = this.extractEventsByCategory(
+      events,
+      route.key.toLowerCase()
+    );
 
     return (
       <Loader
@@ -97,7 +108,6 @@ export class Component extends React.Component<EventItemsProps> {
     );
   }
 }
-
 
 const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.EventState.isFetching,
