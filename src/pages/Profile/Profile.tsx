@@ -27,19 +27,6 @@ import { ModalPepupNotification } from '../../components/ModalPepupNotification/
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userId: state.LoginState.userId,
-  handle: state.LoginState.handle,
-  profileData: state.ProfileState.profileData
-});
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getProfile: (handle: string) => dispatch(getProfile(handle) as any),
-  openPepupModal: () => dispatch(openPepupModal()),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
-});
-
 const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
 const celebTabs: { [key: string]: number } = {
@@ -239,7 +226,20 @@ export class Component extends React.Component<ProfileScreenProps> {
   }
 }
 
+const mapStateToProps = (state: IGlobalState) => ({
+  userId: state.LoginState.userId,
+  handle: state.LoginState.handle,
+  profileData: state.ProfileState.profileData
+});
+
+const mapDispatchToProps = {
+  getProfile,
+  openPepupModal,
+  getCeleb,
+  getUserPepups
+};
+
 export const ProfileScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);
