@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import {
   colorBlack,
-  colorTextGrey,
   colorLightGray,
   colorTextViolet,
   semiboldFont,

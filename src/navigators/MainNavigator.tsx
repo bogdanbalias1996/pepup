@@ -6,7 +6,6 @@ import {
 import { Image, View } from 'react-native';
 import {
   colorBlack,
-  colorTextGrey,
   colorShadow,
   semiboldFont,
   colorTextMainTabs

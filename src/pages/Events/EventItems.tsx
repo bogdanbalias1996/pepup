@@ -12,11 +12,11 @@ import {
 import { openEventModal, getEvent, getEventsByCategory } from './actions';
 import { EventItemsProps, Event } from './types';
 import {
-  colorTextGrey,
   colorBlack,
   defaultFont,
   colorLightOrange,
-  boldFont
+  boldFont,
+  colorEventLabel
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Loader } from '../../components/Loader/Loader';
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGrey
+    color: colorEventLabel
   },
   wrapTitle: {
     flex: 1,
