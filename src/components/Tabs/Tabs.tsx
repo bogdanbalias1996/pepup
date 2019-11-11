@@ -21,7 +21,6 @@ export class Tabs extends React.PureComponent<TabsProps> {
         acc[cur.title] = cur.component;
         return acc;
       }, {});
-
       return SceneMap(sceneData as any);
     },
  

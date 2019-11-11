@@ -1,13 +1,11 @@
-import * as React from 'react';
+import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { PepupsScreenProps, Category } from '.';
-import { PepupItems } from './PepupItems';
+import { PepupsScreenProps, Category, PepupsScreenState, Celeb } from './types';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import styles from './Pepups.styles';
 import { IGlobalState } from '../../coreTypes';
 import memoize from 'memoize-one';
@@ -19,12 +17,17 @@ import {
   setCategory,
   getFeaturedCelebs
 } from './actions';
-import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
+import CategoryViewer from '../../components/CategoryViewer';
 import { colorBlueberry } from '../../variables';
 
+import CelebCard from './CelebCard';
+import { keyExtractorType } from '../../components/CategoryViewer/types';
 
-export class Component extends React.PureComponent<PepupsScreenProps> {
+export class Component extends PureComponent<
+  PepupsScreenProps,
+  PepupsScreenState
+> {
   static navigationOptions = () => ({
     header: (props: any) => (
       <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />
@@ -39,27 +42,26 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
   componentDidMount() {
     const { getAllActiveCategories } = this.props;
 
-    getAllActiveCategories()
-    this.fetchCategories('Featured')
-  };
+    getAllActiveCategories();
+    this.fetchCategories('Featured');
+  }
 
   fetchCategories = (categoryId: string) => {
-    const {
-      getCelebsByCategory,
-      setCategory,
-      getFeaturedCelebs
-    } = this.props;
+    const { getCelebsByCategory, setCategory, getFeaturedCelebs } = this.props;
 
     setCategory(categoryId);
 
     categoryId === 'Featured'
       ? getFeaturedCelebs()
       : getCelebsByCategory(categoryId);
-  }
-
-  toggleModal = () => {
-    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
+
+  keyExstractor = (item: Celeb) => item.mappedUserId;
+
+  toggleModal = () =>
+    this.setState(({ isModalVisible }) => {
+      isModalVisible: !isModalVisible;
+    });
 
   handleChangeTab = (index: number) => {
     const { categories } = this.props;
@@ -68,23 +70,22 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
     const categoryId = categories[index].id;
     this.fetchCategories(categoryId);
-  }
+  };
 
-  createTabsConfig = memoize((categories: Category[]): Array<Tab> | null => {
-    const tabsConfig: Array<Tab> | null = categories.length
-      ? categories.map(cat => ({
-          title: cat.id,
-          component: PepupItems
-        }))
-      : null;
-
-    return tabsConfig;
-  })
+  createCategoryConfig = memoize((categories: Category[]) =>
+    categories.map(cat => ({
+      title: cat.id,
+      component: CelebCard,
+      keyExtractor: this.keyExstractor as keyExtractorType
+    }))
+  );
 
   render() {
-    const { categories, isFetchingCat } = this.props;
+    const { categories, isFetchingCat, celebs } = this.props;
+    const { activeTabIndex } = this.state;
 
-    const tabsConfig = this.createTabsConfig(categories);
+    const isCategoriesLoaded = Boolean(categories && categories.length);
+    const categoryConfig = this.createCategoryConfig(categories);
 
     return (
       <PepupBackground>
@@ -93,14 +94,13 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
             size="large"
             color={colorBlueberry}
             isDataLoaded={!isFetchingCat}>
-            {tabsConfig && (
-              <Tabs
-                config={tabsConfig}
-                style={styles.tabsComponent}
-                changeIndex={this.handleChangeTab}
-                activeTabIndex={this.state.activeTabIndex}
-                stylesItem={defaultTabsStyles.roundedTabs}
-                stylesTabsContainer={styles.stylesTabsContainer}
+            {isCategoriesLoaded && (
+              <CategoryViewer
+                categories={categoryConfig}
+                data={celebs}
+                activeTabIndex={activeTabIndex}
+                onTabChange={this.handleChangeTab}
+                flatListStyle={styles.flatListStyle}
               />
             )}
           </Loader>
@@ -114,7 +114,8 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
 
 const mapStateToProps = (state: IGlobalState) => ({
   categories: state.PepupState.categories,
-  isFetchingCat: state.PepupState.isFetchingCat
+  isFetchingCat: state.PepupState.isFetchingCat,
+  celebs: state.PepupState.celebs
 });
 const mapDispatchToProps = {
   getAllActiveCategories,
