@@ -18,15 +18,15 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     categories.map((item: ViewerCategory) => ({
       key: item.title,
       title: item.title,
-      component: item.component
+      component: item.component,
+      keyExtractor: item.keyExtractor
     }))
   );
 
   renderScene = ({ route }: { route: ViewerRoute }) => (
     <List
       route={route}
-      data={this.props.data}
-      keyExstractor={this.props.keyExstractor}  
+      data={this.props.data} 
     />
   );
 

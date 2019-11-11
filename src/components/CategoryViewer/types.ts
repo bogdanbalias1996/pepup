@@ -1,16 +1,18 @@
 import { ComponentType } from 'react';
 
-type keyExstractor = (item: object) => string | number;
+type keyExtractorType = (item: object) => string | number;
 
 export interface ViewerCategory {
   title: string;
-  component: ComponentType<any>
+  component: ComponentType<any>,
+  keyExtractor: keyExtractorType
 }
 
 export interface ViewerRoute {
   key: string;
   title: string;
   component: ComponentType<any>;
+  keyExtractor?: keyExtractorType;
 }
 
 export interface ViewerData {
@@ -22,11 +24,10 @@ export interface CategoryViewerProps {
   activeTabIndex: number;
   categories: ViewerCategory[];
   data: ViewerData;
-  keyExstractor?: keyExstractor;
+  keyExstractor?: keyExtractorType;
 }
 
 export interface ListProps {
   data: ViewerData;
   route: ViewerRoute;
-  keyExstractor?: keyExstractor;
 }

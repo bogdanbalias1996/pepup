@@ -67,26 +67,10 @@ export type PepupsItemsScreenStateProps = {
   isFetching: boolean;
 }
 
-export type PepupItemsProps = {
-  getFeaturedCelebs: () => Promise<any>
-  
-  celebs: { [key: string]: Array<Celeb> };
-  openPepupModal: () => void;
-  categoryId: string;
-  
-  getCeleb: (userId: string) => Promise<any>;
-  isFetching: boolean;
-
-  route: {
-    key: string;
-    title: string;
-  }
-};
-
 export type PepupsScreenProps = PepupsScreenStateProps &
   PepupsScreenDispatchProps;
 
-export  interface  PepupsScreenState {
+export interface  PepupsScreenState {
   isModalVisible: boolean;
   activeTabIndex: number;
 }

@@ -73,7 +73,8 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
 
   createCategoryConfig = memoize((categories: Category[]) => categories.map(cat => ({
     title: cat.id,
-    component: CelebCard
+    component: CelebCard,
+    keyExtractor: this.keyExstractor
   })))
 
   render() {
@@ -97,7 +98,6 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-                keyExstractor={this.keyExstractor as any}
               />
             )}
           </Loader>
