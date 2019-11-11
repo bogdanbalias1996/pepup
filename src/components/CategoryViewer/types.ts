@@ -1,11 +1,11 @@
 import { ComponentType } from 'react';
 
-type keyExtractorType = (item: object) => string | number;
+export type keyExtractorType = (item: object) => string | number;
 
 export interface ViewerCategory {
   title: string;
   component: ComponentType<any>,
-  keyExtractor: keyExtractorType
+  keyExtractor?: keyExtractorType
 }
 
 export interface ViewerRoute {

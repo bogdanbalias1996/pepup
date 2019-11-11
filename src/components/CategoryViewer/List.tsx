@@ -37,7 +37,7 @@ class List extends Component<ListProps> {
   render() {
     const { data, route } = this.props;
     const dataArr = this.extractDataByCategory(data, route.key);
-    console.log(route)
+
     return (
       <View style={styles.celebsWrapper}>
         <Loader

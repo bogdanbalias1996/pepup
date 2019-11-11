@@ -22,7 +22,7 @@ import CategoryViewer from '../../components/CategoryViewer';
 import { colorBlueberry } from '../../variables';
 
 import CelebCard from './CelebCard';
-
+import { keyExtractorType } from '../../components/CategoryViewer/types';
 
 export class Component extends PureComponent<PepupsScreenProps, PepupsScreenState> {
   static navigationOptions = () => ({
@@ -74,7 +74,7 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
   createCategoryConfig = memoize((categories: Category[]) => categories.map(cat => ({
     title: cat.id,
     component: CelebCard,
-    keyExtractor: this.keyExstractor
+    keyExtractor: this.keyExstractor as keyExtractorType
   })))
 
   render() {
