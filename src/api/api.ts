@@ -230,7 +230,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.DenyRequest:
         return `${host}/pepup/deny-request/${pepupId}`;
       case ApiOperation.GetNotifications:
-        return `${host}/notifications/list`;  
+        return `${host}/notifications/list`;
       default:
         return '';
     }
@@ -282,7 +282,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetPepupById:
       case ApiOperation.AcceptRequest:
       case ApiOperation.DenyRequest:
-      case ApiOperation.GetNotifications:  
+      case ApiOperation.GetNotifications:
         return true;
 
       default:
