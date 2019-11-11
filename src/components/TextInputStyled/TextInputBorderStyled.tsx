@@ -5,7 +5,7 @@ import { TextInputStyledProps } from '.';
 import { LinearGradient } from 'expo-linear-gradient';
 import styles from './TextInputStyled.styles';
 import {
-  colorTextGray,
+  colorTextGrey,
   colorVioletStart,
   colorVioletEnd
 } from '../../variables';
@@ -55,7 +55,7 @@ export class TextInputBorderStyled extends React.PureComponent<
           placeholder={label}
           multiline={multiline}
           numberOfLines={numberOfLines}
-          placeholderTextColor={colorTextGray}
+          placeholderTextColor={colorTextGrey}
           value={value}
           onChangeText={handleChange(name)}
           onBlur={() => {

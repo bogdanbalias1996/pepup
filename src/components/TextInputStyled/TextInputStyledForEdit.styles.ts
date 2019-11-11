@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colorTomato, colorBorderDarker, colorBlack, colorTextGray, semiboldFont, defaultFont } from '../../variables'
+import { colorTomato, colorBorderDarker, colorBlack, colorTextGrey, semiboldFont, defaultFont } from '../../variables'
 
 export default StyleSheet.create({
   container: {
@@ -42,7 +42,7 @@ export default StyleSheet.create({
   labelStyle: {
     marginTop: 0,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     fontSize: 14,
     alignItems: 'center',
     paddingLeft: 0,

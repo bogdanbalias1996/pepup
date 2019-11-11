@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorTextViolet,
   colorVioletGrey,
   colorGreen,
@@ -78,7 +78,7 @@ export default StyleSheet.create({
   },
   carouselDate: {
     fontSize: 12,
-    color: colorTextGray
+    color: colorTextGrey
   },
   carousel: {
     margin: 24,
@@ -94,7 +94,7 @@ export default StyleSheet.create({
   },
   numberRewiewsText: {
     fontSize: 12,
-    color: colorTextGray
+    color: colorTextGrey
   },
   allRewiewsButton: {
     color: colorTextViolet
@@ -169,12 +169,12 @@ export default StyleSheet.create({
   },
   actualR: {
     fontSize: 12,
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont
   },
   generalR: {
     fontSize: 10,
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont
   },
   rateImg: {
@@ -191,7 +191,7 @@ export default StyleSheet.create({
     color: colorGreen
   },
   regularText: {
-    color: colorTextGray
+    color: colorTextGrey
   },
   header: {
     flex: 1,

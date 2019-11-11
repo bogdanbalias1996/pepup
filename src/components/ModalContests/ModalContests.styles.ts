@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorTomato,
   boldFont,
   semiboldFont,
@@ -56,7 +56,7 @@ export default StyleSheet.create({
   infoLabel: {
     fontSize: 14,
     fontFamily: boldFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginBottom: 8
   },
   infoValue: {
@@ -85,7 +85,7 @@ export default StyleSheet.create({
     marginRight: 16
   },
   infoText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     lineHeight: 22,
     marginBottom: 10
   },

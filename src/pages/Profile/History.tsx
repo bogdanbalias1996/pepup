@@ -16,7 +16,7 @@ import {
   semiboldFont,
   colorDotGray,
   colorLightOrange,
-  colorTextGray,
+  colorTextGrey,
   boldFont,
   colorStat,
   defaultFont
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     fontFamily: italicFont,
     fontSize: 14,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginRight: 14
   },
   statistics: {

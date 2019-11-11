@@ -1,11 +1,11 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorLightGray,
+  colorTextGrey,
   colorTextViolet,
   colorTomato,
-  defaultFont
+  defaultFont,
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -19,14 +19,14 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24,
     flexShrink: 1
   },
   title: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorBlack,
     textAlign: 'center',
     fontSize: 24
@@ -43,13 +43,13 @@ export default StyleSheet.create({
     marginBottom: 40
   },
   createAccountText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont,
     fontSize: 14,
     textAlign: 'center'
   },
   createAccountLink: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   loginWithText: {

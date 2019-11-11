@@ -1,7 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorLightGray,
   colorTextViolet,
   semiboldFont,
@@ -76,7 +76,7 @@ export default StyleSheet.create({
   infoLabel: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginBottom: 8
   },
   infoLabelQnt: {
@@ -115,7 +115,7 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   infoText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     lineHeight: 22
   },
   btnSubmit: {

@@ -16,7 +16,9 @@ import {
   boldFont,
   defaultFont,
   colorCoolGrey,
-  colorDotGray
+  colorDotGray,
+  colorLightYellow,
+  colorLightOrange
 } from '../../variables';
 import { Loader } from '../Loader/Loader';
 import FastImage from 'react-native-fast-image';
@@ -47,7 +49,7 @@ const getColorButton = (type: string) => {
     case 'grey':
       return [colorCoolGrey, colorDotGray];
     default:
-      return [colorVioletStart, colorVioletEnd];
+      return [colorLightYellow, colorLightOrange];
   }
 };
 

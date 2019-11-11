@@ -36,8 +36,6 @@ export const colorTomato = '#e83d3c';
 
 export const colorSwipeLine = '#ecebf0';
 export const colorLightGray = '#f7f6fb';
-export const colorTextGray = '#908aa2';
-export const colorTextViolet = '#6e4cdf';
 export const colorInputBackground = '#edebf2';
 export const colorBlueStart = '#1cabff';
 export const colorBlueEnd = '#0265dc';
@@ -68,3 +66,6 @@ export const italicFont = 'montserrat-italic';
 export const colorLightYellow = '#f2cb1f';
 export const colorLightOrange = '#f5a623';
 export const colorBlack = '#1b1c21';
+export const colorInput = '#f7f8ff';
+export const colorTextViolet = '#694ab9';
+export const colorTextGrey = '#9b9b9b'

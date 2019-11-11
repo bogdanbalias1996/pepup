@@ -13,7 +13,7 @@ import {
 import { openEventModal, getEvent, getEventsByCategory } from './actions';
 import { EventItemsProps, Event } from './';
 import {
-  colorTextGray,
+  colorTextGrey,
   colorBlack,
   defaultFont,
   colorLightOrange,
@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGrey
   },
   wrapTitle: {
     flex: 1,

@@ -10,7 +10,7 @@ import {
 
 import { MyRequestsProps } from '.';
 import {
-  colorTextGray,
+  colorTextGrey,
   colorBlack,
   colorInputBackground,
   defaultFont,
@@ -172,7 +172,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGrey
   },
   completed: {
     fontFamily: semiboldFont
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGrey
   },
   name: {
     fontSize: 14,

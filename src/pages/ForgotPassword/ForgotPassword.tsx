@@ -101,6 +101,7 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
                         onPress={() => handleSubmit()}
                         text="Submit"
                         loader={isFetching}
+                        textBold={true}
                       />
                     </View>
                   );
@@ -114,7 +115,7 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
                   }}>
                   <Text style={styles.createAccountText}>
                     Go back to{' '}
-                    <Text style={styles.createAccountLink}>Login</Text>
+                    <Text style={styles.createAccountLink}>Sign In</Text>
                   </Text>
                 </TouchableOpacity>
               </View>

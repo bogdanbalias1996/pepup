@@ -103,7 +103,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
                   <TouchableOpacity
                     onPress={() => navigation.navigate('ForgotPassword')}>
                     <Text style={styles.btnForgetPasswordText}>
-                      Forgot Password?
+                      I forgot my password
                     </Text>
                   </TouchableOpacity>
 
@@ -112,6 +112,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
                     onPress={() => handleSubmit()}
                     text="Log In"
                     loader={isFetching}
+                    textBold={true}
                   />
                 </View>
               );

@@ -52,7 +52,8 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
                 onPress={() => {
                   navigate({ routeName: "Login" });
                 }}
-                text="Back to login"
+                text="Back to Login"
+                textBold={true}
               />
 
               <View style={styles.createAccountContainer}>

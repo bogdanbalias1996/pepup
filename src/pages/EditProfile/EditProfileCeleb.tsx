@@ -27,7 +27,7 @@ import { editProfile } from './actions';
 import DateTimePicker from 'react-native-modal-datetime-picker';
 import { format } from 'date-fns';
 import { Icon } from '../../components/Icon/Icon';
-import { colorTextGray } from '../../variables';
+import { colorTextGrey } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
 import { VideoType } from '../../components/ModalRecordVideo/';
 import { getCeleb } from '../Pepups/actions';
@@ -186,7 +186,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               label="click to record intro video"
                               formProps={props}
                               iconName="video-camera"
-                              iconColor={colorTextGray}
+                              iconColor={colorTextGrey}
                             />
                           </TouchableOpacity>
                           <View style={styles.private}>

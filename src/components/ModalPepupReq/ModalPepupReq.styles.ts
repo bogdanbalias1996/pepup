@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorSwipeLine,
   colorTomato,
   semiboldFont,
@@ -41,7 +41,7 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   disclaimerText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     lineHeight: 22,
     alignSelf: 'flex-start',
     fontFamily: defaultFont

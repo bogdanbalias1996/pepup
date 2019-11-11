@@ -1,11 +1,11 @@
 import { StyleSheet } from "react-native";
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorCoral,
-  colorLightGray,
   colorTextViolet,
-  defaultFont
+  defaultFont,
+  boldFont,
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -26,20 +26,20 @@ export default StyleSheet.create({
     marginBottom: 30
   },
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24
   },
   title: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorBlack,
     textAlign: "center",
     fontSize: 24
   },
   description: {
     fontSize: 14,
-    color: colorTextGray,
+    color: colorTextGrey,
     textAlign: "center",
     marginTop: 25,
     fontFamily: defaultFont,
@@ -58,7 +58,7 @@ export default StyleSheet.create({
     fontSize: 14,
     textAlign: "center",
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginBottom: 30
   },
   resetText: {
@@ -66,12 +66,12 @@ export default StyleSheet.create({
     lineHeight: 20,
     textAlign: "center",
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginHorizontal: 20,
     marginBottom: 15
   },
   createAccountLink: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   createAccountEmail: {

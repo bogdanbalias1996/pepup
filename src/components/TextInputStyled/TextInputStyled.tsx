@@ -3,7 +3,7 @@ import { View, TouchableOpacity, TextInput } from "react-native";
 import { Icon } from "../Icon/Icon";
 import { TextInputStyledProps } from ".";
 import styles from "./TextInputStyled.styles";
-import { colorTextGray } from "../../variables";
+import { colorTextGrey } from "../../variables";
 
 export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
   render() {
@@ -39,7 +39,7 @@ export class TextInputStyled extends React.PureComponent<TextInputStyledProps> {
           style={styles.input}
           autoCapitalize="none"
           placeholder={label}
-          placeholderTextColor={colorTextGray}
+          placeholderTextColor={colorTextGrey}
           value={value}
           onChangeText={handleChange(name)}
           onBlur={() => {

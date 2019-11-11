@@ -19,7 +19,7 @@ import { StoreItemsProps, Product } from './';
 import {
   colorBlack,
   colorTextRed,
-  colorTextGray,
+  colorTextGrey,
   colorOrange,
   defaultFont,
   semiboldFont,
@@ -211,7 +211,7 @@ const styles = StyleSheet.create({
     fontFamily: semiboldFont
   },
   priceText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     fontSize: 14,
     paddingHorizontal: 5,
     fontFamily: defaultFont,

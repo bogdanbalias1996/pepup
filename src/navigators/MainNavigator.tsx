@@ -6,7 +6,7 @@ import {
 import { Image, View } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
+  colorTextGrey,
   colorShadow,
   semiboldFont
 } from '../variables';
@@ -88,7 +88,7 @@ export const TabsNavigator = createBottomTabNavigator(
         elevation: 7
       },
       activeTintColor: colorBlack,
-      inactiveTintColor: colorTextGray,
+      inactiveTintColor: colorTextGrey,
       labelStyle: {
         marginTop: 3,
         fontSize: 11,

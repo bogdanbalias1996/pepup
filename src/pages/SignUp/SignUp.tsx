@@ -117,6 +117,7 @@ export const Component: React.SFC<SignupScreenProps> = ({
                     onPress={() => handleSubmit()}
                     text="Sign Up"
                     loader={isFetching}
+                    textBold={true}
                   />
                 </View>
               );
@@ -129,7 +130,7 @@ export const Component: React.SFC<SignupScreenProps> = ({
             }}>
             <Text style={styles.createAccountText}>
               Already have an account?{' '}
-              <Text style={styles.createAccountLink}>Log In</Text>
+              <Text style={styles.createAccountLink}>Sign In</Text>
             </Text>
           </TouchableOpacity>
           {/* <Text style={styles.loginWithText}>Sign Up with</Text>

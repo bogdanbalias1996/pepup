@@ -10,7 +10,7 @@ import {
 
 import { FanRequestsProps, Pepup } from './';
 import {
-  colorTextGray,
+  colorTextGrey,
   colorBlack,
   colorInputBackground,
   defaultFont,
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGrey
   },
   completed: {
     fontFamily: boldFont
@@ -209,7 +209,7 @@ const styles = StyleSheet.create({
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     flexShrink: 1
   },
   name: {

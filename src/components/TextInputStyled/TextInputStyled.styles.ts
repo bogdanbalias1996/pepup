@@ -3,7 +3,8 @@ import {
   colorTomato,
   colorBlack,
   defaultFont,
-  semiboldFont
+  semiboldFont,
+  colorInput
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -12,7 +13,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'white',
+    backgroundColor: colorInput,
     paddingHorizontal: 16,
     paddingVertical: 5,
     borderRadius: 8,
