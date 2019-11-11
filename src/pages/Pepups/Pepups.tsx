@@ -24,7 +24,10 @@ import { colorBlueberry } from '../../variables';
 import CelebCard from './CelebCard';
 import { keyExtractorType } from '../../components/CategoryViewer/types';
 
-export class Component extends PureComponent<PepupsScreenProps, PepupsScreenState> {
+export class Component extends PureComponent<
+  PepupsScreenProps,
+  PepupsScreenState
+> {
   static navigationOptions = () => ({
     header: (props: any) => (
       <HeaderRounded {...props} title={'Pepups'.toUpperCase()} />
@@ -39,28 +42,26 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
   componentDidMount() {
     const { getAllActiveCategories } = this.props;
 
-    getAllActiveCategories()
-    this.fetchCategories('Featured')
-  };
+    getAllActiveCategories();
+    this.fetchCategories('Featured');
+  }
 
   fetchCategories = (categoryId: string) => {
-    const {
-      getCelebsByCategory,
-      setCategory,
-      getFeaturedCelebs
-    } = this.props;
+    const { getCelebsByCategory, setCategory, getFeaturedCelebs } = this.props;
 
     setCategory(categoryId);
 
     categoryId === 'Featured'
       ? getFeaturedCelebs()
       : getCelebsByCategory(categoryId);
-  }
+  };
 
   keyExstractor = (item: Celeb) => item.mappedUserId;
 
   toggleModal = () =>
-    this.setState(({ isModalVisible }) => { isModalVisible: !isModalVisible });
+    this.setState(({ isModalVisible }) => {
+      isModalVisible: !isModalVisible;
+    });
 
   handleChangeTab = (index: number) => {
     const { categories } = this.props;
@@ -69,20 +70,22 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
 
     const categoryId = categories[index].id;
     this.fetchCategories(categoryId);
-  }
+  };
 
-  createCategoryConfig = memoize((categories: Category[]) => categories.map(cat => ({
-    title: cat.id,
-    component: CelebCard,
-    keyExtractor: this.keyExstractor as keyExtractorType
-  })))
+  createCategoryConfig = memoize((categories: Category[]) =>
+    categories.map(cat => ({
+      title: cat.id,
+      component: CelebCard,
+      keyExtractor: this.keyExstractor as keyExtractorType
+    }))
+  );
 
   render() {
     const { categories, isFetchingCat, celebs } = this.props;
     const { activeTabIndex } = this.state;
 
     const isCategoriesLoaded = Boolean(categories && categories.length);
-    const categoryConfig =  this.createCategoryConfig(categories)
+    const categoryConfig = this.createCategoryConfig(categories);
 
     return (
       <PepupBackground>
@@ -90,14 +93,14 @@ export class Component extends PureComponent<PepupsScreenProps, PepupsScreenStat
           <Loader
             size="large"
             color={colorBlueberry}
-            isDataLoaded={!isFetchingCat}
-          >
+            isDataLoaded={!isFetchingCat}>
             {isCategoriesLoaded && (
               <CategoryViewer
                 categories={categoryConfig}
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
+                flatListStyle={styles.flatListStyle}
               />
             )}
           </Loader>

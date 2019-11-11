@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {
-  FlatList,
-  View
-} from 'react-native';
+import { FlatList, View } from 'react-native';
 
 import { colorBlueberry } from '../../variables';
 
@@ -15,13 +12,19 @@ class List extends Component<ListProps> {
   static defaultKeyExtractor = (item: { id: string }) => item.id;
 
   shouldComponentUpdate(nextProps: ListProps) {
-    const oldData = this.extractDataByCategory(this.props.data, this.props.route.key);
-    const newData = this.extractDataByCategory(nextProps.data, nextProps.route.key);
+    const oldData = this.extractDataByCategory(
+      this.props.data,
+      this.props.route.key
+    );
+    const newData = this.extractDataByCategory(
+      nextProps.data,
+      nextProps.route.key
+    );
 
     return newData.length !== oldData.length;
   }
 
-  extractDataByCategory(data: ViewerData , category: string): Object[]  {
+  extractDataByCategory(data: ViewerData, category: string): Object[] {
     const categoryName = category.toLowerCase();
     const categoryCelebs = data[categoryName] || [];
 
@@ -29,17 +32,17 @@ class List extends Component<ListProps> {
   }
 
   renderItem = ({ item }: any) => {
-    const { route } = this.props
+    const { route } = this.props;
 
-    return <route.component item={item} />
+    return <route.component item={item} />;
   };
 
   render() {
-    const { data, route } = this.props;
+    const { data, route, flatListStyle } = this.props;
     const dataArr = this.extractDataByCategory(data, route.key);
 
     return (
-      <View style={styles.celebsWrapper}>
+      <View style={styles.wrapper}>
         <Loader
           isDataLoaded={Boolean(dataArr.length)}
           color={colorBlueberry}
@@ -48,10 +51,12 @@ class List extends Component<ListProps> {
             showsVerticalScrollIndicator={false}
             numColumns={2}
             horizontal={false}
-            columnWrapperStyle={styles.row}
+            columnWrapperStyle={flatListStyle || styles.flatList}
             data={dataArr as any}
             renderItem={this.renderItem}
-            keyExtractor={route.keyExtractor || List.defaultKeyExtractor as any}
+            keyExtractor={
+              route.keyExtractor || (List.defaultKeyExtractor as any)
+            }
           />
         </Loader>
       </View>

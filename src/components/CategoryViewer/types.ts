@@ -1,11 +1,12 @@
 import { ComponentType } from 'react';
+import { StyleProp } from 'react-native';
 
 export type keyExtractorType = (item: object) => string | number;
 
 export interface ViewerCategory {
   title: string;
-  component: ComponentType<any>,
-  keyExtractor?: keyExtractorType
+  component: ComponentType<any>;
+  keyExtractor?: keyExtractorType;
 }
 
 export interface ViewerRoute {
@@ -25,9 +26,11 @@ export interface CategoryViewerProps {
   categories: ViewerCategory[];
   data: ViewerData;
   keyExstractor?: keyExtractorType;
+  flatListStyle?: StyleProp<any>;
 }
 
 export interface ListProps {
   data: ViewerData;
   route: ViewerRoute;
+  flatListStyle?: StyleProp<any>;
 }

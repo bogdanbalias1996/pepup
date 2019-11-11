@@ -7,7 +7,7 @@ import { CategoryViewerProps, ViewerCategory, ViewerRoute } from './types';
 
 import styles from './CategoryViewer.styles';
 
-import List from './List'; 
+import List from './List';
 
 class CategoryViewer extends PureComponent<CategoryViewerProps> {
   static defaultProps = {
@@ -26,17 +26,19 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   renderScene = ({ route }: { route: ViewerRoute }) => (
     <List
       route={route}
-      data={this.props.data} 
+      data={this.props.data}
+      flatListStyle={this.props.flatListStyle}
     />
   );
 
-  renderLabel = ({ route, focused }: { route: { title: string }; focused: boolean }) => (
-    <Text
-      style={
-        focused
-          ? styles.selectedLabel
-          : styles.itemText
-      }>
+  renderLabel = ({
+    route,
+    focused
+  }: {
+    route: { title: string };
+    focused: boolean;
+  }) => (
+    <Text style={focused ? styles.selectedLabel : styles.itemText}>
       {route.title}
     </Text>
   );
@@ -55,7 +57,7 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
 
   render() {
     const { categories, onTabChange, activeTabIndex } = this.props;
-  
+
     const routes = this.generateRoutes(categories);
 
     return (

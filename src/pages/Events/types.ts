@@ -1,7 +1,4 @@
-import {
-  NavigationScreenProp,
-  NavigationScreenOptions
-} from 'react-navigation';
+import { NavigationScreenProp } from 'react-navigation';
 
 export type Event = {
   active: boolean;
@@ -29,12 +26,12 @@ export type Event = {
 
 export type EventsScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
-  events: Array<Event>;
+  events: { [key: string]: Array<Event> };
   isFetching: boolean;
 };
 
 export type EventsScreenDispatchProps = {
-  getEventsByCategory: (categoryId: string) => Promise<void>
+  getEventsByCategory: (categoryId: string) => Promise<void>;
 };
 
 export type EventItemsProps = {
@@ -46,7 +43,7 @@ export type EventItemsProps = {
   isFetching: boolean;
   route: {
     key: string;
-  }
+  };
 };
 
 export type EventsResponseType = {

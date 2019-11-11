@@ -13,7 +13,7 @@ export default StyleSheet.create({
     marginTop: deviceInfoCheck() ? 10 : 0
   },
   wrapHeaderRight: {
-    flexDirection: 'row',
+    flexDirection: 'row'
   },
   wrapHeaderRightIcon: {
     backgroundColor: colorEndButtonInput,
@@ -22,15 +22,19 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginLeft: 10,
     width: 40,
-    height: 40,
+    height: 40
   },
   rateIcon: {
     width: 20,
-    height: 20,
+    height: 20
   },
   stylesTabsContainer: {
     backgroundColor: 'transparent',
     marginBottom: 10,
     paddingLeft: 5
+  },
+  flatListStyle: {
+    flex: 1,
+    flexDirection: 'row'
   }
 });
