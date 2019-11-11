@@ -44,7 +44,6 @@ export class OnboardingScreen extends React.Component {
   };
 
   _renderItem = (item: any) => {
-    console.log(item);
     return (
       <View style={styles.container}>
         <Card style={styles.card}>
