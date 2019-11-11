@@ -1,4 +1,4 @@
-import { Contest } from '../../pages/Contests/index';
+import { Contest } from '../../pages/Contests/types';
 
 export type ModalContestsProps = {
   closeContestModal: () => void;

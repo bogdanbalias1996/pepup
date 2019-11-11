@@ -1,4 +1,4 @@
-import {NavigationScreenProp, NavigationScreenOptions} from 'react-navigation';
+import { NavigationScreenProp } from 'react-navigation';
 
 export type Contest = {
   id: string;
@@ -23,26 +23,18 @@ export type Contest = {
 export type ContestResponseType = {
   categoryId: string;
   data: Contest[];
-}
+};
 
 export type ContestsScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
-  contests: Array<Contest>;
+  contests: {
+    [key: string]: Contest[];
+  };
   isFetching: boolean;
+  getContestsByCategory: (category: string) => void;
 };
 
 export type ContestsScreenDispatchProps = {};
-
-export type ContestItemsProps = {
-  getContestsByCategory: (id: string) => Promise<any>;
-  contests: {
-    [key: string]: Contest[]
-  };
-  openContestModal: () => void;
-  getContest: (contestId: string) => Promise<any>;
-  isFetching: boolean;
-  categoryId: string;
-};
 
 export type ContestsScreenProps = ContestsScreenStateProps &
   ContestsScreenDispatchProps;
