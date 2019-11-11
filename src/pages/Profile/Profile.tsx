@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { Dispatch } from 'redux';
 import FastImage from 'react-native-fast-image';
 
 import { IGlobalState } from '../../coreTypes';
@@ -19,7 +18,6 @@ import styles from './Profile.styles';
 import { getProfile, getUserPepups } from './actions';
 import { ProfileScreenProps } from '.';
 import { MyRequests } from './MyRequests';
-import { History } from './History';
 import { FanRequests } from './FanRequests';
 import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
@@ -27,7 +25,9 @@ import { ModalPepupNotification } from '../../components/ModalPepupNotification/
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
 
-const ROLE_CELEB = 'REGULAR,CELEBRITY';
+import EditProfileButton from './EditProfileButton';
+
+export const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
 const celebTabs: { [key: string]: number } = {
   funRequests: 0,
@@ -41,7 +41,10 @@ const userTabs: { [key: string]: number } = {
 };
 
 export class Component extends React.Component<ProfileScreenProps> {
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+  static getDerivedStateFromProps(
+    nextProps: ProfileScreenProps,
+    prevState: any
+  ) {
     const {
       profileData,
       navigation,
@@ -103,38 +106,34 @@ export class Component extends React.Component<ProfileScreenProps> {
   tabsConfig = [
     {
       title: 'My Requests',
-      component: () => <MyRequests />
+      component: MyRequests
     },
     {
       title: 'Notifications',
-      component: () => <Notifications />
+      component: Notifications
     }
   ];
 
   tabsConfigCeleb = [
     {
       title: 'Fan Requests',
-      component: () => <FanRequests />
+      component: FanRequests
     },
     {
       title: 'My Requests',
-      component: () => <MyRequests />
+      component: MyRequests
     },
     {
       title: 'Notifications',
-      component: () => <Notifications />
+      component: Notifications
     }
-    // {
-    //   title: 'History',
-    //   component: () => <History />,
-    // },
   ];
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { handle, getProfile } = this.props;
 
     handle && getProfile(handle);
-  };
+  }
 
   render() {
     const { profileData, openPepupModal, getCeleb } = this.props;
@@ -180,19 +179,8 @@ export class Component extends React.Component<ProfileScreenProps> {
             )}
           </View>
 
-          <View style={styles.titleWrap}>
-            <Text style={styles.title}>
-              {(profileData && profileData.name) || ' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigate({
-                  routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
-                })
-              }>
-              <Icon name="edit" />
-            </TouchableOpacity>
-          </View>
+          <EditProfileButton />
+
           <View style={styles.wrapContent}>
             <Loader isDataLoaded={!!profileData}>
               {!!profileData && (

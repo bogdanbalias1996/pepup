@@ -25,20 +25,6 @@ export default StyleSheet.create({
   avatarCeleb: {
     backgroundColor: 'white'
   },
-  titleWrap: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'flex-start',
-    marginBottom: 10
-  },
-  title: {
-    fontSize: 20,
-    fontFamily: boldFont,
-    color: 'white',
-    textAlign: 'center',
-    lineHeight: 28,
-    marginHorizontal: 10
-  },
   wrapContent: {
     backgroundColor: colorLightGray,
     borderTopLeftRadius: 32,
