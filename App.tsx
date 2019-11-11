@@ -35,9 +35,9 @@ YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const FCM_TOKEN = 'fcmToken';
 const AppNavigator = createSwitchNavigator({
+  Main: MainNavigator,
   Pages: PagesNavigator,
-  Auth: AuthenticationNavigator,
-  Main: MainNavigator
+  Auth: AuthenticationNavigator  
 });
 
 const AppContainer = createAppContainer(AppNavigator);

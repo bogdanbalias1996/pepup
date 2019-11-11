@@ -1,5 +1,5 @@
-import React, { PureComponent, ComponentType } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import React, { PureComponent } from 'react';
+import { View, Text } from 'react-native';
 import memoize from 'memoize-one';
 import { TabView, TabBar } from 'react-native-tab-view';
 
@@ -38,10 +38,10 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     route: { title: string };
     focused: boolean;
   }) => (
-    <Text style={focused ? styles.selectedLabel : styles.itemText}>
-      {route.title}
-    </Text>
-  );
+      <Text style={focused ? styles.selectedLabel : styles.itemText}>
+        {route.title}
+      </Text>
+    );
 
   renderTabBar = (props: any) => (
     <TabBar

@@ -10,6 +10,7 @@ import { PepupBackground } from '../../components/PepupBackground/PepupBackgroun
 import { TextInputPassword } from '../../components/TextInputStyled/TextInputPassword';
 import { TextInputStyled } from '../../components/TextInputStyled/TextInputStyled';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
+import Logo from '../../components/Logo';
 
 import { signupUser } from './actions';
 import styles from './SignUp.styles';
@@ -49,19 +50,7 @@ export const Component: React.SFC<SignupScreenProps> = ({
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
         bounces={false}>
-        <View
-          style={{
-            flexGrow: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingBottom: 20
-          }}>
-          <Image
-            source={require('../../../assets/logo2x.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
+        <Logo />
         <View style={styles.wrapContent}>
           <Text style={styles.title}>Sign Up</Text>
           <Formik

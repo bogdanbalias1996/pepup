@@ -2,8 +2,7 @@ import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGrey,
-  colorTextViolet,
-  colorVioletGrey,
+  colorTextViolet,  
   colorGreen,
   colorTomato,
   semiboldFont,
@@ -15,26 +14,7 @@ import {
   colorInput,
 } from '../../variables';
 
-export default StyleSheet.create({
-  wrapModalContent: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    flex: 1,
-    paddingHorizontal: 24
-  },
-  avatar: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    borderRadius: 20,
-    position: 'relative'
-  },
-  avatarWrapper: {
-    marginHorizontal: 24,
-    height: 390,
-    marginVertical: 20
-  },
+export default StyleSheet.create({       
   title: {
     fontSize: 22,
     fontFamily: boldFont,
@@ -54,9 +34,16 @@ export default StyleSheet.create({
     color: colorTomato,
     fontFamily: defaultFont
   },
+  contentBlock: {
+    flexDirection: 'row', 
+    marginTop: 19,
+    marginBottom: 39
+  },
   infoText: {
+    flexShrink: 1, 
     color: colorTextGreyIntro,
-    lineHeight: 22
+    lineHeight: 22,
+    marginLeft: 17
   },
   modal: {
     marginTop: 20,
@@ -143,7 +130,10 @@ export default StyleSheet.create({
     backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999
   },
   btnSubmit: {
     flex: 1
@@ -154,16 +144,11 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont
+  },  
+  rate: { 
+    flexDirection: 'row', 
+    alignItems: 'center' 
   },
-  wrapVideo: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 30
-  },
-  rate: { flexDirection: 'row', alignItems: 'center' },
   rateText: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -209,5 +194,11 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 8
   },
-  scrollContent: { paddingBottom: 90, position: 'relative' }
+  scrollContent: { 
+    paddingBottom: 190, 
+    position: 'relative',
+    marginHorizontal: 24,
+    // borderWidth: 1,
+    // borderColor: 'red' 
+  }
 });

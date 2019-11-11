@@ -15,16 +15,6 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     flex: 1
   },
-  imageWrapper: {
-    flexGrow: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  logo: {
-    height: 110,
-    alignSelf: "center",
-    marginBottom: 30
-  },
   wrapContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 32,

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { CardGradientProps } from './';
+import { CardGradientProps } from './types';
 
 export const CardGradient = ({ children, style }: CardGradientProps) => {
   return (
@@ -14,6 +14,8 @@ export const CardGradient = ({ children, style }: CardGradientProps) => {
     </LinearGradient>
   );
 };
+
+export default CardGradient;
 
 const styles = StyleSheet.create({
   gradient: {

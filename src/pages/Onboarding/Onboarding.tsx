@@ -15,25 +15,25 @@ const slides = [
   {
     key: '1',
     title: 'PEPUP',
-    description: 'yo life with personalized videos from people you love',
+    description: 'yo life with personalized videos \n from people you love',
     imageSrc: require('../../../assets/onboarding/connect.png')
   },
   {
     key: '2',
     title: 'EVENTS',
-    description: 'Attend exclusive events and party in style',
+    description: 'Attend exclusive events and \n party in style',
     imageSrc: require('../../../assets/onboarding/mungle.png')
   },
   {
     key: '3',
     title: 'CONTESTS',
-    description: 'Participate in a variety of contests and win prizes',
+    description: 'Participate in a variety of \n contests and win prizes',
     imageSrc: require('../../../assets/onboarding/dazzle.png')
   },
   {
     key: '4',
     title: 'STORE',
-    description: 'Collect original celebrity apparel & merchandize',
+    description: 'Shop and collect original \n celebrity apparel & merchandize',
     imageSrc: require('../../../assets/onboarding/indulge.png')
   }
 ];
@@ -43,10 +43,10 @@ export class OnboardingScreen extends React.Component {
     lastSlide: false
   };
 
-  _renderItem = (item: any) => {
+  _renderItem = (item: any) => {    
     return (
       <View style={styles.container}>
-        <Card style={styles.card}>
+        <Card style={styles.card} borderWidth={6}>
           <FastImage
             style={styles.image}
             source={item.item.imageSrc}
@@ -55,6 +55,7 @@ export class OnboardingScreen extends React.Component {
           <Text style={styles.title}>{item.item.title}</Text>
         </Card>
         <Text style={styles.description}>{item.item.description}</Text>
+
         {item.item.key === '4' && (
           <ButtonStyled
             style={styles.buttonStyle}
@@ -78,7 +79,7 @@ export class OnboardingScreen extends React.Component {
 
   render() {
     return (
-      <PepupBackground>
+      <PepupBackground style={{ paddingTop: 0 }}>
         <AppIntroSlider
           renderItem={this._renderItem}
           slides={slides}
@@ -87,8 +88,8 @@ export class OnboardingScreen extends React.Component {
           onSlideChange={this.onChange}
           hidePagination={this.state.lastSlide}
           activeDotStyle={styles.activeDotStyle}
-          paginationStyle={styles.paginationStyle}
-          doneLabel=""
+          paginationStyle={styles.paginationStyle as any}
+          doneLabel=""          
         />
       </PepupBackground>
     );

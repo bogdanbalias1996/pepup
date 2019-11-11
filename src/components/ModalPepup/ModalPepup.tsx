@@ -5,6 +5,7 @@ import {
   View,
   ScrollView,
   Image,
+  FlatList,
   ListRenderItem
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -14,7 +15,6 @@ import { Video } from 'expo-av';
 import {
   closePepupModal,
   openPepupReqModal,
-  openVideoModal,
   getAllReviews,
   openReviewsModal
 } from '../../pages/Pepups/actions';
@@ -30,8 +30,7 @@ import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { Pepup } from '../../pages/Profile';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
+import VideoCard from '../VideoCard'
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -44,10 +43,27 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
-  openVideoModal: (videoUrl: string) => dispatch(openVideoModal(videoUrl)),
   openReviewsModal: () => dispatch(openReviewsModal()),
   getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
+
+const dataMock = [
+  {
+    date: '14 Aug 2019',
+    for: 'for Trish Devato',
+    video: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+  },
+  {
+    date: '14 Aug 2019',
+    for: 'for Trish Devato',
+    video: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+  },
+  {
+    date: '14 Aug 2019',
+    for: 'for Trish Devato',
+    video: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+  }
+]
 
 export class Component extends React.PureComponent<ModalPepupProps> {
   state = {
@@ -84,6 +100,20 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     );
   };
 
+  renderFeaturedPepupItem = ({ item }: any) => {    
+    return (
+      <View style={{ marginRight: 8 }}>
+        <VideoCard
+          height={208}
+          width={144}
+          videoUrl='http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+        />
+        <Text>{item.for}</Text>
+        <Text>{item.date}</Text>
+      </View>
+    )
+  }
+
   render() {
     const {
       closePepupModal,
@@ -106,7 +136,13 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         onRequestClose={() => closePepupModal()}
         heightContent={this.state.heightDescription}>
         {!!celebData && (
-          <View style={{ flex: 1, paddingTop: 20 }}>
+          <View style={{ flex: 1, paddingTop: 55 }}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closePepupModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
+
             <ScrollView showsVerticalScrollIndicator={false}>
               <View
                 style={styles.scrollContent}
@@ -115,47 +151,38 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   Object.keys(celebData).length !== 0 &&
                     this.setState({ heightDescription: height });
                 }}>
-                <View style={{ paddingHorizontal: 24 }}>
-                  <View style={styles.header}>
-                    <Text style={styles.title}>{celebData.userInfo.name}</Text>
-                  </View>
-                  <Text style={[styles.text, styles.subTitle]}>
-                    {celebData.dataInfo.intro}
-                  </Text>
-                  <Text
-                    style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
-                    {`${celebData.totalPepupsFulfilled} Pepups`}
-                  </Text>
+                <View style={styles.header}>
+                  <Text style={styles.title}>{celebData.userInfo.name}</Text>
                 </View>
-                <View style={{ overflow: 'hidden', position: 'relative' }}>
-                  <Card style={styles.avatarWrapper}>
-                    <CardGradient />
-                    <Video
-                      source={{ uri: videoUrl }}
-                      rate={1.0}
-                      volume={1.0}
-                      isMuted={false}
-                      isLooping={true}
-                      resizeMode="cover"
-                      useNativeControls={false}
-                      style={styles.avatar}
-                    />
-                  </Card>
-                  <TouchableOpacity
-                    style={styles.wrapVideo}
-                    onPress={() => openVideoModal(videoUrl)}>
-                    <Image
-                      style={{ width: 60, height: 60 }}
-                      source={require('../../../assets/play.png')}
-                      resizeMode="contain"
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={{ paddingHorizontal: 24 }}>
+                <Text style={[styles.text, styles.subTitle]}>
+                  {celebData.dataInfo.intro}
+                </Text>
+                <Text
+                  style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
+                  {`${celebData.totalPepupsFulfilled} Pepups`}
+                </Text>
+
+                <View style={styles.contentBlock}>
+                  <VideoCard
+                    videoUrl={videoUrl}
+                    height={164}
+                    width={94}
+                  />
                   <Text style={[styles.text, styles.infoText]}>
                     {celebData.dataInfo.who}
                   </Text>
-                  {/* <FlatList
+                </View>
+
+                <View>
+                  <Text>Featured Pepups</Text>
+                  <FlatList
+                    data={dataMock}
+                    renderItem={this.renderFeaturedPepupItem}
+                    keyExtractor={(item: any, index: number) => `${index}`}
+                    horizontal={true}
+                  />
+                </View>
+                {/* <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
                     data={celebData.media}
@@ -167,33 +194,33 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       justifyContent: 'center'
                     }}
                   /> */}
-                  {celebData.dataInfo.review && (
-                    <View style={styles.reviews}>
-                      <View style={styles.rewiewsHeader}>
-                        <Text style={[styles.text, styles.numberRewiewsText]}>
-                          {`${celebData.reviews} reactions`}
-                        </Text>
-                        <TouchableOpacity onPress={() => this.getReviews()}>
-                          <Text style={[styles.text, styles.allRewiewsButton]}>
-                            Check all reactions
+                {celebData.dataInfo.review && (
+                  <View style={styles.reviews}>
+                    <View style={styles.rewiewsHeader}>
+                      <Text style={[styles.text, styles.numberRewiewsText]}>
+                        {`${celebData.reviews} reactions`}
+                      </Text>
+                      <TouchableOpacity onPress={() => this.getReviews()}>
+                        <Text style={[styles.text, styles.allRewiewsButton]}>
+                          Check all reactions
                           </Text>
-                        </TouchableOpacity>
-                      </View>
-                      <View style={styles.commentCard}>
-                        <View style={styles.commentHeader}>
-                          <Text style={[styles.text, styles.commentTitle]}>
-                            {celebData.dataInfo.review.submitterUserInfo.name}
-                          </Text>
-                        </View>
-                        <Text style={[styles.text, styles.commentText]}>
-                          {celebData.dataInfo.review.review}
-                        </Text>
-                      </View>
+                      </TouchableOpacity>
                     </View>
-                  )}
-                </View>
+                    <View style={styles.commentCard}>
+                      <View style={styles.commentHeader}>
+                        <Text style={[styles.text, styles.commentTitle]}>
+                          {celebData.dataInfo.review.submitterUserInfo.name}
+                        </Text>
+                      </View>
+                      <Text style={[styles.text, styles.commentText]}>
+                        {celebData.dataInfo.review.review}
+                      </Text>
+                    </View>
+                  </View>
+                )}
               </View>
             </ScrollView>
+
             <View style={styles.modalFooter}>
               {userId === celebData.mappedUserId ? (
                 <ButtonStyled
@@ -202,19 +229,12 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   text="CLOSE"
                 />
               ) : (
-                <>
-                  <TouchableOpacity
-                    style={styles.btnCancel}
-                    onPress={() => closePepupModal()}>
-                    <Icon size={20} name="cancel" color={colorBlack} />
-                  </TouchableOpacity>
                   <ButtonStyled
                     style={styles.btnSubmit}
                     onPress={() => openPepupReqModal()}
                     text="Fill out request form"
                   />
-                </>
-              )}
+                )}
             </View>
           </View>
         )}

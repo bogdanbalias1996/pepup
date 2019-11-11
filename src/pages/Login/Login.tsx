@@ -9,6 +9,7 @@ import { Text, View, Keyboard, Image, TouchableOpacity } from 'react-native';
 import { LoginScreenProps, LoginScreenFromData } from './';
 import styles from './Login.styles';
 import { loginUser } from './actions';
+import Logo from '../../components/Logo';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { TextInputStyled } from '../../components/TextInputStyled/TextInputStyled';
@@ -49,13 +50,7 @@ export const Component: React.SFC<LoginScreenProps> = ({
         enableOnAndroid={true}
         keyboardShouldPersistTaps="handled"
         bounces={false}>
-        <View style={styles.imageWrapper}>
-          <Image
-            source={require('../../../assets/logo2x.png')}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
+        <Logo />
         <View style={styles.wrapContent}>
           <Text style={styles.title}>Sign In</Text>
           <Formik

@@ -14,6 +14,7 @@ import { navigate } from '../../navigationService';
 import { ResetpassScreenFromData, ResetpassScreenProps } from './';
 import { resetPassword } from './actions';
 import { IGlobalState } from '../../coreTypes';
+import Logo from '../../components/Logo';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.LoginState.isFetching
@@ -46,13 +47,7 @@ export class Component extends React.PureComponent<ResetpassScreenProps> {
           enableOnAndroid={true}
           keyboardShouldPersistTaps="handled"
           bounces={false}>
-          <View style={styles.imageWrapper}>
-            <Image
-              source={require('../../../assets/logo2x.png')}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          </View>
+          <Logo />
           <View style={styles.wrapContent}>
             <View style={{ width: '100%' }}>
               <Text style={styles.title}>Forgot password?</Text>

@@ -13,11 +13,7 @@ export default StyleSheet.create({
     paddingTop: 45,
     justifyContent: 'space-between',
     flexGrow: 1
-  },
-  logo: {
-    height: 110,
-    alignSelf: 'center'
-  },
+  },  
   wrapContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
@@ -63,8 +59,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
-    marginTop: 15
-    //marginBottom: 20
+    marginTop: 15    
   },
   formErrorContainer: {
     flexDirection: 'row',

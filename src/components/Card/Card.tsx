@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { CardProps } from './';
+import { CardProps } from './types';
 import { colorPastelPurple } from '../../variables';
 
-export const Card = ({ children, style, radius = 20 }: CardProps) => {
+export const Card = ({ children, style, radius = 20, borderWidth = 4 }: CardProps) => {
   return (
-    <View style={[styles.wrapper, style, { borderRadius: radius }]}>
+    <View style={[styles.wrapper, style, { borderRadius: radius, padding: borderWidth }]}>
       <View style={[styles.purpleBack, { borderRadius: radius }]}>
         {children}
       </View>
@@ -13,9 +13,10 @@ export const Card = ({ children, style, radius = 20 }: CardProps) => {
   );
 };
 
+export default Card;
+
 const styles = StyleSheet.create({
   wrapper: {
-    padding: 4,
     backgroundColor: 'white',
     shadowColor: 'black',
     shadowOffset: {
