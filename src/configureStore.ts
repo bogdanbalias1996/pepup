@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, Store } from "redux";
 import { IGlobalState, IAction } from "./coreTypes";
 import thunk from "redux-thunk";
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {trackConnection} from '../src/middlewares/trackInternetConnection';
 
 import { FontReducer } from "./common/font.reducer";
@@ -39,9 +40,14 @@ const rootReducer = (
   return configureReducers()(state, action);
 };
 
+const middlewares = [thunk];
+const enhancers = __DEV__ 
+  ? composeWithDevTools(applyMiddleware(...middlewares)) 
+  : applyMiddleware(...middlewares);
+
 const store = createStore<IGlobalState, any, any, any>(
   rootReducer as any,
-  applyMiddleware(thunk)
+  enhancers
 );
 
 export const getStore = (): Store<IGlobalState> => {

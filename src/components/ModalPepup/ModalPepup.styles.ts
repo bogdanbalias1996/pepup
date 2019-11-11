@@ -4,7 +4,6 @@ import {
   colorTextGray,
   colorTextViolet,
   colorVioletGrey,
-  colorSwipeLine,
   colorGreen,
   colorTomato,
   semiboldFont,
@@ -52,13 +51,6 @@ export default StyleSheet.create({
     fontSize: 16,
     color: colorTomato,
     fontFamily: defaultFont
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: 'center'
   },
   infoText: {
     color: colorTextGreyIntro,

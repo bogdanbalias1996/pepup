@@ -14,44 +14,41 @@ import {
   colorMessageBorder
 } from '../../variables';
 
-export const NotificationItem: React.SFC<NotificationProps> = ({
-  onPress = () => {},
+export const Notification: React.SFC<NotificationProps> = ({
+  onPress = () => { },
   isRead = false,
   title = '',
   message = '',
   date = ''
 }): JSX.Element => {
+
+  const NotificationItem = () => (
+    <TouchableOpacity
+      activeOpacity={1}
+      style={styles.message}
+      onPress={() => onPress()}>
+      <View style={styles.headerWrap}>
+        <Text style={styles.messageTitle}>{title}</Text>
+        <Text style={styles.messageDate}>{date}</Text>
+      </View>
+      <Text style={styles.messageText}>{message}</Text>
+    </TouchableOpacity>
+  )
+
   return isRead ? (
     <View style={styles.messageWrap}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.message}
-        onPress={() => onPress()}>
-        <View style={styles.headerWrap}>
-          <Text style={styles.messageTitle}>{title}</Text>
-          <Text style={styles.messageDate}>{date}</Text>
-        </View>
-        <Text style={styles.messageText}>{message}</Text>
-      </TouchableOpacity>
+      <NotificationItem />
     </View>
   ) : (
-    <LinearGradient
-      start={[0, 0.5]}
-      end={[1, 0.5]}
-      colors={[colorVioletStart, colorVioletEnd]}
-      style={styles.gradient}>
-      <TouchableOpacity
-        activeOpacity={1}
-        style={styles.message}
-        onPress={() => onPress()}>
-        <View style={styles.headerWrap}>
-          <Text style={styles.messageTitle}>{title}</Text>
-          <Text style={styles.messageDate}>{date}</Text>
-        </View>
-        <Text style={styles.messageText}>{message}</Text>
-      </TouchableOpacity>
-    </LinearGradient>
-  );
+      <LinearGradient
+        start={[0, 0.5]}
+        end={[1, 0.5]}
+        colors={[colorVioletStart, colorVioletEnd]}
+        style={styles.gradient}
+      >
+        <NotificationItem />
+      </LinearGradient>
+    );
 };
 
 const styles = StyleSheet.create({

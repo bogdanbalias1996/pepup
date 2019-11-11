@@ -2,8 +2,6 @@ import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   colorTextGray,
-  colorLightGray,
-  colorSwipeLine,
   colorTomato,
   boldFont,
   semiboldFont,
@@ -17,13 +15,6 @@ export default StyleSheet.create({
     borderTopRightRadius: 32,
     flexGrow: 1,
     paddingHorizontal: 24
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: 'center'
   },
   modal: {
     marginTop: 40,
@@ -48,8 +39,10 @@ export default StyleSheet.create({
     fontFamily: boldFont,
     color: colorBlack,
     lineHeight: 24,
-    height: 24,
     marginVertical: 16,
+    flex: 1,
+    flexWrap: 'wrap',
+    flexDirection: 'row'
   },
   infoBlock: {
     flexDirection: 'row',
@@ -91,7 +84,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     marginRight: 16
   },
-  infoText: { 
+  infoText: {
     color: colorTextGray,
     lineHeight: 22,
     marginBottom: 10
@@ -112,7 +105,8 @@ export default StyleSheet.create({
   conTitle: {
     flexDirection: 'row',
     justifyContent: 'flex-start',
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 20
   },
   form: {
     flexGrow: 1,
@@ -179,5 +173,10 @@ export default StyleSheet.create({
     top: 0,
     right: 0,
     zIndex: 20
+  },
+  upperWrap: {
+    flex: 1,
+    paddingHorizontal: 24, 
+    paddingTop: 20
   }
 });

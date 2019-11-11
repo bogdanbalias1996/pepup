@@ -18,7 +18,8 @@ export default StyleSheet.create({
   wrapModalContent: {
     flex: 1,
     paddingHorizontal: 24,
-    position: 'relative'
+    position: 'relative',
+    paddingTop: 20
   },
   modal: {
     zIndex: 100,

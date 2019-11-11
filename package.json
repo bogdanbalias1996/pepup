@@ -8,7 +8,10 @@
     "start": "react-native start",
     "test": "jest",
     "postinstall": "npx jetify",
+    "precommit": "npm run prettier",
     "lint": "eslint .",
+    "prettier": "prettier --parser typescript --write src/**/*.{ts,tsx}",
+    "prettier:check": "npm run prettier:base -- --list-different \"src/**/*.{ts,tsx}\"",
     "buildapk": "mkdir -p android/app/src/main/assets && rm -rf android/app/build && react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew assembleDebug"
   },
   "dependencies": {
@@ -82,8 +85,10 @@
     "eslint": "^6.5.1",
     "jest": "^24.9.0",
     "metro-react-native-babel-preset": "^0.56.0",
+    "prettier": "^1.18.2",
     "react-native-typescript-transformer": "^1.2.12",
     "react-test-renderer": "16.9.0",
+    "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
     "typescript": "^3.3.4000"
   },

@@ -28,6 +28,7 @@ import { format } from 'date-fns';
 import { goBack } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
 import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -88,7 +89,12 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
     return (
       profileData && (
         <PepupBackground>
-          <View style={styles.wrapContent}>
+          <KeyboardAwareScrollView
+            contentContainerStyle={styles.wrapContent}
+            enableOnAndroid={true}
+            keyboardShouldPersistTaps="handled"
+            bounces={false}
+            enableAutomaticScroll={true}>
             <Formik
               initialValues={{
                 email: profileData.email,
@@ -131,6 +137,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             name="name"
                             label="full name"
                             formProps={props}
+                            multiline={false}
                           />
                           <TouchableOpacity
                             onPress={() =>
@@ -166,6 +173,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             name="address"
                             label="address"
                             formProps={props}
+                            multiline={false}
                           />
                           <View
                             style={{
@@ -177,6 +185,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                                 name="city"
                                 label="city"
                                 formProps={props}
+                                multiline={false}
                               />
                             </View>
                             <View style={{ width: '50%' }}>
@@ -184,6 +193,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                                 name="country"
                                 label="country"
                                 formProps={props}
+                                multiline={false}
                               />
                             </View>
                           </View>
@@ -193,6 +203,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             label="email"
                             keyboardType="email-address"
                             formProps={props}
+                            multiline={false}
                           />
 
                           <TextInputStyledForEdit
@@ -200,6 +211,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             label="phone"
                             keyboardType="phone-pad"
                             formProps={props}
+                            multiline={false}
                           />
 
                           <TextInputPasswordForEdit
@@ -208,6 +220,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             keyboardType="numeric"
                             secure={true}
                             formProps={props}
+                            multiline={false}
                           />
                         </View>
                       </ScrollView>
@@ -225,7 +238,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                 );
               }}
             </Formik>
-          </View>
+          </KeyboardAwareScrollView>
         </PepupBackground>
       )
     );

@@ -5,14 +5,14 @@ import { SET_INTERNET_CONNECTION } from '../utils/connectionCheck/actions';
 import { IAction } from '../coreTypes';
 
 export const trackConnection: TrackConnectionMiddleware = (store: Store) => (
-  next: any,
+  next: any
 ) => (action: any) => {
   const lastApiAction: any = typeof action === 'function' ? action : null;
   const isOnline =
     action.type === SET_INTERNET_CONNECTION
       ? action.data
       : store.getState().ConnectionState.isOnline;
-    
+
   if (
     !isOnline &&
     action.type !== OPEN_ERROR &&
@@ -23,8 +23,8 @@ export const trackConnection: TrackConnectionMiddleware = (store: Store) => (
         type: 'connectionFail',
         onPress: () => {
           lastApiAction ? store.dispatch((() => lastApiAction) as any) : null;
-        },
-      }),
+        }
+      })
     );
   } else {
     next(action);

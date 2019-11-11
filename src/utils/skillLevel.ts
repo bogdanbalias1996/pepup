@@ -5,7 +5,7 @@ import {
   colorBlueStart,
   colorPinkEnd,
   colorPinkStart
-} from "../variables";
+} from '../variables';
 
 export const getColorsByScore = (score: number = 0): string[] => {
   switch (true) {
@@ -19,19 +19,19 @@ export const getColorsByScore = (score: number = 0): string[] => {
       return [colorPinkEnd, colorPinkStart];
 
     default:
-      return ["white", "white"];
+      return ['white', 'white'];
   }
 };
 
 export const getSkillLevel = (score: number = 0): string => {
   switch (true) {
     case score > 0 && score <= 500:
-      return "BEGINNER";
+      return 'BEGINNER';
 
     case score > 500 && score <= 1000:
-      return "INTERMEDIATE";
+      return 'INTERMEDIATE';
 
     case score > 1000:
-      return "ADVANCED";
+      return 'ADVANCED';
   }
 };
