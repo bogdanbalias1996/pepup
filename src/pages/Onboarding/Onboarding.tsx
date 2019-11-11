@@ -78,7 +78,7 @@ export class OnboardingScreen extends React.Component {
 
   render() {
     return (
-      <PepupBackground style={styles.background}>
+      <PepupBackground>
         <AppIntroSlider
           renderItem={this._renderItem}
           slides={slides}

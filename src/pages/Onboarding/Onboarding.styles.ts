@@ -4,9 +4,6 @@ import {
 } from '../../variables'
 
 export default StyleSheet.create({
-  background: {
-    // paddingTop: 
-  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -62,21 +59,21 @@ export default StyleSheet.create({
     textShadowRadius: 4
   },
   paginationStyle: {
-    height: 155,
+    height: 100,
     left: 0,
     right: 0,
-    bottom: -100
+    bottom: 0
   },
   dotStyle: {
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   },
   activeDotStyle: {
     width: 24,
     height: 4,
     borderRadius: 2,
-    backgroundColor: 'white',
+    backgroundColor: 'white'
   }
 })
