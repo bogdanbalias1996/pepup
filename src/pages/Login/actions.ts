@@ -5,6 +5,8 @@ import { LoginScreenFromData, AuthResponse } from './';
 import { IAction } from '../../coreTypes';
 import { navigate } from '../../navigationService';
 import { openError } from '../ErrorModal/actions';
+import DeviceInfo from 'react-native-device-info';
+import { getStore } from '../../configureStore';
 
 export const REQUEST_LOGIN_USER = 'REQUEST_LOGIN_USER';
 export const requestLogInUser = (): IAction<undefined> => {
@@ -56,6 +58,31 @@ export const logoutUser = () => {
   };
 };
 
+export const REGISTER_DEVICE = 'REGISTER_DEVICE';
+const registerDevice = () => (dispatch: Dispatch) => {
+  const timezone = new Date().getTimezoneOffset() / 60;
+  const deviceType = DeviceInfo.getSystemName();
+  const os = DeviceInfo.getSystemVersion();
+  const appVersion = DeviceInfo.getVersion();
+  const token = getStore().getState().LoginState.accessToken;
+
+  request({
+    operation: ApiOperation.RegisterDevice,
+    variables: {
+      token,
+      timezone,
+      os,
+      appVersion,
+      deviceType
+    },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  })
+    .then(res => console.log(res))
+    .catch(err => console.log(err));
+};
+
 export const loginUser = (
   payload: LoginScreenFromData,
   setErrors: any,
@@ -78,6 +105,7 @@ export const loginUser = (
       .then(res => {
         dispatch(receiveLoginUser(res));
         navigate({ routeName: 'Pepups' });
+        dispatch(registerDevice() as any);
       })
       .catch(err => {
         const {

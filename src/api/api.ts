@@ -40,7 +40,8 @@ export enum ApiOperation {
   UpdateCelebIntroVideo,
   GetPepupById,
   AcceptRequest,
-  DenyRequest
+  DenyRequest,
+  RegisterDevice
 }
 
 export interface INetwork<C> {
@@ -127,6 +128,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.UpdateCelebIntroVideo:
       case ApiOperation.AcceptRequest:
       case ApiOperation.DenyRequest:
+      case ApiOperation.RegisterDevice:
         return ApiMethod.POST;
 
       case ApiOperation.GetProfile:
@@ -228,6 +230,8 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/pepup/accept-request/${pepupId}`;
       case ApiOperation.DenyRequest:
         return `${host}/pepup/deny-request/${pepupId}`;
+      case ApiOperation.RegisterDevice:
+        return `${host}/user/register-device`;
       default:
         return '';
     }
@@ -279,6 +283,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.GetPepupById:
       case ApiOperation.AcceptRequest:
       case ApiOperation.DenyRequest:
+      case ApiOperation.RegisterDevice:
         return true;
 
       default:
