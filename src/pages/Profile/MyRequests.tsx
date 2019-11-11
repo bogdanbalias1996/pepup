@@ -84,7 +84,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           status,
           msg: ``,
           statusColor: colorAllRead,
-          onPress: () => {}
+          onPress: undefined
         };
     }
   };
