@@ -20,7 +20,7 @@ import {
 import { PepupItemsProps, Celeb } from './';
 import {
   colorLightGray,
-  colorBlueberry,
+  colorLightOrange,
   boldFont,
   semiboldFont
 } from '../../variables';
@@ -93,7 +93,7 @@ export class Component extends React.Component<PepupItemsProps> {
       <View style={styles.celebsWrapper}>
         <Loader
           isDataLoaded={Boolean(celebsArr.length)}
-          color={colorBlueberry}
+          color={colorLightOrange}
           size="large">
           <FlatList
             showsVerticalScrollIndicator={false}

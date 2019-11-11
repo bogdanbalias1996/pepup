@@ -1,35 +1,38 @@
 import * as React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
 
 import styles from './Onboarding.styles';
 import { navigate } from '../../navigationService';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { setLocalStorage } from '../../common/utils/session';
+import FastImage from 'react-native-fast-image';
+import { Card } from '../../components/Card/Card';
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 
 export const IS_ONBOARDING_PASSED = 'OnboardingPassed';
 const slides = [
   {
     key: '1',
-    title: 'CONNECT',
-    description: 'Get up-close and personal with your favorite stars',
+    title: 'PEPUP',
+    description: 'yo life with personalized videos from people you love',
     imageSrc: require('../../../assets/onboarding/connect.png')
   },
   {
     key: '2',
-    title: 'MINGLE',
+    title: 'EVENTS',
     description: 'Attend exclusive events and party in style',
     imageSrc: require('../../../assets/onboarding/mungle.png')
   },
   {
     key: '3',
-    title: 'DAZZLE',
+    title: 'CONTESTS',
     description: 'Participate in a variety of contests and win prizes',
     imageSrc: require('../../../assets/onboarding/dazzle.png')
   },
   {
     key: '4',
-    title: 'INDULGE',
+    title: 'STORE',
     description: 'Collect original celebrity apparel & merchandize',
     imageSrc: require('../../../assets/onboarding/indulge.png')
   }
@@ -41,19 +44,18 @@ export class OnboardingScreen extends React.Component {
   };
 
   _renderItem = (item: any) => {
+    console.log(item);
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
-          <Image
+        <Card style={styles.card}>
+          <FastImage
             style={styles.image}
             source={item.item.imageSrc}
-            resizeMode="cover"
+            resizeMode={FastImage.resizeMode.cover}
           />
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{item.item.title}</Text>
-          <Text style={styles.description}>{item.item.description}</Text>
-        </View>
+        </Card>
+        <Text style={styles.title}>{item.item.title}</Text>
+        <Text style={styles.description}>{item.item.description}</Text>
         {item.item.key === '4' && (
           <ButtonStyled
             style={styles.buttonStyle}
@@ -80,17 +82,19 @@ export class OnboardingScreen extends React.Component {
 
   render() {
     return (
-      <AppIntroSlider
-        renderItem={this._renderItem}
-        slides={slides}
-        showNextButton={false}
-        dotStyle={styles.dotStyle}
-        onSlideChange={this.onChange}
-        hidePagination={this.state.lastSlide}
-        activeDotStyle={styles.activeDotStyle}
-        paginationStyle={styles.paginationStyle}
-        doneLabel=""
-      />
+      <PepupBackground>
+        <AppIntroSlider
+          renderItem={this._renderItem}
+          slides={slides}
+          showNextButton={false}
+          dotStyle={styles.dotStyle}
+          onSlideChange={this.onChange}
+          hidePagination={this.state.lastSlide}
+          activeDotStyle={styles.activeDotStyle}
+          paginationStyle={styles.paginationStyle}
+          doneLabel=""
+        />
+      </PepupBackground>
     );
   }
 }

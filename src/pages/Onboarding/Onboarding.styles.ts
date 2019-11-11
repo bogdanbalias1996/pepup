@@ -1,25 +1,20 @@
-import { StyleSheet, Dimensions } from 'react-native'
+import { StyleSheet } from 'react-native'
 import {
-  colorDotGray,
-  colorDots,
-  semiboldFont,
-  colorVioletEnd
+  boldFont,
 } from '../../variables'
 
 export default StyleSheet.create({
+  card: {
+    height: 510,
+    width: 275,
+    marginHorizontal: 50,
+    marginTop: 100
+  },
   container: {
     alignItems: 'center',
+    justifyContent: 'flex-start',
     flex: 1,
     position: 'relative'
-  },
-  textContainer:{
-    position: 'absolute',
-    bottom: 110,
-    zIndex: 10,
-  },
-  imageContainer: {
-    height: '100%',
-    width: '100%'
   },
   paginationStyle: {
     height: 155,
@@ -36,35 +31,43 @@ export default StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: Dimensions.get('screen').width,
-    height: Dimensions.get('screen').height
+    height: '100%',
+    width: '100%',
+    borderRadius: 20
   },
   title: {
     fontSize: 38,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: 'white',
-    marginBottom: 15,
+    paddingBottom: 30,
     textAlign: 'center',
-    letterSpacing: 5
+    letterSpacing: 2,
+    zIndex: 10,
+    position: 'absolute',
+    bottom: 190,
   },
   description: {
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: 'white',
     fontSize: 20,
+    paddingTop: 20,
     paddingHorizontal: 20,
     textAlign: 'center',
-    //marginBottom: 20
+    zIndex: 10,
+    textShadowColor: 'rgba(0, 0, 0, 0.5)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4
   },
   dotStyle: {
     width: 4,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colorDots,
+    backgroundColor: 'white',
   },
   activeDotStyle: {
     width: 24,
     height: 4,
     borderRadius: 2,
-    backgroundColor: colorDotGray,
+    backgroundColor: 'white',
   }
 })

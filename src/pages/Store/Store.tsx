@@ -14,7 +14,7 @@ import {IGlobalState} from '../../coreTypes';
 import {getProductsCategories} from './actions';
 import {Tab} from '../../components/Tabs';
 import {Loader} from '../../components/Loader/Loader';
-import {colorBlueberry} from '../../variables';
+import {colorLightOrange} from '../../variables';
 
 const Header = (
   props: JSX.IntrinsicAttributes & {
@@ -85,7 +85,7 @@ export class Component extends React.PureComponent<StoreScreenProps> {
         <View style={styles.wrapContent}>
           <Loader
             size="large"
-            color={colorBlueberry}
+            color={colorLightOrange}
             isDataLoaded={!isFetchingCat}>
             {tabsConfig && (
               <Tabs

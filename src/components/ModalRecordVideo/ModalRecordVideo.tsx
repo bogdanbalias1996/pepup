@@ -19,7 +19,7 @@ import { RNCamera } from 'react-native-camera';
 import { Video } from 'expo-av';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
 import styles from './ModalRecordVideo.styles';
-import { colorBlueberry } from '../../variables'
+import { colorLightOrange } from '../../variables'
 
 const minAcceptableVideoDuration = 30;
 const maxAcceptableVideoDuration = 60;
@@ -288,7 +288,7 @@ export class Component extends React.PureComponent<ModalRecordVideoProps, ModalR
                         style={{ width: 128 }}
                         onPress={this.postVideo}
                         loader={isSendingVideo}
-                        loaderColor={colorBlueberry}
+                        loaderColor={colorLightOrange}
                       />
                     )
                     : (

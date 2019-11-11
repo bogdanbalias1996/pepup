@@ -23,7 +23,7 @@ import {
   colorOrange,
   defaultFont,
   semiboldFont,
-  colorBlueberry,
+  colorLightOrange,
   colorLightGray
 } from '../../variables';
 import { RadioButtons } from '../../components/RadioButtons/RadioButtons';
@@ -133,7 +133,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
           value={filterValue}
           onPress={val => setFilterValue(val)}
         /> */}
-        <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+        <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}

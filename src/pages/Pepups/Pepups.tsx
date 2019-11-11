@@ -21,7 +21,7 @@ import {
 } from './actions';
 import { Tab } from '../../components/Tabs';
 import { Loader } from '../../components/Loader/Loader';
-import { colorBlueberry } from '../../variables';
+import { colorLightOrange } from '../../variables';
 
 
 export class Component extends React.PureComponent<PepupsScreenProps> {
@@ -91,7 +91,7 @@ export class Component extends React.PureComponent<PepupsScreenProps> {
         <View style={styles.wrapContent}>
           <Loader
             size="large"
-            color={colorBlueberry}
+            color={colorLightOrange}
             isDataLoaded={!isFetchingCat}>
             {tabsConfig && (
               <Tabs

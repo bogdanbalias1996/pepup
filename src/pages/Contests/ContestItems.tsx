@@ -15,7 +15,7 @@ import {
   colorBlack,
   defaultFont,
   boldFont,
-  colorBlueberry,
+  colorLightOrange,
   colorTextGreyIntro
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
@@ -78,7 +78,7 @@ export class Component extends React.PureComponent<ContestItemsProps> {
     return (
       <Loader
         isDataLoaded={(contests && contests[categoryId]) || !isFetching}
-        color={colorBlueberry}
+        color={colorLightOrange}
         size="large">
         <FlatList
           style={{ flex: 1 }}

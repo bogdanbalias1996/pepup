@@ -20,7 +20,8 @@ import {
   colorCompletedStatus,
   italicFont,
   semiboldFont,
-  colorBlueberry
+  colorLightOrange,
+  colorAllRead
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
@@ -82,7 +83,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorBlueberry,
+          statusColor: colorAllRead,
           onPress: () => {}
         };
     }
@@ -138,7 +139,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     const { isFetching, userPepups } = this.props;
 
     return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+      <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         <FlatList
           style={{ flex: 1, paddingLeft: 16 }}
           showsVerticalScrollIndicator={false}

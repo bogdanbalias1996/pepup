@@ -95,7 +95,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
                     type === 'border'
                       ? colorBlack
                       : type === 'white'
-                      ? colorVioletEnd
+                      ? colorBlack
                       : 'white'
                 },
                 {

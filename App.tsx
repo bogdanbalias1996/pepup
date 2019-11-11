@@ -24,7 +24,7 @@ import NotificationPopup from 'react-native-push-notification-popup';
 import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
 import { MainNavigator } from './src/navigators/MainNavigator';
 import { PagesNavigator } from './src/navigators/PagesNavigator';
-import { colorBlueberry } from './src/variables';
+import { colorLightOrange } from './src/variables';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from './src/components/ErrorState/ErrorState';
 import { setInternetConnection } from './src/utils/connectionCheck/actions';
@@ -43,7 +43,7 @@ const AppNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
-    <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
+    <Loader color={colorLightOrange} isDataLoaded={isFontLoaded}>
       <AppContainer ref={setTopLevelNavigator}/>
     </Loader>
   );

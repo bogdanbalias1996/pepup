@@ -487,3 +487,50 @@ export const getPepupNotification = (pepupId: string) => {
       });
   };
 };
+
+export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
+export const receiveNotifications = (data: Array<Pepup>): IAction<Array<Pepup>> => {
+  return {
+    type: RECEIVE_NOTIFICATIONS,
+    data,
+  };
+};
+
+export const REQUEST_NOTIFICATIONS = 'REQUEST_NOTIFICATIONS';
+export const requestNotifications = (): IAction<undefined> => {
+  return {
+    type: REQUEST_NOTIFICATIONS,
+    data: undefined,
+  };
+};
+
+export const FAILURE_NOTIFICATIONS = 'FAILURE_NOTIFICATIONS';
+export const failureNotifications = (): IAction<undefined> => {
+  return {
+    type: FAILURE_NOTIFICATIONS,
+    data: undefined,
+  };
+};
+
+export const getNotifications = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestNotifications());
+    request({
+      operation: ApiOperation.GetNotifications,
+    })
+      .then(res => {
+        dispatch(receiveNotifications(res));
+      })
+      .catch(err => {
+        dispatch(failureNotifications());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getNotifications() as any);
+            },
+          }),
+        );
+      });
+  };
+};

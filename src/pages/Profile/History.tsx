@@ -15,7 +15,7 @@ import {
   italicFont,
   semiboldFont,
   colorDotGray,
-  colorBlueberry,
+  colorLightOrange,
   colorTextGray,
   boldFont,
   colorStat,
@@ -92,7 +92,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const [rating] = celebData ? celebData.weightedRating.split('/') : ['0'];
 
     return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+      <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         {celebData && (
           <>
             <View style={styles.statistics}>

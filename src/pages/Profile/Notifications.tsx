@@ -10,7 +10,7 @@ import {
 
 import { NotificationItemsProps } from '.';
 import {
-  colorBlueberry,
+  colorLightOrange,
   boldFont,
   colorAllRead
 } from '../../variables';
@@ -89,7 +89,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
     // const { isFetching } = this.props;
 
     return (
-      // <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+      // <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         <View style={styles.wrapper}>
           <TouchableOpacity
             style={styles.allReadWrap}

@@ -1,5 +1,4 @@
 export const colorPastelPurple = '#D6CEF2';
-export const colorBlueberry = '#58377b';
 export const colorLightBlue = '#f2f5ff';
 export const colorLightGreyBlue = '#aeb6d1';
 export const colorCoolGrey = '#aaadb8';
@@ -37,7 +36,6 @@ export const colorTomato = '#e83d3c';
 
 export const colorSwipeLine = '#ecebf0';
 export const colorLightGray = '#f7f6fb';
-export const colorBlack = '#2a292e';
 export const colorTextGray = '#908aa2';
 export const colorTextViolet = '#6e4cdf';
 export const colorInputBackground = '#edebf2';
@@ -56,7 +54,6 @@ export const colorGreen = '#1f9e3e';
 export const colorOrangeStatus = '#fa6400';
 export const colorCompletedStatus = '#b620e0';
 export const colorItalic = '#212121';
-export const colorDots = '#a1a8b5';
 export const colorTextAlert = '#302c48';
 export const colorStat = '#a02e9e';
 export const colorTextGreyIntro = '#675899';
@@ -67,3 +64,7 @@ export const defaultFont = 'ss-medium';
 export const semiboldFont = 'ss-medium';
 export const boldFont = 'ss-bold';
 export const italicFont = 'montserrat-italic';
+
+export const colorLightYellow = '#f2cb1f';
+export const colorLightOrange = '#f5a623';
+export const colorBlack = '#1b1c21';

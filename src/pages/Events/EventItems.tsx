@@ -16,7 +16,7 @@ import {
   colorTextGray,
   colorBlack,
   defaultFont,
-  colorBlueberry,
+  colorLightOrange,
   boldFont
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
@@ -84,7 +84,7 @@ export class Component extends React.Component<EventItemsProps> {
     return (
       <Loader
         isDataLoaded={Boolean(eventsArr.length)}
-        color={colorBlueberry}
+        color={colorLightOrange}
         size="large">
         <FlatList
           style={{ flex: 1 }}
