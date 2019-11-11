@@ -10,7 +10,8 @@ import {
   colorDotGray,
   colorCancelButton,
   colorModalTextGrey,
-  colorEventLabel
+  colorEventLabel,
+  colorPicker
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -154,6 +155,14 @@ export default StyleSheet.create({
     padding: 10,
     paddingTop: 300,
     justifyContent: 'flex-end'
+  },
+  selector: {
+    borderRadius: 30,
+    width: 100,
+    padding: 5,
+    height: 44,
+    justifyContent: 'center',
+    borderColor: colorPicker
   },
   modalOptionStyle: {
     borderBottomColor: colorDotGray,

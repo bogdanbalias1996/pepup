@@ -75,3 +75,4 @@ export const colorInputBorderStart = '#ebde39';
 export const colorInputBorderEnd = '#7436b2';
 export const colorTextMainTabs = '#908aa2'
 export const colorEventLabel = '#4a4a4a'
+export const colorPicker = '#979797'

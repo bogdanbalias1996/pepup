@@ -193,13 +193,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                   optionContainerStyle={styles.modalOptionContainer}
                   optionTextStyle={styles.modalOptionTextStyle}
                   optionStyle={styles.modalOptionStyle}
-                  selectStyle={{
-                    borderRadius: 30,
-                    width: 100,
-                    padding: 5,
-                    height: 44,
-                    justifyContent: 'center'
-                  }}
+                  selectStyle={styles.selector}
                   cancelText="x"
                 />
               </View>
