@@ -11,6 +11,8 @@ import {
   colorModalTextGrey,
   colorCancelButton,
   colorInput,
+  colorEventLabel,
+  colorMessageBorder
 } from '../../variables';
 
 export default StyleSheet.create({       
@@ -36,7 +38,7 @@ export default StyleSheet.create({
   contentBlock: {
     flexDirection: 'row', 
     marginTop: 19,
-    marginBottom: 39
+    marginBottom: 5    
   },
   infoText: {
     flexShrink: 1, 
@@ -73,7 +75,8 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   reviews: {
-    marginVertical: 10
+    marginTop: 33,
+    marginBottom: 15
   },
   rewiewsHeader: {
     flexDirection: 'row',
@@ -106,19 +109,7 @@ export default StyleSheet.create({
   commentText: {
     color: colorModalTextGrey,
     lineHeight: 22
-  },
-  modalFooter: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 30,
-    marginHorizontal: 24,
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
+  },  
   modalFooterReviews: {
     justifyContent: 'center'
   },
@@ -135,7 +126,7 @@ export default StyleSheet.create({
     zIndex: 999
   },
   btnSubmit: {
-    flex: 1
+    flex: 1    
   },
   btnSubmitClose: {
     width: 120
@@ -194,17 +185,29 @@ export default StyleSheet.create({
     marginBottom: 8
   },
   scrollContent: { 
-    paddingBottom: 190, 
+    paddingBottom: 30, 
     position: 'relative',
     marginHorizontal: 24    
   },
   section: {
-    marginBottom: 33
+    marginTop: 32
   },
   sectionTitle: {
     fontSize: 18,
     fontFamily: boldFont,
     color: colorBlack,
     marginBottom: 14
-  }
+  },
+  charityImage: {
+    width: 86, 
+    height: 60, 
+    borderRadius: 6
+  },
+  charityTitle: {
+    textAlign: 'center',
+    fontSize: 14,
+    color: colorEventLabel,
+    fontFamily: defaultFont,
+    marginTop: 4
+  }  
 });

@@ -3,13 +3,9 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   videoContainer: {
     flexGrow: 1,
-    flexShrink: 0,
-    // overflow: 'hidden', 
+    flexShrink: 0,    
     position: 'relative',        
-    width: '100%',
-    
-    // borderWidth: 1,
-    // borderColor: 'red' 
+    width: '100%'    
   },
   video: {
     flex: 1,    

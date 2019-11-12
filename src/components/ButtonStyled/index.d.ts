@@ -8,4 +8,5 @@ export type ButtonStyledProps = {
   loaderColor?: string;
   iconSource?: any;
   width?: string;
+  styleGradient?: any; 
 };
