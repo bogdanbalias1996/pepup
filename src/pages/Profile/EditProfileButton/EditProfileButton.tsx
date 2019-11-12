@@ -7,10 +7,12 @@ import { navigate } from '../../../navigationService';
 
 import { Icon } from '../../../components/Icon/Icon';
 
-import styles from './EditProfileButton.styles';
+import { isUserCelebritySelector } from '../../../selectors';
+
 import { IGlobalState } from '../../../coreTypes';
-import { ROLE_CELEB } from '../Profile';
 import { EditProfileButtonProps } from './types';
+
+import styles from './EditProfileButton.styles';
 
 class EditProfileButton extends PureComponent<EditProfileButtonProps> {
   onPress = () => {
@@ -36,19 +38,15 @@ class EditProfileButton extends PureComponent<EditProfileButtonProps> {
 }
 
 const mapStateToProps = createSelector(
+  isUserCelebritySelector,
   (state: IGlobalState) => {
     const { profileData } = state.ProfileState;
 
     return (profileData && profileData.name) || ' ';
   },
-  (state: IGlobalState) => {
-    const { profileData } = state.ProfileState;
-
-    return Boolean(profileData && profileData.role === ROLE_CELEB);
-  },
-  (name: string, isCelebrity: boolean) => ({
-    name,
-    isCelebrity
+  (isCelebrity: boolean, name: string) => ({
+    isCelebrity,
+    name
   })
 );
 

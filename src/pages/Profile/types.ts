@@ -64,7 +64,12 @@ export type ProfileScreenStateProps = {
   celebPepups: Array<Pepup>;
   pepups: Array<Pepup>;
   isFetching: boolean;
+  isCelebrity: boolean;
 };
+
+export interface ProfileScreenState {
+  activeTabIndex: number;
+}
 
 export type ProfileScreenDispatchProps = {
   getProfile: (handle: string) => Promise<any>;
