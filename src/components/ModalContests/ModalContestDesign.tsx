@@ -28,6 +28,8 @@ import { IGlobalState } from '../../coreTypes';
 import { TextInputBorderStyled } from '../TextInputStyled/TextInputBorderStyled';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
+import Card from '../Card';
+import CardGradient from '../CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalTestShown: state.ContestState.isModalTestShown,
@@ -169,6 +171,11 @@ export class Component extends React.Component<ModalContestQuizProps> {
         onRequestClose={() => closeContestQuizModal()}
         heightContent={this.state.heightDescription}>
         <View style={styles.upperWrap}>
+          <TouchableOpacity
+            style={styles.btnCancel}
+            onPress={() => closeContestQuizModal()}>
+            <Icon size={20} name="cancel" color={colorBlack} />
+          </TouchableOpacity>
           <View style={styles.wrap}>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View
@@ -179,15 +186,19 @@ export class Component extends React.Component<ModalContestQuizProps> {
                     this.setState({ heightDescription: height });
                 }}>
                 <View style={styles.conTitle}>
-                  <FastImage
-                    style={styles.avatar}
-                    source={{
-                      uri:
-                        contestData.mediaBasePath + contestData.organizerLogo,
-                      priority: FastImage.priority.normal
-                    }}
-                    resizeMode={FastImage.resizeMode.contain}
-                  />
+                  <Card style={styles.cardAvatar} radius={8}>
+                    <CardGradient style={styles.gradient} />
+                    <FastImage
+                      style={styles.contestImage}
+                      source={{
+                        uri: `${contestData.mediaBasePath}${
+                          contestData.organizerLogo
+                        }`,
+                        priority: FastImage.priority.normal
+                      }}
+                      resizeMode={FastImage.resizeMode.contain}
+                    />
+                  </Card>
                   <Text style={styles.title}>{contestData.title}</Text>
                 </View>
                 <View style={styles.form}>
@@ -263,11 +274,6 @@ export class Component extends React.Component<ModalContestQuizProps> {
               </View>
             </ScrollView>
             <View style={styles.modalFooter}>
-              <TouchableOpacity
-                style={styles.btnCancel}
-                onPress={() => closeContestQuizModal()}>
-                <Icon size={20} name="cancel" color={colorBlack} />
-              </TouchableOpacity>
               <ButtonStyled
                 style={[
                   styles.btnSubmit,

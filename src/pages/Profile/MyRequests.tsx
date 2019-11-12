@@ -17,7 +17,6 @@ import {
   colorOrangeStatus,
   colorTextRed,
   colorCompletedStatus,
-  italicFont,
   semiboldFont,
   colorLightOrange,
   colorTextViolet,
