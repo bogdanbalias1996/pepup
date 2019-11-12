@@ -59,7 +59,7 @@ export class OnboardingScreen extends React.Component {
           />
           <Text style={styles.title}>{item.title}</Text>
         </View>
-        <View style={{ flexGrow: 1, flexShrink: 0 }}>
+        <View style={styles.descriptionContainer}>
           <Text style={styles.description}>{item.description}</Text>
 
           {item.key === '4' && (
@@ -88,7 +88,7 @@ export class OnboardingScreen extends React.Component {
     return (
       <PepupBackground style={{ paddingTop: 0 }}>
         <AppIntroSlider
-          renderItem={item => this._renderItem(item)}
+          renderItem={this._renderItem}
           slides={slides}
           showNextButton={false}
           dotStyle={styles.dotStyle}

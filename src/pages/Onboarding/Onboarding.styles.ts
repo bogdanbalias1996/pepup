@@ -40,6 +40,10 @@ export default StyleSheet.create({
     left: 0,
     right: 0
   },
+  descriptionContainer: {
+    flexGrow: 1,
+    flexShrink: 0
+  },
   description: {
     fontFamily: boldFont,
     color: 'white',
