@@ -47,13 +47,6 @@ export class Component extends React.PureComponent<ContestsScreenProps> {
     activeTabIndex: 0
   };
 
-  componentDidMount() {
-    const { getContestsByCategory } = this.props;
-
-    const initialTab = Component.tabsConfig[0].title;
-    getContestsByCategory(initialTab);
-  }
-
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };

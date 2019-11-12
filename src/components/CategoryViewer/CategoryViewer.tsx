@@ -1,5 +1,5 @@
 import React, { PureComponent, ComponentType } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import { View, Text } from 'react-native';
 import memoize from 'memoize-one';
 import { TabView, TabBar } from 'react-native-tab-view';
 
@@ -13,6 +13,12 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   static defaultProps = {
     style: {}
   };
+
+  componentDidMount() {
+    const { onTabChange, activeTabIndex } = this.props;
+
+    onTabChange(activeTabIndex);
+  }
 
   generateRoutes = memoize((categories: ViewerCategory[]) =>
     categories.map((item: ViewerCategory) => ({

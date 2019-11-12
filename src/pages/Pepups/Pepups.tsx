@@ -43,7 +43,6 @@ export class Component extends PureComponent<
     const { getAllActiveCategories } = this.props;
 
     getAllActiveCategories();
-    this.fetchCategories('Featured');
   }
 
   fetchCategories = (categoryId: string) => {

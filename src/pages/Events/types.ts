@@ -34,18 +34,6 @@ export type EventsScreenDispatchProps = {
   getEventsByCategory: (categoryId: string) => Promise<void>;
 };
 
-export type EventItemsProps = {
-  events: { [key: string]: Array<Event> };
-  categoryId: string;
-  getEventsByCategory: (id: string) => Promise<any>;
-  openEventModal: () => void;
-  getEvent: (eventId: string) => Promise<any>;
-  isFetching: boolean;
-  route: {
-    key: string;
-  };
-};
-
 export type EventsResponseType = {
   categoryId: string;
   data: Event[];
