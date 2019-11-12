@@ -99,7 +99,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     );
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress && onPress()}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
@@ -130,7 +130,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
               numberOfLines={3}
               ellipsizeMode="tail"
               style={[styles.text, styles.reqDescription]}>
-              {item.request}
+              {item.request.trim()}
             </Text>
           </View>
         </View>

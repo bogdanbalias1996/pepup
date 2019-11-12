@@ -5,13 +5,11 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    flex: 1,
-    marginTop: 30
+    flex: 1
   },
   wrapper: {
     flex: 1,
-    justifyContent: 'flex-end',
-    paddingTop: 50
+    justifyContent: 'flex-end'    
   },
   overlay: {
     justifyContent: 'flex-end',
@@ -19,6 +17,6 @@ export default StyleSheet.create({
     position: 'absolute',
     top: 0,
     bottom: 0,
-    width: '100%'
+    width: '100%'    
   }
 });

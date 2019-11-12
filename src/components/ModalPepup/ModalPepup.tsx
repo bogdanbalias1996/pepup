@@ -19,9 +19,9 @@ import {
 import { PepupModal } from '../PepupModal/PepupModal';
 import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { ModalPepupProps, RenderItemMedia } from './';
+import { ModalPepupProps } from './';
 import styles from './ModalPepup.styles';
-import { colorBlack, colorMessageBorder } from '../../variables';
+import { colorBlack } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';

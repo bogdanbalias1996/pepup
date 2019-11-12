@@ -42,7 +42,7 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
           isLoading={this.props.isFetching}
           onRequestClose={() => closeReviewsModal()}
           heightContent={this.state.heightDescription}>
-          <View style={{ flex: 1, paddingTop: 55, paddingHorizontal: 24 }}>
+          <View style={{ flex: 1, paddingTop: 55 }}>
             <TouchableOpacity
               style={styles.btnCancel}
               onPress={() => closeReviewsModal()}>
@@ -94,7 +94,6 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
               </View>
             </ScrollView>
           </View>
-          <View style={[styles.modalFooter, styles.modalFooterReviews]} />
         </PepupModal>
       )
     );

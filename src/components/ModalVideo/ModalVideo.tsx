@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Modal from 'react-native-modalbox';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
+import { PepupModal } from '../PepupModal/PepupModal';
 
 import { closeVideoModal } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
@@ -38,19 +39,16 @@ export class Component extends React.PureComponent<ModalVideoProps> {
     const { isPlaying, isLoaded, isEnd } = this.state;
 
     return (
-      <Modal
-        isOpen={isVideoModalShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={true}
-        onClosed={() => closeVideoModal()}
-      >
+      <PepupModal
+        visible={isVideoModalShown}        
+        onRequestClose={closeVideoModal}        
+      >        
         <View
           style={{
             position: 'relative',
             alignItems: 'center',
             justifyContent: 'center',
-            backgroundColor: 'black'
+            backgroundColor: 'black'            
           }}
         >
           <Video
@@ -118,7 +116,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
             ></TouchableOpacity>
           ) : null}
         </View>
-      </Modal>
+      </PepupModal>
     );
   }
 }

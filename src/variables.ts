@@ -11,6 +11,7 @@ export const colorOrangeStart = '#f6663e';
 export const colorOrangeEnd = '#ea3d34';
 export const colorDotGray = '#c8c8d0';
 export const colorCoolGrey = '#aaadb8';
+export const colorPaleGrey = '#f1f2f6';
 export const colorPastelPurple = '#D6CEF2';
 export const colorLightYellow = '#f2cb1f';
 export const colorLightOrange = '#f5a623';

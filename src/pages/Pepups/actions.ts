@@ -250,7 +250,7 @@ export const sendRequestForPepup = (
   setErrors: any
 ) => {
   return (dispatch: Dispatch) => {
-    const { name, text, shareCheckbox } = payload;
+    const { name, text = '', shareCheckbox } = payload;
     const store = getStore().getState().PepupState;
     const { selectedCategory } = store;
     const userId = store.celebData && store.celebData.mappedUserId;
@@ -260,7 +260,7 @@ export const sendRequestForPepup = (
       operation: ApiOperation.RequestPepup,
       variables: {
         requestedFor: name,
-        request: text,
+        request: text.trim(),
         requestedOf: userId,
         category: selectedCategory,
         share: shareCheckbox

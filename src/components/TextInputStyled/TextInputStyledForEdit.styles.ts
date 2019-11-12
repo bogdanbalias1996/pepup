@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { colorTomato, colorBlack, colorTextGrey, semiboldFont, defaultFont } from '../../variables'
+import { colorTomato, colorBlack, colorTextGrey, semiboldFont, defaultFont, colorPaleGrey } from '../../variables'
 
 export default StyleSheet.create({
   container: {
@@ -9,7 +9,7 @@ export default StyleSheet.create({
     paddingVertical: 10,
     marginBottom: 10,
     borderBottomWidth: 1,
-    borderColor: colorBlack
+    borderColor: colorPaleGrey
   },
   containerWithLabel: {
     flexDirection: 'column',
