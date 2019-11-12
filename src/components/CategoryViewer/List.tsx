@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
 
-import { colorBlueberry } from '../../variables';
-
 import { Loader } from '../../components/Loader/Loader';
 
 import { ListProps, ViewerData } from './types';
 import styles from './List.styles';
+import { colorLightOrange } from '../../variables';
 
 class List extends Component<ListProps> {
   static defaultKeyExtractor = (item: { id: string }) => item.id;
@@ -44,7 +43,7 @@ class List extends Component<ListProps> {
       <View style={styles.wrapper}>
         <Loader
           isDataLoaded={Boolean(dataArr.length)}
-          color={colorBlueberry}
+          color={colorLightOrange}
           size="large">
           <FlatList
             showsVerticalScrollIndicator={false}

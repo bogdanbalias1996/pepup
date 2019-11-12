@@ -4,7 +4,7 @@ import {
   colorBlack,
   defaultFont,
   boldFont,
-  colorTextGreyIntro
+  colorEventLabel
 } from '../../../variables';
 
 export default StyleSheet.create({
@@ -30,7 +30,7 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGreyIntro
+    color: colorEventLabel
   },
   wrapTitle: {
     flex: 1,

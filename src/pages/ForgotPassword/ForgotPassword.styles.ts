@@ -2,10 +2,10 @@ import { StyleSheet } from "react-native";
 import {
   colorBlack,
   colorTextGrey,
-  colorCoral,
   colorTextViolet,
   defaultFont,
   boldFont,
+  colorTomato,
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -69,7 +69,7 @@ export default StyleSheet.create({
     color: colorBlack
   },
   formErrorContainer: {
-    backgroundColor: colorCoral,
+    backgroundColor: colorTomato,
     padding: 5,
     flexDirection: "row",
     justifyContent: "space-between",

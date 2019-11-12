@@ -18,8 +18,8 @@ import {
   colorLightOrange,
   colorTextGrey,
   boldFont,
-  colorStat,
-  defaultFont
+  defaultFont,
+  colorTextViolet
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { getAllPepups } from './actions';
@@ -195,12 +195,12 @@ const styles = StyleSheet.create({
     fontFamily: boldFont,
     fontSize: 18,
     textAlign: 'center',
-    color: colorStat
+    color: colorTextViolet
   },
   statText: {
     fontFamily: defaultFont,
     fontSize: 12,
     textAlign: 'center',
-    color: colorStat
+    color: colorTextViolet
   }
 });

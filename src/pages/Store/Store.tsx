@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {connect} from 'react-redux';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
 import {Dispatch} from 'redux';
 
 import {ModalStore} from '../../components/ModalStore/ModalStore';

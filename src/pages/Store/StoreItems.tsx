@@ -24,7 +24,6 @@ import {
   defaultFont,
   semiboldFont,
   colorLightOrange,
-  colorLightGray
 } from '../../variables';
 import { RadioButtons } from '../../components/RadioButtons/RadioButtons';
 import { IGlobalState } from '../../coreTypes';
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 212,
     borderRadius: 16,
-    backgroundColor: colorLightGray
+    backgroundColor: 'white'
   },
   wrapInfo: {
     width: '100%',

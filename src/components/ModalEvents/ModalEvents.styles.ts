@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import {
   colorBlack,
-  colorLightGray,
   colorTextViolet,
   semiboldFont,
   defaultFont,
@@ -22,7 +21,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     position: 'relative',
-    paddingTop: 20
+    paddingTop: 55
   },
   modal: {
     zIndex: 100,
@@ -118,7 +117,10 @@ export default StyleSheet.create({
     backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    alignSelf: 'flex-end'
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999
   },
   infoText: {
     color: colorModalTextGrey,
@@ -145,7 +147,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center'
   },

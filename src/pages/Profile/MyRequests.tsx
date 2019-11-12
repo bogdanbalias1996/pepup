@@ -12,7 +12,6 @@ import { MyRequestsProps } from './types';
 import {
   colorTextGrey,
   colorBlack,
-  colorInputBackground,
   defaultFont,
   colorGreen,
   colorOrangeStatus,
@@ -21,13 +20,16 @@ import {
   italicFont,
   semiboldFont,
   colorLightOrange,
-  colorAllRead
+  colorTextViolet,
+  colorEventLabel,
+  colorBottomInput
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getUserPepups } from './actions';
 import { capitalize } from '../../helpers';
+import { openVideoModal } from '../Pepups/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userPepups: state.ProfileState.userPepups,
@@ -35,7 +37,8 @@ const mapStateToProps = (state: IGlobalState) => ({
   isFetching: state.ProfileState.isFetching
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
+  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
+  openVideoModal: (link: string) => dispatch(openVideoModal(link))
 });
 
 export class Component extends React.PureComponent<MyRequestsProps> {
@@ -45,9 +48,9 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     userId && getUserPepups(userId);
   }
 
-  getStatusUser = (status: string, name: string) => {
+  getStatusUser = (status: string, name: string, link: string = '') => {
     const normalizedStatus = status.toLowerCase();
-
+    
     switch (normalizedStatus) {
       case 'pending':
         return {
@@ -76,14 +79,14 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           status,
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl')
+          onPress: () => this.props.openVideoModal(link)
         };
       default:
         console.log(`Unsupported request status: '${normalizedStatus}'`);
         return {
           status,
           msg: ``,
-          statusColor: colorAllRead,
+          statusColor: colorTextViolet,
           onPress: undefined
         };
     }
@@ -92,7 +95,8 @@ export class Component extends React.PureComponent<MyRequestsProps> {
   renderItemRequest = ({ item }: any) => {
     const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
-      item.celebInfo.userInfo.name
+      item.celebInfo.userInfo.name,
+      item.dataInfo && item.mediaBasePath + item.dataInfo.link
     );
 
     return (
@@ -141,7 +145,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         <FlatList
-          style={{ flex: 1, paddingLeft: 16 }}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={userPepups}
           renderItem={this.renderItemRequest}
@@ -159,10 +163,9 @@ export const MyRequests = connect(
 
 const styles = StyleSheet.create({
   card: {
-    paddingVertical: 16,
-    paddingRight: 16,
+    padding: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground
+    borderColor: colorBottomInput
   },
   cardHeader: {
     flexDirection: 'row',
@@ -172,14 +175,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGrey
+    color: colorEventLabel
   },
   completed: {
     fontFamily: semiboldFont
   },
   reqDescription: {
+    color: colorTextGrey,
     fontSize: 12,
-    fontFamily: italicFont
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,

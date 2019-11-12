@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { deviceInfoCheck } from '../../helpers';
 import {
-  colorLightGray,
   colorTomato,
   semiboldFont,
   colorItalic,
@@ -10,7 +9,7 @@ import {
 
 export default StyleSheet.create({
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 20,

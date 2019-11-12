@@ -5,10 +5,7 @@ import {LinearGradient} from 'expo-linear-gradient';
 import styles from './RadioButtons.styles';
 import {RadioButtonsProps} from './';
 import {
-  colorVioletStart,
-  colorVioletEnd,
-  colorLightGray,
-  colorBlack,
+  colorBlack, colorBorderGradStart, colorBorderGradEnd,
 } from '../../variables';
 
 export class RadioButtons extends React.PureComponent<RadioButtonsProps> {
@@ -22,7 +19,7 @@ export class RadioButtons extends React.PureComponent<RadioButtonsProps> {
               key={item.key}
               start={[0, 0.5]}
               end={[1, 0.5]}
-              colors={[colorVioletStart, colorVioletEnd]}
+              colors={[colorBorderGradStart, colorBorderGradEnd]}
               style={[
                 styles.btnGradient,
                 {padding: value.key === item.key ? 0 : 1},
@@ -32,7 +29,7 @@ export class RadioButtons extends React.PureComponent<RadioButtonsProps> {
                   styles.btn,
                   {
                     backgroundColor:
-                      value.key === item.key ? 'transparent' : colorLightGray,
+                      value.key === item.key ? 'transparent' : 'white',
                       height: value.key === item.key ? 30 : 28,
                   },
                 ]}

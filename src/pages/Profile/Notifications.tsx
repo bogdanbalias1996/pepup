@@ -10,9 +10,8 @@ import {
 
 import { NotificationItemsProps } from './types';
 import {
-  colorLightOrange,
   boldFont,
-  colorAllRead
+  colorTextViolet
 } from '../../variables';
 
 import { IGlobalState } from '../../coreTypes';
@@ -126,6 +125,6 @@ const styles = StyleSheet.create({
   allRead: {
     fontFamily: boldFont,
     fontSize: 14,
-    color: colorAllRead
+    color: colorTextViolet
   }
 });

@@ -98,6 +98,11 @@ export class Component extends React.PureComponent<ModalEventsProps> {
         heightContent={this.state.heightDescription}>
         {!!eventData && Object.keys(eventData).length !== 0 && (
           <View style={styles.wrapModalContent}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closeEventModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
             <ScrollView
               showsVerticalScrollIndicator={false}
               style={styles.scrollView}>
@@ -109,11 +114,6 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                       this.setState({ heightDescription: height });
                   }}>
                   <View style={styles.insidePadding}>
-                    <TouchableOpacity
-                      style={styles.btnCancel}
-                      onPress={() => closeEventModal()}>
-                      <Icon size={20} name="cancel" color={colorBlack} />
-                    </TouchableOpacity>
                     <View style={styles.wrapTitle}>
                       <Image
                         style={styles.imageLogo}

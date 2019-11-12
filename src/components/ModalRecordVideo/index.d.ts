@@ -1,4 +1,5 @@
 import { RecordOptions } from 'react-native-camera';
+import { AlertProps } from '../SuccessfulAlert';
 
 export type ModalRecordVideoProps = {
   videoRecordModalClose: () => void;
