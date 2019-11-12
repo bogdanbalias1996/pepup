@@ -5,14 +5,14 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import memoize from 'memoize-one';
 
-import { ROLE_CELEB } from '../Profile';
-import { IGlobalState } from '../../../coreTypes';
-
 import { openPepupModal, getCeleb } from '../../Pepups/actions';
+
+import { isUserCelebrity } from '../../../selectors';
 
 import { CardGradient } from '../../../components/CardGradient/CardGradient';
 import { Card } from '../../../components/Card/Card';
 
+import { IGlobalState } from '../../../coreTypes';
 import { Profile } from '../types';
 import { UserBlockProps } from './types';
 
@@ -76,11 +76,7 @@ class UserBlock extends PureComponent<UserBlockProps> {
 }
 
 const mapStateToProps = createSelector(
-  (state: IGlobalState) => {
-    const { profileData } = state.ProfileState;
-
-    return Boolean(profileData && profileData.role === ROLE_CELEB);
-  },
+  isUserCelebrity,
   (state: IGlobalState) => state.ProfileState.profileData,
   (isCelebrity: boolean, profileData: Profile | null) => ({
     isCelebrity,
