@@ -3,6 +3,7 @@ import { View, Image, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
+import memoize from 'memoize-one';
 
 import { ROLE_CELEB } from '../Profile';
 import { IGlobalState } from '../../../coreTypes';
@@ -31,28 +32,32 @@ class UserBlock extends PureComponent<UserBlockProps> {
     }
   };
 
+  generateUserAvatar = memoize((profileData: Profile) => {
+    const { icon } = profileData;
+
+    return icon
+      ? {
+          uri: profileData.icon,
+          priority: FastImage.priority.normal
+        }
+      : UserBlock.avatarPlaceholder;
+  });
+
   render() {
     const { profileData, isCelebrity } = this.props;
 
+    const userAvatar = this.generateUserAvatar(profileData);
+
     return (
       <View style={styles.avatarsWrap}>
-        {profileData && (
-          <Card style={styles.avatar} radius={6}>
-            <CardGradient style={styles.gradient} />
-            <FastImage
-              style={styles.image}
-              source={
-                profileData.icon
-                  ? {
-                      uri: profileData.icon,
-                      priority: FastImage.priority.normal
-                    }
-                  : UserBlock.avatarPlaceholder
-              }
-              resizeMode={FastImage.resizeMode.cover}
-            />
-          </Card>
-        )}
+        <Card style={styles.avatar} radius={6}>
+          <CardGradient style={styles.gradient} />
+          <FastImage
+            style={styles.image}
+            source={userAvatar}
+            resizeMode={FastImage.resizeMode.cover}
+          />
+        </Card>
         {isCelebrity && (
           <Card style={styles.avatar} radius={6}>
             <CardGradient style={styles.gradient} />
