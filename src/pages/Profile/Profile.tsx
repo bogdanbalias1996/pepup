@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import FastImage from 'react-native-fast-image';
 
 import { IGlobalState } from '../../coreTypes';
@@ -11,21 +11,19 @@ import { Icon } from '../../components/Icon/Icon';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import { navigate } from '../../navigationService';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 import styles from './Profile.styles';
 import { getProfile, getUserPepups } from './actions';
-import { ProfileScreenProps } from '.';
+import { ProfileScreenProps } from './types';
 import { MyRequests } from './MyRequests';
 import { FanRequests } from './FanRequests';
-import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
 
 import EditProfileButton from './EditProfileButton';
+import UserBlock from './UserBlock';
 
 export const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
@@ -136,49 +134,12 @@ export class Component extends React.Component<ProfileScreenProps> {
   }
 
   render() {
-    const { profileData, openPepupModal, getCeleb } = this.props;
-    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
-
-    const getModal = () => {
-      openPepupModal();
-      profileData && getCeleb(profileData.id);
-    };
+    const { profileData } = this.props;
 
     return (
       profileData && (
         <PepupBackground>
-          <View style={styles.avatarsWrap}>
-            {profileData && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <FastImage
-                  style={styles.image}
-                  source={
-                    profileData.icon
-                      ? {
-                          uri: profileData.icon,
-                          priority: FastImage.priority.normal
-                        }
-                      : require('../../../assets/avatarPlaceholder.png')
-                  }
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </Card>
-            )}
-            {isCelebrity && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <TouchableOpacity activeOpacity={1} onPress={getModal}>
-                  <Image
-                    style={[styles.image, styles.avatarCeleb]}
-                    source={require('../../../assets/celebAvatar.png')}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </Card>
-            )}
-          </View>
-
+          <UserBlock />
           <EditProfileButton />
 
           <View style={styles.wrapContent}>
@@ -222,8 +183,6 @@ const mapStateToProps = (state: IGlobalState) => ({
 
 const mapDispatchToProps = {
   getProfile,
-  openPepupModal,
-  getCeleb,
   getUserPepups
 };
 

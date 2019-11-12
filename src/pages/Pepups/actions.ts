@@ -9,7 +9,7 @@ import { PostReviewFormProps } from '../../components/ModalReviewForm';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
-import { UserRequest } from '../Profile';
+import { UserRequest } from '../Profile/types';
 
 export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
 export const openPepupModal = (): IAction<undefined> => {
@@ -89,7 +89,6 @@ export const getAllActiveCategories = () => async (dispatch: Dispatch) => {
       })
     );
   }
-
 };
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';

@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { FanRequestsProps, Pepup } from './';
+import { FanRequestsProps, Pepup } from './types';
 import {
   colorTextGray,
   colorBlack,

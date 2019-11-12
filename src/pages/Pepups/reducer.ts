@@ -32,7 +32,7 @@ import {
   FAILURE_FEATURED_CELEBS
 } from './actions';
 import { Category, Celeb, Review } from '.';
-import { UserRequest } from '../Profile';
+import { UserRequest } from '../Profile/types';
 
 export class PepupState {
   isModalShown: boolean;
