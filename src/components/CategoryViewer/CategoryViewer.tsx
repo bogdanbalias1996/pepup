@@ -14,6 +14,12 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     style: {}
   };
 
+  componentDidMount() {
+    const { onTabChange, activeTabIndex } = this.props;
+
+    onTabChange(activeTabIndex);
+  }
+
   generateRoutes = memoize((categories: ViewerCategory[]) =>
     categories.map((item: ViewerCategory) => ({
       key: item.title,
