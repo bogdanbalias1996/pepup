@@ -1,12 +1,11 @@
 import { StyleSheet } from "react-native";
 import {
     colorBlack,
-    colorLightGray,
     semiboldFont,
-    colorItalic,
-    italicFont,
-    boldFont,
-    colorCancelButton
+    colorCancelButton,
+    defaultFont,
+    colorModalTextGrey,
+    colorTextGrey
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -18,15 +17,18 @@ export default StyleSheet.create({
         paddingHorizontal: 24
     },
     avatar: {
-        width: 76,
-        height: 76,
-        borderRadius: 15,
+        width: 80,
+        height: 100,
+        borderRadius: 6,
     },
     title: {
-        fontSize: 18,
-        fontFamily: boldFont,
+        fontSize: 16,
+        fontFamily: semiboldFont,
         color: colorBlack,
-        lineHeight: 20
+        lineHeight: 24
+    },
+    featured: {
+        color: colorTextGrey
     },
     subTitle: {
         fontSize: 14,
@@ -57,8 +59,12 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 30,
         backgroundColor: colorCancelButton,
-        justifyContent: "center",
-        alignItems: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 17,
+        top: 23,
+        zIndex: 999
     },
     btnSubmit: {
         flex: 1
@@ -67,8 +73,9 @@ export default StyleSheet.create({
         marginHorizontal: 10
     },
     reqTitle: {
-        justifyContent: 'center',
-        alignItems: 'center'
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row'
     },
     footerWrap: {
         justifyContent: "flex-end",
@@ -84,11 +91,21 @@ export default StyleSheet.create({
         paddingHorizontal: 24
     },
     textBlock: {
-        marginVertical: 10
+        marginVertical: 5
+    },
+    textWrap: {
+        marginLeft: 15
     },
     reqData: {
-        color: colorItalic,
-        fontFamily: italicFont,
-        fontSize: 18
-    }
+        color: colorModalTextGrey,
+        fontFamily: defaultFont,
+        fontSize: 14
+    },
+    image: {
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 6
+    },
 });

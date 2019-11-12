@@ -204,7 +204,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.PostReview:
         return `${host}/pepup/celeb/post-review`;
       case ApiOperation.FulfillRequestPepup:
-        return `${host}/pepup/celeb/fulfill-pepup-request`;
+        return `${host}/pepup/fulfill-pepup-request`;
       case ApiOperation.SubmitEntryContest:
         return `${host}/pepup/contest/submit-entry/${contestId}`;
       case ApiOperation.GetUserPepups:

@@ -67,6 +67,11 @@ export class Component extends React.PureComponent<RequestPepupProps> {
           onRequestClose={() => closePepupReqModal()}
           heightContent={this.state.heightDescription}>
           <View style={styles.upperWrap}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closePepupReqModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
             <Formik
               initialValues={{
                 name: '',
@@ -168,11 +173,6 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       </View>
                     </ScrollView>
                     <View style={styles.modalFooter}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => closePepupReqModal()}>
-                        <Icon size={20} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
                       <ButtonStyled
                         style={styles.btnSubmit}
                         onPress={handleSubmit}

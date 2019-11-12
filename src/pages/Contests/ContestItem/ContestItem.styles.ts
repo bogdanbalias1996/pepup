@@ -4,7 +4,7 @@ import {
   colorBlack,
   defaultFont,
   boldFont,
-  colorTextGreyIntro
+  colorEventLabel
 } from '../../../variables';
 
 export default StyleSheet.create({
@@ -30,7 +30,7 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGreyIntro
+    color: colorEventLabel
   },
   wrapTitle: {
     flex: 1,
@@ -40,10 +40,19 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   imageLogo: {
-    width: 72,
-    height: 72,
+    width: '100%',
+    height: '100%',
     marginRight: 16,
     borderRadius: 8
+  },
+  gradient: {
+    borderRadius: 8
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    marginRight: 15
   },
   title: {
     flex: 1,

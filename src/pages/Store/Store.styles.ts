@@ -1,29 +1,12 @@
 import { StyleSheet } from "react-native";
-import { colorEndButtonInput, colorLightGray } from "../../variables";
 
 export default StyleSheet.create({
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 16,
     flex: 1,
     marginTop: 10
   },
-  wrapHeaderRight: {
-    flexDirection: "row"
-  },
-  wrapHeaderRightIcon: {
-    backgroundColor: colorEndButtonInput,
-    borderRadius: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
-    width: 40,
-    height: 40
-  },
-  rateIcon: {
-    width: 20,
-    height: 20
-  }
 });

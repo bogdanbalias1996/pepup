@@ -14,6 +14,7 @@ import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
+import { ModalVideo } from '../../components/ModalVideo/ModalVideo';
 import EditProfileButton from './EditProfileButton';
 import UserBlock from './UserBlock';
 import ProfileHeader from './ProfileHeader';
@@ -143,6 +144,7 @@ export class Component extends React.Component<
         <ModalRecordVideo />
         <ModalPepup />
         <ModalPostReview />
+        <ModalVideo />
         <ModalPepupNotification />
       </PepupBackground>
     );

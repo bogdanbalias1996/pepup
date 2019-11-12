@@ -18,7 +18,6 @@ import { ModalStoreProps } from '.';
 import styles from './ModalStore.styles';
 import {
   colorBlack,
-  colorLightGray,
   boldFont,
   defaultFont,
 } from '../../variables';
@@ -124,7 +123,6 @@ export class Component extends React.PureComponent<ModalStoreProps> {
           ]}>
           {Object.keys(prodData).length !== 0 ? (
             <View style={styles.wrapModalContent}>
-              <View style={styles.swiperLine} />
               <ScrollView style={styles.scrollView}>
                 <View style={styles.scrollContent}>
                   <View
@@ -189,7 +187,7 @@ export class Component extends React.PureComponent<ModalStoreProps> {
                                     backgroundColor:
                                       value.key === item.key
                                         ? '#d8d8d8'
-                                        : colorLightGray,
+                                        : 'white',
                                   },
                                 ]}
                                 onPress={() => {

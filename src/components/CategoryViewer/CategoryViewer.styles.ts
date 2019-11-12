@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 import {
-  colorVioletGrey,
   colorBlack,
   boldFont,
   semiboldFont
@@ -37,7 +36,7 @@ export default StyleSheet.create({
     overflow: 'visible'
   },
   itemText: {
-    color: colorVioletGrey,
+    color: colorBlack,
     fontSize: 16,
     fontFamily: semiboldFont,
     alignSelf: 'center',

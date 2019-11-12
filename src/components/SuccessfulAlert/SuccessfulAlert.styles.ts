@@ -1,10 +1,8 @@
 import { StyleSheet } from 'react-native';
 import {
-  semiboldFont,
   colorBlack,
   defaultFont,
-  colorTextAlert,
-  colorTextGreyIntro
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -23,7 +21,7 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
     textAlign: 'center',
     marginBottom: 15
@@ -45,8 +43,8 @@ export default StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: defaultFont,
-    // color: colorTextAlert,
-    color: colorTextGreyIntro,
+    color: colorBlack,
+    opacity: 0.7,
     textAlign: 'center'
   }
 });

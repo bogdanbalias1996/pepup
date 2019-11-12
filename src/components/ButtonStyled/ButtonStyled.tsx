@@ -7,14 +7,10 @@ import { ButtonStyledProps } from '.';
 import styles from './ButtonStyled.styles';
 import {
   colorBlack,
-  colorVioletStart,
-  colorVioletEnd,
   colorBlueStart,
   colorBlueEnd,
   colorOrangeStart,
   colorOrangeEnd,
-  boldFont,
-  defaultFont,
   colorCoolGrey,
   colorDotGray,
   colorLightYellow,
@@ -32,7 +28,7 @@ const getTypeButton = (type: string) => {
     case 'grey':
       return [styles.shadowGrey, styles.btnShadow];
     default:
-      return [styles.shadowViolet, styles.btnShadow];
+      return [styles.shadowYellow, styles.btnShadow];
   }
 };
 
@@ -43,9 +39,9 @@ const getColorButton = (type: string) => {
     case 'orange':
       return [colorOrangeStart, colorOrangeEnd];
     case 'border':
-      return [colorVioletStart, colorVioletEnd];
+      return [colorLightYellow, colorLightOrange];
     case 'white':
-      return ['white', 'white'];
+      return 'white';
     case 'grey':
       return [colorCoolGrey, colorDotGray];
     default:
@@ -58,10 +54,11 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   iconName = '',
   iconSource,
   text = '',
-  style = '',
+  style = {},
   type = '',
   loader = false,
-  loaderColor = 'white'
+  loaderColor = 'white',
+  styleGradient = {}
 }): JSX.Element => {
   return (
     <View style={[getTypeButton(type)].concat(style)}>
@@ -72,7 +69,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 }
+          type === 'border' && { padding: 1 },
+          styleGradient
         ]}>
         <TouchableOpacity
           activeOpacity={type === 'border' ? 1 : 0.5}

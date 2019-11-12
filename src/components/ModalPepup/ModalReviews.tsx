@@ -42,7 +42,12 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
           isLoading={this.props.isFetching}
           onRequestClose={() => closeReviewsModal()}
           heightContent={this.state.heightDescription}>
-          <View style={{ flex: 1, paddingTop: 20, paddingHorizontal: 24 }}>
+          <View style={{ flex: 1, paddingTop: 55, paddingHorizontal: 24 }}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closeReviewsModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
             <ScrollView showsVerticalScrollIndicator={false}>
               <View
                 style={styles.scrollContent}
@@ -89,13 +94,7 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
               </View>
             </ScrollView>
           </View>
-          <View style={[styles.modalFooter, styles.modalFooterReviews]}>
-            <TouchableOpacity
-              style={styles.btnCancel}
-              onPress={() => closeReviewsModal()}>
-              <Icon size={20} name="cancel" color={colorBlack} />
-            </TouchableOpacity>
-          </View>
+          <View style={[styles.modalFooter, styles.modalFooterReviews]} />
         </PepupModal>
       )
     );

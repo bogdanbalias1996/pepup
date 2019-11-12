@@ -7,8 +7,8 @@ import { RadioButtonsProps } from './';
 import {
   colorLightGradStart,
   colorLightGradEnd,
-  colorVioletStart,
-  colorVioletEnd,
+  colorBorderGradStart,
+  colorBorderGradEnd,
 } from '../../variables';
 
 export class RadioButtonsContest extends React.PureComponent<
@@ -26,7 +26,7 @@ export class RadioButtonsContest extends React.PureComponent<
                 key={i}
                 start={[0, 0.5]}
                 end={[1, 0.5]}
-                colors={[colorVioletStart, colorVioletEnd]}
+                colors={[colorBorderGradStart, colorBorderGradEnd]}
                 style={[styles.btnGradientDark]}>
                 <LinearGradient
                   start={[0, 0.5]}

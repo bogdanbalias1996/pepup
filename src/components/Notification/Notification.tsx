@@ -6,12 +6,12 @@ import { StyleSheet } from 'react-native';
 import { NotificationProps } from '.';
 import {
   colorBlack,
-  colorVioletStart,
-  colorVioletEnd,
   semiboldFont,
   italicFont,
-  colorVioletGrey,
-  colorMessageBorder
+  colorMessageBorder,
+  colorBorderGradEnd,
+  colorBorderGradStart,
+  colorTextGrey
 } from '../../variables';
 
 export const Notification: React.SFC<NotificationProps> = ({
@@ -43,7 +43,7 @@ export const Notification: React.SFC<NotificationProps> = ({
       <LinearGradient
         start={[0, 0.5]}
         end={[1, 0.5]}
-        colors={[colorVioletStart, colorVioletEnd]}
+        colors={[colorBorderGradStart, colorBorderGradEnd]}
         style={styles.gradient}
       >
         <NotificationItem />
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     fontSize: 14,
     lineHeight: 22,
-    color: colorVioletGrey
+    color: colorTextGrey
   },
   messageTitle: {
     color: colorBlack,
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
   },
   messageDate: {
     fontFamily: italicFont,
-    color: colorVioletGrey,
+    color: colorTextGrey,
     fontSize: 12,
     textAlign: 'center'
   }
