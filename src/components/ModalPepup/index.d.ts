@@ -1,5 +1,5 @@
-import { Celeb, Review } from "../../pages/Pepups";
-import { Profile } from "../../pages/Profile";
+import { Celeb, Review } from '../../pages/Pepups';
+import { Profile } from '../../pages/Profile/types';
 
 export type ModalPepupProps = {
   closePepupModal: () => void;
@@ -24,7 +24,6 @@ export type ModalReviewsProps = {
 };
 
 export type RenderItemMedia = {
-  date: string,
-  title: string
-}
-
+  date: string;
+  title: string;
+};

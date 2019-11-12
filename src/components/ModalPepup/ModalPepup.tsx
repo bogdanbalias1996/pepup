@@ -29,8 +29,9 @@ import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
-import { Pepup } from '../../pages/Profile';
-import VideoCard from '../VideoCard'
+
+import VideoCard from '../VideoCard';
+import { Pepup } from '../../pages/Profile/types';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -90,7 +91,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
 
     openReviewsModal();
     celebData && getAllReviews(celebData.userInfo.id);
-  }
+  };
 
   renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
     return (
