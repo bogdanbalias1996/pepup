@@ -7,7 +7,7 @@ import {
   colorTomato,
   semiboldFont,
   boldFont,
-  defaultFont,
+  defaultFont,  
   colorTextGreyIntro,
   colorModalTextGrey,
   colorCancelButton,
@@ -197,8 +197,15 @@ export default StyleSheet.create({
   scrollContent: { 
     paddingBottom: 190, 
     position: 'relative',
-    marginHorizontal: 24,
-    // borderWidth: 1,
-    // borderColor: 'red' 
+    marginHorizontal: 24    
+  },
+  section: {
+    marginBottom: 33
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: boldFont,
+    color: colorBlack,
+    marginBottom: 14
   }
 });

@@ -3,11 +3,11 @@ import {
   TouchableOpacity,
   Text,
   View,
-  ScrollView,
-  Image,
+  ScrollView,  
   FlatList,
   ListRenderItem
 } from 'react-native';
+import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { Video } from 'expo-av';
@@ -47,7 +47,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   getAllReviews: (id: string) => dispatch(getAllReviews(id) as any)
 });
 
-const dataMock = [
+const featuredPepupsMock = [
   {
     date: '14 Aug 2019',
     for: 'for Trish Devato',
@@ -62,6 +62,21 @@ const dataMock = [
     date: '14 Aug 2019',
     for: 'for Trish Devato',
     video: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
+  }
+]
+
+const supportsCharitiesMock = [
+  {
+    title: 'Peta',
+    img: 'https://via.placeholder.com/86x60'
+  },
+  {
+    title: 'UNICEF',
+    img: 'https://via.placeholder.com/86x60'
+  },
+  {
+    title: 'UNICEF',
+    img: 'https://via.placeholder.com/86x60'
   }
 ]
 
@@ -100,7 +115,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     );
   };
 
-  renderFeaturedPepupItem = ({ item }: any) => {    
+  renderFeaturedPepupItem = ({ item }: any) => {
     return (
       <View style={{ marginRight: 8 }}>
         <VideoCard
@@ -110,6 +125,22 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         />
         <Text>{item.for}</Text>
         <Text>{item.date}</Text>
+      </View>
+    )
+  }
+
+  renderSupportsCharitiesItem = ({ item }: any) => {
+    return (
+      <View style={{ marginRight: 8 }}>
+        <FastImage 
+          style={{ width: 86, height: 60 }}
+          source={{
+            uri: item.img,
+            priority: FastImage.priority.normal
+          }}
+          resizeMode={FastImage.resizeMode.cover}
+        />
+        <Text>{`${item.title}`.toUpperCase()}</Text>
       </View>
     )
   }
@@ -173,15 +204,25 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   </Text>
                 </View>
 
-                <View>
-                  <Text>Featured Pepups</Text>
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Featured Pepups</Text>
                   <FlatList
-                    data={dataMock}
+                    data={featuredPepupsMock}
                     renderItem={this.renderFeaturedPepupItem}
                     keyExtractor={(item: any, index: number) => `${index}`}
                     horizontal={true}
                   />
                 </View>
+                <View style={styles.section}>
+                  <Text style={styles.sectionTitle}>Supports Charities</Text>
+                  <FlatList
+                    data={supportsCharitiesMock}
+                    renderItem={this.renderSupportsCharitiesItem}
+                    keyExtractor={(item: any, index: number) => `${index}`}
+                    horizontal={true}
+                  />
+                </View>
+
                 {/* <FlatList
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
