@@ -20,8 +20,9 @@ import {
   colorCompletedStatus,
   italicFont,
   colorLightOrange,
-  boldFont,
-  colorAllRead
+  semiboldFont,
+  colorTextViolet,
+  colorEventLabel
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
@@ -69,7 +70,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const today = new Date();
     const requestedOn = new Date(date);
     const roundedDays = +(
-      7 -
+      8 -
       (today.getTime() - requestedOn.getTime()) / (1000 * 3600 * 24)
     ).toFixed(0);
 
@@ -116,7 +117,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorAllRead,
+          statusColor: colorTextViolet,
           onPress: undefined,
           linkText: ''
         };
@@ -127,7 +128,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
     const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={onPress ? () => onPress() : null}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
@@ -165,7 +166,7 @@ export class Component extends React.PureComponent<FanRequestsProps> {
       celebPepups && (
         <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
           <FlatList
-            style={{ flex: 1, paddingLeft: 16 }}
+            style={{ flex: 1 }}
             showsVerticalScrollIndicator={false}
             data={celebPepups}
             renderItem={this.renderItemRequest}
@@ -184,8 +185,7 @@ export const FanRequests = connect(
 
 const styles = StyleSheet.create({
   card: {
-    paddingVertical: 16,
-    paddingRight: 16,
+    padding: 16,
     borderBottomWidth: 1,
     borderColor: colorInputBackground
   },
@@ -197,14 +197,15 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGrey
+    color: colorEventLabel
   },
   completed: {
-    fontFamily: boldFont
+    fontFamily: semiboldFont
   },
   reqDescription: {
+    color: colorTextGrey,
     fontSize: 12,
-    fontFamily: italicFont
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,

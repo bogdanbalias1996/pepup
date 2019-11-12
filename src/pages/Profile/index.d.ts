@@ -81,7 +81,8 @@ export type MyRequestsProps = {
   getStatusUser?: () => void,
   isFetching: boolean,
   userId: string,
-  getUserPepups: (id: string) => Promise<any>
+  getUserPepups: (id: string) => Promise<any>,
+  openVideoModal: (link: string) => void
 }
 
 export type NotificationItemsProps = {

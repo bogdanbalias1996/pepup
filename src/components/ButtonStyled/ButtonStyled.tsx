@@ -43,7 +43,7 @@ const getColorButton = (type: string) => {
     case 'orange':
       return [colorOrangeStart, colorOrangeEnd];
     case 'border':
-      return [colorVioletStart, colorVioletEnd];
+      return [colorLightYellow, colorLightOrange];
     case 'white':
       return ['white', 'white'];
     case 'grey':

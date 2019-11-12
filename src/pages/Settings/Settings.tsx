@@ -16,7 +16,7 @@ import { PepupBackground } from '../../components/PepupBackground/PepupBackgroun
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { colorVioletStart, colorVioletEnd } from '../../variables';
+import { colorVioletStart, colorVioletEnd, colorBorderGradEnd, colorBorderGradStart } from '../../variables';
 import { logoutUser, setDeveloperMode } from '../Login/actions';
 import { LinearGradient } from 'expo-linear-gradient';
 import { SuccessfulAlert } from '../../components/SuccessfulAlert/SuccessfulAlert';
@@ -33,7 +33,7 @@ const ListItem = ({
     <LinearGradient
       start={[0, 0.5]}
       end={[1, 0.5]}
-      colors={[colorVioletStart, colorVioletEnd]}
+      colors={[colorBorderGradStart, colorBorderGradEnd]}
       style={styles.gradient}>
       <TouchableOpacity
         activeOpacity={1}

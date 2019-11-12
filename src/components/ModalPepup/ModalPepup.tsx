@@ -222,13 +222,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
             </ScrollView>
 
             <View style={styles.modalFooter}>
-              {userId === celebData.mappedUserId ? (
-                <ButtonStyled
-                  style={styles.btnSubmitClose}
-                  onPress={() => closePepupModal()}
-                  text="CLOSE"
-                />
-              ) : (
+              {userId !== celebData.mappedUserId && (
                   <ButtonStyled
                     style={styles.btnSubmit}
                     onPress={() => openPepupReqModal()}

@@ -10,8 +10,8 @@ export default StyleSheet.create({
     flex: 1
   },
   card: {
-    width: '100%',
-    height: '100%',
+    width: '72%',
+    height: '72%',
     maxWidth: 286,
     maxHeight: 524,
     position: 'relative'

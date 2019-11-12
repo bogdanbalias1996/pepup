@@ -12,7 +12,8 @@ import { NotificationItemsProps } from '.';
 import {
   colorLightOrange,
   boldFont,
-  colorAllRead
+  colorAllRead,
+  colorTextViolet
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
@@ -131,6 +132,6 @@ const styles = StyleSheet.create({
   allRead: {
     fontFamily: boldFont,
     fontSize: 14,
-    color: colorAllRead
+    color: colorTextViolet
   }
 });

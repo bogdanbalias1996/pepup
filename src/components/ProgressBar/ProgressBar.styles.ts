@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colorLightYellow } from '../../variables';
 
 export default StyleSheet.create({
   wrapper: {
@@ -12,7 +13,7 @@ export default StyleSheet.create({
   },
   progress: {
     borderRadius: 3.5,
-    backgroundColor: '#b620e0',
+    backgroundColor: colorLightYellow,
     height: '100%',
     width: '50%'
   }

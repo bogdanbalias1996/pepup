@@ -70,7 +70,11 @@ export default StyleSheet.create({
     backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999,
+    flexGrow: 1
   },
   btnSubmit: {
     flex: 1
@@ -122,6 +126,6 @@ export default StyleSheet.create({
   upperWrap: {
     paddingHorizontal: 24,
     flex: 1,
-    paddingTop: 20
+    paddingTop: 55
   }
 });

@@ -26,6 +26,7 @@ import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
+import { ModalVideo } from '../../components/ModalVideo/ModalVideo';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userId: state.LoginState.userId,
@@ -157,7 +158,6 @@ export class Component extends React.Component<ProfileScreenProps> {
       openPepupModal();
       profileData && getCeleb(profileData.id);
     };
-
     return (
       profileData && (
         <PepupBackground>
@@ -230,6 +230,7 @@ export class Component extends React.Component<ProfileScreenProps> {
             </Loader>
           </View>
           <ModalRecordVideo />
+          <ModalVideo />
           <ModalPepup />
           <ModalPostReview />
           <ModalPepupNotification />

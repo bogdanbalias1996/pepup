@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-import { semiboldFont, colorBlack, defaultFont, colorTextAlert, colorLightGray, colorCancelButton } from "../../variables";
+import { semiboldFont, colorBlack, defaultFont, colorTextAlert, colorLightGray, colorCancelButton, boldFont } from "../../variables";
 
 export default StyleSheet.create({
     wrapModalContent: {
@@ -14,7 +14,7 @@ export default StyleSheet.create({
     },
     title: {
         fontSize: 22,
-        fontFamily: semiboldFont,
+        fontFamily: boldFont,
         color: colorBlack,
         textAlign: 'center',
         marginBottom: 15
@@ -39,9 +39,10 @@ export default StyleSheet.create({
         marginRight: 16
     },
     text: {
-        fontSize: 18,
+        fontSize: 16,
         fontFamily: defaultFont,
-        color: colorTextAlert,
+        color: colorBlack,
+        opacity: 0.7,
         textAlign: 'center'
     },
     imageContainer: {
