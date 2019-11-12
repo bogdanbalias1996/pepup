@@ -3,14 +3,12 @@ import {
   TouchableOpacity,
   Text,
   View,
-  ScrollView,  
-  FlatList,
-  ListRenderItem
+  ScrollView,
+  FlatList  
 } from 'react-native';
 import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { Video } from 'expo-av';
 
 import {
   closePepupModal,
@@ -23,15 +21,33 @@ import { Icon } from '../../components/Icon/Icon';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { ModalPepupProps, RenderItemMedia } from './';
 import styles from './ModalPepup.styles';
-import { colorBlack } from '../../variables';
+import { colorBlack, colorMessageBorder } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
-
 import VideoCard from '../VideoCard';
-import { Pepup } from '../../pages/Profile/types';
+import EmojiBar from '../EmojiBar';
+
+const EmojiBarData = [
+  {
+    name: 'thinking_face',
+    description: 'Question'
+  },
+  {
+    name: 'hugging_face',
+    description: 'Advice'
+  },
+  {
+    name: 'nerd_face',
+    description: 'Idea'
+  },
+  {
+    name: 'smile',
+    description: 'Wish'
+  }
+]
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.PepupState.isModalShown,
@@ -41,6 +57,7 @@ const mapStateToProps = (state: IGlobalState) => ({
   reviews: state.PepupState.reviews,
   userId: state.LoginState.userId
 });
+
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupModal: () => dispatch(closePepupModal()),
   openPepupReqModal: () => dispatch(openPepupReqModal()),
@@ -69,15 +86,15 @@ const featuredPepupsMock = [
 const supportsCharitiesMock = [
   {
     title: 'Peta',
-    img: 'https://via.placeholder.com/86x60'
+    img: 'https://placedog.net/86/60'
   },
   {
     title: 'UNICEF',
-    img: 'https://via.placeholder.com/86x60'
+    img: 'http://placekitten.com/86/60'
   },
   {
     title: 'UNICEF',
-    img: 'https://via.placeholder.com/86x60'
+    img: 'https://placedog.net/86/60'
   }
 ]
 
@@ -91,29 +108,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
 
     openReviewsModal();
     celebData && getAllReviews(celebData.userInfo.id);
-  };
-
-  renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
-    return (
-      <View style={styles.carouselCard}>
-        <View style={styles.carouselAvatar}>
-          <Video
-            source={{
-              uri: 'http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-            }}
-            rate={1.0}
-            volume={1.0}
-            isMuted={false}
-            isLooping={true}
-            resizeMode="contain"
-            useNativeControls={true}
-            style={[styles.carouselAvatar, { overflow: 'hidden' }]}
-          />
-        </View>
-        <Text style={[styles.text, styles.carouselTitle]}>{item.title}</Text>
-        <Text style={[styles.text, styles.carouselDate]}>{item.date}</Text>
-      </View>
-    );
   };
 
   renderFeaturedPepupItem = ({ item }: any) => {
@@ -133,15 +127,15 @@ export class Component extends React.PureComponent<ModalPepupProps> {
   renderSupportsCharitiesItem = ({ item }: any) => {
     return (
       <View style={{ marginRight: 8 }}>
-        <FastImage 
-          style={{ width: 86, height: 60 }}
+        <FastImage
+          style={styles.charityImage}
           source={{
             uri: item.img,
             priority: FastImage.priority.normal
           }}
           resizeMode={FastImage.resizeMode.cover}
         />
-        <Text>{`${item.title}`.toUpperCase()}</Text>
+        <Text style={styles.charityTitle}>{`${item.title}`.toUpperCase()}</Text>
       </View>
     )
   }
@@ -152,9 +146,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
       openPepupReqModal,
       isModalShown,
       celebData,
-      openVideoModal,
       userId
     } = this.props;
+
+    const isSameUser = celebData ? userId === celebData.mappedUserId : false;
 
     const videoUrl =
       celebData && celebData.dataInfo['intro-video']
@@ -183,6 +178,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   Object.keys(celebData).length !== 0 &&
                     this.setState({ heightDescription: height });
                 }}>
+
                 <View style={styles.header}>
                   <Text style={styles.title}>{celebData.userInfo.name}</Text>
                 </View>
@@ -205,6 +201,20 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   </Text>
                 </View>
 
+                {
+                  !isSameUser && (
+                    <View>
+                      <EmojiBar data={EmojiBarData} />
+                      <ButtonStyled
+                        style={styles.btnSubmit}
+                        styleGradient={{ borderRadius: 6 }}
+                        onPress={() => openPepupReqModal()}
+                        text="ASK ME ANYTHING"
+                      />
+                    </View>
+                  )
+                }
+
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Featured Pepups</Text>
                   <FlatList
@@ -212,8 +222,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     renderItem={this.renderFeaturedPepupItem}
                     keyExtractor={(item: any, index: number) => `${index}`}
                     horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                   />
                 </View>
+
                 <View style={styles.section}>
                   <Text style={styles.sectionTitle}>Supports Charities</Text>
                   <FlatList
@@ -221,21 +233,10 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     renderItem={this.renderSupportsCharitiesItem}
                     keyExtractor={(item: any, index: number) => `${index}`}
                     horizontal={true}
+                    showsHorizontalScrollIndicator={false}
                   />
                 </View>
-
-                {/* <FlatList
-                    horizontal={true}
-                    showsHorizontalScrollIndicator={false}
-                    data={celebData.media}
-                    renderItem={this.renderItem}
-                    keyExtractor={(item: Pepup) => item.id}
-                    style={styles.carousel}
-                    contentContainerStyle={{
-                      alignItems: 'center',
-                      justifyContent: 'center'
-                    }}
-                  /> */}
+                
                 {celebData.dataInfo.review && (
                   <View style={styles.reviews}>
                     <View style={styles.rewiewsHeader}>
@@ -245,7 +246,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       <TouchableOpacity onPress={() => this.getReviews()}>
                         <Text style={[styles.text, styles.allRewiewsButton]}>
                           Check all reactions
-                          </Text>
+                        </Text>
                       </TouchableOpacity>
                     </View>
                     <View style={styles.commentCard}>
@@ -262,22 +263,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 )}
               </View>
             </ScrollView>
-
-            <View style={styles.modalFooter}>
-              {userId === celebData.mappedUserId ? (
-                <ButtonStyled
-                  style={styles.btnSubmitClose}
-                  onPress={() => closePepupModal()}
-                  text="CLOSE"
-                />
-              ) : (
-                  <ButtonStyled
-                    style={styles.btnSubmit}
-                    onPress={() => openPepupReqModal()}
-                    text="Fill out request form"
-                  />
-                )}
-            </View>
           </View>
         )}
         <ModalPepupReq />

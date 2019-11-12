@@ -58,10 +58,11 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   iconName = '',
   iconSource,
   text = '',
-  style = '',
+  style = {},
   type = '',
   loader = false,
-  loaderColor = 'white'
+  loaderColor = 'white',
+  styleGradient = {}
 }): JSX.Element => {
   return (
     <View style={[getTypeButton(type)].concat(style)}>
@@ -72,7 +73,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 }
+          type === 'border' && { padding: 1 },
+          styleGradient
         ]}>
         <TouchableOpacity
           activeOpacity={type === 'border' ? 1 : 0.5}
