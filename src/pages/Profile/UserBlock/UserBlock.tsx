@@ -7,7 +7,7 @@ import memoize from 'memoize-one';
 
 import { openPepupModal, getCeleb } from '../../Pepups/actions';
 
-import { isUserCelebrity } from '../../../selectors';
+import { isUserCelebritySelector } from '../../../selectors';
 
 import { CardGradient } from '../../../components/CardGradient/CardGradient';
 import { Card } from '../../../components/Card/Card';
@@ -76,7 +76,7 @@ class UserBlock extends PureComponent<UserBlockProps> {
 }
 
 const mapStateToProps = createSelector(
-  isUserCelebrity,
+  isUserCelebritySelector,
   (state: IGlobalState) => state.ProfileState.profileData,
   (isCelebrity: boolean, profileData: Profile | null) => ({
     isCelebrity,

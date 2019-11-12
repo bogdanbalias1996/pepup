@@ -1,6 +1,6 @@
 import { IGlobalState } from './coreTypes';
 
-export const isUserCelebrity = (state: IGlobalState): boolean => {
+export const isUserCelebritySelector = (state: IGlobalState): boolean => {
   const ROLE_CELEB = 'REGULAR,CELEBRITY';
   const { profileData } = state.ProfileState;
 

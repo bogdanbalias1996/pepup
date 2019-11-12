@@ -7,7 +7,7 @@ import { navigate } from '../../../navigationService';
 
 import { Icon } from '../../../components/Icon/Icon';
 
-import { isUserCelebrity } from '../../../selectors';
+import { isUserCelebritySelector } from '../../../selectors';
 
 import { IGlobalState } from '../../../coreTypes';
 import { EditProfileButtonProps } from './types';
@@ -38,7 +38,7 @@ class EditProfileButton extends PureComponent<EditProfileButtonProps> {
 }
 
 const mapStateToProps = createSelector(
-  isUserCelebrity,
+  isUserCelebritySelector,
   (state: IGlobalState) => {
     const { profileData } = state.ProfileState;
 
