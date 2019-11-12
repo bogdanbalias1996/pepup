@@ -7,7 +7,6 @@ import { navigate } from '../../navigationService';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { setLocalStorage } from '../../common/utils/session';
 import FastImage from 'react-native-fast-image';
-import { Card } from '../../components/Card/Card';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 
 export const IS_ONBOARDING_PASSED = 'OnboardingPassed';
@@ -40,30 +39,38 @@ const slides = [
 
 export class OnboardingScreen extends React.Component {
   state = {
-    lastSlide: false
+    lastSlide: false,
+    height: 0,
+    isLoaded: false
   };
 
-  _renderItem = (item: any) => {    
+  componentDidMount() {
+    this.setState({ isLoaded: true });
+  }
+
+  _renderItem = ({ item }: any) => {
     return (
       <View style={styles.container}>
-        <Card style={styles.card} borderWidth={6}>
+        <View style={styles.imageContainer}>
           <FastImage
             style={styles.image}
-            source={item.item.imageSrc}
+            source={item.imageSrc}
             resizeMode={FastImage.resizeMode.cover}
           />
-          <Text style={styles.title}>{item.item.title}</Text>
-        </Card>
-        <Text style={styles.description}>{item.item.description}</Text>
+          <Text style={styles.title}>{item.title}</Text>
+        </View>
+        <View style={{ flexGrow: 1, flexShrink: 0 }}>
+          <Text style={styles.description}>{item.description}</Text>
 
-        {item.item.key === '4' && (
-          <ButtonStyled
-            style={styles.buttonStyle}
-            onPress={() => this._onDone()}
-            text={'Get Started'.toUpperCase()}
-            type="white"
-          />
-        )}
+          {item.key === '4' && (
+            <ButtonStyled
+              style={styles.buttonStyle}
+              onPress={() => this._onDone()}
+              text={'Get Started'.toUpperCase()}
+              type="white"
+            />
+          )}
+        </View>
       </View>
     );
   };
@@ -81,7 +88,7 @@ export class OnboardingScreen extends React.Component {
     return (
       <PepupBackground style={{ paddingTop: 0 }}>
         <AppIntroSlider
-          renderItem={this._renderItem}
+          renderItem={item => this._renderItem(item)}
           slides={slides}
           showNextButton={false}
           dotStyle={styles.dotStyle}
@@ -89,7 +96,7 @@ export class OnboardingScreen extends React.Component {
           hidePagination={this.state.lastSlide}
           activeDotStyle={styles.activeDotStyle}
           paginationStyle={styles.paginationStyle as any}
-          doneLabel=""          
+          doneLabel=""
         />
       </PepupBackground>
     );
