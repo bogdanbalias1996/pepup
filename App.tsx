@@ -23,28 +23,40 @@ import NotificationPopup from 'react-native-push-notification-popup';
 
 import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
 import { MainNavigator } from './src/navigators/MainNavigator';
-import { PagesNavigator } from './src/navigators/PagesNavigator';
 import { colorLightOrange } from './src/variables';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from './src/components/ErrorState/ErrorState';
 import { setInternetConnection } from './src/utils/connectionCheck/actions';
 import { openError, closeError } from './src/pages/ErrorModal/actions';
+import { LoadingScreen } from './src/pages/Loading/Loading';
+import { OnboardingScreen } from './src/pages/Onboarding/Onboarding';
 import { authenticate } from './src/common/utils/session';
 
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const FCM_TOKEN = 'fcmToken';
 const AppNavigator = createSwitchNavigator({
-  Main: MainNavigator,
-  Pages: PagesNavigator,
-  Auth: AuthenticationNavigator  
+  Loading: {
+    screen: LoadingScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Onboarding: {
+    screen: OnboardingScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Auth: AuthenticationNavigator,
+  Main: MainNavigator
 });
 
 const AppContainer = createAppContainer(AppNavigator);
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
     <Loader color={colorLightOrange} isDataLoaded={isFontLoaded}>
-      <AppContainer ref={setTopLevelNavigator}/>
+      <AppContainer ref={setTopLevelNavigator} />
     </Loader>
   );
 };
@@ -94,7 +106,7 @@ export default class App extends Component {
 
     this.checkPermission();
     this.createNotificationListeners();
-    
+
     await authenticate();
   }
 
@@ -146,7 +158,7 @@ export default class App extends Component {
 
   showAlert(title: any, body: any, data: any) {
     this.popup.show({
-      onPress: function() {
+      onPress: function () {
         navigate(
           { routeName: 'Profile', params: { activeTab: data.activeTab } },
           true

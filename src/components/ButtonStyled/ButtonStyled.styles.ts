@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
 import {
-  colorBlueStart,
-  colorVioletStart,
+  colorBlueStart,  
   colorOrangeStart,
   colorCoolGrey,
   boldFont,
@@ -24,7 +23,7 @@ export default StyleSheet.create({
       width: 0,
       height: 8,
     },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 10,
 
     elevation: 16,

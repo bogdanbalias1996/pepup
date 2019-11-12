@@ -41,7 +41,7 @@ const getColorButton = (type: string) => {
     case 'border':
       return [colorLightYellow, colorLightOrange];
     case 'white':
-      return 'white';
+      return ['white', 'white'];
     case 'grey':
       return [colorCoolGrey, colorDotGray];
     default:
@@ -59,7 +59,7 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   loader = false,
   loaderColor = 'white',
   styleGradient = {}
-}): JSX.Element => {
+}): JSX.Element => {  
   return (
     <View style={[getTypeButton(type)].concat(style)}>
       <LinearGradient

@@ -5,7 +5,7 @@ import { colorLightYellow, colorLightOrange } from '../../variables';
 
 export const PepupBackground = (props: any): JSX.Element => {
   const { children = null, style = {} } = props;
-
+  
   return (
     <LinearGradient
       colors={[colorLightYellow, colorLightOrange]}
