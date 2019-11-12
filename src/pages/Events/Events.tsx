@@ -50,13 +50,6 @@ class Component extends React.PureComponent<EventsScreenProps> {
     activeTabIndex: 0
   };
 
-  componentDidMount() {
-    const { getEventsByCategory } = this.props;
-    const initialCategory = Component.tabsConfig[0].title;
-
-    getEventsByCategory(initialCategory);
-  }
-
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
