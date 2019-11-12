@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { Dispatch } from 'redux';
 
-import { HistoryItemsProps, Pepup } from './';
+import { HistoryItemsProps, Pepup } from './types';
 import {
   colorBlack,
   italicFont,
@@ -129,10 +129,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
   }
 }
 
-export const History = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Component);
+export const History = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 const styles = StyleSheet.create({
   card: {

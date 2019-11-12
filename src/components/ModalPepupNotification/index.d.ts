@@ -1,4 +1,4 @@
-import { UserRequest } from "../../pages/Profile";
+import { UserRequest } from '../../pages/Profile/types';
 
 export type PepupNotificationProps = {
     closeNotifyModal: () => void, 
