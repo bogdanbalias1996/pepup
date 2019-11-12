@@ -1,16 +1,12 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { View, Image, TouchableOpacity } from 'react-native';
-import FastImage from 'react-native-fast-image';
 
 import { IGlobalState } from '../../coreTypes';
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { ModalRecordVideo } from '../../components/ModalRecordVideo/ModalRecordVideo';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { Icon } from '../../components/Icon/Icon';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
-import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { navigate } from '../../navigationService';
 
 import styles from './Profile.styles';
 import { getProfile, getUserPepups } from './actions';
@@ -24,6 +20,7 @@ import { Notifications } from './Notifications';
 
 import EditProfileButton from './EditProfileButton';
 import UserBlock from './UserBlock';
+import ProfileHeader from './ProfileHeader';
 
 export const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
@@ -85,20 +82,7 @@ export class Component extends React.Component<ProfileScreenProps> {
   };
 
   static navigationOptions = () => ({
-    header: (props: any) => (
-      <HeaderRounded
-        {...props}
-        title={'Profile'.toUpperCase()}
-        getRightComponent={() => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigate({ routeName: 'Settings' })}>
-              <Icon name="nut-icon" />
-            </TouchableOpacity>
-          );
-        }}
-      />
-    )
+    header: (navigationProps: any) => <ProfileHeader {...navigationProps} />
   });
 
   tabsConfig = [

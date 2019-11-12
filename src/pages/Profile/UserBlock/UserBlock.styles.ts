@@ -1,10 +1,4 @@
 import { StyleSheet } from 'react-native';
-import {
-  colorEndButtonInput,
-  colorLightGray,
-  boldFont
-} from '../../../variables';
-import { deviceInfoCheck } from '../../../helpers';
 
 export default StyleSheet.create({
   avatarsWrap: {
