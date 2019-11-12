@@ -1,46 +1,28 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { Dispatch } from 'redux';
-import FastImage from 'react-native-fast-image';
+import { View, Image, TouchableOpacity } from 'react-native';
 
 import { IGlobalState } from '../../coreTypes';
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { ModalRecordVideo } from '../../components/ModalRecordVideo/ModalRecordVideo';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { Icon } from '../../components/Icon/Icon';
 import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
-import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { navigate } from '../../navigationService';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 import styles from './Profile.styles';
 import { getProfile, getUserPepups } from './actions';
-import { ProfileScreenProps } from '.';
+import { ProfileScreenProps } from './types';
 import { MyRequests } from './MyRequests';
-import { History } from './History';
 import { FanRequests } from './FanRequests';
-import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
 import { Notifications } from './Notifications';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userId: state.LoginState.userId,
-  handle: state.LoginState.handle,
-  profileData: state.ProfileState.profileData
-});
+import EditProfileButton from './EditProfileButton';
+import UserBlock from './UserBlock';
+import ProfileHeader from './ProfileHeader';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getProfile: (handle: string) => dispatch(getProfile(handle) as any),
-  openPepupModal: () => dispatch(openPepupModal()),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
-});
-
-const ROLE_CELEB = 'REGULAR,CELEBRITY';
+export const ROLE_CELEB = 'REGULAR,CELEBRITY';
 
 const celebTabs: { [key: string]: number } = {
   funRequests: 0,
@@ -54,7 +36,10 @@ const userTabs: { [key: string]: number } = {
 };
 
 export class Component extends React.Component<ProfileScreenProps> {
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
+  static getDerivedStateFromProps(
+    nextProps: ProfileScreenProps,
+    prevState: any
+  ) {
     const {
       profileData,
       navigation,
@@ -97,115 +82,50 @@ export class Component extends React.Component<ProfileScreenProps> {
   };
 
   static navigationOptions = () => ({
-    header: (props: any) => (
-      <HeaderRounded
-        {...props}
-        title={'Profile'.toUpperCase()}
-        getRightComponent={() => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigate({ routeName: 'Settings' })}>
-              <Icon name="nut-icon" />
-            </TouchableOpacity>
-          );
-        }}
-      />
-    )
+    header: (navigationProps: any) => <ProfileHeader {...navigationProps} />
   });
 
   tabsConfig = [
     {
       title: 'My Requests',
-      component: () => <MyRequests />
+      component: MyRequests
     },
     {
       title: 'Notifications',
-      component: () => <Notifications />
+      component: Notifications
     }
   ];
 
   tabsConfigCeleb = [
     {
       title: 'Fan Requests',
-      component: () => <FanRequests />
+      component: FanRequests
     },
     {
       title: 'My Requests',
-      component: () => <MyRequests />
+      component: MyRequests
     },
     {
       title: 'Notifications',
-      component: () => <Notifications />
+      component: Notifications
     }
-    // {
-    //   title: 'History',
-    //   component: () => <History />,
-    // },
   ];
 
-  componentDidMount = () => {
+  componentDidMount() {
     const { handle, getProfile } = this.props;
 
     handle && getProfile(handle);
-  };
+  }
 
   render() {
-    const { profileData, openPepupModal, getCeleb } = this.props;
-    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
-
-    const getModal = () => {
-      openPepupModal();
-      profileData && getCeleb(profileData.id);
-    };
+    const { profileData } = this.props;
 
     return (
       profileData && (
         <PepupBackground>
-          <View style={styles.avatarsWrap}>
-            {profileData && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <FastImage
-                  style={styles.image}
-                  source={
-                    profileData.icon
-                      ? {
-                          uri: profileData.icon,
-                          priority: FastImage.priority.normal
-                        }
-                      : require('../../../assets/avatarPlaceholder.png')
-                  }
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </Card>
-            )}
-            {isCelebrity && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <TouchableOpacity activeOpacity={1} onPress={getModal}>
-                  <Image
-                    style={[styles.image, styles.avatarCeleb]}
-                    source={require('../../../assets/celebAvatar.png')}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </Card>
-            )}
-          </View>
+          <UserBlock />
+          <EditProfileButton />
 
-          <View style={styles.titleWrap}>
-            <Text style={styles.title}>
-              {(profileData && profileData.name) || ' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigate({
-                  routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
-                })
-              }>
-              <Icon name="edit" />
-            </TouchableOpacity>
-          </View>
           <View style={styles.wrapContent}>
             <Loader isDataLoaded={!!profileData}>
               {!!profileData && (
@@ -239,7 +159,18 @@ export class Component extends React.Component<ProfileScreenProps> {
   }
 }
 
+const mapStateToProps = (state: IGlobalState) => ({
+  userId: state.LoginState.userId,
+  handle: state.LoginState.handle,
+  profileData: state.ProfileState.profileData
+});
+
+const mapDispatchToProps = {
+  getProfile,
+  getUserPepups
+};
+
 export const ProfileScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);

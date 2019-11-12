@@ -8,7 +8,7 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { MyRequestsProps } from '.';
+import { MyRequestsProps } from './types';
 import {
   colorTextGray,
   colorBlack,

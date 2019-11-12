@@ -8,12 +8,8 @@ import {
   TouchableOpacity
 } from 'react-native';
 
-import { NotificationItemsProps } from '.';
-import {
-  colorBlueberry,
-  boldFont,
-  colorAllRead
-} from '../../variables';
+import { NotificationItemsProps } from './types';
+import { colorBlueberry, boldFont, colorAllRead } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
@@ -33,45 +29,39 @@ const mock = [
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   },
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   },
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   },
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   },
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   },
   {
     title: 'Pepup Sent!',
     date: 'Oct 23, 2019',
-    message:
-      'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
+    message: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit.'
   }
 ];
 
 export class Component extends React.PureComponent<NotificationItemsProps> {
   state = {
     isRead: false
-  }
+  };
 
   renderNotification = ({ item }: any) => {
     return (
@@ -79,7 +69,7 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
         title={item.title}
         message={item.message}
         date={item.date}
-        onPress={() => this.setState({isRead: !this.state.isRead})}
+        onPress={() => this.setState({ isRead: !this.state.isRead })}
         isRead={this.state.isRead}
       />
     );
@@ -90,21 +80,21 @@ export class Component extends React.PureComponent<NotificationItemsProps> {
 
     return (
       // <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
-        <View style={styles.wrapper}>
-          <TouchableOpacity
-            style={styles.allReadWrap}
-            activeOpacity={1}
-            onPress={() => !this.state.isRead && this.setState({isRead: true})}>
-            <Text style={styles.allRead}>Mark All as Read</Text>
-          </TouchableOpacity>
-          <FlatList
-            style={{ flex: 1, paddingLeft: 16 }}
-            showsVerticalScrollIndicator={false}
-            data={mock}
-            renderItem={this.renderNotification}
-            keyExtractor={(item: any, index: number) => `${index}`}
-          />
-        </View>
+      <View style={styles.wrapper}>
+        <TouchableOpacity
+          style={styles.allReadWrap}
+          activeOpacity={1}
+          onPress={() => !this.state.isRead && this.setState({ isRead: true })}>
+          <Text style={styles.allRead}>Mark All as Read</Text>
+        </TouchableOpacity>
+        <FlatList
+          style={{ flex: 1, paddingLeft: 16 }}
+          showsVerticalScrollIndicator={false}
+          data={mock}
+          renderItem={this.renderNotification}
+          keyExtractor={(item: any, index: number) => `${index}`}
+        />
+      </View>
       // </Loader>
     );
   }

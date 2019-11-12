@@ -23,7 +23,7 @@ import {
   OPEN_NOTIFY_MODAL,
   CLOSE_NOTIFY_MODAL
 } from './actions';
-import { Profile, Pepup, UserRequest } from '.';
+import { Profile, Pepup, UserRequest } from './types';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,

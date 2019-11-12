@@ -29,7 +29,7 @@ import { ModalVideo } from '../ModalVideo/ModalVideo';
 import { ModalPepupReq } from '../ModalPepupReq/ModalPepupReq';
 import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
-import { Pepup } from '../../pages/Profile';
+import { Pepup } from '../../pages/Profile/types';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';
 
@@ -59,7 +59,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
 
     openReviewsModal();
     celebData && getAllReviews(celebData.userInfo.id);
-  }
+  };
 
   renderItem = (item: RenderItemMedia & ListRenderItem<Pepup>) => {
     return (

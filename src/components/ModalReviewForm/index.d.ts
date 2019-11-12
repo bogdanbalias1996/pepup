@@ -1,14 +1,14 @@
-import { UserRequest } from "../../pages/Profile";
+import { UserRequest } from '../../pages/Profile/types';
 
 export type ModalPostReviewProps = {
-    isFetching?: boolean,
-    pepupData: UserRequest | null,
-    closePostReviewModal: () => void;
-    isModalPostReviewShown: boolean;
-    postReview: (formData: PostReviewFormProps, setErrors: any) => Promise<any>
-}
+  isFetching?: boolean;
+  pepupData: UserRequest | null;
+  closePostReviewModal: () => void;
+  isModalPostReviewShown: boolean;
+  postReview: (formData: PostReviewFormProps, setErrors: any) => Promise<any>;
+};
 
 export type PostReviewFormProps = {
-    review: string,
-    rating: number
-}
+  review: string;
+  rating: number;
+};
