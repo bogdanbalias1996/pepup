@@ -1,10 +1,10 @@
 import { StyleSheet } from "react-native";
 
-import { semiboldFont, colorBlack, defaultFont, colorTextAlert, colorLightGray, colorCancelButton, boldFont } from "../../variables";
+import { colorBlack, defaultFont, colorCancelButton, boldFont } from "../../variables";
 
 export default StyleSheet.create({
     wrapModalContent: {
-        backgroundColor: colorLightGray,
+        backgroundColor: 'white',
         borderTopLeftRadius: 32,
         borderTopRightRadius: 32,
         flexGrow: 1,

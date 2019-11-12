@@ -5,7 +5,8 @@ import {
   colorOrangeStart,
   colorCoolGrey,
   boldFont,
-  colorBlack
+  colorBlack,
+  colorLightYellow
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -28,8 +29,8 @@ export default StyleSheet.create({
 
     elevation: 16,
   },
-  shadowViolet: {
-    shadowColor: colorVioletStart
+  shadowYellow: {
+    shadowColor: colorLightYellow
   },
   shadowGrey: {
     shadowColor: colorCoolGrey

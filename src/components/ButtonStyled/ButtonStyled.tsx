@@ -7,14 +7,10 @@ import { ButtonStyledProps } from '.';
 import styles from './ButtonStyled.styles';
 import {
   colorBlack,
-  colorVioletStart,
-  colorVioletEnd,
   colorBlueStart,
   colorBlueEnd,
   colorOrangeStart,
   colorOrangeEnd,
-  boldFont,
-  defaultFont,
   colorCoolGrey,
   colorDotGray,
   colorLightYellow,
@@ -32,7 +28,7 @@ const getTypeButton = (type: string) => {
     case 'grey':
       return [styles.shadowGrey, styles.btnShadow];
     default:
-      return [styles.shadowViolet, styles.btnShadow];
+      return [styles.shadowYellow, styles.btnShadow];
   }
 };
 
@@ -45,7 +41,7 @@ const getColorButton = (type: string) => {
     case 'border':
       return [colorLightYellow, colorLightOrange];
     case 'white':
-      return ['white', 'white'];
+      return 'white';
     case 'grey':
       return [colorCoolGrey, colorDotGray];
     default:

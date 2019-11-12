@@ -1,10 +1,7 @@
 import { StyleSheet } from 'react-native';
 import {
-  semiboldFont,
   colorBlack,
   defaultFont,
-  colorTextAlert,
-  colorTextGreyIntro,
   boldFont
 } from '../../variables';
 

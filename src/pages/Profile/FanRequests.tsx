@@ -22,7 +22,8 @@ import {
   colorLightOrange,
   semiboldFont,
   colorTextViolet,
-  colorEventLabel
+  colorEventLabel,
+  colorBottomInput
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
@@ -187,7 +188,7 @@ const styles = StyleSheet.create({
   card: {
     padding: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground
+    borderColor: colorBottomInput
   },
   cardHeader: {
     flexDirection: 'row',

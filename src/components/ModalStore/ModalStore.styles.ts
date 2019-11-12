@@ -2,10 +2,8 @@ import { StyleSheet } from "react-native";
 import {
   colorBlack,
   colorTextGrey,
-  colorLightGray,
   colorTextViolet,
   colorOrange,
-  colorSwipeLine,
   semiboldFont,
   defaultFont,
   colorCancelButton
@@ -21,13 +19,6 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flex: 1
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: "center"
   },
   modal: {
     zIndex: 100,

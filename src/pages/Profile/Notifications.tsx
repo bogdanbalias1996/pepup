@@ -10,9 +10,7 @@ import {
 
 import { NotificationItemsProps } from './types';
 import {
-  colorLightOrange,
   boldFont,
-  colorAllRead,
   colorTextViolet
 } from '../../variables';
 

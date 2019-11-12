@@ -3,7 +3,6 @@ import {
 } from 'react-native';
 
 import {
-  colorLightGray,
   boldFont,
   semiboldFont
 } from '../../../variables';
@@ -40,7 +39,7 @@ export default StyleSheet.create({
   status: {
     fontSize: 12,
     fontFamily: semiboldFont,
-    color: colorLightGray,
+    color: 'white',
     marginBottom: 10,
     marginLeft: 8
   },

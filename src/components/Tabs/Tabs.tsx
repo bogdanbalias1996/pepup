@@ -4,7 +4,6 @@ import { TabsProps, Tab } from './';
 import { createSelector } from 'reselect';
 import { TabView, SceneMap, TabBar } from 'react-native-tab-view';
 import {
-  colorVioletGrey,
   colorBlack,
   boldFont,
   semiboldFont
@@ -106,7 +105,7 @@ export const defaultTabsStyles = StyleSheet.create({
     overflow: 'visible'
   },
   itemText: {
-    color: colorVioletGrey,
+    color: colorBlack,
     fontSize: 16,
     fontFamily: semiboldFont,
     alignSelf: 'center',

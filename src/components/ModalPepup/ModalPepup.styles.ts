@@ -8,7 +8,6 @@ import {
   semiboldFont,
   boldFont,
   defaultFont,  
-  colorTextGreyIntro,
   colorModalTextGrey,
   colorCancelButton,
   colorInput,
@@ -41,7 +40,7 @@ export default StyleSheet.create({
   },
   infoText: {
     flexShrink: 1, 
-    color: colorTextGreyIntro,
+    color: colorModalTextGrey,
     lineHeight: 22,
     marginLeft: 17
   },

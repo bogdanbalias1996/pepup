@@ -12,7 +12,6 @@ import { MyRequestsProps } from './types';
 import {
   colorTextGrey,
   colorBlack,
-  colorInputBackground,
   defaultFont,
   colorGreen,
   colorOrangeStatus,
@@ -22,7 +21,8 @@ import {
   semiboldFont,
   colorLightOrange,
   colorTextViolet,
-  colorEventLabel
+  colorEventLabel,
+  colorBottomInput
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
@@ -145,7 +145,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     return (
       <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         <FlatList
-          style={{ flex: 1, paddingLeft: 16 }}
+          style={{ flex: 1 }}
           showsVerticalScrollIndicator={false}
           data={userPepups}
           renderItem={this.renderItemRequest}
@@ -163,10 +163,9 @@ export const MyRequests = connect(
 
 const styles = StyleSheet.create({
   card: {
-    paddingVertical: 16,
-    paddingRight: 16,
+    padding: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground
+    borderColor: colorBottomInput
   },
   cardHeader: {
     flexDirection: 'row',

@@ -23,6 +23,7 @@ import CategoryViewer from '../../components/CategoryViewer';
 
 import CelebCard from './CelebCard';
 import { keyExtractorType } from '../../components/CategoryViewer/types';
+import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
 export class Component extends PureComponent<
   PepupsScreenProps,
@@ -106,7 +107,7 @@ export class Component extends PureComponent<
           </Loader>
         </View>
         <ModalPepup />
-        {/* <ErrorModal /> */}
+        <ErrorModal />
       </PepupBackground>
     );
   }

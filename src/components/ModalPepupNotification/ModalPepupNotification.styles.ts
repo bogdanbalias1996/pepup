@@ -1,11 +1,7 @@
 import { StyleSheet } from "react-native";
 import {
     colorBlack,
-    colorLightGray,
     semiboldFont,
-    colorItalic,
-    italicFont,
-    boldFont,
     colorCancelButton,
     defaultFont,
     colorModalTextGrey,
