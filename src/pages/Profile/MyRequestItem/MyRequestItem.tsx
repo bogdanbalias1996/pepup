@@ -1,0 +1,154 @@
+import * as React from 'react';
+import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+
+import { MyRequestsProps } from '../types';
+import {
+  colorTextGray,
+  colorBlack,
+  colorInputBackground,
+  defaultFont,
+  colorGreen,
+  colorOrangeStatus,
+  colorTextRed,
+  colorCompletedStatus,
+  italicFont,
+  semiboldFont,
+  colorBlueberry
+} from '../../../variables';
+
+import { capitalize } from '../../../helpers';
+
+class MyRequestItem extends React.PureComponent<MyRequestsProps> {
+  getStatusUser = (status: string, name: string) => {
+    const normalizedStatus = status.toLowerCase();
+
+    switch (normalizedStatus) {
+      case 'pending':
+        return {
+          status,
+          msg: `${name} has been notified.`,
+          statusColor: colorGreen,
+          onPress: () => {}
+        };
+      case 'accepted':
+        return {
+          status,
+          msg: `${name} is working on your request.`,
+          statusColor: colorOrangeStatus,
+          onPress: () => {}
+        };
+      case 'unavailable':
+      case 'rejected':
+        return {
+          status: 'unavailable',
+          msg: `Sorry. ${name} is unable to complete your request.`,
+          statusColor: colorTextRed,
+          onPress: () => {}
+        };
+      case 'completed':
+        return {
+          status,
+          msg: `Hurray! Your pepup is ready.`,
+          statusColor: colorCompletedStatus,
+          onPress: () => alert('Compl')
+        };
+      default:
+        console.log(`Unsupported request status: '${normalizedStatus}'`);
+        return {
+          status,
+          msg: ``,
+          statusColor: colorBlueberry,
+          onPress: () => {}
+        };
+    }
+  };
+
+  render() {
+    const { item } = this.props;
+    const { msg, statusColor, onPress, status } = this.getStatusUser(
+      item.status,
+      item.celebInfo.userInfo.name
+    );
+
+    return (
+      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Text style={styles.notificationStatus}>
+              <Text style={{ color: statusColor }}>
+                {capitalize(status.toLowerCase())}
+              </Text>{' '}
+              - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
+            </Text>
+            <Text style={styles.date}>{item.requestedOnDt}</Text>
+          </View>
+          <View>
+            {status.toLowerCase() === 'completed' ? (
+              <Text>
+                <Text style={styles.text}>{msg}</Text>{' '}
+                <Text
+                  style={[
+                    styles.text,
+                    { color: statusColor },
+                    styles.completed
+                  ]}>
+                  Click to watch.
+                </Text>
+              </Text>
+            ) : (
+              <Text style={styles.text}>{msg}</Text>
+            )}
+            <Text
+              numberOfLines={3}
+              ellipsizeMode="tail"
+              style={[styles.text, styles.reqDescription]}>
+              {item.request}
+            </Text>
+          </View>
+        </View>
+      </TouchableOpacity>
+    );
+  }
+}
+
+export default MyRequestItem;
+
+const styles = StyleSheet.create({
+  card: {
+    paddingVertical: 16,
+    paddingRight: 16,
+    borderBottomWidth: 1,
+    borderColor: colorInputBackground
+  },
+  cardHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 8
+  },
+  text: {
+    fontSize: 14,
+    fontFamily: defaultFont,
+    color: colorTextGray
+  },
+  completed: {
+    fontFamily: semiboldFont
+  },
+  reqDescription: {
+    fontSize: 12,
+    fontFamily: italicFont
+  },
+  date: {
+    fontSize: 12,
+    fontFamily: defaultFont,
+    color: colorTextGray
+  },
+  name: {
+    fontSize: 14,
+    fontFamily: defaultFont,
+    color: colorBlack
+  },
+  notificationStatus: {
+    flexDirection: 'row',
+    fontFamily: defaultFont
+  }
+});

@@ -36,6 +36,7 @@ import CategoryViewer from '../../components/CategoryViewer';
 import { ViewerCategory } from '../../components/CategoryViewer/types';
 
 import FanRequestsItem from './FanRequestItem';
+import MyRequestsItem from './MyRequestItem';
 
 export class Component extends React.Component<
   ProfileScreenProps,
@@ -89,7 +90,7 @@ export class Component extends React.Component<
     const tabsConfig: ProfileTabConfig[] = [
       {
         title: 'My Requests',
-        component: () => <Text>1</Text>
+        component: MyRequestsItem
       },
       {
         title: 'Notifications',
