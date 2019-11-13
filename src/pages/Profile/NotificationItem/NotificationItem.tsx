@@ -19,6 +19,8 @@ export class NotificationItem extends React.PureComponent<
     isRead: false
   };
 
+  onPress = () => this.setState(state => ({ isRead: !state.isRead }));
+
   render() {
     const { item } = this.props;
     return (
@@ -26,7 +28,7 @@ export class NotificationItem extends React.PureComponent<
         title={item.title}
         message={item.message}
         date={item.date}
-        onPress={() => this.setState({ isRead: !this.state.isRead })}
+        onPress={this.onPress}
         isRead={this.state.isRead}
       />
     );
@@ -34,13 +36,6 @@ export class NotificationItem extends React.PureComponent<
 }
 
 export default NotificationItem;
-
-/* <TouchableOpacity
-style={styles.allReadWrap}
-activeOpacity={1}
-onPress={() => !this.state.isRead && this.setState({ isRead: true })}>
-<Text style={styles.allRead}>Mark All as Read</Text>
-</TouchableOpacity> */
 
 const styles = StyleSheet.create({
   wrapper: {

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import { createSelector } from 'reselect';
 import memoize from 'memoize-one';
 
@@ -33,7 +33,10 @@ import {
 import styles from './Profile.styles';
 
 import CategoryViewer from '../../components/CategoryViewer';
-import { ViewerCategory } from '../../components/CategoryViewer/types';
+import {
+  ViewerCategory,
+  ViewerRoute
+} from '../../components/CategoryViewer/types';
 
 import FanRequestsItem from './FanRequestItem';
 import MyRequestsItem from './MyRequestItem';
@@ -132,6 +135,20 @@ export class Component extends React.Component<
     this.setState({ activeTabIndex: index });
   };
 
+  renderHeader = (route: ViewerRoute) => {
+    if (route.title === 'Notifications') {
+      return (
+        <TouchableOpacity
+          // style={styles.allReadWrap}
+          activeOpacity={1}>
+          <Text style={styles.allRead}>Mark All as Read</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
+  };
+
   render() {
     const { profileData, isCelebrity, data } = this.props;
     const { activeTabIndex } = this.state;
@@ -170,8 +187,10 @@ export class Component extends React.Component<
               flatListStyle={{
                 paddingLeft: 16,
                 flex: 1,
-                flexDirection: 'column'
+                flexDirection: 'column',
+                marginBottom: 10
               }}
+              header={this.renderHeader}
             />
           </Loader>
         </View>

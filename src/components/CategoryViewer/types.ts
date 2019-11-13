@@ -1,4 +1,4 @@
-import { ComponentType } from 'react';
+import { ComponentType, ElementType } from 'react';
 import { StyleProp } from 'react-native';
 
 export type keyExtractorType = (item: object) => string | number;
@@ -26,6 +26,8 @@ export interface CategoryViewerProps {
   categories: ViewerCategory[];
   data: ViewerData;
   flatListStyle?: StyleProp<any>;
+  header?: (route: ViewerRoute) => ElementType | null;
+  footer?: (route: ViewerRoute) => ElementType | null;
 }
 
 export interface ListProps {
