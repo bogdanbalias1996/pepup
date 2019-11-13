@@ -8,5 +8,24 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     zIndex: 30
+  },
+  bottomControlsWrap: {
+    flexDirection: 'row',
+    position: 'absolute',
+    alignItems: 'center',
+    bottom: 25,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 24,
+    justifyContent: 'space-between'
+  },
+  downloadShare: {
+    flexDirection: 'row',
+  },
+  btnSend: {
+    width: 155,
+  },
+  icon: {
+    marginHorizontal: 12
   }
 });

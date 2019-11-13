@@ -74,26 +74,15 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                 validationSchema={ReviewSchema}
                 onSubmit={this.handleSubmit}>
                 {(props: any) => {
-                  const {
-                    handleSubmit,
-                    errors,
-                    touched,
-                    setFieldValue,
-                    values
-                  } = props;
-
-                  const formattedErrorString = Object.keys(errors)
-                    .reduce((acc: Array<string>, key: string) => {
-                      const value = (errors as any)[key];
-                      if ((touched as any)[key] && acc.indexOf(value) < 0) {
-                        acc.push(value);
-                      }
-                      return acc;
-                    }, [])
-                    .join('. ');
+                  const { handleSubmit, setFieldValue, values } = props;
 
                   return (
                     <View style={styles.wrap}>
+                      <TouchableOpacity
+                        style={styles.btnCancel}
+                        onPress={() => closePostReviewModal()}>
+                        <Icon size={20} name="cancel" color={colorBlack} />
+                      </TouchableOpacity>
                       <ScrollView>
                         <View style={styles.scrollContent}>
                           <View
@@ -106,7 +95,9 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                             <View style={{ justifyContent: 'space-between' }}>
                               <View style={styles.inputWrap}>
                                 <Text style={styles.subTitle}>
-                                  {`Say Thanks to ${pepupData.celebInfo.userInfo.name}`}
+                                  {`Say Thanks to ${
+                                    pepupData.celebInfo.userInfo.name
+                                  }`}
                                 </Text>
                                 <TextInputBorderStyled
                                   name="review"
@@ -137,18 +128,12 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                           </View>
                         </View>
                       </ScrollView>
-
                       <View style={styles.footerWrap}>
                         <View style={styles.modalFooter}>
-                          <TouchableOpacity
-                            style={styles.btnCancel}
-                            onPress={() => closePostReviewModal()}>
-                            <Icon size={20} name="cancel" color={colorBlack} />
-                          </TouchableOpacity>
                           <ButtonStyled
                             style={styles.btnSubmit}
-                            onPress={handleSubmit}
-                            text="SUBMIT"
+                            onPress={() => handleSubmit()}
+                            text='SUBMIT'
                             loader={isFetching}
                           />
                         </View>

@@ -257,7 +257,7 @@ export class Component extends React.PureComponent<
                       onPress={() => {
                         this.setState({ isReadyForPost: false });
                       }}>
-                      <Icon name="left" />
+                      <Icon name="back" />
                     </TouchableOpacity>
                   </View>
                 ) : (
