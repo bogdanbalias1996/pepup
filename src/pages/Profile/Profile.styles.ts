@@ -45,5 +45,11 @@ export default StyleSheet.create({
     fontFamily: boldFont,
     fontSize: 14,
     color: colorAllRead
+  },
+  flatListStyle: {
+    paddingLeft: 16,
+    paddingRight: 16,
+    flex: 1,
+    marginBottom: 10
   }
 });

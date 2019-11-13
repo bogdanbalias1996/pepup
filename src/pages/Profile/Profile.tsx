@@ -170,12 +170,7 @@ export class Component extends React.Component<
               data={data}
               activeTabIndex={activeTabIndex}
               onTabChange={this.handleChangeTab}
-              flatListStyle={{
-                paddingLeft: 16,
-                flex: 1,
-                flexDirection: 'column',
-                marginBottom: 10
-              }}
+              flatListStyle={styles.flatListStyle}
               header={this.renderHeader}
             />
           </Loader>

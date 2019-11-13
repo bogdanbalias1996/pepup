@@ -12,7 +12,6 @@ import {
 export default StyleSheet.create({
   card: {
     paddingVertical: 16,
-    paddingRight: 16,
     borderBottomWidth: 1,
     borderColor: colorInputBackground
   },
