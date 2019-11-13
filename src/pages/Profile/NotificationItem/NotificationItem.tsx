@@ -1,56 +1,48 @@
-import * as React from 'react';
-import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import React, { PureComponent } from 'react';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-import { NotificationItemsProps } from '../types';
-import { colorBlueberry, boldFont, colorAllRead } from '../../../variables';
-import { Notification } from '../../../components/Notification/Notification';
+import { NotificationItemsProps, NotificationItemState } from './types';
 
-export class NotificationItem extends React.PureComponent<
-  NotificationItemsProps
+import { DefaultWrapper, GradientWrapper } from './wrappers';
+
+import styles from './NotificationItem.styles';
+
+export class NotificationItem extends PureComponent<
+  NotificationItemsProps,
+  NotificationItemState
 > {
   state = {
     isRead: false
   };
 
-  onPress = () => this.setState(state => ({ isRead: !state.isRead }));
+  onPress = () =>
+    this.setState((state: NotificationItemState) => ({
+      isRead: !state.isRead
+    }));
 
   render() {
     const { item } = this.props;
+    const { isRead } = this.state;
+
+    const { title = '', date = '', message = '' } = item;
+
+    const Wrapper = isRead ? DefaultWrapper : GradientWrapper;
+
     return (
-      <Notification
-        title={item.title}
-        message={item.message}
-        date={item.date}
-        onPress={this.onPress}
-        isRead={this.state.isRead}
-      />
+      <Wrapper>
+        <TouchableOpacity
+          onPress={this.onPress}
+          activeOpacity={1}
+          style={styles.message}>
+          <View style={styles.headerWrap}>
+            <Text style={styles.messageTitle}>{title}</Text>
+            <Text style={styles.messageDate}>{date}</Text>
+          </View>
+          <Text style={styles.messageText}>{message}</Text>
+        </TouchableOpacity>
+      </Wrapper>
     );
   }
 }
 
 export default NotificationItem;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingLeft: 10,
-    paddingRight: 24,
-    flex: 1
-  },
-  allReadWrap: {
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    marginBottom: 10
-  },
-  allRead: {
-    fontFamily: boldFont,
-    fontSize: 14,
-    color: colorAllRead
-  }
-});
