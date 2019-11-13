@@ -81,7 +81,7 @@ export class Component extends React.Component<
   }
 
   state = {
-    activeTabIndex: 2
+    activeTabIndex: 0
   };
 
   componentDidMount() {
@@ -117,6 +117,7 @@ export class Component extends React.Component<
     const { isCelebrity, getUserPepups, getCelebPepups, userId } = this.props;
 
     const tabs = this.getTabsConfig(isCelebrity);
+    console.log({ tabs, index });
     const tabName = tabs[index].title;
 
     const sw: { [key in ProfileTabType]: () => void } = {

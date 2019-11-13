@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
+import { differenceInDays } from 'date-fns';
 
-import { FanRequestsProps, Pepup } from '../types';
 import {
   colorGreen,
   colorOrangeStatus,
@@ -16,8 +16,9 @@ import { openNotifyModal, getPepupNotification } from '../actions';
 import { videoRecordModalOpen } from '../../RecordVideo/actions';
 
 import styles from './FanRequestItem.styles';
+import { FanRequestItemProps } from './types';
 
-class FanRequestItem extends React.PureComponent<FanRequestsProps> {
+class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
   getModal = (pepupId: string) => {
     const { openNotifyModal, getPepupNotification } = this.props;
 
@@ -25,34 +26,32 @@ class FanRequestItem extends React.PureComponent<FanRequestsProps> {
     getPepupNotification(pepupId);
   };
 
+  getMessage(days: number) {
+    if (days > 0) {
+      return `${days > 1 ? `${days} days` : `${days} day`} remaining.`;
+    } else if (days === 0) {
+      return `Last day to fulfill.`;
+    } else return 'Expired!';
+  }
+
   getStatusCeleb = ({ status, requestedOnDt: date, id }: any) => {
     const normalizedStatus = status.toLowerCase();
+
     const today = new Date();
     const requestedOn = new Date(date);
-    const roundedDays = +(
-      7 -
-      (today.getTime() - requestedOn.getTime()) / (1000 * 3600 * 24)
-    ).toFixed(0);
-
-    const getMessage = (days: number) => {
-      if (days > 0) {
-        return `${days > 1 ? `${days} days` : `${days} day`} remaining.`;
-      } else if (days === 0) {
-        return `Last day to fulfill.`;
-      } else return 'Expired!';
-    };
+    const roundedDays = differenceInDays(today, requestedOn);
 
     switch (normalizedStatus) {
       case 'pending':
         return {
-          msg: getMessage(roundedDays),
+          msg: this.getMessage(roundedDays),
           statusColor: colorGreen,
           onPress: () => this.getModal(id),
           linkText: 'View Details.'
         };
       case 'accepted':
         return {
-          msg: getMessage(roundedDays),
+          msg: this.getMessage(roundedDays),
           statusColor: colorOrangeStatus,
           onPress: () =>
             this.props.videoRecordModalOpen(id, 'fulfillPepupRequest'),
@@ -89,7 +88,7 @@ class FanRequestItem extends React.PureComponent<FanRequestsProps> {
     const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
