@@ -37,6 +37,7 @@ import { ViewerCategory } from '../../components/CategoryViewer/types';
 
 import FanRequestsItem from './FanRequestItem';
 import MyRequestsItem from './MyRequestItem';
+import NotificationItem from './NotificationItem';
 
 export class Component extends React.Component<
   ProfileScreenProps,
@@ -94,7 +95,7 @@ export class Component extends React.Component<
       },
       {
         title: 'Notifications',
-        component: () => <Text>1</Text>
+        component: NotificationItem
       }
     ];
 
