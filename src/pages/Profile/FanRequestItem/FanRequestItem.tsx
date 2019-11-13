@@ -39,7 +39,8 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
 
     const today = new Date();
     const requestedOn = new Date(date);
-    const roundedDays = differenceInDays(today, requestedOn);
+    const dayLimit = 8;
+    const roundedDays = dayLimit - differenceInDays(today, requestedOn);
 
     switch (normalizedStatus) {
       case 'pending':
