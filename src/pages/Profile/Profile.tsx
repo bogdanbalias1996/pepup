@@ -81,7 +81,7 @@ export class Component extends React.Component<
   }
 
   state = {
-    activeTabIndex: 0
+    activeTabIndex: 2
   };
 
   componentDidMount() {
@@ -138,10 +138,8 @@ export class Component extends React.Component<
   renderHeader = (route: ViewerRoute) => {
     if (route.title === 'Notifications') {
       return (
-        <TouchableOpacity
-          // style={styles.allReadWrap}
-          activeOpacity={1}>
-          <Text style={styles.allRead}>Mark All as Read</Text>
+        <TouchableOpacity style={styles.allReadWrap} activeOpacity={1}>
+          <Text style={styles.allReadText}>Mark All as Read</Text>
         </TouchableOpacity>
       );
     }
@@ -166,19 +164,6 @@ export class Component extends React.Component<
 
         <View style={styles.wrapContent}>
           <Loader isDataLoaded={!!profileData}>
-            {/* <Tabs
-              config={tabsConfig}
-              changeIndex={(index: number) =>
-                this.setState({ activeTabIndex: index })
-              }
-              style={{ flex: 1 }}
-              stylesItem={defaultTabsStyles.roundedTabs}
-              activeTabIndex={this.state.activeTabIndex}
-              stylesTabsContainer={{
-                backgroundColor: 'transparent',
-                marginBottom: 10
-              }}
-            /> */}
             <CategoryViewer
               categories={tabsConfig as ViewerCategory[]}
               data={data}
