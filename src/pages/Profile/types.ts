@@ -55,6 +55,8 @@ export type UserRequest = {
   requestedOnDt: string;
 };
 
+export type NotificationItem = {};
+
 export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
@@ -86,6 +88,7 @@ export type MyRequestsProps = {
   userId: string;
   getUserPepups: (id: string) => Promise<any>;
   openVideoModal: (link: string) => void;
+  getPepupNotification: (id: string) => Promise<any>;
 };
 
 export type NotificationItemsProps = {

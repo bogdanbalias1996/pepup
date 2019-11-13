@@ -21,9 +21,12 @@ import {
   REQUEST_PEPUP_NOTIFICATION,
   FAILURE_PEPUP_NOTIFICATION,
   OPEN_NOTIFY_MODAL,
-  CLOSE_NOTIFY_MODAL
+  CLOSE_NOTIFY_MODAL,
+  RECEIVE_NOTIFICATIONS,
+  REQUEST_NOTIFICATIONS,
+  FAILURE_NOTIFICATIONS
 } from './actions';
-import { Profile, Pepup, UserRequest } from './types';
+import { Profile, Pepup, UserRequest, NotificationItem } from './types';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,
@@ -43,6 +46,7 @@ export class ProfileState {
   recordedVideo: any;
   isModalNotifyShown: boolean;
   isFetchingNotifyD: boolean;
+  notifications: Array<NotificationItem>;
 
   constructor() {
     this.profileData = null;
@@ -56,6 +60,7 @@ export class ProfileState {
     this.pepupData = null;
     this.isModalNotifyShown = false;
     this.isFetchingNotifyD = false;
+    this.notifications = [];
   }
 }
 
@@ -209,6 +214,22 @@ export const ProfileReducer = (
       };
     case REMOVE_SESSION:
       return new ProfileState();
+    case RECEIVE_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.data,
+        isFetching: false
+      };
+    case REQUEST_NOTIFICATIONS:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FAILURE_NOTIFICATIONS:
+      return {
+        ...state,
+        isFetching: false
+      };
     default:
       return state;
   }

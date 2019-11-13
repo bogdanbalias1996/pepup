@@ -28,7 +28,7 @@ import { Dispatch } from 'redux';
 import { Loader } from '../../components/Loader/Loader';
 import { getUserPepups } from './actions';
 import { capitalize } from '../../helpers';
-import { openVideoModal } from '../Pepups/actions';
+import { openVideoModal, getPepupNotification } from '../Pepups/actions';
 
 const mapStateToProps = (state: IGlobalState) => ({
   userPepups: state.ProfileState.userPepups,
@@ -37,7 +37,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
-  openVideoModal: (link: string) => dispatch(openVideoModal(link))
+  openVideoModal: (link: string) => dispatch(openVideoModal(link)),
+  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any)
 });
 
 export class Component extends React.PureComponent<MyRequestsProps> {
@@ -47,7 +48,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     userId && getUserPepups(userId);
   }
 
-  getStatusUser = (status: string, name: string, link: string = '') => {
+  getStatusUser = (status: string, name: string, link: string = '', id: string = '') => {
     const normalizedStatus = status.toLowerCase();
     
     switch (normalizedStatus) {
@@ -79,8 +80,8 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => {
-            console.log(`link: ${link}`)
-            return this.props.openVideoModal(link)
+            this.props.openVideoModal(link); 
+            this.props.getPepupNotification(id)
           }
         };
       default:
@@ -98,7 +99,8 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
       item.celebInfo.userInfo.name,
-      item.dataInfo && item.mediaBasePath + item.dataInfo.link
+      item.dataInfo && item.mediaBasePath + item.dataInfo.link,
+      item.id
     );
 
     return (

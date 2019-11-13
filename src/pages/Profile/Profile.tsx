@@ -144,7 +144,7 @@ export class Component extends React.Component<
         <ModalRecordVideo />
         <ModalPepup />
         <ModalPostReview />
-        <ModalVideo />
+        <ModalVideo isPepup/>
         <ModalPepupNotification />
       </PepupBackground>
     );

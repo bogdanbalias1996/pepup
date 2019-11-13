@@ -10,7 +10,7 @@ import {
   videoRecordModalClose,
   videoRecordModalUpload
 } from '../RecordVideo/actions';
-import { Pepup, UserRequest } from './types';
+import { Pepup, UserRequest, NotificationItem } from './types';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
 export const receiveUserProfile = (data: string): IAction<string> => {
@@ -518,7 +518,7 @@ export const getPepupNotification = (pepupId: string) => {
 };
 
 export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
-export const receiveNotifications = (data: Array<Pepup>): IAction<Array<Pepup>> => {
+export const receiveNotifications = (data: Array<NotificationItem>): IAction<Array<NotificationItem>> => {
   return {
     type: RECEIVE_NOTIFICATIONS,
     data,

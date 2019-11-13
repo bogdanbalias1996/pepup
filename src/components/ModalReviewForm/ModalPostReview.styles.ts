@@ -11,10 +11,10 @@ import {
 
 export default StyleSheet.create({
     wrapModalContent: {
-        flex: 1, 
-        paddingHorizontal: 24, 
+        flex: 1,
+        paddingHorizontal: 24,
         position: 'relative',
-        paddingTop: 15
+        paddingTop: 15,
     },
     subTitle: {
         fontSize: 14,
@@ -50,9 +50,12 @@ export default StyleSheet.create({
         height: 48,
         borderRadius: 30,
         backgroundColor: colorCancelButton,
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 16
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 0,
+        top: 23,
+        zIndex: 999
     },
     btnSubmit: {
         flex: 1
@@ -93,7 +96,11 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    wrap: { flex: 1, position: 'relative' },
+    wrap: {
+        flex: 1,
+        position: 'relative',
+        paddingTop: 55
+    },
     checkboxWrap: {
         flexDirection: 'row',
         alignItems: 'center',

@@ -28,8 +28,7 @@ export default StyleSheet.create({
   image: {
     width: '100%',
     height: '100%',
-    borderRadius: 8,
-    marginTop: 5
+    borderRadius: 8
   },
   descriptionTitle: {
     fontSize: 14,
@@ -102,11 +101,10 @@ export default StyleSheet.create({
     fontFamily: defaultFont
   },
   avatar: {
-    width: 327,
-    height: 168,
+    flex: 1,
+    height: 180,
     borderRadius: 8,
-    marginRight: 10,
-    shadowColor: 'black',
+    shadowColor: colorBlack,
     shadowOffset: {
       width: 0,
       height: 3

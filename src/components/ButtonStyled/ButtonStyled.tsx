@@ -14,7 +14,9 @@ import {
   colorCoolGrey,
   colorDotGray,
   colorLightYellow,
-  colorLightOrange
+  colorLightOrange,
+  defaultFont,
+  boldFont
 } from '../../variables';
 import { Loader } from '../Loader/Loader';
 import FastImage from 'react-native-fast-image';
@@ -58,7 +60,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   type = '',
   loader = false,
   loaderColor = 'white',
-  styleGradient = {}
+  styleGradient = {},
+  normalFont = false
 }): JSX.Element => {  
   return (
     <View style={[getTypeButton(type)].concat(style)}>
@@ -95,7 +98,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
                       ? colorBlack
                       : type === 'white'
                       ? colorBlack
-                      : 'white'
+                      : 'white',
+                  fontFamily: normalFont ? defaultFont : boldFont    
                 }
               ]}>
               {text}
