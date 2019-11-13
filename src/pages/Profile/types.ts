@@ -84,30 +84,6 @@ export type ProfileScreenDispatchProps = {
   getCelebPepups: (id: string) => Promise<any>;
 };
 
-export type MyRequestsProps = {
-  userPepups: Array<Pepup>;
-  getStatusUser?: () => void;
-  isFetching: boolean;
-  userId: string;
-  getUserPepups: (id: string) => Promise<any>;
-};
-
-export type NotificationItemsProps = {
-  isFetching: boolean;
-};
-
-export type FanRequestsProps = {
-  celebPepups: Array<Pepup>;
-  getStatusCeleb?: () => void;
-  isFetching: boolean;
-  userId: string;
-  pepupId?: string;
-  getCelebPepups: (id: string) => Promise<any>;
-  openNotifyModal: () => void;
-  getPepupNotification: (id: string) => Promise<any>;
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void;
-};
-
 export type HistoryItemsProps = {
   pepups: Array<Pepup>;
   profileData: Profile | null;
