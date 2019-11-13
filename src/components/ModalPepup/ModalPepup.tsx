@@ -245,7 +245,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                       </Text>
                       <TouchableOpacity onPress={() => this.getReviews()}>
                         <Text style={[styles.text, styles.allRewiewsButton]}>
-                          Check all reactions
+                          See all reactions
                         </Text>
                       </TouchableOpacity>
                     </View>

@@ -2,7 +2,6 @@ import * as React from 'react';
 import { TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 import { Video } from 'expo-av';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { PepupModal } from '../PepupModal/PepupModal';
@@ -11,6 +10,7 @@ import { closeVideoModal } from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ModalVideoProps } from '.';
 import styles from './ModalVideo.styles';
+import { colorBlack } from '../../variables';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoModalShown: state.PepupState.isVideoModalShown,
@@ -73,11 +73,12 @@ export class Component extends React.PureComponent<ModalVideoProps> {
             style={{ width: '100%', height: '100%' }}
           />
           <TouchableOpacity
-            style={{ position: 'absolute', top: 50, left: 24, zIndex: 40 }}
+            style={styles.closeBtn}
             onPress={() => closeVideoModal()}
           >
-            <Icon name="left" />
+            <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
+          
           {!isLoaded ? (
             <ActivityIndicator
               size="small"

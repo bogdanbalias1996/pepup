@@ -25,9 +25,10 @@ class CelebCard extends PureComponent<CelebCardProps> {
 
   render() {
     const { item } = this.props;
+
     return (
       <View style={styles.wrapper}>
-        <Card style={styles.card}>
+        <Card style={styles.card} radius={24}>
           <TouchableOpacity
             onPress={this.onPress}
             style={styles.avatarWrapper}

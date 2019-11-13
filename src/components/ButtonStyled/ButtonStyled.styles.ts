@@ -14,7 +14,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    height: 50,
+    height: 48,
     paddingVertical: 16
   },
   btnShadow: {

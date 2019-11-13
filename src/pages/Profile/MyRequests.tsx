@@ -78,7 +78,10 @@ export class Component extends React.PureComponent<MyRequestsProps> {
           status,
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
-          onPress: () => this.props.openVideoModal(link)
+          onPress: () => {
+            console.log(`link: ${link}`)
+            return this.props.openVideoModal(link)
+          }
         };
       default:
         console.log(`Unsupported request status: '${normalizedStatus}'`);

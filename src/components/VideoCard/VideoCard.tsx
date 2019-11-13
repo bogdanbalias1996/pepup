@@ -14,7 +14,7 @@ class VideoCard extends PureComponent<VideoCardProps> {
 
     return (
       <View style={[styles.videoContainer, { width, height }]}>
-        <Card>
+        <Card radius={10}>
           <CardGradient />
           <Video
             source={{ uri: videoUrl }}
