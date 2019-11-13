@@ -1,24 +1,20 @@
 import * as React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-import { MyRequestsProps } from '../types';
 import {
-  colorTextGray,
-  colorBlack,
-  colorInputBackground,
-  defaultFont,
+  colorBlueberry,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus,
-  italicFont,
-  semiboldFont,
-  colorBlueberry
+  colorCompletedStatus
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
 
-class MyRequestItem extends React.PureComponent<MyRequestsProps> {
+import { MyRequestItemProps } from './types';
+import styles from './MyRequestItem.styles';
+
+class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   getStatusUser = (status: string, name: string) => {
     const normalizedStatus = status.toLowerCase();
 
@@ -71,7 +67,7 @@ class MyRequestItem extends React.PureComponent<MyRequestsProps> {
     );
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
@@ -112,43 +108,3 @@ class MyRequestItem extends React.PureComponent<MyRequestsProps> {
 }
 
 export default MyRequestItem;
-
-const styles = StyleSheet.create({
-  card: {
-    paddingVertical: 16,
-    paddingRight: 16,
-    borderBottomWidth: 1,
-    borderColor: colorInputBackground
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorTextGray
-  },
-  completed: {
-    fontFamily: semiboldFont
-  },
-  reqDescription: {
-    fontSize: 12,
-    fontFamily: italicFont
-  },
-  date: {
-    fontSize: 12,
-    fontFamily: defaultFont,
-    color: colorTextGray
-  },
-  name: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorBlack
-  },
-  notificationStatus: {
-    flexDirection: 'row',
-    fontFamily: defaultFont
-  }
-});
