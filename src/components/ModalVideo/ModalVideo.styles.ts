@@ -13,7 +13,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     alignItems: 'center',
-    bottom: 25,
+    bottom: 90,
     left: 0,
     right: 0,
     paddingHorizontal: 24,

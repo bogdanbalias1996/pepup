@@ -92,7 +92,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                               Object.keys(pepupData).length !== 0 &&
                                 this.setState({ heightDescription: height });
                             }}>
-                            <View style={{ justifyContent: 'space-between' }}>
+                            <View style={{paddingBottom: 55, justifyContent: 'space-between' }}>
                               <View style={styles.inputWrap}>
                                 <Text style={styles.subTitle}>
                                   {`Say Thanks to ${

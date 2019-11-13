@@ -14,7 +14,7 @@ export default StyleSheet.create({
         flex: 1,
         paddingHorizontal: 24,
         position: 'relative',
-        paddingTop: 15
+        paddingTop: 15,
     },
     subTitle: {
         fontSize: 14,
