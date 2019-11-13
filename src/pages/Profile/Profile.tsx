@@ -31,8 +31,11 @@ import {
 } from './types';
 
 import styles from './Profile.styles';
+
 import CategoryViewer from '../../components/CategoryViewer';
 import { ViewerCategory } from '../../components/CategoryViewer/types';
+
+import FanRequestsItem from './FanRequestItem';
 
 export class Component extends React.Component<
   ProfileScreenProps,
@@ -97,7 +100,7 @@ export class Component extends React.Component<
     const tabsConfigCeleb: ProfileTabConfig[] = [
       {
         title: 'Fan Requests',
-        component: () => <Text>1</Text>
+        component: FanRequestsItem
       },
       ...tabsConfig
     ];
@@ -106,20 +109,16 @@ export class Component extends React.Component<
   });
 
   handleChangeTab = (index: number) => {
-    const { isCelebrity } = this.props;
+    const { isCelebrity, getUserPepups, getCelebPepups, userId } = this.props;
 
     const tabs = this.getTabsConfig(isCelebrity);
     const tabName = tabs[index].title;
 
     const sw: { [key in ProfileTabType]: () => void } = {
       'My Requests': () => {
-        const { getUserPepups, userId } = this.props;
-
         userId && getUserPepups(userId);
       },
       'Fan Requests': () => {
-        const { getCelebPepups, userId } = this.props;
-
         userId && getCelebPepups(userId);
       },
       Notifications: () => {
@@ -166,6 +165,11 @@ export class Component extends React.Component<
               data={data}
               activeTabIndex={activeTabIndex}
               onTabChange={this.handleChangeTab}
+              flatListStyle={{
+                paddingLeft: 16,
+                flex: 1,
+                flexDirection: 'column'
+              }}
             />
           </Loader>
         </View>
