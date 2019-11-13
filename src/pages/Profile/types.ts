@@ -1,6 +1,7 @@
 import { NavigationScreenProp } from 'react-navigation';
 import { Celeb } from '../Pepups/types';
 import { VideoType } from '../../components/ModalRecordVideo';
+import { ComponentType } from 'react';
 
 export type Profile = {
   email: string;
@@ -114,3 +115,10 @@ export type HistoryItemsProps = {
 
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
+
+export type ProfileTabType = 'My Requests' | 'Fan Requests' | 'Notifications';
+
+export type ProfileTabConfig = {
+  title: ProfileTabType;
+  [key: string]: any;
+};

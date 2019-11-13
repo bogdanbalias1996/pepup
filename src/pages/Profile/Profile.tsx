@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import { createSelector } from 'reselect';
 import memoize from 'memoize-one';
 
@@ -20,12 +20,19 @@ import ProfileHeader from './ProfileHeader';
 
 import { isUserCelebritySelector } from '../../selectors';
 
-import { getProfile, getUserPepups } from './actions';
+import { getProfile, getUserPepups, getCelebPepups } from './actions';
 
 import { IGlobalState } from '../../coreTypes';
-import { ProfileScreenProps, ProfileScreenState } from './types';
+import {
+  ProfileScreenProps,
+  ProfileScreenState,
+  ProfileTabType,
+  ProfileTabConfig
+} from './types';
 
 import styles from './Profile.styles';
+import CategoryViewer from '../../components/CategoryViewer';
+import { ViewerCategory } from '../../components/CategoryViewer/types';
 
 export class Component extends React.Component<
   ProfileScreenProps,
@@ -39,19 +46,8 @@ export class Component extends React.Component<
     nextProps: ProfileScreenProps,
     prevState: ProfileScreenState
   ) {
-    const {
-      profileData,
-      navigation,
-      getProfile,
-      getUserPepups,
-      handle,
-      userId,
-      isCelebrity
-    } = nextProps;
+    const { profileData, navigation, isCelebrity } = nextProps;
     const { params } = nextProps.navigation.state;
-
-    handle && !profileData && getProfile(handle);
-    userId && !profileData && getUserPepups(userId);
 
     if (params && profileData) {
       if (
@@ -83,25 +79,25 @@ export class Component extends React.Component<
   componentDidMount() {
     const { handle, getProfile } = this.props;
 
-    handle && getProfile(handle);
+    if (handle) getProfile(handle);
   }
 
-  getTabsConfig = memoize((isCelebrity: boolean) => {
-    const tabsConfig = [
+  getTabsConfig = memoize((isCelebrity: boolean): ProfileTabConfig[] => {
+    const tabsConfig: ProfileTabConfig[] = [
       {
         title: 'My Requests',
-        component: MyRequests
+        component: () => <Text>1</Text>
       },
       {
         title: 'Notifications',
-        component: Notifications
+        component: () => <Text>1</Text>
       }
     ];
 
-    const tabsConfigCeleb = [
+    const tabsConfigCeleb: ProfileTabConfig[] = [
       {
         title: 'Fan Requests',
-        component: FanRequests
+        component: () => <Text>1</Text>
       },
       ...tabsConfig
     ];
@@ -109,8 +105,35 @@ export class Component extends React.Component<
     return isCelebrity ? tabsConfigCeleb : tabsConfig;
   });
 
+  handleChangeTab = (index: number) => {
+    const { isCelebrity } = this.props;
+
+    const tabs = this.getTabsConfig(isCelebrity);
+    const tabName = tabs[index].title;
+
+    const sw: { [key in ProfileTabType]: () => void } = {
+      'My Requests': () => {
+        const { getUserPepups, userId } = this.props;
+
+        userId && getUserPepups(userId);
+      },
+      'Fan Requests': () => {
+        const { getCelebPepups, userId } = this.props;
+
+        userId && getCelebPepups(userId);
+      },
+      Notifications: () => {
+        console.log('fetching notifications');
+      }
+    };
+
+    sw[tabName] && sw[tabName]();
+    this.setState({ activeTabIndex: index });
+  };
+
   render() {
-    const { profileData, isCelebrity } = this.props;
+    const { profileData, isCelebrity, data } = this.props;
+    const { activeTabIndex } = this.state;
 
     if (!profileData) {
       return null;
@@ -125,7 +148,7 @@ export class Component extends React.Component<
 
         <View style={styles.wrapContent}>
           <Loader isDataLoaded={!!profileData}>
-            <Tabs
+            {/* <Tabs
               config={tabsConfig}
               changeIndex={(index: number) =>
                 this.setState({ activeTabIndex: index })
@@ -137,6 +160,12 @@ export class Component extends React.Component<
                 backgroundColor: 'transparent',
                 marginBottom: 10
               }}
+            /> */}
+            <CategoryViewer
+              categories={tabsConfig as ViewerCategory[]}
+              data={data}
+              activeTabIndex={activeTabIndex}
+              onTabChange={this.handleChangeTab}
             />
           </Loader>
         </View>
@@ -162,20 +191,33 @@ const userTabs: { [key: string]: number } = {
 
 const mapStateToProps = createSelector(
   isUserCelebritySelector,
+  (
+    state: IGlobalState
+  ): {
+    [key in ProfileTabType]: Array<any>;
+  } => ({
+    'My Requests': state.ProfileState.userPepups,
+    'Fan Requests': state.ProfileState.celebPepups,
+    Notifications: require('./mocks').notifications
+  }),
   (state: IGlobalState) => ({
     userId: state.LoginState.userId,
     handle: state.LoginState.handle,
     profileData: state.ProfileState.profileData
   }),
-  (isCelebrity: boolean, otherProps) => ({
-    isCelebrity,
-    ...otherProps
-  })
+  (isCelebrity: boolean, data, otherProps) => {
+    return {
+      isCelebrity,
+      data,
+      ...otherProps
+    };
+  }
 );
 
 const mapDispatchToProps = {
   getProfile,
-  getUserPepups
+  getUserPepups,
+  getCelebPepups
 };
 
 export const ProfileScreen = connect(
