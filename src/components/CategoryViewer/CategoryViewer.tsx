@@ -32,12 +32,17 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
   );
 
   renderScene = ({ route }: { route: ViewerRoute }) => {
-    const { header, footer, flatListStyle, data } = this.props;
+    const { header, footer, flatListStyle, data, flatListProps } = this.props;
 
     return (
       <Fragment>
         {header && header(route)}
-        <List route={route} data={data} flatListStyle={flatListStyle} />
+        <List
+          route={route}
+          data={data}
+          flatListStyle={flatListStyle}
+          flatListProps={flatListProps}
+        />
         {footer && footer(route)}
       </Fragment>
     );

@@ -66,6 +66,9 @@ export type ProfileScreenStateProps = {
   pepups: Array<Pepup>;
   isFetching: boolean;
   isCelebrity: boolean;
+  data: {
+    [key in ProfileTabType]: Array<any>;
+  };
 };
 
 export interface ProfileScreenState {
@@ -78,6 +81,7 @@ export type ProfileScreenDispatchProps = {
   fulfillPepupRequest: (video: any) => void;
   updateCelebIntroVideo: (celebId: string, video: any) => void;
   getUserPepups: (id: string) => Promise<any>;
+  getCelebPepups: (id: string) => Promise<any>;
 };
 
 export type MyRequestsProps = {

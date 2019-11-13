@@ -34,6 +34,10 @@ export class Component extends PureComponent<
     )
   });
 
+  static flatListProps = {
+    numColumns: 2
+  };
+
   state = {
     isModalVisible: false,
     activeTabIndex: 0
@@ -99,7 +103,7 @@ export class Component extends PureComponent<
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-                flatListStyle={styles.flatListStyle}
+                flatListProps={Component.flatListProps}
               />
             )}
           </Loader>
