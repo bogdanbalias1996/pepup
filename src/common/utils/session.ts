@@ -9,7 +9,7 @@ import { navigate } from '../../navigationService';
 import { setUserId, setHandleName } from '../../pages/Login/actions';
 import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding';
 
-import { getProfile } from '../../pages/Profile/actions';
+import { getProfile, initialLoadProfile } from '../../pages/Profile/actions';
 
 export const ACCESS_TOKEN_NAME = 'access_token';
 export const ACCESS_HANDLE_NAME = 'handle_name';
@@ -114,9 +114,7 @@ export const authenticate = async () => {
     store.dispatch(removeSession());
     navigate({ routeName: isOnboardingPassed ? 'Auth' : 'Onboarding' });
   } else {
-    const handle = store.getState().LoginState.handle;
-
-    await store.dispatch(getProfile(handle));
+    await store.dispatch(initialLoadProfile() as any);
 
     navigate({ routeName: 'Main' });
   }
