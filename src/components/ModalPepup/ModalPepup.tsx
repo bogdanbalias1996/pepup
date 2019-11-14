@@ -155,13 +155,9 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   <Text style={styles.title}>{celebData.userInfo.name}</Text>
                 </View>
                 <Text style={[styles.text, styles.subTitle]}>
-                  {celebData.dataInfo.intro}
+                  {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}
                 </Text>
-                <Text
-                  style={[styles.text, styles.subTitle]}>
-                  {`${celebData.totalPepupsFulfilled} Pepups`}
-                </Text>
-
+              
                 <View style={styles.celebInfoBlock}>
                   <VideoCard
                     videoUrl={videoUrl}

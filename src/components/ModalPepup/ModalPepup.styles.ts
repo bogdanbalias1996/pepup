@@ -105,10 +105,7 @@ export default StyleSheet.create({
     borderRadius: 8,
     borderWidth: 1,
     borderColor: 'rgba(198, 198, 202, 0.25)'
-  },
-  commentCardOnModal: {
-    marginVertical: 8
-  },
+  },  
   commentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',

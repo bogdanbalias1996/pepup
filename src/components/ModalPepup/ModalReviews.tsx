@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { Fragment } from 'react';
 import { TouchableOpacity, Text, View, ScrollView } from 'react-native';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
@@ -41,44 +41,44 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
           visible={isModalReviewShown}
           isLoading={this.props.isFetching}
           onRequestClose={() => closeReviewsModal()}
-          heightContent={this.state.heightDescription}>
-          <View style={{ flex: 1, paddingTop: 55 }}>
+          heightContent={this.state.heightDescription}
+        >
+          <View style={{ flex: 1, paddingTop: 52 }}>
             <TouchableOpacity
               style={styles.btnCancel}
               onPress={() => closeReviewsModal()}>
               <Icon size={20} name="cancel" color={colorBlack} />
             </TouchableOpacity>
-            <ScrollView showsVerticalScrollIndicator={false}>
+
+            <View style={{ marginHorizontal: 24 }}>
+              <View style={[styles.headerReviews, { marginBottom: 29 }]}>
+                <Text style={styles.title}>{celebData.userInfo.name}</Text>                
+                <Text style={[styles.text, styles.subTitle, { color: colorBlack }]}>
+                  {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}                  
+                </Text>                
+              </View>
+              <View style={[styles.rewiewsNumber, { marginBottom: 15 }]}>
+                <Text style={[styles.text, styles.numberRewiewsText]}>
+                  {`${celebData.reviews} reactions`}
+                </Text>
+              </View>
+            </View>
+            
+            <ScrollView>
               <View
                 style={styles.scrollContent}
                 onLayout={event => {
                   const { height } = event.nativeEvent.layout;
                   Object.keys(celebData).length !== 0 &&
                     this.setState({ heightDescription: height });
-                }}>
-                <View style={styles.headerReviews}>
-                  <View style={styles.header}>
-                    <Text style={styles.title}>{celebData.userInfo.name}</Text>
-                  </View>
-                  <Text style={[styles.text, styles.subTitle]}>
-                    {celebData.dataInfo.intro}
-                  </Text>
-                  <Text
-                    style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
-                    {`${celebData.totalPepupsFulfilled} Pepups`}
-                  </Text>
-                </View>
-                <View style={styles.rewiewsNumber}>
-                  <Text style={[styles.text, styles.numberRewiewsText]}>
-                    {`${celebData.reviews} reactions`}
-                  </Text>
-                </View>
-                <View>
+                }}
+              >
+                <Fragment>
                   {reviews.map((item, i) => {
                     return (
                       <View
                         key={i}
-                        style={[styles.commentCard, styles.commentCardOnModal]}>
+                        style={[styles.commentCard, { marginBottom: 15 }]}>
                         <View style={styles.commentHeader}>
                           <Text style={[styles.text, styles.commentTitle]}>
                             {item.submitterUserInfo.name}
@@ -90,7 +90,7 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
                       </View>
                     );
                   })}
-                </View>
+                </Fragment>
               </View>
             </ScrollView>
           </View>
