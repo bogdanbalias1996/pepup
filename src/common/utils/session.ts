@@ -1,13 +1,19 @@
 import { getStore } from '../../configureStore';
 import AsyncStorage from '@react-native-community/async-storage';
-import { removeSession, setDeveloperMode, setUserName } from '../../pages/Login/actions';
+import {
+  removeSession,
+  setDeveloperMode,
+  setUserName
+} from '../../pages/Login/actions';
 import { navigate } from '../../navigationService';
 import { setUserId, setHandleName } from '../../pages/Login/actions';
 import { IS_ONBOARDING_PASSED } from '../../pages/Onboarding/Onboarding';
 
+import { getProfile } from '../../pages/Profile/actions';
+
 export const ACCESS_TOKEN_NAME = 'access_token';
 export const ACCESS_HANDLE_NAME = 'handle_name';
-export const ACCESS_USER_NAME = 'user_name'
+export const ACCESS_USER_NAME = 'user_name';
 const jwtDecode = require('jwt-decode');
 
 export const clearLocalStorage = async (omittedNames?: String[]) => {
@@ -100,13 +106,18 @@ export const getToken = async () => {
 
 export const authenticate = async () => {
   const token = await getToken();
+  const store = getStore();
 
   if (!token) {
     const isOnboardingPassed = await getLocalStorage(IS_ONBOARDING_PASSED);
 
-    getStore().dispatch(removeSession());
+    store.dispatch(removeSession());
     navigate({ routeName: isOnboardingPassed ? 'Auth' : 'Onboarding' });
   } else {
+    const handle = store.getState().LoginState.handle;
+
+    await store.dispatch(getProfile(handle));
+
     navigate({ routeName: 'Main' });
   }
 };
