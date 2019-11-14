@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
-import { IAction } from '../../coreTypes';
+import { IAction, IGlobalState } from '../../coreTypes';
 import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { closeVideoModal } from '../Pepups/actions';
@@ -13,36 +13,50 @@ import {
 import { Pepup, UserRequest, NotificationItem } from './types';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
-export const receiveUserProfile = (data: string): IAction<string> => {
-  return {
-    type: RECEIVE_USER_PROFILE,
-    data
-  };
-};
+export const receiveUserProfile = (data: string): IAction<string> => ({
+  type: RECEIVE_USER_PROFILE,
+  data
+});
 
-export const getProfile = (handle: string) => {
-  return (dispatch: Dispatch) => {
-    request({
+export const initialLoadProfile = () => async (
+  dispatch: Dispatch,
+  getState: () => IGlobalState
+) => {
+  try {
+    const handle = getState().LoginState.handle;
+
+    const userProfile = await request({
       operation: ApiOperation.GetProfile,
       params: {
         handle
       }
-    })
-      .then(res => {
-        dispatch(receiveUserProfile(res));
+    });
+
+    dispatch(receiveUserProfile(userProfile));
+  } catch (err) {}
+};
+
+export const getProfile = (handle: string) => async (dispatch: Dispatch) => {
+  try {
+    const userProfile = await request({
+      operation: ApiOperation.GetProfile,
+      params: {
+        handle
+      }
+    });
+
+    dispatch(receiveUserProfile(userProfile));
+  } catch (err) {
+    dispatch(
+      openError({
+        type: 'unknown',
+        onPress: () => {
+          dispatch(closeError());
+          navigate({ routeName: 'Login' });
+        }
       })
-      .catch(err => {
-        dispatch(
-          openError({
-            type: 'unknown',
-            onPress: () => {
-              dispatch(closeError());
-              navigate({ routeName: 'Login' });
-            }
-          })
-        );
-      });
-  };
+    );
+  }
 };
 
 export const fulfillPepupRequest = (entityId: string, video: any) => {
@@ -518,10 +532,12 @@ export const getPepupNotification = (pepupId: string) => {
 };
 
 export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
-export const receiveNotifications = (data: Array<NotificationItem>): IAction<Array<NotificationItem>> => {
+export const receiveNotifications = (
+  data: Array<NotificationItem>
+): IAction<Array<NotificationItem>> => {
   return {
     type: RECEIVE_NOTIFICATIONS,
-    data,
+    data
   };
 };
 
@@ -529,7 +545,7 @@ export const REQUEST_NOTIFICATIONS = 'REQUEST_NOTIFICATIONS';
 export const requestNotifications = (): IAction<undefined> => {
   return {
     type: REQUEST_NOTIFICATIONS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -537,7 +553,7 @@ export const FAILURE_NOTIFICATIONS = 'FAILURE_NOTIFICATIONS';
 export const failureNotifications = (): IAction<undefined> => {
   return {
     type: FAILURE_NOTIFICATIONS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -545,7 +561,7 @@ export const getNotifications = () => {
   return (dispatch: Dispatch) => {
     dispatch(requestNotifications());
     request({
-      operation: ApiOperation.GetNotifications,
+      operation: ApiOperation.GetNotifications
     })
       .then(res => {
         dispatch(receiveNotifications(res));
@@ -557,8 +573,8 @@ export const getNotifications = () => {
             type: 'unknown',
             onPress: () => {
               dispatch(getNotifications() as any);
-            },
-          }),
+            }
+          })
         );
       });
   };
