@@ -37,7 +37,7 @@ class List extends Component<ListProps> {
   };
 
   render() {
-    const { data, route, flatListStyle } = this.props;
+    const { data, route, flatListStyle, flatListProps = {} } = this.props;
     const dataArr = this.extractDataByCategory(data, route.key);
 
     return (
@@ -48,14 +48,14 @@ class List extends Component<ListProps> {
           size="large">
           <FlatList
             showsVerticalScrollIndicator={false}
-            numColumns={2}
             horizontal={false}
-            columnWrapperStyle={flatListStyle || styles.flatList}
+            style={flatListStyle || styles.flatList}
             data={dataArr as any}
             renderItem={this.renderItem}
             keyExtractor={
               route.keyExtractor || (List.defaultKeyExtractor as any)
             }
+            {...flatListProps}
           />
         </Loader>
       </View>

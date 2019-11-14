@@ -1,12 +1,6 @@
-import {
-  StyleSheet
-} from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import {
-  colorLightGray,
-  boldFont,
-  semiboldFont
-} from '../../../variables';
+import { colorLightGray, boldFont, semiboldFont } from '../../../variables';
 
 export default StyleSheet.create({
   row: {

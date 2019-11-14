@@ -1,49 +1,20 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-import { MyRequestsProps } from './types';
 import {
-  colorTextGray,
-  colorBlack,
-  colorInputBackground,
-  defaultFont,
+  colorBlueberry,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus,
-  italicFont,
-  semiboldFont,
-  colorBlueberry
-} from '../../variables';
-import { IGlobalState } from '../../coreTypes';
-import { Dispatch } from 'redux';
-import { Loader } from '../../components/Loader/Loader';
-import { getUserPepups } from './actions';
-import { capitalize } from '../../helpers';
+  colorCompletedStatus
+} from '../../../variables';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userPepups: state.ProfileState.userPepups,
-  userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching
-});
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
-});
+import { capitalize } from '../../../helpers';
 
-export class Component extends React.PureComponent<MyRequestsProps> {
-  componentDidMount() {
-    const { getUserPepups, userId } = this.props;
+import { MyRequestItemProps } from './types';
+import styles from './MyRequestItem.styles';
 
-    userId && getUserPepups(userId);
-  }
-
+class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   getStatusUser = (status: string, name: string) => {
     const normalizedStatus = status.toLowerCase();
 
@@ -88,14 +59,15 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     }
   };
 
-  renderItemRequest = ({ item }: any) => {
+  render() {
+    const { item } = this.props;
     const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
       item.celebInfo.userInfo.name
     );
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
@@ -132,66 +104,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
         </View>
       </TouchableOpacity>
     );
-  };
-
-  render() {
-    const { isFetching, userPepups } = this.props;
-
-    return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
-        <FlatList
-          style={{ flex: 1, paddingLeft: 16 }}
-          showsVerticalScrollIndicator={false}
-          data={userPepups}
-          renderItem={this.renderItemRequest}
-          keyExtractor={(item: any) => item.id}
-        />
-      </Loader>
-    );
   }
 }
 
-export const MyRequests = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Component);
-
-const styles = StyleSheet.create({
-  card: {
-    paddingVertical: 16,
-    paddingRight: 16,
-    borderBottomWidth: 1,
-    borderColor: colorInputBackground
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorTextGray
-  },
-  completed: {
-    fontFamily: semiboldFont
-  },
-  reqDescription: {
-    fontSize: 12,
-    fontFamily: italicFont
-  },
-  date: {
-    fontSize: 12,
-    fontFamily: defaultFont,
-    color: colorTextGray
-  },
-  name: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorBlack
-  },
-  notificationStatus: {
-    flexDirection: 'row',
-    fontFamily: defaultFont
-  }
-});
+export default MyRequestItem;
