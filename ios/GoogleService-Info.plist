@@ -32,5 +32,7 @@
 	<string>1:688006228248:ios:657ce695d503e72d39966d</string>
 	<key>DATABASE_URL</key>
 	<string>https://pepup-99c46.firebaseio.com</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>MEDIA</string>
 </dict>
 </plist>

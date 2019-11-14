@@ -62,7 +62,6 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
         <PepupModal
           visible={isModalPostReviewShown}
           onRequestClose={() => closePostReviewModal()}
-          isLoading={isFetching}
           heightContent={this.state.heightDescription}>
           {pepupData && Object.keys(pepupData).length !== 0 && (
             <View style={styles.wrapModalContent}>

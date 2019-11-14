@@ -217,8 +217,7 @@ export const PepupReducer = (
     case RECEIVE_REVIEW:
       return {
         ...state,
-        isFetching: false,
-        isModalPostReviewShown: false
+        isFetching: false
       };
     case REQUEST_REVIEW:
       return {
