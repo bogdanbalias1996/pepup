@@ -30,7 +30,7 @@ export default StyleSheet.create({
     color: colorBlack,
     fontSize: 18,
     fontFamily: boldFont,
-    letterSpacing: 1,
+    letterSpacing: 0.5,
     alignSelf: 'center',
     textAlign: 'left',
     overflow: 'visible'    

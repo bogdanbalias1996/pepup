@@ -29,6 +29,8 @@ import { ModalReviews } from './ModalReviews';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import VideoCard from '../VideoCard';
 import EmojiBar from '../EmojiBar';
+import FeaturedPepupListItem from './FeaturedPepupListItem';
+import CharityPartnersListItem from './CharityPartnersListItem';
 
 const EmojiBarData = [
   {
@@ -110,36 +112,6 @@ export class Component extends React.PureComponent<ModalPepupProps> {
     celebData && getAllReviews(celebData.userInfo.id);
   };
 
-  renderFeaturedPepupItem = ({ item }: any) => {
-    return (
-      <View style={{ marginRight: 8 }}>
-        <VideoCard
-          height={208}
-          width={144}
-          videoUrl='http://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4'
-        />
-        <Text>{item.for}</Text>
-        <Text>{item.date}</Text>
-      </View>
-    )
-  }
-
-  renderSupportsCharitiesItem = ({ item }: any) => {
-    return (
-      <View style={{ marginRight: 8 }}>
-        <FastImage
-          style={styles.charityImage}
-          source={{
-            uri: item.img,
-            priority: FastImage.priority.normal
-          }}
-          resizeMode={FastImage.resizeMode.cover}
-        />
-        <Text style={styles.charityTitle}>{`${item.title}`.toUpperCase()}</Text>
-      </View>
-    )
-  }
-
   render() {
     const {
       closePepupModal,
@@ -186,11 +158,11 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   {celebData.dataInfo.intro}
                 </Text>
                 <Text
-                  style={[styles.text, styles.subTitle, { marginTop: 5 }]}>
+                  style={[styles.text, styles.subTitle]}>
                   {`${celebData.totalPepupsFulfilled} Pepups`}
                 </Text>
 
-                <View style={styles.contentBlock}>
+                <View style={styles.celebInfoBlock}>
                   <VideoCard
                     videoUrl={videoUrl}
                     height={164}
@@ -219,7 +191,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   <Text style={styles.sectionTitle}>Featured Pepups</Text>
                   <FlatList
                     data={featuredPepupsMock}
-                    renderItem={this.renderFeaturedPepupItem}
+                    renderItem={FeaturedPepupListItem}
                     keyExtractor={(item: any, index: number) => `${index}`}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
@@ -230,7 +202,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                   <Text style={styles.sectionTitle}>Supports Charities</Text>
                   <FlatList
                     data={supportsCharitiesMock}
-                    renderItem={this.renderSupportsCharitiesItem}
+                    renderItem={CharityPartnersListItem}
                     keyExtractor={(item: any, index: number) => `${index}`}
                     horizontal={true}
                     showsHorizontalScrollIndicator={false}
