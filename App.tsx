@@ -158,7 +158,7 @@ export default class App extends Component {
 
   showAlert(title: any, body: any, data: any) {
     this.popup.show({
-      onPress: function () {
+      onPress: function() {
         navigate(
           { routeName: 'Profile', params: { activeTab: data.activeTab } },
           true
