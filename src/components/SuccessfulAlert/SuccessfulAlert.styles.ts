@@ -1,9 +1,5 @@
 import { StyleSheet } from 'react-native';
-import {
-  colorBlack,
-  defaultFont,
-  boldFont
-} from '../../variables';
+import { colorBlack, defaultFont, boldFont } from '../../variables';
 
 export default StyleSheet.create({
   wrapModalContent: {
@@ -46,5 +42,14 @@ export default StyleSheet.create({
     color: colorBlack,
     opacity: 0.7,
     textAlign: 'center'
+  },
+  textContainer: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    justifyContent: 'space-between'
+  },
+  switchLabelText: {
+    lineHeight: 32,
+    paddingRight: 16
   }
 });
