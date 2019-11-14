@@ -5,7 +5,8 @@ export type PepupNotificationProps = {
   getPepupNotification?: (id: string) => Promise<any>;
   isModalNotifyShown: boolean;
   isFetching: boolean;
-  isFetchingNotify: boolean;
+  isFetchingNotifyA: boolean;
+  isFetchingNotifyD: boolean;
   pepupData: UserRequest | null;
   acceptPepupRequest: (id: string) => Promise<any>;
   denyPepupRequest: (id: string) => Promise<any>;

@@ -5,6 +5,7 @@ export type keyExtractorType = (item: object) => string | number;
 
 export interface ViewerCategory {
   title: string;
+  key?: string;
   component: ComponentType<any>;
   keyExtractor?: keyExtractorType;
 }

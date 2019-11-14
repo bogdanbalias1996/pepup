@@ -24,7 +24,7 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
 
   generateRoutes = memoize((categories: ViewerCategory[]) =>
     categories.map((item: ViewerCategory) => ({
-      key: item.title,
+      key: item.key || item.title,
       title: item.title,
       component: item.component,
       keyExtractor: item.keyExtractor

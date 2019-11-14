@@ -96,9 +96,10 @@ export type HistoryItemsProps = {
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
 
-export type ProfileTabType = 'My Requests' | 'Fan Requests' | 'Notifications';
+export type ProfileTabType = 'myRequests' | 'funRequests' | 'notifications';
 
 export type ProfileTabConfig = {
-  title: ProfileTabType;
+  title: string;
+  key: ProfileTabType;
   [key: string]: any;
 };

@@ -46,12 +46,38 @@ export class Component extends React.Component<
     header: (navigationProps: any) => <ProfileHeader {...navigationProps} />
   });
 
+  static getTabsConfig = memoize((isCelebrity: boolean): ProfileTabConfig[] => {
+    const tabsConfig: ProfileTabConfig[] = [
+      {
+        title: 'My Requests',
+        key: 'myRequests',
+        component: MyRequestsItem
+      },
+      {
+        title: 'Notifications',
+        key: 'notifications',
+        component: NotificationItem
+      }
+    ];
+
+    const tabsConfigCeleb: ProfileTabConfig[] = [
+      {
+        title: 'Fan Requests',
+        key: 'funRequests',
+        component: FanRequestsItem
+      },
+      ...tabsConfig
+    ];
+
+    return isCelebrity ? tabsConfigCeleb : tabsConfig;
+  });
+
   static getDerivedStateFromProps(
     nextProps: ProfileScreenProps,
     prevState: ProfileScreenState
   ) {
     const { profileData, navigation, isCelebrity } = nextProps;
-    const { params } = nextProps.navigation.state;
+    const { params } = navigation.state;
 
     if (params && profileData) {
       if (
@@ -86,49 +112,29 @@ export class Component extends React.Component<
     if (handle) getProfile(handle);
   }
 
-  getTabsConfig = memoize((isCelebrity: boolean): ProfileTabConfig[] => {
-    const tabsConfig: ProfileTabConfig[] = [
-      {
-        title: 'My Requests',
-        component: MyRequestsItem
-      },
-      {
-        title: 'Notifications',
-        component: NotificationItem
-      }
-    ];
-
-    const tabsConfigCeleb: ProfileTabConfig[] = [
-      {
-        title: 'Fan Requests',
-        component: FanRequestsItem
-      },
-      ...tabsConfig
-    ];
-
-    return isCelebrity ? tabsConfigCeleb : tabsConfig;
-  });
-
   handleChangeTab = (index: number) => {
     const { isCelebrity, getUserPepups, getCelebPepups, userId } = this.props;
 
-    const tabs = this.getTabsConfig(isCelebrity);
+    const tabs = Component.getTabsConfig(isCelebrity);
 
-    const tabName = tabs[index].title;
+    const tabName = tabs[index].key;
 
-    const sw: { [key in ProfileTabType]: () => void } = {
-      'My Requests': () => {
+    const callbacksMap: { [key in ProfileTabType]: () => void } = {
+      myRequests: () => {
         userId && getUserPepups(userId);
       },
-      'Fan Requests': () => {
+      funRequests: () => {
         userId && getCelebPepups(userId);
       },
-      Notifications: () => {
+      notifications: () => {
         console.log('fetching notifications');
       }
     };
 
-    sw[tabName] && sw[tabName]();
+    if (callbacksMap[tabName]) {
+      callbacksMap[tabName]();
+    }
+
     this.setState({ activeTabIndex: index });
   };
 
@@ -152,7 +158,7 @@ export class Component extends React.Component<
       return null;
     }
 
-    const tabsConfig = this.getTabsConfig(isCelebrity);
+    const tabsConfig = Component.getTabsConfig(isCelebrity) as ViewerCategory[];
 
     return (
       <PepupBackground>
@@ -162,7 +168,7 @@ export class Component extends React.Component<
         <View style={styles.wrapContent}>
           <Loader isDataLoaded={!!profileData}>
             <CategoryViewer
-              categories={tabsConfig as ViewerCategory[]}
+              categories={tabsConfig}
               data={data}
               activeTabIndex={activeTabIndex}
               onTabChange={this.handleChangeTab}
@@ -198,9 +204,9 @@ const mapStateToProps = createSelector(
   ): {
     [key in ProfileTabType]: Array<any>;
   } => ({
-    'My Requests': state.ProfileState.userPepups,
-    'Fan Requests': state.ProfileState.celebPepups,
-    Notifications: require('./mocks').notifications
+    myRequests: state.ProfileState.userPepups,
+    funRequests: state.ProfileState.celebPepups,
+    notifications: require('./mocks').notifications
   }),
   (state: IGlobalState) => ({
     userId: state.LoginState.userId,
