@@ -64,7 +64,7 @@ export class Component extends React.Component<
     const tabsConfigCeleb: ProfileTabConfig[] = [
       {
         title: 'Fan Requests',
-        key: 'funRequests',
+        key: 'fanRequests',
         component: FanRequestsItem
       },
       ...tabsConfig
@@ -80,24 +80,13 @@ export class Component extends React.Component<
     const { profileData, navigation, isCelebrity } = nextProps;
     const { params } = navigation.state;
 
-    if (params && profileData) {
-      if (
-        isCelebrity &&
-        params.activeTab &&
-        celebTabs[params.activeTab] !== prevState.activeTabIndex
-      ) {
-        const activeTabIndex = celebTabs[params.activeTab];
-        navigation.setParams({ activeTab: null });
-        return { activeTabIndex };
-      } else if (
-        !isCelebrity &&
-        params.activeTab &&
-        userTabs[params.activeTab] !== prevState.activeTabIndex
-      ) {
-        const activeTabIndex = userTabs[params.activeTab];
-        navigation.setParams({ activeTab: null });
-        return { activeTabIndex };
-      }
+    const activeTab = profileData && params && params.activeTab;
+    const tabsConfig = Component.getTabsConfig(isCelebrity);
+
+    const targetTabIndex = tabsConfig.findIndex(el => el.key === activeTab);
+
+    if (![-1, prevState.activeTabIndex].includes(targetTabIndex)) {
+      return { activeTabIndex: targetTabIndex };
     }
 
     return null;
@@ -124,7 +113,7 @@ export class Component extends React.Component<
       myRequests: () => {
         userId && getUserPepups(userId);
       },
-      funRequests: () => {
+      fanRequests: () => {
         userId && getCelebPepups(userId);
       },
       notifications: () => {
@@ -181,23 +170,12 @@ export class Component extends React.Component<
         <ModalRecordVideo />
         <ModalPepup />
         <ModalPostReview />
-        <ModalVideo isPepup/>
+        <ModalVideo isPepup />
         <ModalPepupNotification />
       </PepupBackground>
     );
   }
 }
-
-const celebTabs: { [key: string]: number } = {
-  funRequests: 0,
-  myRequests: 1,
-  notifications: 2
-};
-
-const userTabs: { [key: string]: number } = {
-  myRequests: 0,
-  notifications: 1
-};
 
 const mapStateToProps = createSelector(
   isUserCelebritySelector,
@@ -207,7 +185,7 @@ const mapStateToProps = createSelector(
     [key in ProfileTabType]: Array<any>;
   } => ({
     myRequests: state.ProfileState.userPepups,
-    funRequests: state.ProfileState.celebPepups,
+    fanRequests: state.ProfileState.celebPepups,
     notifications: require('./mocks').notifications
   }),
   (state: IGlobalState) => ({
