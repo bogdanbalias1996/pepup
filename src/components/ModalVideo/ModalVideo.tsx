@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Image,
+  ActivityIndicator,
+  PermissionsAndroid,
+  Platform
+} from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import RNFetchBlob from 'rn-fetch-blob';
 import { Video } from 'expo-av';
@@ -44,7 +51,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
     downloadProgress: 0
   };
 
-  downloadTheVideo() {
+  saveFile = () => {
     RNFetchBlob.config({
       fileCache: true,
       appendExt: 'mp4'
@@ -62,6 +69,15 @@ export class Component extends React.PureComponent<ModalVideoProps> {
       .catch(err => {
         console.log(JSON.stringify(err, null, 2));
       });
+  }
+  async downloadTheVideo() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    
+    if (Platform.OS === 'android' && granted === PermissionsAndroid.RESULTS.GRANTED || Platform.OS === 'ios') {
+      this.saveFile()
+    }
   }
 
   render() {
