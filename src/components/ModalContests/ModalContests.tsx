@@ -62,6 +62,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
                   <View
+                    style={{paddingBottom: 60}}
                     onLayout={event => {
                       const { height } = event.nativeEvent.layout;
                       Object.keys(contestData).length !== 0 &&

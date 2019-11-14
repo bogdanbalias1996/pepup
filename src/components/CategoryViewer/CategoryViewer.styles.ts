@@ -28,20 +28,20 @@ export default StyleSheet.create({
   selectedLabel: {
     paddingTop: 4,
     color: colorBlack,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: boldFont,
-    letterSpacing: 2,
+    letterSpacing: 1,
     alignSelf: 'center',
     textAlign: 'left',
-    overflow: 'visible'
+    overflow: 'visible'    
   },
   itemText: {
     color: colorBlack,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: semiboldFont,
     alignSelf: 'center',
     textAlign: 'left',
-    letterSpacing: 2,
+    letterSpacing: 0.5,
     paddingTop: 4
   },
   initialLayout: {

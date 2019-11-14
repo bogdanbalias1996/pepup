@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
 import {
-  colorTextGray,
   colorBlack,
   defaultFont,
-  boldFont
+  boldFont,
+  colorEventLabel
 } from '../../../variables';
 
 export default StyleSheet.create({
@@ -13,7 +13,7 @@ export default StyleSheet.create({
     marginHorizontal: 6,
     backgroundColor: 'white',
     borderRadius: 24,
-    shadowColor: 'black',
+    shadowColor: colorBlack,
     shadowOffset: {
       width: 0,
       height: 3
@@ -29,7 +29,7 @@ export default StyleSheet.create({
   text: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorEventLabel
   },
   wrapTitle: {
     flex: 1,

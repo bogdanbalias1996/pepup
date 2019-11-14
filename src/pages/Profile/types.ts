@@ -1,6 +1,7 @@
 import { NavigationScreenProp } from 'react-navigation';
 import { Celeb } from '../Pepups/types';
 import { VideoType } from '../../components/ModalRecordVideo';
+import { ComponentType } from 'react';
 
 export type Profile = {
   email: string;
@@ -55,6 +56,8 @@ export type UserRequest = {
   requestedOnDt: string;
 };
 
+export type NotificationItem = {};
+
 export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
@@ -65,6 +68,9 @@ export type ProfileScreenStateProps = {
   pepups: Array<Pepup>;
   isFetching: boolean;
   isCelebrity: boolean;
+  data: {
+    [key in ProfileTabType]: Array<any>;
+  };
 };
 
 export interface ProfileScreenState {
@@ -77,31 +83,7 @@ export type ProfileScreenDispatchProps = {
   fulfillPepupRequest: (video: any) => void;
   updateCelebIntroVideo: (celebId: string, video: any) => void;
   getUserPepups: (id: string) => Promise<any>;
-};
-
-export type MyRequestsProps = {
-  userPepups: Array<Pepup>;
-  getStatusUser?: () => void;
-  isFetching: boolean;
-  userId: string;
-  getUserPepups: (id: string) => Promise<any>;
-  openVideoModal: (link: string) => void;
-};
-
-export type NotificationItemsProps = {
-  isFetching: boolean;
-};
-
-export type FanRequestsProps = {
-  celebPepups: Array<Pepup>;
-  getStatusCeleb?: () => void;
-  isFetching: boolean;
-  userId: string;
-  pepupId?: string;
   getCelebPepups: (id: string) => Promise<any>;
-  openNotifyModal: () => void;
-  getPepupNotification: (id: string) => Promise<any>;
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => void;
 };
 
 export type HistoryItemsProps = {
@@ -115,3 +97,11 @@ export type HistoryItemsProps = {
 
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
+
+export type ProfileTabType = 'myRequests' | 'funRequests' | 'notifications';
+
+export type ProfileTabConfig = {
+  title: string;
+  key: ProfileTabType;
+  [key: string]: any;
+};

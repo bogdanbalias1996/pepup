@@ -22,25 +22,25 @@ class Component extends React.PureComponent<EventsScreenProps> {
 
   private static readonly tabsConfig = [
     {
-      title: 'Past',
-      component: EventCard
-    },
-    {
-      title: 'Today',
-      component: EventCard
-    },
-    {
       title: 'Featured',
       component: EventCard
     },
     {
-      title: 'Upcoming',
+      title: 'Active',
       component: EventCard
     },
     {
-      title: 'Hot',
+      title: 'Past',
       component: EventCard
-    }
+    },
+    // {
+    //   title: 'Upcoming',
+    //   component: EventCard
+    // },
+    // {
+    //   title: 'Hot',
+    //   component: EventCard
+    // }
   ];
 
   state = {

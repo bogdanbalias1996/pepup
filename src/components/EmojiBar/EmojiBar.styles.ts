@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { colorBlack, colorMessageBorder } from '../../variables';
+import { colorBlack, colorMessageBorder, defaultFont } from '../../variables';
 
 export default StyleSheet.create({
   emojiBarWrapper: {
@@ -24,6 +24,7 @@ export default StyleSheet.create({
     fontSize: 12,
     marginTop: 5,
     marginBottom: 10,
-    color: colorBlack
+    color: colorBlack,
+    fontFamily: defaultFont
   }
 })

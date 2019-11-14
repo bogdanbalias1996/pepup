@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CardProps } from './types';
-import { colorPastelPurple } from '../../variables';
+import { colorPastelPurple, colorBlack } from '../../variables';
 
 export const Card = ({ children, style, radius = 20, borderWidth = 4 }: CardProps) => {
   return (
@@ -18,7 +18,7 @@ export default Card;
 const styles = StyleSheet.create({
   wrapper: {
     backgroundColor: 'white',
-    shadowColor: 'black',
+    shadowColor: colorBlack,
     shadowOffset: {
       width: 0,
       height: 3

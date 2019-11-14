@@ -9,7 +9,7 @@ export default StyleSheet.create({
   },
   video: {
     flex: 1,    
-    borderRadius: 20,
+    borderRadius: 10,
     position: 'relative'
   },  
   videoBtnPlayWrapper: {

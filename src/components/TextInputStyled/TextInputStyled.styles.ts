@@ -14,11 +14,12 @@ export default StyleSheet.create({
     alignItems: 'center',
     width: '100%',
     backgroundColor: colorInput,
-    paddingHorizontal: 16,
-    paddingVertical: 5,
+    paddingHorizontal: 16,    
     borderRadius: 8,
     marginVertical: 8,
-    height: 50
+    height: 56,  
+    borderWidth: 1, 
+    borderColor: 'rgba(198, 198, 202, 0.25)'
   },
   error: {
     borderWidth: 1,
@@ -29,7 +30,7 @@ export default StyleSheet.create({
     paddingLeft: 0,
     color: colorBlack,
     fontFamily: semiboldFont,
-    fontSize: 15
+    fontSize: 15    
   },
   inputBorder: {
     flexGrow: 1,
@@ -39,7 +40,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 8,
     paddingVertical: 10,
-    paddingHorizontal: 5
+    paddingHorizontal: 5    
   },
   errorText: {
     backgroundColor: colorTomato,
