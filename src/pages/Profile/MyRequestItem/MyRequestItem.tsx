@@ -1,54 +1,21 @@
 import * as React from 'react';
-import { connect } from 'react-redux';
-import {
-  Text,
-  View,
-  FlatList,
-  StyleSheet,
-  TouchableOpacity
-} from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 
-import { MyRequestsProps } from './types';
 import {
-  colorTextGrey,
-  colorBlack,
-  defaultFont,
+  colorBlueberry,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus,
-  semiboldFont,
-  colorLightOrange,
-  colorTextViolet,
-  colorEventLabel,
-  colorBottomInput
-} from '../../variables';
-import { IGlobalState } from '../../coreTypes';
-import { Dispatch } from 'redux';
-import { Loader } from '../../components/Loader/Loader';
-import { getUserPepups } from './actions';
-import { capitalize } from '../../helpers';
-import { openVideoModal, getPepupNotification } from '../Pepups/actions';
+  colorCompletedStatus
+} from '../../../variables';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userPepups: state.ProfileState.userPepups,
-  userId: state.LoginState.userId,
-  isFetching: state.ProfileState.isFetching
-});
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any),
-  openVideoModal: (link: string) => dispatch(openVideoModal(link)),
-  getPepupNotification: (id: string) => dispatch(getPepupNotification(id) as any)
-});
+import { capitalize } from '../../../helpers';
 
-export class Component extends React.PureComponent<MyRequestsProps> {
-  componentDidMount() {
-    const { getUserPepups, userId } = this.props;
+import { MyRequestItemProps } from './types';
+import styles from './MyRequestItem.styles';
 
-    userId && getUserPepups(userId);
-  }
-
-  getStatusUser = (status: string, name: string, link: string = '', id: string = '') => {
+class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
+  getStatusUser = (status: string, name: string) => {
     const normalizedStatus = status.toLowerCase();
     
     switch (normalizedStatus) {
@@ -95,7 +62,8 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     }
   };
 
-  renderItemRequest = ({ item }: any) => {
+  render() {
+    const { item } = this.props;
     const { msg, statusColor, onPress, status } = this.getStatusUser(
       item.status,
       item.celebInfo.userInfo.name,
@@ -104,7 +72,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
     );
 
     return (
-      <TouchableOpacity activeOpacity={1} onPress={() => onPress && onPress()}>
+      <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
@@ -141,66 +109,7 @@ export class Component extends React.PureComponent<MyRequestsProps> {
         </View>
       </TouchableOpacity>
     );
-  };
-
-  render() {
-    const { isFetching, userPepups } = this.props;
-
-    return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
-        <FlatList
-          style={{ flex: 1 }}
-          showsVerticalScrollIndicator={false}
-          data={userPepups}
-          renderItem={this.renderItemRequest}
-          keyExtractor={(item: any) => item.id}
-        />
-      </Loader>
-    );
   }
 }
 
-export const MyRequests = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Component);
-
-const styles = StyleSheet.create({
-  card: {
-    padding: 16,
-    borderBottomWidth: 1,
-    borderColor: colorBottomInput
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginBottom: 8
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorEventLabel
-  },
-  completed: {
-    fontFamily: semiboldFont
-  },
-  reqDescription: {
-    color: colorTextGrey,
-    fontSize: 12,
-    fontFamily: defaultFont
-  },
-  date: {
-    fontSize: 12,
-    fontFamily: defaultFont,
-    color: colorTextGrey
-  },
-  name: {
-    fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorBlack
-  },
-  notificationStatus: {
-    flexDirection: 'row',
-    fontFamily: defaultFont
-  }
-});
+export default MyRequestItem;
