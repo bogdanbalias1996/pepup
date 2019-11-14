@@ -8,7 +8,3 @@ export type AlertProps = {
   developerMode?: boolean;
   setDeveloperMode: (value: boolean) => void;
 };
-
-export type AlertState = {
-  isSwitchOn: boolean | null | undefined;
-};

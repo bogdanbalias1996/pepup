@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
 import { closeAlert } from '../../pages/Alert/actions';
-import { AlertProps, AlertState } from '.';
+import { AlertProps } from '.';
 import styles from './SuccessfulAlert.styles';
 import { IGlobalState } from '../../coreTypes';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
@@ -24,41 +24,18 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   setDeveloperMode: (value: boolean) => dispatch(setDeveloperMode(value))
 });
 
-export class Component extends React.PureComponent<AlertProps, AlertState> {
-  constructor(props: AlertProps) {
-    super(props);
-
-    this.state = {
-      isSwitchOn: null
-    };
-  }
-
-  componentDidUpdate(prevProps: AlertProps, prevState: AlertState) {
-    if (prevState.isSwitchOn === null) {
-      this.setState({ isSwitchOn: prevProps.developerMode });
-    }
-  }
-
-  toggleSwitch = () => {
-    this.setState({ isSwitchOn: !this.state.isSwitchOn });
-  };
-
-  onSubmit = () => {
-    const { isDevAlert, setDeveloperMode, onPress, closeAlert } = this.props;
-    const { isSwitchOn } = this.state;
-
-    if (isDevAlert) {
-      setDeveloperMode(!!isSwitchOn);
-      closeAlert();
-    } else {
-      onPress ? onPress() : closeAlert();
-    }
-  };
-
+export class Component extends React.PureComponent<AlertProps> {
   render() {
-    const { title, text, isAlertShown, closeAlert, isDevAlert } = this.props;
-
-    const { isSwitchOn } = this.state;
+    const {
+      title,
+      text,
+      onPress,
+      isAlertShown,
+      closeAlert,
+      isDevAlert,
+      setDeveloperMode,
+      developerMode
+    } = this.props;
 
     return (
       <Modal
@@ -80,15 +57,15 @@ export class Component extends React.PureComponent<AlertProps, AlertState> {
                     trackColor={{ true: colorLightYellow, false: 'grey' }}
                     thumbColor="white"
                     ios_backgroundColor="grey"
-                    value={!!isSwitchOn}
-                    onValueChange={this.toggleSwitch}
+                    value={developerMode}
+                    onValueChange={() => setDeveloperMode(!developerMode)}
                   />
                 </View>
               )}
             </View>
             <ButtonStyled
               style={styles.btnSubmit}
-              onPress={this.onSubmit}
+              onPress={onPress ? () => onPress() : () => closeAlert()}
               text="OK"
             />
           </View>
