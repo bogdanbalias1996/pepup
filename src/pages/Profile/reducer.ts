@@ -33,6 +33,12 @@ import {
   FAILURE_EDIT_USER
 } from '../EditProfile/actions';
 import { REMOVE_SESSION } from '../Login/actions';
+import {
+  setLocalStorage,
+  ACCESS_TOKEN_NAME,
+  ACCESS_HANDLE_NAME,
+  ACCESS_USER_NAME
+} from '../../common/utils/session';
 
 export class ProfileState {
   profileData: Profile | null;
@@ -77,6 +83,9 @@ export const ProfileReducer = (
         profileData: action.data
       };
     case RECEIVE_EDIT_USER:
+      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
+      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
+      setLocalStorage(action.data.name, ACCESS_USER_NAME);
       return {
         ...state,
         profileData: action.data,
