@@ -1,12 +1,14 @@
 import * as React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import { Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import styles from './Onboarding.styles';
 import { navigate } from '../../navigationService';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { setLocalStorage } from '../../common/utils/session';
-import FastImage from 'react-native-fast-image';
+
+import Storage from '../../common/utils/Storage';
+
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 
 export const IS_ONBOARDING_PASSED = 'OnboardingPassed';
@@ -76,7 +78,7 @@ export class OnboardingScreen extends React.Component {
   };
 
   _onDone = () => {
-    setLocalStorage(true, IS_ONBOARDING_PASSED);
+    Storage.set(true, IS_ONBOARDING_PASSED);
     navigate({ routeName: 'Auth' });
   };
 
