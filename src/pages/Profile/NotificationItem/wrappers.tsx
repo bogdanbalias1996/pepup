@@ -1,7 +1,10 @@
 import React from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 
-import { colorVioletStart, colorVioletEnd } from '../../../variables';
+import {
+  colorBorderGradEnd,
+  colorBorderGradStart
+} from '../../../variables';
 
 import styles from './NotificationItem.styles';
 import { View } from 'react-native';
@@ -11,7 +14,7 @@ export const GradientWrapper: Wrapper = ({ children }) => (
   <LinearGradient
     start={[0, 0.5]}
     end={[1, 0.5]}
-    colors={[colorVioletStart, colorVioletEnd]}
+    colors={[colorBorderGradStart, colorBorderGradEnd]}
     style={styles.gradient}>
     {children}
   </LinearGradient>

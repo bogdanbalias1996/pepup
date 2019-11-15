@@ -25,11 +25,13 @@ class ContestItem extends Component<ContestItemProps> {
       <TouchableOpacity
         onPress={this.onPress}
         style={styles.card}
-        activeOpacity={1}>
+        activeOpacity={1}
+      >      
         <View style={styles.cardHeader}>
           <Text style={styles.text}>{`${item.entries} entries`}</Text>
           <Text style={styles.text}>{`Ends: ${item.endDt}`}</Text>
         </View>
+        
         <View style={styles.wrapTitle}>
           <Card style={styles.avatar} radius={8}>
             <CardGradient style={styles.gradient} />
