@@ -24,12 +24,12 @@ import {
 } from '../ForgotPassword/actions';
 
 import {
-  setLocalStorage,
-  clearLocalStorage,
   ACCESS_TOKEN_NAME,
   ACCESS_HANDLE_NAME,
   ACCESS_USER_NAME
 } from '../../common/utils/session';
+
+import Storage from '../../common/utils/Storage';
 
 export class LoginState {
   accessToken: string;
@@ -57,9 +57,9 @@ export const LoginReducer = (
 ): LoginState => {
   switch (action.type) {
     case RECEIVE_LOGIN_USER:
-      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
-      setLocalStorage(action.data.name, ACCESS_USER_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
+      Storage.setItem(ACCESS_USER_NAME, action.data.name);
 
       return {
         ...state,
@@ -83,7 +83,7 @@ export const LoginReducer = (
       };
 
     case REMOVE_SESSION:
-      clearLocalStorage([IS_ONBOARDING_PASSED]);
+      Storage.clear([IS_ONBOARDING_PASSED]);
       return new LoginState();
 
     case REQUEST_SIGNUP_USER:
@@ -99,8 +99,8 @@ export const LoginReducer = (
       };
 
     case RECEIVE_SIGNUP_USER:
-      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
 
       return {
         ...state,
@@ -144,7 +144,7 @@ export const LoginReducer = (
         name: action.data
       };
     case SET_DEVELOPER_MODE:
-      setLocalStorage(action.data, 'developerMode');
+      Storage.setItem('developerMode', action.data);
 
       return {
         ...state,
