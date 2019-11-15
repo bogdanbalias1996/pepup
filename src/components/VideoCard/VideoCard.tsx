@@ -10,11 +10,18 @@ import { openVideoModal } from '../../pages/Pepups/actions';
 
 class VideoCard extends PureComponent<VideoCardProps> {
   render() {
-    const { videoUrl, width, height, openVideoModal } = this.props;
+    const { 
+      videoUrl, 
+      width, 
+      height, 
+      openVideoModal,
+      withoutShadow = false,
+      borderWidth = 4
+    } = this.props;
 
     return (
       <View style={[styles.videoContainer, { width, height }]}>
-        <Card radius={10}>
+        <Card radius={10} withoutShadow={withoutShadow} borderWidth={borderWidth}>
           <CardGradient />
           <Video
             source={{ uri: videoUrl }}

@@ -6,15 +6,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import styles from './TextInputStyled.styles';
 import {
   colorTextGrey,
-  colorVioletStart,
-  colorVioletEnd,
   colorBorderGradEnd,
   colorBorderGradStart
 } from '../../variables';
 
 export class TextInputBorderStyled extends React.PureComponent<
   TextInputStyledProps
-> {
+  > {
   render() {
     const {
       name,
@@ -25,7 +23,7 @@ export class TextInputBorderStyled extends React.PureComponent<
       secure,
       multiline,
       numberOfLines,
-      inputStyle,
+      inputStyle,      
       ...TextInputProps
     } = this.props;
 
@@ -50,23 +48,30 @@ export class TextInputBorderStyled extends React.PureComponent<
             ? ['red', 'red']
             : [colorBorderGradStart, colorBorderGradEnd]
         }
-        style={styles.inputGradient}>
-        <TextInput
-          style={[styles.inputBorder].concat(inputStyle)}
-          autoCapitalize="none"
-          placeholder={label}
-          multiline={multiline}
-          numberOfLines={numberOfLines}
-          placeholderTextColor={colorTextGrey}
-          value={value}
-          onChangeText={handleChange(name)}
-          onBlur={() => {
-            value && setFieldTouched(name);
-          }}
-          autoCorrect={true}
-          {...TextInputProps}
-          secureTextEntry={secure}
-        />
+        style={styles.inputGradient}
+      >
+        <View style={{ 
+          borderRadius: styles.inputGradient.borderRadius,
+          minHeight: 41,
+          backgroundColor: 'white'
+        }}>
+          <TextInput
+            style={[styles.inputBorder].concat(inputStyle)}
+            autoCapitalize="none"
+            placeholder={label}
+            multiline={multiline}
+            numberOfLines={numberOfLines}
+            placeholderTextColor={colorTextGrey}
+            value={value}
+            onChangeText={handleChange(name)}
+            onBlur={() => {
+              value && setFieldTouched(name);
+            }}
+            autoCorrect={true}
+            {...TextInputProps}
+            secureTextEntry={secure}
+          />
+        </View>
       </LinearGradient>
     );
   }

@@ -11,40 +11,46 @@ import {
   colorModalTextGrey,
   colorCancelButton,
   colorInput,
-  colorEventLabel,
-  colorMessageBorder
+  colorEventLabel
 } from '../../variables';
 
 export default StyleSheet.create({       
+  text: {
+    fontSize: 14,
+    fontFamily: defaultFont
+  },  
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: boldFont,
-    color: colorBlack
+    lineHeight: 30,    
+    color: colorBlack,
+    letterSpacing: 0.5
   },
   subTitle: {
-    fontSize: 14,
+    fontSize: 12,
     color: colorModalTextGrey,
     fontFamily: semiboldFont,
-    marginTop: 7
+    paddingTop: 7
   },
-  nopepups: {
-    textAlign: 'center',
-    width: '100%',
-    marginVertical: 30,
-    fontSize: 16,
-    color: colorTomato,
-    fontFamily: defaultFont
-  },
-  contentBlock: {
+  celebInfoBlock: {
     flexDirection: 'row', 
-    marginTop: 19,
-    marginBottom: 5    
-  },
+    marginTop: 21,
+    marginBottom: 6
+  },  
   infoText: {
     flexShrink: 1, 
     color: colorModalTextGrey,
     lineHeight: 22,
     marginLeft: 17
+  },
+  section: {
+    marginTop: 33
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: boldFont,
+    color: colorBlack,
+    marginBottom: 14
   },
   modal: {
     marginTop: 20,
@@ -75,35 +81,38 @@ export default StyleSheet.create({
     alignSelf: 'center'
   },
   reviews: {
-    marginTop: 33,
-    marginBottom: 15
+    marginTop: 32,
+    marginBottom: 15    
   },
   rewiewsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 9
   },
   numberRewiewsText: {
-    fontSize: 12,
-    color: colorTextGrey
+    fontSize: 14,
+    color: colorEventLabel
   },
   allRewiewsButton: {
-    color: colorTextViolet
+    color: colorTextViolet,
+    fontFamily: boldFont,
+    fontSize: 15
   },
   commentCard: {
-    padding: 16,
+    paddingVertical: 19,  
+    paddingHorizontal: 16,
     backgroundColor: colorInput,
-    borderRadius: 8
-  },
-  commentCardOnModal: {
-    marginVertical: 8
-  },
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(198, 198, 202, 0.25)'
+  },  
   commentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5
+    marginBottom: 5    
   },
-  commentTitle: {
+  commentTitle: {    
+    fontFamily: boldFont,
     color: colorBlack
   },
   commentText: {
@@ -130,10 +139,6 @@ export default StyleSheet.create({
   },
   btnSubmitClose: {
     width: 120
-  },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont
   },  
   rate: { 
     flexDirection: 'row', 
@@ -188,26 +193,13 @@ export default StyleSheet.create({
     paddingBottom: 30, 
     position: 'relative',
     marginHorizontal: 24    
-  },
-  section: {
-    marginTop: 32
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontFamily: boldFont,
-    color: colorBlack,
-    marginBottom: 14
-  },
-  charityImage: {
-    width: 86, 
-    height: 60, 
-    borderRadius: 6
-  },
-  charityTitle: {
+  },  
+  nopepups: {
     textAlign: 'center',
-    fontSize: 14,
-    color: colorEventLabel,
-    fontFamily: defaultFont,
-    marginTop: 4
+    width: '100%',
+    marginVertical: 30,
+    fontSize: 16,
+    color: colorTomato,
+    fontFamily: defaultFont
   }  
 });

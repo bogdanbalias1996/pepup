@@ -3,9 +3,14 @@ import { StyleSheet, View } from 'react-native';
 import { CardProps } from './types';
 import { colorPastelPurple, colorBlack } from '../../variables';
 
-export const Card = ({ children, style, radius = 20, borderWidth = 4 }: CardProps) => {
+export const Card = ({ children, style, radius = 20, borderWidth = 4, withoutShadow = false }: CardProps) => {
   return (
-    <View style={[styles.wrapper, style, { borderRadius: radius, padding: borderWidth }]}>
+    <View style={[
+      styles.wrapper, 
+      withoutShadow ? {} : styles.shadow, 
+      style, 
+      { borderRadius: radius, padding: borderWidth }
+    ]}>
       <View style={[styles.purpleBack, { borderRadius: radius }]}>
         {children}
       </View>
@@ -17,18 +22,20 @@ export default Card;
 
 const styles = StyleSheet.create({
   wrapper: {
-    backgroundColor: 'white',
-    shadowColor: colorBlack,
-    shadowOffset: {
-      width: 0,
-      height: 3
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    backgroundColor: 'white',    
     justifyContent: 'center',
     alignItems: 'center',
     position: 'relative'
+  },
+  shadow: {
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 2,
   },
   purpleBack: {
     width: '100%',

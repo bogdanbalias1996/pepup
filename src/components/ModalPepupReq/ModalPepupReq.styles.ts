@@ -112,15 +112,15 @@ export default StyleSheet.create({
   checkboxWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 30
+    marginTop: 23,
+    marginBottom: 34    
   },
   checkText: {
     flex: 1,
     marginLeft: 10,
-    marginTop: 8,
     flexWrap: 'wrap',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    paddingTop: 10    
   },
   scrollContent: { paddingBottom: 90 },
   upperWrap: {

@@ -3,4 +3,6 @@ export type VideoCardProps = {
   width: number;
   height: number;
   openVideoModal: (videoUrl: string) => void;
+  withoutShadow?: boolean;
+  borderWidth?: number
 }
