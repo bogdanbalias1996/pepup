@@ -78,7 +78,7 @@ export class OnboardingScreen extends React.Component {
   };
 
   _onDone = () => {
-    Storage.set(true, IS_ONBOARDING_PASSED);
+    Storage.setItem(IS_ONBOARDING_PASSED, true);
     navigate({ routeName: 'Auth' });
   };
 

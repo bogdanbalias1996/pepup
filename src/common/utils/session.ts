@@ -37,10 +37,10 @@ export const getToken = async () => {
     name = getStore().getState().LoginState.name;
     developerMode =
       getStore().getState().LoginState.developerMode ||
-      (await Storage.get('developerMode'));
+      (await Storage.getItem('developerMode'));
 
     if (!accessToken) {
-      const token = await Storage.get(ACCESS_TOKEN_NAME);
+      const token = await Storage.getItem(ACCESS_TOKEN_NAME);
       accessToken = token;
     }
     if (!userId) {
@@ -49,18 +49,20 @@ export const getToken = async () => {
       getStore().dispatch(setUserId(decoded.id));
     }
     if (!handle) {
-      const handleStorage = await Storage.get('handle_name');
+      const handleStorage = await Storage.getItem('handle_name');
 
       getStore().dispatch(setHandleName(handleStorage));
     }
     if (!name) {
-      const handleUserName = await Storage.get(ACCESS_USER_NAME);
+      const handleUserName = await Storage.getItem(ACCESS_USER_NAME);
       getStore().dispatch(setUserName(handleUserName));
     }
 
     getStore().dispatch(setDeveloperMode(developerMode));
   } catch (err) {
-    const accessTokenFromLocaleStorage = await Storage.get(ACCESS_TOKEN_NAME);
+    const accessTokenFromLocaleStorage = await Storage.getItem(
+      ACCESS_TOKEN_NAME
+    );
 
     accessToken = accessTokenFromLocaleStorage
       ? accessTokenFromLocaleStorage.token
@@ -74,7 +76,7 @@ export const authenticate = async () => {
   const store = getStore();
 
   if (!token) {
-    const isOnboardingPassed = await Storage.get(IS_ONBOARDING_PASSED);
+    const isOnboardingPassed = await Storage.getItem(IS_ONBOARDING_PASSED);
 
     store.dispatch(removeSession());
     navigate({ routeName: isOnboardingPassed ? 'Auth' : 'Onboarding' });

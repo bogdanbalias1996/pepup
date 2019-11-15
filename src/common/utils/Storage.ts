@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-community/async-storage';
 
 class Storage {
-  public static async get(itemName: string) {
+  public static async getItem(key: string) {
     try {
-      const res = await AsyncStorage.getItem(itemName);
+      const res = await AsyncStorage.getItem(key);
 
       return JSON.parse(res || 'null') as any;
     } catch (e) {
@@ -12,9 +12,9 @@ class Storage {
     }
   }
 
-  public static async set(value: any, itemName: string) {
+  public static async setItem(key: string, value: any) {
     try {
-      return await AsyncStorage.setItem(itemName, JSON.stringify(value));
+      return await AsyncStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
       console.error('Failed to set item to localStorage:', e);
       return null;

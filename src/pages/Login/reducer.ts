@@ -57,9 +57,9 @@ export const LoginReducer = (
 ): LoginState => {
   switch (action.type) {
     case RECEIVE_LOGIN_USER:
-      Storage.set(action.data.accessToken, ACCESS_TOKEN_NAME);
-      Storage.set(action.data.handle, ACCESS_HANDLE_NAME);
-      Storage.set(action.data.name, ACCESS_USER_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
+      Storage.setItem(ACCESS_USER_NAME, action.data.name);
 
       return {
         ...state,
@@ -99,8 +99,8 @@ export const LoginReducer = (
       };
 
     case RECEIVE_SIGNUP_USER:
-      Storage.set(action.data.accessToken, ACCESS_TOKEN_NAME);
-      Storage.set(action.data.handle, ACCESS_HANDLE_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
 
       return {
         ...state,
@@ -144,7 +144,7 @@ export const LoginReducer = (
         name: action.data
       };
     case SET_DEVELOPER_MODE:
-      Storage.set(action.data, 'developerMode');
+      Storage.setItem('developerMode', action.data);
 
       return {
         ...state,
