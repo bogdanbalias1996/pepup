@@ -83,12 +83,15 @@ export const ProfileReducer = (
         profileData: action.data
       };
     case RECEIVE_EDIT_USER:
-      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
-      setLocalStorage(action.data.name, ACCESS_USER_NAME);
+      const { accessToken, ...rest } = action.data;
+
+      setLocalStorage(accessToken, ACCESS_TOKEN_NAME);
+      setLocalStorage(rest.handle, ACCESS_HANDLE_NAME);
+      setLocalStorage(rest.name, ACCESS_USER_NAME);
+
       return {
         ...state,
-        profileData: action.data,
+        profileData: rest,
         isFetching: false
       };
 

@@ -4,7 +4,6 @@ import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import ImagePicker from 'react-native-image-picker';
-import memoize from 'memoize-one';
 
 import { openPepupModal, getCeleb } from '../../Pepups/actions';
 import { updateProfilePhoto } from '../../EditProfile/actions';
@@ -41,21 +40,21 @@ class UserBlock extends PureComponent<UserBlockProps, any> {
 
     return icon
       ? {
-          uri: profileData.icon
-          // priority: FastImage.priority.normal
+          uri: `${icon}?random_number=${new Date().getTime()}`,
+          priority: FastImage.priority.normal
         }
       : UserBlock.avatarPlaceholder;
   };
 
   chooseAvatar = () => {
     const options = {
-      title: 'Select Avatar',
+      title: 'Select Profile Picture',
       allowsEditing: true,
       storageOptions: {
         skipBackup: true,
         path: 'images'
       },
-      quality: 0.1
+      quality: 0.5
     };
 
     ImagePicker.showImagePicker(options, (response: any) => {
@@ -64,7 +63,9 @@ class UserBlock extends PureComponent<UserBlockProps, any> {
       } else if (response.error) {
         console.log('ImagePicker Error: ', response.error);
       } else {
-        const avatar = { uri: `data:image/jpeg;base64,${response.data}` };
+        const avatar = {
+          uri: `data:${response.type};base64,${response.data}`
+        };
         this.props.updateProfilePhoto(avatar);
       }
     });
@@ -72,8 +73,6 @@ class UserBlock extends PureComponent<UserBlockProps, any> {
 
   render() {
     const { profileData, isCelebrity } = this.props;
-
-    console.log('AVATAR', profileData.icon);
 
     const userAvatar = this.generateUserAvatar(profileData);
 
@@ -85,7 +84,7 @@ class UserBlock extends PureComponent<UserBlockProps, any> {
             activeOpacity={1}
             onPress={this.chooseAvatar}
             style={styles.avatarButton}>
-            <Image
+            <FastImage
               style={styles.image}
               source={userAvatar}
               resizeMode={FastImage.resizeMode.cover}
