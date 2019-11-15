@@ -44,7 +44,7 @@ export const getToken = async () => {
       accessToken = token;
     }
     if (!userId) {
-      let decoded = jwtDecode(accessToken);
+      let decoded = jwtDecode(accessToken as string) as any;
 
       getStore().dispatch(setUserId(decoded.id));
     }
