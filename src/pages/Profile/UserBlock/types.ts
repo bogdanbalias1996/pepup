@@ -5,4 +5,5 @@ export interface UserBlockProps {
   profileData: Profile;
   openPepupModal: () => void;
   getCeleb: (id: string) => void;
+  updateProfilePhoto: (values: any) => void;
 }
