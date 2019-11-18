@@ -5,16 +5,15 @@ import {
   colorTextViolet,
   colorTomato,
   defaultFont,
-  boldFont,
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
   background: { paddingTop: 0 },
   container: {
-    paddingTop: 45,
     justifyContent: 'space-between',
     height: '100%'
-  },  
+  },
   wrapContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
@@ -45,7 +44,7 @@ export default StyleSheet.create({
   },
   createAccountContainer: {
     marginTop: 22,
-    marginBottom: 80
+    marginBottom: 30
   },
   createAccountText: {
     color: colorTextGrey,
