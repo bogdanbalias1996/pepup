@@ -1,7 +1,9 @@
 import React, { isValidElement } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
-import get from 'lodash.get';
 import { connect } from 'react-redux';
+import memoize from 'memoize-one';
+import get from 'lodash.get';
+
 import { openVideoModal, getPepupNotification } from '../../Pepups/actions';
 
 import {
@@ -18,7 +20,7 @@ import { MyRequestItemProps } from './types';
 import styles from './MyRequestItem.styles';
 
 class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
-  getStatusUser = (item: any) => {
+  getStatusUser = memoize((item: any) => {
     const { status, id, mediaBasePath } = item;
     const { openVideoModal, getPepupNotification } = this.props;
     const normalizedStatus = status.toLowerCase();
@@ -80,7 +82,7 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
           onPress: undefined
         };
     }
-  };
+  });
 
   render() {
     const { item } = this.props;
@@ -99,11 +101,7 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {
-              isValidElement(msg) 
-                ? msg
-                : <Text style={styles.text}>{msg}</Text>
-            }            
+            {isValidElement(msg) ? msg : <Text style={styles.text}>{msg}</Text>}
             <Text
               numberOfLines={3}
               ellipsizeMode="tail"
@@ -117,7 +115,6 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   }
 }
 
-export default connect(
-  null,
-  { openVideoModal, getPepupNotification }
-)(MyRequestItem);
+export default connect(null, { openVideoModal, getPepupNotification })(
+  MyRequestItem
+);
