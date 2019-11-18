@@ -449,8 +449,8 @@ export const failureReview = (): IAction<undefined> => {
 export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
   return (dispatch: Dispatch, getState: () => IGlobalState) => {
     const { review, rating } = payload;
-    const store = getState().PepupState;
-    const userId = store.celebData && store.celebData.userInfo.id;
+    const store = getState().ProfileState;
+    const id = store.pepupData && store.pepupData.celebInfo.userInfo.id;
 
     dispatch(requestReview());
     request({
@@ -458,7 +458,7 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       variables: {
         review,
         rating,
-        celebId: userId
+        celebId: id
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -474,6 +474,7 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
             onPress: () => {
               dispatch(closeAlert());
               dispatch(closePostReviewModal());
+              dispatch(closeVideoModal());
             }
           })
         );

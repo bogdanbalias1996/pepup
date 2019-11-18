@@ -4,6 +4,8 @@ import {
   View,
   Image,
   ActivityIndicator,
+  PermissionsAndroid,
+  Platform
 } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -26,7 +28,7 @@ import { ModalPostReview } from '../ModalReviewForm/ModalPostReview';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoModalShown: state.PepupState.isVideoModalShown,
-  videoUrl: state.PepupState.videoUrl,
+  videoUrl: state.PepupState.videoUrl
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -45,25 +47,38 @@ export class Component extends React.PureComponent<ModalVideoProps> {
     isLoaded: false,
     isPlaying: false,
     isEnd: false,
-    path: ''
+    path: '',
+    downloadProgress: 0
   };
 
-  downloadTheVideo() {
-    RNFetchBlob
-    .config({
-      fileCache : true,
-      appendExt : 'mp4'
+  saveFile = () => {
+    RNFetchBlob.config({
+      fileCache: true,
+      appendExt: 'mp4'
     })
-    .fetch('GET', this.props.videoUrl)
-    .then((res: any) => {
-      this.setState({path: res.path()});
-      this.saveToCameraRoll()
-    })
+      .fetch('GET', this.props.videoUrl)
+      .progress({ interval: 250 }, (received, total) => {
+        this.setState({
+          downloadProgress: (received / total) * 100
+        });
+      })
+      .then(res => {
+        CameraRoll.saveToCameraRoll(res.path(), 'video');
+        this.setState({ downloadProgress: 0 });
+      })
+      .catch(err => {
+        console.log(JSON.stringify(err, null, 2));
+      });
   }
-
-  handlePressDownload = () => {
-    CameraRoll.saveToCameraRoll(this.state.path).then(alert('Success'))
-  };
+  async downloadTheVideo() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    
+    if (Platform.OS === 'android' && granted === PermissionsAndroid.RESULTS.GRANTED || Platform.OS === 'ios') {
+      this.saveFile()
+    }
+  }
 
   render() {
     const {
@@ -71,7 +86,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
       isVideoModalShown,
       videoUrl,
       isPepup,
-      openPostReviewModal,
+      openPostReviewModal
     } = this.props;
     const { isPlaying, isLoaded, isEnd } = this.state;
 
@@ -107,11 +122,10 @@ export class Component extends React.PureComponent<ModalVideoProps> {
           />
           <TouchableOpacity
             style={styles.closeBtn}
-            onPress={() => closeVideoModal()}
-          >
+            onPress={() => closeVideoModal()}>
             <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
-          
+
           {!isLoaded ? (
             <ActivityIndicator
               size="small"
@@ -153,8 +167,12 @@ export class Component extends React.PureComponent<ModalVideoProps> {
               <View style={styles.downloadShare}>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.handlePressDownload()}>
-                  <Icon name="download" />
+                  onPress={() => this.downloadTheVideo()}>
+                  {this.state.downloadProgress > 0 ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <Icon name="download" />
+                  )}
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.icon}
