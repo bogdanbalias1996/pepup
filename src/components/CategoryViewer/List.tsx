@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
+import isEqualWith from 'lodash/isEqualWith';
 
 import { Loader } from '../../components/Loader/Loader';
 
@@ -20,7 +21,13 @@ class List extends Component<ListProps> {
       nextProps.route.key
     );
 
-    return newData.length !== oldData.length;
+    const areEqual = isEqualWith(
+      newData,
+      oldData,
+      (newItem, oldItem) => newItem === oldItem
+    );
+
+    return !areEqual;
   }
 
   extractDataByCategory(data: ViewerData, category: string): Object[] {
