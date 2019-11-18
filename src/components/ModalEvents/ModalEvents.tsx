@@ -113,7 +113,7 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                   onLayout={event => {
                     const { height } = event.nativeEvent.layout;
                     Object.keys(eventData).length !== 0 &&
-                      this.setState({ heightDescription: height });
+                      this.setState({ heightDescription: height + 20 });
                   }}>
 
                   <View style={styles.wrapTitle}>
@@ -150,14 +150,14 @@ export class Component extends React.PureComponent<ModalEventsProps> {
                         {eventData.startDt}
                       </Text>
                     </View>
-                    <View style={styles.infoItem}>
+                    <View style={[styles.infoItem, { marginBottom: 5 }]}>
                       <Text style={styles.infoLabel}>Entries</Text>
                       <Text style={styles.infoValue}>
                         {eventData.soldSeats}
                       </Text>
                     </View>
 
-                    <View style={styles.infoLocation}>
+                    <View style={[styles.infoLocation, { marginBottom: 5 }]}>
                       <Text style={styles.infoLabel}>Location</Text>
                       <Text style={styles.infoLocationValue}>
                         {eventData.eventLoc}

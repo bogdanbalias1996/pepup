@@ -19,7 +19,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8
-  },
+  },  
   text: {
     fontSize: 14,
     fontFamily: defaultFont,

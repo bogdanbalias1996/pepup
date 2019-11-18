@@ -36,9 +36,11 @@ class VideoCard extends PureComponent<VideoCardProps> {
         </Card>
         <TouchableOpacity
           style={styles.videoBtnPlayWrapper}
-          onPress={() => openVideoModal(videoUrl)}>
+          onPress={() => openVideoModal(videoUrl)}
+          activeOpacity={1}
+        >
           <Image
-            style={{ width: 20, height: 20 }}
+            style={{ width: 30, height: 30 }}
             source={require('../../../assets/play.png')}
             resizeMode="contain"
           />

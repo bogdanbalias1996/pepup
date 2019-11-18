@@ -56,7 +56,7 @@ export default StyleSheet.create({
   },
   avatar: {
     width: '100%',
-    height: 190,
+    height: '100%',    
     borderRadius: 8,
     marginBottom: 16
   }

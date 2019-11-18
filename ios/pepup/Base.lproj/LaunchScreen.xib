@@ -25,6 +25,6 @@
         </view>
     </objects>
     <resources>
-        <image name="PepupIcon" width="104" height="180"/>
+        <image name="PepupIcon" width="128" height="165"/>
     </resources>
 </document>

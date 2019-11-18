@@ -35,8 +35,8 @@ export default StyleSheet.create({
     marginTop: 24
   },
   btnForgetPasswordText: {
-    color: colorBlack,
-    fontFamily: defaultFont,
+    color: colorTextViolet,
+    fontFamily: boldFont,
     lineHeight: 22,
     fontSize: 14,
     width: '100%',

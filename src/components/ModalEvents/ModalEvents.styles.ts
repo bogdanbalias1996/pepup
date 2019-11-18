@@ -15,7 +15,7 @@ import {
 export default StyleSheet.create({
   scrollView: {
     flex: 1,
-    marginBottom: 10
+    marginBottom: 10    
   },
   wrapModalContent: {
     flex: 1,
@@ -48,9 +48,9 @@ export default StyleSheet.create({
   carousel: {
     marginTop: 0
   },
-  imageCarouselWrap: {
+  imageCarouselWrap: {    
     width: Dimensions.get('window').width - 64,
-    marginHorizontal: 10,
+    marginHorizontal: 7,
     height: 170,
     marginVertical: 10
   },
