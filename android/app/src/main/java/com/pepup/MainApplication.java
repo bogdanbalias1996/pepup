@@ -46,7 +46,6 @@ public class MainApplication extends Application implements ReactApplication {
           
           packages.add(new RNFirebaseMessagingPackage());
           packages.add(new RNFirebaseNotificationsPackage());
-          //packages.add(new RNSharePackage());
 
           List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
             new ModuleRegistryAdapter(mModuleRegistryProvider)

@@ -96,7 +96,6 @@ export const fulfillPepupRequest = (entityId: string, video: any) => {
         );
       })
       .catch(err => {
-        console.log(JSON.stringify(err, null, 2))
         dispatch(videoRecordModalUpload(false));
         dispatch(
           openError({
