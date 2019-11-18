@@ -9,6 +9,7 @@ import { ErrorState } from "./pages/ErrorModal/reducer";
 import { StoreState } from "./pages/Store/reducer";
 import { ConnectionState } from "./utils/connectionCheck/reducer";
 import { RecordVideoState } from './pages/RecordVideo/reducer';
+import { SettingsState } from "./pages/WebViewPage/reducer";
 
 export interface IGlobalState {
   LoginState: LoginState;
@@ -22,6 +23,7 @@ export interface IGlobalState {
   ConnectionState: ConnectionState;
   StoreState: StoreState;
   RecordVideoState: RecordVideoState;
+  SettingsState: SettingsState;
 }
 
 export interface IAction<T> {

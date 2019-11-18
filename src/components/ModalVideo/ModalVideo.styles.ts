@@ -26,7 +26,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     position: 'absolute',
     alignItems: 'center',
-    bottom: 90,
+    bottom: 40,
     left: 0,
     right: 0,
     paddingHorizontal: 24,
@@ -39,6 +39,7 @@ export default StyleSheet.create({
     width: 155,
   },
   icon: {
-    marginHorizontal: 12
+    marginHorizontal: 12,
+    alignSelf: 'center'
   }
 });

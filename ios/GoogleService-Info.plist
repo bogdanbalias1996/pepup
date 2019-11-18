@@ -41,5 +41,7 @@
 	  <string>googleplus</string>
 	  <string>twitter</string>
 	</array>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>MEDIA</string>
 </dict>
 </plist>
