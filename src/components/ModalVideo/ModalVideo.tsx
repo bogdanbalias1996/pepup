@@ -111,7 +111,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
           />
           <TouchableOpacity
             style={styles.closeBtn}
-            onPress={() => closeVideoModal()}>
+            onPress={closeVideoModal()}>
             <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
 
@@ -156,12 +156,12 @@ export class Component extends React.PureComponent<ModalVideoProps> {
               <View style={styles.downloadShare}>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.handlePressDownload()}>
+                  onPress={this.handlePressDownload()}>
                   <Icon name="download" />
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.handleShare()}>
+                  onPress={this.handleShare()}>
                   <Icon name="share" />
                 </TouchableOpacity>
               </View>
@@ -170,7 +170,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 text="SAY THANKS"
                 normalFont
                 style={styles.btnSend}
-                onPress={() => openPostReviewModal()}
+                onPress={openPostReviewModal()}
                 loaderColor={colorLightOrange}
               />
             </View>
