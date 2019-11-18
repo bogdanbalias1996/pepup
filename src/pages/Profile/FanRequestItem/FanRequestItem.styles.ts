@@ -5,7 +5,6 @@ import {
   colorBlack,  
   colorBottomInput,
   defaultFont,
-  italicFont,
   boldFont
 } from '../../../variables';
 
@@ -30,7 +29,7 @@ export default StyleSheet.create({
   },
   reqDescription: {
     fontSize: 12,
-    fontFamily: italicFont
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,

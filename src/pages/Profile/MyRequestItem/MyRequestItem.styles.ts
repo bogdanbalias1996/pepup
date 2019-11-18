@@ -4,8 +4,7 @@ import {
   colorTextGrey,
   colorBlack,
   colorBottomInput,
-  defaultFont,
-  italicFont,
+  defaultFont,  
   semiboldFont
 } from '../../../variables';
 
@@ -19,18 +18,21 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginBottom: 8
-  },  
+  },
+  reqText: {
+    fontSize: 13   
+  },
   text: {
-    fontSize: 14,
-    fontFamily: defaultFont,
+    fontSize: 14,    
+    fontFamily: semiboldFont,    
     color: colorTextGrey
   },
   completed: {
     fontFamily: semiboldFont
   },
   reqDescription: {
-    fontSize: 12,
-    fontFamily: italicFont
+    fontSize: 13,
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,
@@ -39,7 +41,7 @@ export default StyleSheet.create({
   },
   name: {
     fontSize: 14,
-    fontFamily: defaultFont,
+    fontFamily: semiboldFont,
     color: colorBlack
   },
   notificationStatus: {

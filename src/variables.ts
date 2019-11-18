@@ -33,7 +33,6 @@ export const colorCompletedStatus = '#b620e0';
 export const colorBottomInput = '#edebf2';
 export const colorDarkPurple = '#5b30b4';
 
-export const defaultFont = 'ss-medium';
+export const defaultFont = 'ss-regular';
 export const semiboldFont = 'ss-medium';
 export const boldFont = 'ss-bold';
-export const italicFont = 'montserrat-italic';

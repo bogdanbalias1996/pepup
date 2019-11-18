@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import {
   colorBlack,
   semiboldFont,
-  italicFont,  
+  defaultFont,  
   colorMessageBorder
 } from '../../../variables';
 
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     marginBottom: 5
   },
   messageDate: {
-    fontFamily: italicFont,    
+    fontFamily: defaultFont,    
     fontSize: 12,
     textAlign: 'center'
   }

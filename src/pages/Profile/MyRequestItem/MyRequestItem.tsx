@@ -91,7 +91,7 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>
+              <Text style={[styles.text, { color: statusColor }]}>
                 {capitalize(status.toLowerCase())}
               </Text>{' '}
               - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
