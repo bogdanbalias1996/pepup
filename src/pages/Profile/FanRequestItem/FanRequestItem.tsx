@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { differenceInDays } from 'date-fns';
+import differenceInDays from 'date-fns/differenceInDays';
 
 import {
   colorGreen,
@@ -40,7 +40,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
     const today = new Date();
     const requestedOn = new Date(date);
     const dayLimit = 8;
-    const roundedDays = dayLimit - differenceInDays(today, requestedOn);  
+    const roundedDays = dayLimit - differenceInDays(today, requestedOn);
 
     switch (normalizedStatus) {
       case 'pending':
@@ -73,7 +73,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
           linkText: ''
         };
       case 'completed':
-        return {           
+        return {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl'),
@@ -93,7 +93,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
 
   render() {
     const { item } = this.props;
-    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);    
+    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={onPress}>
