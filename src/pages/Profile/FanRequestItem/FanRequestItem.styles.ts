@@ -1,11 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 import {
-  colorTextGray,
-  colorBlack,
-  colorInputBackground,
+  colorTextGrey,
+  colorBlack,  
+  colorBottomInput,
   defaultFont,
-  italicFont,
   boldFont
 } from '../../../variables';
 
@@ -13,7 +12,7 @@ export default StyleSheet.create({
   card: {
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground
+    borderColor: colorBottomInput
   },
   cardHeader: {
     flexDirection: 'row',
@@ -23,19 +22,19 @@ export default StyleSheet.create({
   text: {
     fontSize: 14,
     fontFamily: defaultFont,
-    color: colorTextGray
+    color: colorTextGrey
   },
   completed: {
     fontFamily: boldFont
   },
   reqDescription: {
     fontSize: 12,
-    fontFamily: italicFont
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     flexShrink: 1
   },
   name: {

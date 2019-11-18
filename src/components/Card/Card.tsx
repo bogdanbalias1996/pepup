@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { CardProps } from './types';
-import { colorPastelPurple, colorBlack } from '../../variables';
 
 export const Card = ({ children, style, radius = 20, borderWidth = 4, withoutShadow = false }: CardProps) => {
   return (
@@ -11,7 +10,7 @@ export const Card = ({ children, style, radius = 20, borderWidth = 4, withoutSha
       style, 
       { borderRadius: radius, padding: borderWidth }
     ]}>
-      <View style={[styles.purpleBack, { borderRadius: radius }]}>
+      <View style={[styles.cardBg, { borderRadius: radius }]}>
         {children}
       </View>
     </View>
@@ -37,9 +36,9 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 2,
   },
-  purpleBack: {
+  cardBg: {
     width: '100%',
     height: '100%',
-    backgroundColor: colorPastelPurple
+    backgroundColor: 'rgba(242,203,31, 0.9)'
   }
 });

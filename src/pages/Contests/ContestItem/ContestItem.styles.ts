@@ -9,12 +9,15 @@ import {
 
 export default StyleSheet.create({
   card: {
-    padding: 24,
-    marginBottom: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 23,
+    marginBottom: 18,
     marginHorizontal: 6,
     backgroundColor: 'white',
-    borderRadius: 24,
-    shadowColor: colorBlack,
+    borderRadius: 20,
+    shadowColor: 'rgba(139, 87, 42, 0.85)',
+    borderWidth:  1, 
+    borderColor: 'rgba(198, 198, 202, 0.25)',
     shadowOffset: {
       width: 0,
       height: 3
@@ -28,7 +31,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   text: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: defaultFont,
     color: colorEventLabel
   },
@@ -52,13 +55,14 @@ export default StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 8,
-    marginRight: 15
+    marginRight: 13
   },
   title: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: boldFont,
-    color: colorBlack,
-    lineHeight: 24
+    color: '#2a292e',
+    lineHeight: 20,
+    opacity: 0.9
   }
 });

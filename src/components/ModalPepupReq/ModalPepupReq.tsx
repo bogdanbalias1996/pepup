@@ -15,7 +15,7 @@ import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { TextInputBorderStyled } from '../../components/TextInputStyled/TextInputBorderStyled';
 import { RequestPepupProps, RequestPepupScreenFromData } from './';
 import styles from './ModalPepupReq.styles';
-import { colorBlack, boldFont, colorTextViolet } from '../../variables';
+import { colorBlack, boldFont, colorTextViolet, colorModalTextGrey } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { CheckboxStyled } from '../CheckboxStyled/CheckboxStyled';
 import { openAlert } from '../../pages/Alert/actions';
@@ -95,7 +95,7 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                         }}>
                         <View style={styles.reqTitle}>
                           <Text style={styles.title}>{`Hi ${name},`}</Text>
-                          <Text style={styles.text}>
+                          <Text style={[styles.text, { color: colorModalTextGrey }]}>
                             How can I pepup yo life? I can answer some questions
                             or give you advice or simply wish you or your loved
                             ones for a special occassion. Tell me more below!
@@ -113,10 +113,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="name"
-                                label="Requested for..."
+                                label="Jaggu"
                                 returnKeyType="done"
                                 formProps={props}
-                                inputStyle={{ height: 42 }}
                               />
                             </View>
                             <View style={styles.inputWrap}>
@@ -125,10 +124,12 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="text"
-                                label={`Type your request for ${
-                                  celebData.userInfo.name
-                                } here. For eg. You can ask for birthday wishes, motivation, or to wish you the best of luck.`}
-                                inputStyle={{ height: 180 }}
+                                label={`Please be as specific as possible. If it’s a birthday or an anniversary wish, please specify dates and names.`}
+                                inputStyle={{
+                                  height: 180,
+                                  marginVertical: 20,
+                                  lineHeight: 21
+                                }}
                                 blurOnSubmit={true}
                                 returnKeyType="done"
                                 multiline={true}
@@ -150,9 +151,10 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                     styles.subTitle,
                                     styles.checkText
                                   ]}>{`Feature video on ${
-                                  celebData.userInfo.name
-                                }'s Pepup Page`}</Text>
+                                    celebData.userInfo.name
+                                    }'s Pepup Page`}</Text>
                               </View>
+                              
                               <Text>
                                 <Text
                                   style={[

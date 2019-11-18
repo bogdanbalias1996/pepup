@@ -1,29 +1,32 @@
-import * as React from 'react';
+import React, { isValidElement } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import memoize from 'memoize-one';
+import get from 'lodash.get';
+
+import { openVideoModal } from '../../Pepups/actions';
+import {getPepupNotification} from '../actions'
 
 import {
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
   colorCompletedStatus,
-  colorTextViolet
+  colorBlack
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
-import { getPepupNotification } from '../actions';
 import { MyRequestItemProps } from './types';
 import styles from './MyRequestItem.styles';
-import { connect } from 'react-redux';
-import { openVideoModal } from '../../Pepups/actions';
 
 class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
-  getStatusUser = (
-    status: string,
-    name: string,
-    link: string = '',
-    id: string = ''
-  ) => {
+  getStatusUser = memoize((item: any) => {
+    const { status, id, mediaBasePath } = item;
+    const { openVideoModal, getPepupNotification } = this.props;
     const normalizedStatus = status.toLowerCase();
+    const name = get(item, 'celebInfo.userInfo.name', '');
+    const videoLinkPath = get(item, 'dataInfo.link', '');
+    const videoLink = videoLinkPath ? `${mediaBasePath}${videoLinkPath}` : '';
 
     switch (normalizedStatus) {
       case 'pending':
@@ -51,12 +54,22 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
       case 'completed':
         return {
           status,
-          msg: `Hurray! Your pepup is ready.`,
+          msg: (
+            <Text>
+              <Text style={styles.text}>Hurray! Your pepup is ready.</Text>{' '}
+              <Text
+                style={[
+                  styles.text,
+                  { color: colorCompletedStatus },
+                  styles.completed
+                ]}>
+                Click to watch.
+              </Text>
+            </Text>
+          ),
           statusColor: colorCompletedStatus,
           onPress: () => {
-            const { openVideoModal, getPepupNotification } = this.props;
-            
-            openVideoModal(link);
+            openVideoModal(videoLink);
             getPepupNotification(id);
           }
         };
@@ -65,27 +78,22 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorTextViolet,
+          statusColor: colorBlack,
           onPress: undefined
         };
     }
-  };
+  });
 
   render() {
     const { item } = this.props;
-    const { msg, statusColor, onPress, status } = this.getStatusUser(
-      item.status,
-      item.celebInfo.userInfo.name,
-      item.dataInfo && item.mediaBasePath + item.dataInfo.link,
-      item.id
-    );
+    const { msg, statusColor, onPress, status } = this.getStatusUser(item);
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>
+              <Text style={[styles.text, { color: statusColor }]}>
                 {capitalize(status.toLowerCase())}
               </Text>{' '}
               - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
@@ -93,21 +101,7 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {status.toLowerCase() === 'completed' ? (
-              <Text>
-                <Text style={styles.text}>{msg}</Text>{' '}
-                <Text
-                  style={[
-                    styles.text,
-                    { color: statusColor },
-                    styles.completed
-                  ]}>
-                  Click to watch.
-                </Text>
-              </Text>
-            ) : (
-              <Text style={styles.text}>{msg}</Text>
-            )}
+            {isValidElement(msg) ? msg : <Text style={styles.text}>{msg}</Text>}
             <Text
               numberOfLines={3}
               ellipsizeMode="tail"
@@ -121,10 +115,6 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   }
 }
 
-export default connect(
-  null,
-  {
-    getPepupNotification,
-    openVideoModal
-  }
-)(MyRequestItem as any);
+export default connect(null, { openVideoModal, getPepupNotification })(
+  MyRequestItem
+);

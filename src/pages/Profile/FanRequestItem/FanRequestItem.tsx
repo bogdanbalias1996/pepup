@@ -8,7 +8,7 @@ import {
   colorOrangeStatus,
   colorTextRed,
   colorCompletedStatus,
-  colorTextViolet,
+  colorBlack
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
@@ -40,7 +40,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
     const today = new Date();
     const requestedOn = new Date(date);
     const dayLimit = 8;
-    const roundedDays = dayLimit - differenceInDays(today, requestedOn);
+    const roundedDays = dayLimit - differenceInDays(today, requestedOn);  
 
     switch (normalizedStatus) {
       case 'pending':
@@ -65,9 +65,16 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
           onPress: () => {},
           linkText: ''
         };
-      case 'completed':
+      case 'unavailable':
         return {
-          msg: `Hurray! Your pepup was sent.`,
+          msg: `Sorry. PV Sindhu is unable to complete your request.`,
+          statusColor: colorTextRed,
+          onPress: () => {},
+          linkText: ''
+        };
+      case 'completed':
+        return {           
+          msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl'),
           linkText: 'Click to watch.'
@@ -77,7 +84,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorTextViolet,
+          statusColor: colorBlack,
           onPress: () => {},
           linkText: ''
         };
@@ -86,7 +93,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
 
   render() {
     const { item } = this.props;
-    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);
+    const { msg, statusColor, onPress, linkText } = this.getStatusCeleb(item);    
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={onPress}>

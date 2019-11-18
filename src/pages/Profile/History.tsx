@@ -11,8 +11,7 @@ import { Dispatch } from 'redux';
 
 import { HistoryItemsProps, Pepup } from './types';
 import {
-  colorBlack,
-  italicFont,
+  colorBlack,  
   semiboldFont,
   colorDotGray,
   colorLightOrange,
@@ -179,7 +178,7 @@ const styles = StyleSheet.create({
   },
   pepup: {
     lineHeight: 24,
-    fontFamily: italicFont,
+    fontFamily: defaultFont,
     fontSize: 14,
     color: colorTextGrey,
     marginRight: 14

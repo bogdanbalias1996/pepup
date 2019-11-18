@@ -5,7 +5,7 @@ import { semiboldFont, colorEventLabel } from '../../variables';
 
 const FeaturedPepupListItem = ({ item }: any) => {
     return (
-      <View style={{ marginRight: 8 }}>
+      <View style={{ marginRight: 16 }}>
         <VideoCard
           height={208}
           width={144}

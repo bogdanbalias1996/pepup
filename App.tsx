@@ -91,10 +91,6 @@ export default class App extends Component {
 
     await Font.loadAsync({
       'icons-font': require('./assets/fonts/icon-font/icons-font.ttf'),
-      'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
-      'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
-      'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
-      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
       'ss-bold': require('./assets/fonts/samsung-sharp/ss-bold.ttf'),
       'ss-regular': require('./assets/fonts/samsung-sharp/ss-regular.ttf'),
       'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.ttf')

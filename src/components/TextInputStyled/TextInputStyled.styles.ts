@@ -35,12 +35,11 @@ export default StyleSheet.create({
   inputBorder: {
     flexGrow: 1,
     fontFamily: semiboldFont,
-    fontSize: 15,
+    fontSize: 14,
     color: colorBlack,
     backgroundColor: 'white',
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 5    
+    borderRadius: 8,    
+    paddingHorizontal: 16    
   },
   errorText: {
     backgroundColor: colorTomato,

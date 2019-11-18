@@ -3,4 +3,5 @@ export type CardProps = {
   children: any;
   radius?: number;
   borderWidth?: number;
+  withoutShadow?: boolean;
 };

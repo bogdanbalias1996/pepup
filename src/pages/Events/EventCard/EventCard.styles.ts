@@ -8,12 +8,15 @@ import {
 
 export default StyleSheet.create({
   card: {
-    padding: 16,
+    paddingHorizontal: 20,
+    paddingVertical: 23,
     marginBottom: 24,
     marginHorizontal: 6,
     backgroundColor: 'white',
-    borderRadius: 24,
-    shadowColor: colorBlack,
+    borderRadius: 20,
+    shadowColor: 'rgba(139, 87, 42, 0.85)',
+    borderWidth: 1,
+    borderColor: 'rgba(198, 198, 202, 0.25)',
     shadowOffset: {
       width: 0,
       height: 3
@@ -34,8 +37,9 @@ export default StyleSheet.create({
   wrapTitle: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'flex-start',
-    marginVertical: 24,
+    justifyContent: 'flex-start',    
+    marginTop: 30,
+    marginBottom: 17,
     alignItems: 'center'
   },
   imageLogo: {
@@ -52,7 +56,7 @@ export default StyleSheet.create({
   },
   avatar: {
     width: '100%',
-    height: 190,
+    height: '100%',    
     borderRadius: 8,
     marginBottom: 16
   }
