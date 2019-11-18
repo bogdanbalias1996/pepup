@@ -19,10 +19,6 @@
     "@react-native-community/async-storage": "^1.6.2",
     "@react-native-community/cameraroll": "^1.2.1",
     "@react-native-community/netinfo": "^4.4.0",
-    "@types/jest": "^24.0.18",
-    "@types/react": "^16.9.5",
-    "@types/react-native": "^0.60.18",
-    "@types/react-test-renderer": "^16.9.0",
     "date-fns": "^2.4.1",
     "expo-av": "^7.0.1",
     "expo-constants": "^7.0.0",
@@ -68,7 +64,6 @@
     "reselect": "^4.0.0",
     "rn-fetch-blob": "^0.11.2",
     "superagent": "^5.1.0",
-    "typescript": "^3.6.3",
     "validator": "^11.1.0",
     "yup": "^0.27.0"
   },
@@ -79,8 +74,8 @@
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.148",
     "@types/lodash.get": "^4.4.6",
-    "@types/react": "^16.8.8",
-    "@types/react-native": "^0.57.41",
+    "@types/react": "^16.9.5",
+    "@types/react-native": "^0.60.18",
     "@types/react-native-app-intro-slider": "^3.0.0",
     "@types/react-native-modalbox": "^1.4.8",
     "@types/react-native-star-rating": "^1.1.0",
@@ -88,6 +83,8 @@
     "@types/react-redux": "^7.0.5",
     "@types/superagent": "^4.1.1",
     "@types/yup": "^0.26.24",
+    "@types/jest": "^24.0.18",
+    "@types/react-test-renderer": "^16.9.0",
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
     "husky": "^3.0.9",
@@ -98,7 +95,7 @@
     "react-test-renderer": "16.9.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "typescript": "^3.3.4000"
+    "typescript": "^3.6.3"
   },
   "jest": {
     "preset": "react-native"
