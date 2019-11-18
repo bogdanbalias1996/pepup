@@ -96,6 +96,7 @@ export const fulfillPepupRequest = (entityId: string, video: any) => {
         );
       })
       .catch(err => {
+        console.log(JSON.stringify(err, null, 2))
         dispatch(videoRecordModalUpload(false));
         dispatch(
           openError({
@@ -193,16 +194,6 @@ export const getUserPepups = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveUserPepups(res));
-        if (!res.length) {
-          dispatch(
-            openError({
-              type: 'noResults',
-              onPress: () => {
-                dispatch(getAllPepups() as any);
-              }
-            })
-          );
-        }
       })
       .catch(err => {
         dispatch(failureUserPepups());
@@ -255,16 +246,6 @@ export const getCelebPepups = (userId: string) => {
     })
       .then(res => {
         dispatch(receiveCelebPepups(res));
-        if (!res.length) {
-          dispatch(
-            openError({
-              type: 'noResults',
-              onPress: () => {
-                dispatch(getAllPepups() as any);
-              }
-            })
-          );
-        }
       })
       .catch(err => {
         dispatch(failureCelebPepups());
@@ -312,16 +293,6 @@ export const getAllPepups = () => {
     })
       .then(res => {
         dispatch(receiveAllPepups(res));
-        if (!res.length) {
-          dispatch(
-            openError({
-              type: 'noResults',
-              onPress: () => {
-                dispatch(getAllPepups() as any);
-              }
-            })
-          );
-        }
       })
       .catch(err => {
         dispatch(failureAllPepups());

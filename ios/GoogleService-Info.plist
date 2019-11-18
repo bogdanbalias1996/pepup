@@ -32,5 +32,14 @@
 	<string>1:688006228248:ios:657ce695d503e72d39966d</string>
 	<key>DATABASE_URL</key>
 	<string>https://pepup-99c46.firebaseio.com</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+	  <string>whatsapp</string>
+	  <string>mailto</string>
+	  <string>facebook</string>
+	  <string>instagram</string>
+	  <string>googleplus</string>
+	  <string>twitter</string>
+	</array>
 </dict>
 </plist>

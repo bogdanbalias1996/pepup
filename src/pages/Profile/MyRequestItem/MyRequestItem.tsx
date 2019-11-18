@@ -2,22 +2,29 @@ import * as React from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
 
 import {
-  colorBlueberry,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus
+  colorCompletedStatus,
+  colorTextViolet
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
-
+import { getPepupNotification } from '../actions';
 import { MyRequestItemProps } from './types';
 import styles from './MyRequestItem.styles';
+import { connect } from 'react-redux';
+import { openVideoModal } from '../../Pepups/actions';
 
 class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
-  getStatusUser = (status: string, name: string) => {
+  getStatusUser = (
+    status: string,
+    name: string,
+    link: string = '',
+    id: string = ''
+  ) => {
     const normalizedStatus = status.toLowerCase();
-    
+
     switch (normalizedStatus) {
       case 'pending':
         return {
@@ -47,8 +54,10 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
           msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => {
-            this.props.openVideoModal(link); 
-            this.props.getPepupNotification(id)
+            const { openVideoModal, getPepupNotification } = this.props;
+            
+            openVideoModal(link);
+            getPepupNotification(id);
           }
         };
       default:
@@ -112,4 +121,10 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   }
 }
 
-export default MyRequestItem;
+export default connect(
+  null,
+  {
+    getPepupNotification,
+    openVideoModal
+  }
+)(MyRequestItem as any);

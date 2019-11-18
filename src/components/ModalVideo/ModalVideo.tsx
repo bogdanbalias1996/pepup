@@ -1,12 +1,8 @@
 import * as React from 'react';
-import {
-  TouchableOpacity,
-  View,
-  Image,
-  ActivityIndicator,
-} from 'react-native';
+import { TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import RNFetchBlob from 'rn-fetch-blob';
+import Share from 'react-native-share';
 import { Video } from 'expo-av';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../../coreTypes';
@@ -26,7 +22,7 @@ import { ModalPostReview } from '../ModalReviewForm/ModalPostReview';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoModalShown: state.PepupState.isVideoModalShown,
-  videoUrl: state.PepupState.videoUrl,
+  videoUrl: state.PepupState.videoUrl
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
@@ -49,21 +45,29 @@ export class Component extends React.PureComponent<ModalVideoProps> {
   };
 
   downloadTheVideo() {
-    RNFetchBlob
-    .config({
-      fileCache : true,
-      appendExt : 'mp4'
+    RNFetchBlob.config({
+      fileCache: true,
+      appendExt: 'mp4'
     })
-    .fetch('GET', this.props.videoUrl)
-    .then((res: any) => {
-      this.setState({path: res.path()});
-      this.saveToCameraRoll()
-    })
+      .fetch('GET', this.props.videoUrl)
+      .then((res: any) => {
+        this.setState({ path: res.path() });
+        this.saveToCameraRoll();
+      });
   }
 
   handlePressDownload = () => {
-    CameraRoll.saveToCameraRoll(this.state.path).then(alert('Success'))
+    CameraRoll.saveToCameraRoll(this.state.path).then(alert('Success'));
   };
+
+  handleShare = () => {
+    Share.open({title: 'Share via',
+    url: this.props.videoUrl,
+    showAppsToView: true
+})
+    .then((res) => { console.log(res) })
+    .catch((err) => { err && console.log(err); });
+};
 
   render() {
     const {
@@ -71,7 +75,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
       isVideoModalShown,
       videoUrl,
       isPepup,
-      openPostReviewModal,
+      openPostReviewModal
     } = this.props;
     const { isPlaying, isLoaded, isEnd } = this.state;
 
@@ -107,11 +111,10 @@ export class Component extends React.PureComponent<ModalVideoProps> {
           />
           <TouchableOpacity
             style={styles.closeBtn}
-            onPress={() => closeVideoModal()}
-          >
+            onPress={() => closeVideoModal()}>
             <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
-          
+
           {!isLoaded ? (
             <ActivityIndicator
               size="small"
@@ -158,7 +161,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => closeVideoModal()}>
+                  onPress={() => this.handleShare()}>
                   <Icon name="share" />
                 </TouchableOpacity>
               </View>

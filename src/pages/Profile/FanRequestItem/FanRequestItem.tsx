@@ -8,7 +8,7 @@ import {
   colorOrangeStatus,
   colorTextRed,
   colorCompletedStatus,
-  colorBlueberry
+  colorTextViolet,
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
@@ -77,7 +77,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorBlueberry,
+          statusColor: colorTextViolet,
           onPress: () => {},
           linkText: ''
         };

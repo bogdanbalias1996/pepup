@@ -22,8 +22,8 @@ import styles from './ModalRecordVideo.styles';
 import { colorLightOrange } from '../../variables';
 import { AlertProps } from '../SuccessfulAlert';
 
-const minAcceptableVideoDuration = 30;
-const maxAcceptableVideoDuration = 60;
+const minAcceptableVideoDuration = 5;
+const maxAcceptableVideoDuration = 10;
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoRecordModalVisible: state.RecordVideoState.isVideoRecordModalVisible,

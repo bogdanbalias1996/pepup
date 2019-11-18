@@ -10,18 +10,18 @@ import { colorLightOrange } from '../../variables';
 class List extends Component<ListProps> {
   static defaultKeyExtractor = (item: { id: string }) => item.id;
 
-  shouldComponentUpdate(nextProps: ListProps) {
-    const oldData = this.extractDataByCategory(
-      this.props.data,
-      this.props.route.key
-    );
-    const newData = this.extractDataByCategory(
-      nextProps.data,
-      nextProps.route.key
-    );
+  // shouldComponentUpdate(nextProps: ListProps) {
+  //   const oldData = this.extractDataByCategory(
+  //     this.props.data,
+  //     this.props.route.key
+  //   );
+  //   const newData = this.extractDataByCategory(
+  //     nextProps.data,
+  //     nextProps.route.key
+  //   );
 
-    return newData.length !== oldData.length;
-  }
+  //   return newData.length !== oldData.length;
+  // }
 
   extractDataByCategory(data: ViewerData, category: string): Object[] {
     const categoryCelebs = data[category] || data[category.toLowerCase()] || [];
