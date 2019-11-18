@@ -162,11 +162,11 @@ export const ProfileReducer = (
         isFetching: false
       };
     case RECEIVE_ACCEPT:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
-        return item.id === action.data.id ? action.data : item;
-      });
       return {
         ...state,
+        celebPepups: state.celebPepups.map((item: any) =>
+          item.id === action.data.id ? action.data : item
+        ),
         isFetchingNotifyA: false,
         pepupData: action.data
       };
@@ -181,11 +181,11 @@ export const ProfileReducer = (
         isFetchingNotifyA: false
       };
     case RECEIVE_DENY:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
-        return item.id === action.data.id ? action.data : item;
-      });
       return {
         ...state,
+        celebPepups: state.celebPepups.map((item: any) =>
+          item.id === action.data.id ? action.data : item
+        ),
         isFetchingNotifyD: false,
         pepupData: action.data
       };
