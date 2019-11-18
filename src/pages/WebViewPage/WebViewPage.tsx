@@ -37,7 +37,6 @@ class Component extends React.PureComponent<WebViewPageScreenProps> {
       closeSettingsModal,
       modalData: link
     } = this.props;
-    console.log({ link });
 
     return (
       <PepupModal

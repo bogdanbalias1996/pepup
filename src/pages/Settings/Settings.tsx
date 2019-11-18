@@ -86,7 +86,7 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
             <View style={styles.listItemsWrap}>
               <ListItem
                 title="About Pepup"
-                onPress={() => Linking.openURL('https://facebook.github.io/')}
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Partners &amp; Charities"
@@ -94,30 +94,15 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
               />
               <ListItem
                 title="Privacy Policy"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Terms of Service"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Provide Feedback"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title={`App Version - ${DeviceInfo.getVersion()}`}
