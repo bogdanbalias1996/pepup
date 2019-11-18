@@ -64,14 +64,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
           statusColor: colorTextRed,
           onPress: () => {},
           linkText: ''
-        };
-      case 'unavailable':
-        return {
-          msg: `Sorry. PV Sindhu is unable to complete your request.`,
-          statusColor: colorTextRed,
-          onPress: () => {},
-          linkText: ''
-        };
+        };      
       case 'completed':
         return {           
           msg: `Hurray! Your pepup is ready.`,
@@ -100,10 +93,10 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>
+              <Text style={[styles.text, { color: statusColor }]}>
                 {capitalize(item.status.toLowerCase())}
               </Text>{' '}
-              - <Text style={styles.name}>{item.requestedByInfo.name}</Text>
+              - <Text style={[styles.text, styles.name]}>{item.requestedByInfo.name}</Text>
             </Text>
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
@@ -111,7 +104,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
             <Text>
               <Text style={styles.text}>{msg} </Text>
               <Text
-                style={[styles.text, { color: statusColor }, styles.completed]}>
+                style={[styles.text, { color: statusColor }]}>
                 {linkText}
               </Text>
             </Text>

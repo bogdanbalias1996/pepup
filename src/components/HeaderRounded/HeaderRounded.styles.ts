@@ -12,22 +12,23 @@ export default StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    borderBottomWidth: 0,
+    borderBottomWidth: 0    
   },
   title: {
     color: 'white',
     fontSize: 24,
     fontFamily: boldFont,
     textAlign: 'center',
-    letterSpacing: 2
+    letterSpacing: 2,    
+    paddingTop: 10
   },
   leftContainer: {
     minWidth: 20,
     paddingRight: 5,
-    flexDirection: 'row',
+    flexDirection: 'row'    
   },
   rightContainer: {
-    minWidth: 20,
+    minWidth: 20    
   },
   back: {
     marginRight: 15,

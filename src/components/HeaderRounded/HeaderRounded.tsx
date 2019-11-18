@@ -20,11 +20,11 @@ export const HeaderRounded = (props: {
 
   const getPaddingTop = () => {
     if (deviceInfoCheck() && Platform.OS === 'ios') {
-      return 50;
+      return 40;
     } else if (Platform.OS === 'ios') {
-      return 25;
+      return 15;
     } else {
-      return 18;
+      return 8;
     }
   };
 

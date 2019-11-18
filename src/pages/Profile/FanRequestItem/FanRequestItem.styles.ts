@@ -4,8 +4,9 @@ import {
   colorTextGrey,
   colorBlack,  
   colorBottomInput,
+  colorEventLabel,
   defaultFont,
-  boldFont
+  semiboldFont
 } from '../../../variables';
 
 export default StyleSheet.create({
@@ -21,14 +22,11 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorTextGrey
-  },
-  completed: {
-    fontFamily: boldFont
-  },
+    fontFamily: semiboldFont,
+    color: colorEventLabel    
+  },  
   reqDescription: {
-    fontSize: 12,
+    fontSize: 13,
     fontFamily: defaultFont
   },
   date: {
@@ -38,9 +36,7 @@ export default StyleSheet.create({
     flexShrink: 1
   },
   name: {
-    flexGrow: 1,
-    fontSize: 14,
-    fontFamily: defaultFont,
+    flexGrow: 1,        
     color: colorBlack
   },
   notificationStatus: {
