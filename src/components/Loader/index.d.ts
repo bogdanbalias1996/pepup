@@ -1,6 +1,6 @@
 export type LoaderProps = {
   size?: 'small' | 'large'
   color?: string
-  children: any
+  children?: any
   isDataLoaded: any
 }

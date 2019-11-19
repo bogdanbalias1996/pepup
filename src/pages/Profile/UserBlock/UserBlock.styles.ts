@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import { colorDarkPurple } from '../../../variables';
 
 export default StyleSheet.create({
   avatarsWrap: {
@@ -25,5 +26,17 @@ export default StyleSheet.create({
   },
   gradient: {
     borderRadius: 6
+  },
+  avatarButton: {
+    position: 'relative'
+  },
+  iconWrapper: {
+    position: 'absolute',
+    bottom: -10,
+    right: -10,
+    borderWidth: 1,
+    borderColor: colorDarkPurple,
+    borderRadius: 50,
+    backgroundColor: 'white'
   }
 });

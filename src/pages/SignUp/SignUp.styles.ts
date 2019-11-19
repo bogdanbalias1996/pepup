@@ -1,32 +1,27 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorLightGray,
+  colorTextGrey,
   colorTextViolet,
   colorTomato,
-  defaultFont
+  defaultFont,
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
   container: {
-    paddingTop: 45,
     justifyContent: 'space-between',
     flexGrow: 1
   },
-  logo: {
-    height: 110,
-    alignSelf: 'center'
-  },
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24,
     flexShrink: 1
   },
   title: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorBlack,
     textAlign: 'center',
     fontSize: 24
@@ -40,16 +35,16 @@ export default StyleSheet.create({
   },
   createAccountContainer: {
     marginTop: 24,
-    marginBottom: 40
+    marginBottom: 30
   },
   createAccountText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont,
     fontSize: 14,
     textAlign: 'center'
   },
   createAccountLink: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   loginWithText: {
@@ -64,7 +59,6 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     flex: 1,
     marginTop: 15
-    //marginBottom: 20
   },
   formErrorContainer: {
     flexDirection: 'row',

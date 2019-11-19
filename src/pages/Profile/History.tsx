@@ -11,15 +11,14 @@ import { Dispatch } from 'redux';
 
 import { HistoryItemsProps, Pepup } from './types';
 import {
-  colorBlack,
-  italicFont,
+  colorBlack,  
   semiboldFont,
   colorDotGray,
-  colorBlueberry,
-  colorTextGray,
+  colorLightOrange,
+  colorTextGrey,
   boldFont,
-  colorStat,
-  defaultFont
+  defaultFont,
+  colorTextViolet
 } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { getAllPepups } from './actions';
@@ -44,7 +43,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const { getAllPepups, getCeleb, profileData } = this.props;
 
     getAllPepups();
-    profileData ? getCeleb(profileData.id) : () => {};
+    profileData ? getCeleb(profileData.id) : undefined;
   }
 
   renderItem = ({ item }: any) => {
@@ -92,7 +91,7 @@ export class Component extends React.PureComponent<HistoryItemsProps> {
     const [rating] = celebData ? celebData.weightedRating.split('/') : ['0'];
 
     return (
-      <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+      <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
         {celebData && (
           <>
             <View style={styles.statistics}>
@@ -139,7 +138,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
     flexDirection: 'row',
-    shadowColor: 'black',
+    shadowColor: colorBlack,
     shadowOffset: {
       width: 0,
       height: 3
@@ -179,9 +178,9 @@ const styles = StyleSheet.create({
   },
   pepup: {
     lineHeight: 24,
-    fontFamily: italicFont,
+    fontFamily: defaultFont,
     fontSize: 14,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginRight: 14
   },
   statistics: {
@@ -195,12 +194,12 @@ const styles = StyleSheet.create({
     fontFamily: boldFont,
     fontSize: 18,
     textAlign: 'center',
-    color: colorStat
+    color: colorTextViolet
   },
   statText: {
     fontFamily: defaultFont,
     fontSize: 12,
     textAlign: 'center',
-    color: colorStat
+    color: colorTextViolet
   }
 });

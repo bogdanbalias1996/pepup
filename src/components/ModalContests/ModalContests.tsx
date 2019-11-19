@@ -18,6 +18,8 @@ import { ModalContestQuiz } from './ModalContestQuiz';
 import { ModalContestDesign } from './ModalContestDesign';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
+import Card from '../Card';
+import CardGradient from '../CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalShown: state.ContestState.isModalShown,
@@ -51,64 +53,75 @@ export class Component extends React.PureComponent<ModalContestsProps> {
         heightContent={this.state.heightDescription}>
         {contestData && Object.keys(contestData).length !== 0 && (
           <View style={styles.upperWrap}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closeContestModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
                   <View
+                    style={{ paddingBottom: 60 }}
                     onLayout={event => {
                       const { height } = event.nativeEvent.layout;
                       Object.keys(contestData).length !== 0 &&
                         this.setState({ heightDescription: height });
                     }}>
-                    <FastImage
-                      style={styles.image}
-                      source={{
-                        uri:
-                          contestData.mediaBasePath + contestData.contestImage,
-                        priority: FastImage.priority.normal
-                      }}
-                      resizeMode={FastImage.resizeMode.contain}
-                    />
-                    <View style={{flex: 1}}><Text style={styles.title}>{contestData.title}</Text></View>
-                    <Text style={styles.descriptionTitle}>
-                      Contest details:
-                    </Text>
-                    <Text style={[styles.text, styles.infoText]}>
-                      {contestData.dataInfo.details}
-                    </Text>
-                    <Text style={styles.descriptionTitle}>Contest rules:</Text>
-                    <Text style={[styles.text, styles.infoText]}>
-                      {contestData.dataInfo.rules}
-                    </Text>
-                    <View style={styles.infoBlock}>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Prize</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.prize}
-                        </Text>
+                    <Card style={styles.avatar} radius={8}>
+                      <CardGradient style={styles.gradient} />
+                      <FastImage
+                        style={styles.image}
+                        source={{
+                          uri:
+                            contestData.mediaBasePath +
+                            contestData.contestImage,
+                          priority: FastImage.priority.normal
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </Card>
+                    <View style={{ paddingHorizontal: 24 }}>
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.title}>{contestData.title}</Text>
                       </View>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Entries</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.entries}
-                        </Text>
-                      </View>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>End Date</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.endDt}
-                        </Text>
+                      <Text style={styles.descriptionTitle}>
+                        Contest details:
+                      </Text>
+                      <Text style={[styles.text, styles.infoText]}>
+                        {contestData.dataInfo.details}
+                      </Text>
+                      <Text style={styles.descriptionTitle}>
+                        Contest rules:
+                      </Text>
+                      <Text style={[styles.text, styles.infoText]}>
+                        {contestData.dataInfo.rules}
+                      </Text>
+                      <View style={styles.infoBlock}>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>Prize</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.prize}
+                          </Text>
+                        </View>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>Entries</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.entries}
+                          </Text>
+                        </View>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>End Date</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.endDt}
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>
                 </View>
               </ScrollView>
               <View style={styles.modalFooter}>
-                <TouchableOpacity
-                  style={styles.btnCancel}
-                  onPress={() => closeContestModal()}>
-                  <Icon size={20} name="cancel" color={colorBlack} />
-                </TouchableOpacity>
                 <ButtonStyled
                   style={styles.btnSubmit}
                   onPress={() => openContestQuizModal()}

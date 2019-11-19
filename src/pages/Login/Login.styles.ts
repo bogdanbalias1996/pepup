@@ -1,38 +1,27 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorLightGray,
+  colorTextGrey,
   colorTextViolet,
   colorTomato,
-  defaultFont
+  defaultFont,
+  boldFont
 } from '../../variables';
 
 export default StyleSheet.create({
   background: { paddingTop: 0 },
   container: {
-    paddingTop: 45,
     justifyContent: 'space-between',
     height: '100%'
   },
-  imageWrapper: {
-    flexGrow: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingBottom: 20
-  },
-  logo: {
-    height: 110,
-    alignSelf: 'center'
-  },
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24
   },
   title: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorBlack,
     textAlign: 'center',
     fontSize: 24
@@ -46,23 +35,25 @@ export default StyleSheet.create({
   },
   btnForgetPasswordText: {
     color: colorTextViolet,
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
+    lineHeight: 22,
     fontSize: 14,
     width: '100%',
+    marginTop: 6,
     textAlign: 'right'
   },
   createAccountContainer: {
-    marginTop: 24,
-    marginBottom: 80
+    marginTop: 22,
+    marginBottom: 30
   },
   createAccountText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont,
     fontSize: 14,
     textAlign: 'center'
   },
   createAccountLink: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   loginWithText: {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { getEventsByCategory } from './actions';
@@ -22,25 +22,25 @@ class Component extends React.PureComponent<EventsScreenProps> {
 
   private static readonly tabsConfig = [
     {
-      title: 'Past',
-      component: EventCard
-    },
-    {
-      title: 'Today',
-      component: EventCard
-    },
-    {
       title: 'Featured',
       component: EventCard
     },
     {
-      title: 'Upcoming',
+      title: 'Active',
       component: EventCard
     },
     {
-      title: 'Hot',
+      title: 'Past',
       component: EventCard
-    }
+    },
+    // {
+    //   title: 'Upcoming',
+    //   component: EventCard
+    // },
+    // {
+    //   title: 'Hot',
+    //   component: EventCard
+    // }
   ];
 
   state = {

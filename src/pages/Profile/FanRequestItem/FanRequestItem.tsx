@@ -1,14 +1,14 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Text, View, TouchableOpacity } from 'react-native';
-import { differenceInDays } from 'date-fns';
+import differenceInDays from 'date-fns/differenceInDays';
 
 import {
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
   colorCompletedStatus,
-  colorBlueberry
+  colorBlack
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
@@ -64,10 +64,10 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
           statusColor: colorTextRed,
           onPress: () => {},
           linkText: ''
-        };
+        };      
       case 'completed':
         return {
-          msg: `Hurray! Your pepup was sent.`,
+          msg: `Hurray! Your pepup is ready.`,
           statusColor: colorCompletedStatus,
           onPress: () => alert('Compl'),
           linkText: 'Click to watch.'
@@ -77,7 +77,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorBlueberry,
+          statusColor: colorBlack,
           onPress: () => {},
           linkText: ''
         };
@@ -93,10 +93,10 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>
+              <Text style={[styles.text, { color: statusColor }]}>
                 {capitalize(item.status.toLowerCase())}
               </Text>{' '}
-              - <Text style={styles.name}>{item.requestedByInfo.name}</Text>
+              - <Text style={[styles.text, styles.name]}>{item.requestedByInfo.name}</Text>
             </Text>
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
@@ -104,7 +104,7 @@ class FanRequestItem extends React.PureComponent<FanRequestItemProps> {
             <Text>
               <Text style={styles.text}>{msg} </Text>
               <Text
-                style={[styles.text, { color: statusColor }, styles.completed]}>
+                style={[styles.text, { color: statusColor }]}>
                 {linkText}
               </Text>
             </Text>

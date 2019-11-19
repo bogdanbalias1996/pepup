@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { openEventModal, getEvent } from '../actions';
 
 import { EventCardProps } from './types';
+import { Card } from '../../../components/Card/Card';
 import styles from './EventCard.styles';
 
 class EventCard extends PureComponent<EventCardProps> {
@@ -27,6 +28,7 @@ class EventCard extends PureComponent<EventCardProps> {
             </Text>
             <Text style={styles.text}>{item.startDt}</Text>
           </View>
+          
           <View style={styles.wrapTitle}>
             <Image
               style={styles.imageLogo}
@@ -35,12 +37,15 @@ class EventCard extends PureComponent<EventCardProps> {
             />
             <Text style={styles.title}>{item.title}</Text>
           </View>
+          
           {item.coverImage && (
-            <Image
-              style={styles.avatar}
-              source={{ uri: item.mediaBasePath + item.coverImage }}
-              resizeMode="cover"
-            />
+            <Card style={{ height: 200 }} radius={8}>
+              <Image
+                style={styles.avatar}
+                source={{ uri: item.mediaBasePath + item.coverImage }}
+                resizeMode="cover"
+              />
+            </Card>
           )}
         </View>
       </TouchableOpacity>

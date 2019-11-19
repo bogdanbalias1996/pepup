@@ -15,7 +15,7 @@ import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import { TextInputBorderStyled } from '../../components/TextInputStyled/TextInputBorderStyled';
 import { RequestPepupProps, RequestPepupScreenFromData } from './';
 import styles from './ModalPepupReq.styles';
-import { colorBlack, boldFont } from '../../variables';
+import { colorBlack, boldFont, colorTextViolet, colorModalTextGrey } from '../../variables';
 import { IGlobalState } from '../../coreTypes';
 import { CheckboxStyled } from '../CheckboxStyled/CheckboxStyled';
 import { openAlert } from '../../pages/Alert/actions';
@@ -23,14 +23,12 @@ import { AlertProps } from '../SuccessfulAlert';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isModalReqShown: state.PepupState.isModalReqShown,
   celebData: state.PepupState.celebData,
-  categoryId: state.PepupState.selectedCategory,
-  isFetching: state.PepupState.isFetching
+  isFetching: state.PepupState.isFetching,
+  name: state.LoginState.name
 });
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   closePepupReqModal: () => dispatch(closePepupReqModal()),
@@ -40,8 +38,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
 });
 
 const RequestSchema = Yup.object().shape({
-  name: Yup.string().required('Please type your request'),
-  text: Yup.string().required("Please type person's name")
+  name: Yup.string().required(),
+  text: Yup.string().required()
 });
 
 export class Component extends React.PureComponent<RequestPepupProps> {
@@ -58,7 +56,8 @@ export class Component extends React.PureComponent<RequestPepupProps> {
       closePepupReqModal,
       isModalReqShown,
       isFetching,
-      celebData
+      celebData,
+      name
     } = this.props;
 
     return (
@@ -68,6 +67,11 @@ export class Component extends React.PureComponent<RequestPepupProps> {
           onRequestClose={() => closePepupReqModal()}
           heightContent={this.state.heightDescription}>
           <View style={styles.upperWrap}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closePepupReqModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
             <Formik
               initialValues={{
                 name: '',
@@ -90,26 +94,15 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                             this.setState({ heightDescription: height });
                         }}>
                         <View style={styles.reqTitle}>
-                          <Card style={styles.avatarWrapper}>
-                            <CardGradient style={{ borderRadius: 15 }} />
-                            <FastImage
-                              style={styles.avatar}
-                              source={{
-                                uri: celebData.userInfo.icon,
-                                priority: FastImage.priority.normal
-                              }}
-                              resizeMode={FastImage.resizeMode.cover}
-                            />
-                          </Card>
-                          <Text
-                            style={[
-                              styles.title,
-                              {
-                                textAlign: 'center',
-                                fontFamily: boldFont
-                              }
-                            ]}>
-                            {celebData.userInfo.name}
+                          <Text style={styles.title}>{`Hi ${name},`}</Text>
+                          <Text style={[styles.text, { color: colorModalTextGrey }]}>
+                            How can I pepup yo life? I can answer some questions
+                            or give you advice or simply wish you or your loved
+                            ones for a special occassion. Tell me more below!
+                            Don’t be shy 😎 -{' '}
+                            <Text style={{ color: colorTextViolet }}>
+                              {celebData.userInfo.name}
+                            </Text>
                           </Text>
                         </View>
                         <View style={styles.form}>
@@ -120,10 +113,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="name"
-                                label="Requested for..."
+                                label="Jaggu"
                                 returnKeyType="done"
                                 formProps={props}
-                                inputStyle={{ height: 42 }}
                               />
                             </View>
                             <View style={styles.inputWrap}>
@@ -132,8 +124,13 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                               </Text>
                               <TextInputBorderStyled
                                 name="text"
-                                label={`Type your request for ${celebData.userInfo.name} here. For eg. You can ask for birthday wishes, motivation, or to wish you the best of luck.`}
-                                inputStyle={{ height: 180 }}
+                                label={`Please be as specific as possible. If it’s a birthday or an anniversary wish, please specify dates and names.`}
+                                inputStyle={{
+                                  height: 180,
+                                  marginVertical: 10,
+                                  lineHeight: 21,
+                                  textAlignVertical: 'top'
+                                }}
                                 blurOnSubmit={true}
                                 returnKeyType="done"
                                 multiline={true}
@@ -154,12 +151,24 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                   style={[
                                     styles.subTitle,
                                     styles.checkText
-                                  ]}>{`Feature video on ${celebData.userInfo.name}'s Pepup Page`}</Text>
+                                  ]}>{`Feature video on ${
+                                    celebData.userInfo.name
+                                    }'s Pepup Page`}</Text>
                               </View>
-                              <Text style={styles.disclaimerText}>
-                                NOTE: We will only charge you when we fulfill
-                                your Pepup request. Your Pepup will be ready
-                                within 7 days.
+                              
+                              <Text>
+                                <Text
+                                  style={[
+                                    styles.disclaimerText,
+                                    { fontFamily: boldFont }
+                                  ]}>
+                                  NOTE:{' '}
+                                </Text>
+                                <Text style={styles.disclaimerText}>
+                                  We will only charge you when we fulfill your
+                                  Pepup request. Your Pepup will be ready within
+                                  7 days.
+                                </Text>
                               </Text>
                             </View>
                           </View>
@@ -167,14 +176,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                       </View>
                     </ScrollView>
                     <View style={styles.modalFooter}>
-                      <TouchableOpacity
-                        style={styles.btnCancel}
-                        onPress={() => closePepupReqModal()}>
-                        <Icon size={20} name="cancel" color={colorBlack} />
-                      </TouchableOpacity>
                       <ButtonStyled
                         style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
+                        onPress={handleSubmit}
                         text={`Request for ${celebData.fee} INR  `}
                         loader={isFetching}
                         iconSource={require('../../../assets/coins.png')}

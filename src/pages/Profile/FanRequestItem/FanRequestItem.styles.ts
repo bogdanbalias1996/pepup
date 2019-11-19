@@ -1,19 +1,19 @@
 import { StyleSheet } from 'react-native';
 
 import {
-  colorTextGray,
-  colorBlack,
-  colorInputBackground,
+  colorTextGrey,
+  colorBlack,  
+  colorBottomInput,
+  colorEventLabel,
   defaultFont,
-  italicFont,
-  boldFont
+  semiboldFont
 } from '../../../variables';
 
 export default StyleSheet.create({
   card: {
     paddingVertical: 16,
     borderBottomWidth: 1,
-    borderColor: colorInputBackground
+    borderColor: colorBottomInput
   },
   cardHeader: {
     flexDirection: 'row',
@@ -22,26 +22,21 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
-    color: colorTextGray
-  },
-  completed: {
-    fontFamily: boldFont
-  },
+    fontFamily: semiboldFont,
+    color: colorEventLabel    
+  },  
   reqDescription: {
-    fontSize: 12,
-    fontFamily: italicFont
+    fontSize: 13,
+    fontFamily: defaultFont
   },
   date: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     flexShrink: 1
   },
   name: {
-    flexGrow: 1,
-    fontSize: 14,
-    fontFamily: defaultFont,
+    flexGrow: 1,        
     color: colorBlack
   },
   notificationStatus: {

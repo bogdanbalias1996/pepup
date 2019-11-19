@@ -1,7 +1,7 @@
 export type PepupModalProps = {
   visible: boolean;
   onRequestClose: () => void;
-  heightContent: number;
+  heightContent?: number;
   children: any;
   isLoading?: boolean;
 };

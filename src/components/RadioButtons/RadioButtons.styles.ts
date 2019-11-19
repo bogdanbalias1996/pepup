@@ -1,5 +1,10 @@
 import { StyleSheet } from 'react-native';
-import { colorBlack, defaultFont, boldFont } from '../../variables';
+import { 
+  colorBlack,
+  colorGrey2,
+  defaultFont, 
+  semiboldFont 
+} from '../../variables';
 
 export default StyleSheet.create({
   wrapRadioButtons: {
@@ -7,17 +12,17 @@ export default StyleSheet.create({
     justifyContent: 'space-between',
     width: '100%',
     marginBottom: 16,
-    flex: 1
+    flex: 1    
   },
   wrapRadioButtonsC: {
     flexWrap: 'wrap',
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'space-between',
-    marginBottom: 16
+    marginBottom: 15    
   },
   btn: {
-    borderRadius: 15,
+    borderRadius: 17,
     paddingLeft: 10,
     paddingVertical: 5,
     flexDirection: 'row',
@@ -27,23 +32,22 @@ export default StyleSheet.create({
     width: '100%'
   },
   btnGradientDark: {
-    borderRadius: 15,
+    borderRadius: 17,
     width: '48%',
     padding: 1,
     marginBottom: 10
   },
   btnGradient: {
-    borderRadius: 15,
+    borderRadius: 17,
     justifyContent: 'center',
     alignItems: 'center',
     flexGrow: 1
   },
   btnTextQuiz: {
     textAlign: 'left',
-    fontSize: 16,
-    fontFamily: defaultFont,
-    color: colorBlack,
-    paddingTop: 5
+    fontSize: 14,
+    fontFamily: semiboldFont,
+    color: colorGrey2
   },
   btnText: {
     textAlign: 'center',
@@ -52,9 +56,9 @@ export default StyleSheet.create({
     color: colorBlack
   },
   qText: {
-    fontSize: 16,
-    color: colorBlack,
+    fontSize: 14,    
     marginBottom: 5,
-    fontFamily: boldFont
+    color: colorGrey2,
+    fontFamily: semiboldFont
   }
 });

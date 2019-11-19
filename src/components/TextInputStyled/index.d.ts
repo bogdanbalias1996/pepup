@@ -12,7 +12,7 @@ export interface TextInputStyledProps extends TextInputProps {
   borderTop?: boolean;
   multiline?: boolean;
   numberOfLines?: number;
-  inputStyle?: any;
+  inputStyle?: any;  
   iconColor?: string;
   iconNameClick?: string;
   iconSize?: number;

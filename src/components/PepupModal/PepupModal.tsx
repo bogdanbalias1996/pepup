@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { View, Modal } from 'react-native';
-import { connect } from 'react-redux';
 
 import { PepupModalProps } from '.';
 import styles from './PepupModal.styles';
-import { deviceInfoCheck } from '../../helpers';
+import { getTopBarOffset } from '../../helpers';
 import { Loader } from '../../components/Loader/Loader';
 
-export class Component extends React.Component<PepupModalProps> {
+export class PepupModal extends React.PureComponent<PepupModalProps> {
   render() {
     const {
       visible,
@@ -16,6 +15,7 @@ export class Component extends React.Component<PepupModalProps> {
       children,
       isLoading
     } = this.props;
+
     return (
       visible && (
         <View style={styles.overlay}>
@@ -24,16 +24,21 @@ export class Component extends React.Component<PepupModalProps> {
               animationType="slide"
               transparent={true}
               visible={visible}
-              onRequestClose={onRequestClose}>
+              onRequestClose={onRequestClose}
+            >
               <View
                 style={[
                   styles.wrapper,
-                  { paddingTop: deviceInfoCheck() ? 55 : 25 }
-                ]}>
+                  heightContent ? { paddingTop: getTopBarOffset() + 10 } : {}                  
+                ]}
+                >
                 <View
                   style={[
                     styles.wrapModalContent,
-                    { maxHeight: heightContent + 150, height: '100%' }
+                    { 
+                      maxHeight: heightContent ? heightContent + 150 : '100%', 
+                      height: '100%' 
+                    }                    
                   ]}>
                   {children}
                 </View>
@@ -46,7 +51,4 @@ export class Component extends React.Component<PepupModalProps> {
   }
 }
 
-export const PepupModal = connect(
-  null,
-  null
-)(Component);
+export default PepupModal;

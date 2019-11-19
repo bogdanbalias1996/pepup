@@ -1,22 +1,32 @@
-import * as React from 'react';
+import React, { isValidElement } from 'react';
 import { Text, View, TouchableOpacity } from 'react-native';
+import { connect } from 'react-redux';
+import memoize from 'memoize-one';
+import get from 'lodash.get';
+
+import { openVideoModal } from '../../Pepups/actions';
+import {getPepupNotification} from '../actions'
 
 import {
-  colorBlueberry,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus
+  colorCompletedStatus,
+  colorBlack
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
-
 import { MyRequestItemProps } from './types';
 import styles from './MyRequestItem.styles';
 
 class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
-  getStatusUser = (status: string, name: string) => {
+  getStatusUser = memoize((item: any) => {
+    const { status, id, mediaBasePath } = item;
+    const { openVideoModal, getPepupNotification } = this.props;
     const normalizedStatus = status.toLowerCase();
+    const name = get(item, 'celebInfo.userInfo.name', '');
+    const videoLinkPath = get(item, 'dataInfo.link', '');
+    const videoLink = videoLinkPath ? `${mediaBasePath}${videoLinkPath}` : '';
 
     switch (normalizedStatus) {
       case 'pending':
@@ -24,14 +34,14 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
           status,
           msg: `${name} has been notified.`,
           statusColor: colorGreen,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'accepted':
         return {
           status,
           msg: `${name} is working on your request.`,
           statusColor: colorOrangeStatus,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'unavailable':
       case 'rejected':
@@ -39,39 +49,51 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
           status: 'unavailable',
           msg: `Sorry. ${name} is unable to complete your request.`,
           statusColor: colorTextRed,
-          onPress: () => {}
+          onPress: undefined
         };
       case 'completed':
         return {
           status,
-          msg: `Hurray! Your pepup is ready.`,
+          msg: (
+            <Text>
+              <Text style={styles.text}>Hurray! Your pepup is ready.</Text>{' '}
+              <Text
+                style={[
+                  styles.text,
+                  { color: colorCompletedStatus },
+                  styles.completed
+                ]}>
+                Click to watch.
+              </Text>
+            </Text>
+          ),
           statusColor: colorCompletedStatus,
-          onPress: () => alert('Compl')
+          onPress: () => {
+            openVideoModal(videoLink);
+            getPepupNotification(id);
+          }
         };
       default:
         console.log(`Unsupported request status: '${normalizedStatus}'`);
         return {
           status,
           msg: ``,
-          statusColor: colorBlueberry,
-          onPress: () => {}
+          statusColor: colorBlack,
+          onPress: undefined
         };
     }
-  };
+  });
 
   render() {
     const { item } = this.props;
-    const { msg, statusColor, onPress, status } = this.getStatusUser(
-      item.status,
-      item.celebInfo.userInfo.name
-    );
+    const { msg, statusColor, onPress, status } = this.getStatusUser(item);
 
     return (
       <TouchableOpacity activeOpacity={1} onPress={onPress}>
         <View style={styles.card}>
           <View style={styles.cardHeader}>
             <Text style={styles.notificationStatus}>
-              <Text style={{ color: statusColor }}>
+              <Text style={[styles.text, { color: statusColor }]}>
                 {capitalize(status.toLowerCase())}
               </Text>{' '}
               - <Text style={styles.name}>{item.celebInfo.userInfo.name}</Text>
@@ -79,26 +101,12 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
             <Text style={styles.date}>{item.requestedOnDt}</Text>
           </View>
           <View>
-            {status.toLowerCase() === 'completed' ? (
-              <Text>
-                <Text style={styles.text}>{msg}</Text>{' '}
-                <Text
-                  style={[
-                    styles.text,
-                    { color: statusColor },
-                    styles.completed
-                  ]}>
-                  Click to watch.
-                </Text>
-              </Text>
-            ) : (
-              <Text style={styles.text}>{msg}</Text>
-            )}
+            {isValidElement(msg) ? msg : <Text style={styles.text}>{msg}</Text>}
             <Text
               numberOfLines={3}
               ellipsizeMode="tail"
               style={[styles.text, styles.reqDescription]}>
-              {item.request}
+              {item.request.trim()}
             </Text>
           </View>
         </View>
@@ -107,4 +115,6 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
   }
 }
 
-export default MyRequestItem;
+export default connect(null, { openVideoModal, getPepupNotification })(
+  MyRequestItem
+);

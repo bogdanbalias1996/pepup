@@ -8,14 +8,18 @@ import {
   ScrollView
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Dispatch } from 'redux';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import format from 'date-fns/format';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import styles from './EditProfile.styles';
-import { Dispatch } from 'redux';
+
 import { IGlobalState } from '../../coreTypes';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
+
 import { TextInputStyledForEdit } from '../../components/TextInputStyled/TextInputStyledForEdit';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import {
@@ -24,10 +28,9 @@ import {
   EditProfileScreenFromFormik
 } from '.';
 import { editProfile } from './actions';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import { format } from 'date-fns';
+
 import { Icon } from '../../components/Icon/Icon';
-import { colorTextGray } from '../../variables';
+import { colorTextGrey } from '../../variables';
 import { videoRecordModalOpen } from '../RecordVideo/actions';
 import { VideoType } from '../../components/ModalRecordVideo/';
 import { getCeleb } from '../Pepups/actions';
@@ -44,7 +47,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   editProfile: (data: EditProfileScreenFromData, setErrors: any) =>
     dispatch(editProfile(data, setErrors) as any),
-  videoRecordModalOpen: (entityId: string, videoType: VideoType) => dispatch(videoRecordModalOpen(entityId, videoType)),
+  videoRecordModalOpen: (entityId: string, videoType: VideoType) =>
+    dispatch(videoRecordModalOpen(entityId, videoType)),
   getCeleb: (id: string) => dispatch(getCeleb(id) as any)
 });
 
@@ -113,8 +117,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
             enableOnAndroid={true}
             keyboardShouldPersistTaps="handled"
             bounces={false}
-            enableAutomaticScroll={true}
-          >
+            enableAutomaticScroll={true}>
             <Formik
               initialValues={{
                 email: profileData.email,
@@ -178,7 +181,12 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                             inputStyle={{ height: 120 }}
                           />
                           <TouchableOpacity
-                            onPress={() => videoRecordModalOpen(celebData.mappedUserId, 'celebIntroVideo')}>
+                            onPress={() =>
+                              videoRecordModalOpen(
+                                celebData.mappedUserId,
+                                'celebIntroVideo'
+                              )
+                            }>
                             <TextInputStyledForEdit
                               name="introVideo"
                               pointerEvents="none"
@@ -186,7 +194,7 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                               label="click to record intro video"
                               formProps={props}
                               iconName="video-camera"
-                              iconColor={colorTextGray}
+                              iconColor={colorTextGrey}
                             />
                           </TouchableOpacity>
                           <View style={styles.private}>
@@ -283,9 +291,8 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                     </View>
                     <View style={styles.footer}>
                       <ButtonStyled
-                        textBold={true}
                         style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
+                        onPress={handleSubmit}
                         text="SAVE"
                         loader={isFetching}
                       />

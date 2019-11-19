@@ -1,5 +1,5 @@
 export type ButtonStyledProps = {
-  onPress: Function;
+  onPress: () => void;
   text: String;
   style?: any;
   iconName?: string;
@@ -7,6 +7,7 @@ export type ButtonStyledProps = {
   loader?: boolean;
   loaderColor?: string;
   iconSource?: any;
-  textBold?: boolean;
   width?: string;
+  normalFont?: boolean;
+  styleGradient?: any;
 };

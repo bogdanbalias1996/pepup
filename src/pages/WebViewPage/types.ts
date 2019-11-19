@@ -4,10 +4,13 @@ import {
 } from 'react-navigation';
 
 export type WebViewPageScreenStateProps = {
-  navigation: NavigationScreenProp<any, any>;
+  modalData: any;
+  isSettingsModalOpen: boolean;
 };
 
-export type WebViewPageScreenDispatchProps = {};
+export type WebViewPageScreenDispatchProps = {
+  closeSettingsModal: () => void;
+};
 
 export type WebViewPageScreenProps = WebViewPageScreenStateProps &
   WebViewPageScreenDispatchProps;

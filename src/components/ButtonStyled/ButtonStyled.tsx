@@ -7,16 +7,16 @@ import { ButtonStyledProps } from '.';
 import styles from './ButtonStyled.styles';
 import {
   colorBlack,
-  colorVioletStart,
-  colorVioletEnd,
   colorBlueStart,
   colorBlueEnd,
   colorOrangeStart,
   colorOrangeEnd,
-  boldFont,
-  defaultFont,
   colorCoolGrey,
-  colorDotGray
+  colorDotGray,
+  colorLightYellow,
+  colorLightOrange,
+  defaultFont,
+  boldFont
 } from '../../variables';
 import { Loader } from '../Loader/Loader';
 import FastImage from 'react-native-fast-image';
@@ -30,7 +30,7 @@ const getTypeButton = (type: string) => {
     case 'grey':
       return [styles.shadowGrey, styles.btnShadow];
     default:
-      return [styles.shadowViolet, styles.btnShadow];
+      return [styles.shadowYellow, styles.btnShadow];
   }
 };
 
@@ -41,13 +41,13 @@ const getColorButton = (type: string) => {
     case 'orange':
       return [colorOrangeStart, colorOrangeEnd];
     case 'border':
-      return [colorVioletStart, colorVioletEnd];
+      return [colorLightYellow, colorLightOrange];
     case 'white':
       return ['white', 'white'];
     case 'grey':
       return [colorCoolGrey, colorDotGray];
     default:
-      return [colorVioletStart, colorVioletEnd];
+      return [colorLightYellow, colorLightOrange];
   }
 };
 
@@ -56,12 +56,13 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
   iconName = '',
   iconSource,
   text = '',
-  style = '',
-  textBold = false,
+  style = {},
   type = '',
   loader = false,
-  loaderColor = 'white'
-}): JSX.Element => {
+  loaderColor = 'white',
+  styleGradient = {},
+  normalFont = false
+}): JSX.Element => {  
   return (
     <View style={[getTypeButton(type)].concat(style)}>
       <LinearGradient
@@ -71,7 +72,8 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
         style={[
           styles.btnGradient,
           getTypeButton(type),
-          type === 'border' && { padding: 1 }
+          type === 'border' && { padding: 1 },
+          styleGradient
         ]}>
         <TouchableOpacity
           activeOpacity={type === 'border' ? 1 : 0.5}
@@ -95,11 +97,9 @@ export const ButtonStyled: React.SFC<ButtonStyledProps> = ({
                     type === 'border'
                       ? colorBlack
                       : type === 'white'
-                      ? colorVioletEnd
-                      : 'white'
-                },
-                {
-                  fontFamily: textBold ? boldFont : defaultFont
+                      ? colorBlack
+                      : 'white',
+                  fontFamily: normalFont ? defaultFont : boldFont    
                 }
               ]}>
               {text}

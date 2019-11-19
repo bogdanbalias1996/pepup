@@ -4,7 +4,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { CheckboxStyledProps } from '.';
 import styles from './CheckboxStyled.styles';
-import { colorVioletStart, colorVioletEnd, colorBlack } from '../../variables';
+import { colorVioletStart, colorVioletEnd, colorBlack, colorBorderGradEnd, colorBorderGradStart } from '../../variables';
 import { Icon } from '../Icon/Icon';
 
 export class CheckboxStyled extends React.PureComponent<CheckboxStyledProps> {
@@ -12,9 +12,7 @@ export class CheckboxStyled extends React.PureComponent<CheckboxStyledProps> {
     const { checked, onPress } = this.props;
     return (
       <LinearGradient
-        start={[0, 0.5]}
-        end={[1, 0.5]}
-        colors={[colorVioletStart, colorVioletEnd]}
+        colors={[colorBorderGradEnd, colorBorderGradStart]}
         style={[styles.btnGradient]}
       >
         <TouchableOpacity

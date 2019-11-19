@@ -1,11 +1,3 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React, { Component } from 'react';
 import { StatusBar, YellowBox } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -23,19 +15,31 @@ import NotificationPopup from 'react-native-push-notification-popup';
 
 import { AuthenticationNavigator } from './src/navigators/AuthenticationNavigator';
 import { MainNavigator } from './src/navigators/MainNavigator';
-import { PagesNavigator } from './src/navigators/PagesNavigator';
-import { colorBlueberry } from './src/variables';
+import { colorLightOrange } from './src/variables';
 import { SuccessfulAlert } from './src/components/SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from './src/components/ErrorState/ErrorState';
 import { setInternetConnection } from './src/utils/connectionCheck/actions';
 import { openError, closeError } from './src/pages/ErrorModal/actions';
+import { LoadingScreen } from './src/pages/Loading/Loading';
+import { OnboardingScreen } from './src/pages/Onboarding/Onboarding';
 import { authenticate } from './src/common/utils/session';
 
 YellowBox.ignoreWarnings(['RCTRootView cancelTouches']);
 
 const FCM_TOKEN = 'fcmToken';
 const AppNavigator = createSwitchNavigator({
-  Pages: PagesNavigator,
+  Loading: {
+    screen: LoadingScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Onboarding: {
+    screen: OnboardingScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
   Auth: AuthenticationNavigator,
   Main: MainNavigator
 });
@@ -43,8 +47,8 @@ const AppNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(AppNavigator);
 const AppWithFontLoadedComponent = ({ isFontLoaded }: any) => {
   return (
-    <Loader color={colorBlueberry} isDataLoaded={isFontLoaded}>
-      <AppContainer ref={setTopLevelNavigator}/>
+    <Loader color={colorLightOrange} isDataLoaded={isFontLoaded}>
+      <AppContainer ref={setTopLevelNavigator} />
     </Loader>
   );
 };
@@ -79,10 +83,6 @@ export default class App extends Component {
 
     await Font.loadAsync({
       'icons-font': require('./assets/fonts/icon-font/icons-font.ttf'),
-      'montserrat-medium': require('./assets/fonts/montserrat/Montserrat-Medium.ttf'),
-      'montserrat-bold': require('./assets/fonts/montserrat/Montserrat-Bold.ttf'),
-      'montserrat-semibold': require('./assets/fonts/montserrat/Montserrat-SemiBold.ttf'),
-      'montserrat-italic': require('./assets/fonts/montserrat/Montserrat-MediumItalic.ttf'),
       'ss-bold': require('./assets/fonts/samsung-sharp/ss-bold.ttf'),
       'ss-regular': require('./assets/fonts/samsung-sharp/ss-regular.ttf'),
       'ss-medium': require('./assets/fonts/samsung-sharp/ss-medium.ttf')
@@ -94,7 +94,7 @@ export default class App extends Component {
 
     this.checkPermission();
     this.createNotificationListeners();
-    
+
     await authenticate();
   }
 

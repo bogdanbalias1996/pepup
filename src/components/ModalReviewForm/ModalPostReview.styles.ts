@@ -1,19 +1,20 @@
 import { StyleSheet } from "react-native";
 import {
     colorBlack,
-    colorTextGray,
+    colorTextGrey,
     colorTomato,
     semiboldFont,
     defaultFont,
-    boldFont
+    boldFont,
+    colorCancelButton
 } from "../../variables";
 
 export default StyleSheet.create({
     wrapModalContent: {
-        flex: 1, 
-        paddingHorizontal: 24, 
+        flex: 1,
+        paddingHorizontal: 24,
         position: 'relative',
-        paddingTop: 15
+        paddingTop: 15,
     },
     subTitle: {
         fontSize: 14,
@@ -22,7 +23,7 @@ export default StyleSheet.create({
         marginBottom: 10,
     },
     disclaimerText: {
-        color: colorTextGray,
+        color: colorTextGrey,
         lineHeight: 22,
         fontFamily: defaultFont
     },
@@ -48,10 +49,13 @@ export default StyleSheet.create({
         width: 48,
         height: 48,
         borderRadius: 30,
-        backgroundColor: 'white',
-        justifyContent: "center",
-        alignItems: "center",
-        marginRight: 16
+        backgroundColor: colorCancelButton,
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        right: 0,
+        top: 23,
+        zIndex: 999
     },
     btnSubmit: {
         flex: 1
@@ -92,7 +96,11 @@ export default StyleSheet.create({
         flexShrink: 1,
         marginTop: 15
     },
-    wrap: { flex: 1, position: 'relative' },
+    wrap: {
+        flex: 1,
+        position: 'relative',
+        paddingTop: 60
+    },
     checkboxWrap: {
         flexDirection: 'row',
         alignItems: 'center',

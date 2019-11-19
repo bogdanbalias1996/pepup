@@ -2,8 +2,7 @@ import { Celeb, Review } from '../../pages/Pepups';
 import { Profile } from '../../pages/Profile/types';
 
 export type ModalPepupProps = {
-  closePepupModal: () => void;
-  openVideoModal: (videoUrl: string) => void;
+  closePepupModal: () => void;  
   isModalShown: boolean;
   isFetching?: boolean;
   userId: string;

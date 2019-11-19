@@ -55,10 +55,10 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     route: { title: string };
     focused: boolean;
   }) => (
-    <Text style={focused ? styles.selectedLabel : styles.itemText}>
-      {route.title}
-    </Text>
-  );
+      <Text style={focused ? styles.selectedLabel : styles.itemText}>
+        {route.title}
+      </Text>
+    );
 
   renderTabBar = (props: any) => (
     <TabBar

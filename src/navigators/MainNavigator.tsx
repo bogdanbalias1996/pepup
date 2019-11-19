@@ -6,9 +6,9 @@ import {
 import { Image, View } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
   colorShadow,
-  semiboldFont
+  semiboldFont,
+  colorTextMainTabs
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
@@ -19,7 +19,6 @@ import { SettingsScreen } from '../pages/Settings/Settings';
 // import { StoreScreen } from '../pages/Store/Store';
 import { EditProfileScreen } from '../pages/EditProfile/EditProfile';
 import { EditProfileCelebScreen } from '../pages/EditProfile/EditProfileCeleb';
-import { WebViewPageScreen } from '../pages/WebViewPage/WebViewPage';
 
 // Icons for BottomTabNavigator
 const Pepups = require('../../assets/pepups.png');
@@ -88,7 +87,7 @@ export const TabsNavigator = createBottomTabNavigator(
         elevation: 7
       },
       activeTintColor: colorBlack,
-      inactiveTintColor: colorTextGray,
+      inactiveTintColor: colorTextMainTabs,
       labelStyle: {
         marginTop: 3,
         fontSize: 11,
@@ -125,8 +124,7 @@ export const MainNavigator = createStackNavigator(
     Tabs: TabsNavigator,
     Settings: SettingsScreen,
     EditProfile: EditProfileScreen,
-    EditProfileCeleb: EditProfileCelebScreen,
-    WebViewPage: WebViewPageScreen
+    EditProfileCeleb: EditProfileCelebScreen
   },
   {
     headerMode: 'screen',

@@ -19,6 +19,8 @@ import { RadioButtonsContest } from '../RadioButtons/RadioButtonsContest';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
 import { PepupModal } from '../PepupModal/PepupModal';
+import Card from '../Card';
+import CardGradient from '../CardGradient';
 const alphabet = [...'abcdefghijklmnopqrstuvwxyz'];
 
 const mapStateToProps = (state: IGlobalState) => ({
@@ -70,7 +72,13 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
           visible={isModalTestShown}
           onRequestClose={() => closeContestQuizModal()}
           heightContent={this.state.heightDescription}>
-          <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 20 }}>
+          <View style={{ flex: 1, paddingHorizontal: 24, paddingTop: 55 }}>
+            <TouchableOpacity
+              style={styles.btnCancel}
+              onPress={() => closeContestQuizModal()}>
+              <Icon size={20} name="cancel" color={colorBlack} />
+            </TouchableOpacity>
+
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View
@@ -81,16 +89,22 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                       this.setState({ heightDescription: height });
                   }}>
                   <View style={styles.conTitle}>
-                    <FastImage
-                      style={styles.avatar}
-                      source={{
-                        uri: `${contestData.mediaBasePath}${contestData.organizerLogo}`,
-                        priority: FastImage.priority.normal
-                      }}
-                      resizeMode={FastImage.resizeMode.contain}
-                    />
+                    <Card style={styles.cardAvatar} radius={8}>
+                      <CardGradient style={styles.gradient} />
+                      <FastImage
+                        style={styles.contestImage}
+                        source={{
+                          uri: `${contestData.mediaBasePath}${
+                            contestData.organizerLogo
+                          }`,
+                          priority: FastImage.priority.normal
+                        }}
+                        resizeMode={FastImage.resizeMode.contain}
+                      />
+                    </Card>
                     <Text style={styles.title}>{contestData.title}</Text>
                   </View>
+                  
                   <View style={styles.form}>
                     <View style={{ justifyContent: 'space-between' }}>
                       <View style={styles.itemWrap}>
@@ -110,7 +124,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                                 onPress={(item: any) => {
                                   setFieldValue(val.question, item);
                                 }}
-                                question={`${index+1}. ${val.question}`}
+                                question={`${index + 1}. ${val.question}`}
                                 value={values[val.question]}
                                 key={index}
                               />
@@ -121,16 +135,9 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                     </View>
                   </View>
                   <View style={[styles.modalFooter, { position: 'relative' }]}>
-                    <TouchableOpacity
-                      style={styles.btnCancel}
-                      onPress={() => closeContestQuizModal()}>
-                      <Icon size={20} name="cancel" color={colorBlack} />
-                    </TouchableOpacity>
                     <ButtonStyled
-                      style={[
-                        styles.btnSubmit,
-                        { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
-                      ]}
+                      style={styles.btnSubmit}
+                      type={ this.isAllFieldsFilled(values) ? '' : 'grey' } 
                       loader={isFetching}
                       onPress={() =>
                         this.isAllFieldsFilled(values) ? handleSubmit() : {}

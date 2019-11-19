@@ -10,7 +10,7 @@ import styles from './NotificationItem.styles';
 export class NotificationItem extends PureComponent<
   NotificationItemsProps,
   NotificationItemState
-> {
+  > {
   state = {
     isRead: false
   };
@@ -33,12 +33,12 @@ export class NotificationItem extends PureComponent<
         <TouchableOpacity
           onPress={this.onPress}
           activeOpacity={1}
-          style={styles.message}>
-          <View style={styles.headerWrap}>
-            <Text style={styles.messageTitle}>{title}</Text>
-            <Text style={styles.messageDate}>{date}</Text>
-          </View>
-          <Text style={styles.messageText}>{message}</Text>
+          style={styles.message}>          
+            <View style={styles.headerWrap}>
+              <Text style={styles.messageTitle}>{title}</Text>
+              <Text style={styles.messageDate}>{date}</Text>
+            </View>
+            <Text style={styles.messageText}>{message}</Text>          
         </TouchableOpacity>
       </Wrapper>
     );

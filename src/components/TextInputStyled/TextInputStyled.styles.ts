@@ -3,7 +3,8 @@ import {
   colorTomato,
   colorBlack,
   defaultFont,
-  semiboldFont
+  semiboldFont,
+  colorInput
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -12,12 +13,13 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     alignItems: 'center',
     width: '100%',
-    backgroundColor: 'white',
-    paddingHorizontal: 16,
-    paddingVertical: 5,
+    backgroundColor: colorInput,
+    paddingHorizontal: 16,    
     borderRadius: 8,
     marginVertical: 8,
-    height: 50
+    height: 56,  
+    borderWidth: 1, 
+    borderColor: 'rgba(198, 198, 202, 0.25)'
   },
   error: {
     borderWidth: 1,
@@ -28,17 +30,16 @@ export default StyleSheet.create({
     paddingLeft: 0,
     color: colorBlack,
     fontFamily: semiboldFont,
-    fontSize: 15
+    fontSize: 15    
   },
   inputBorder: {
     flexGrow: 1,
     fontFamily: semiboldFont,
-    fontSize: 15,
+    fontSize: 14,
     color: colorBlack,
     backgroundColor: 'white',
-    borderRadius: 8,
-    paddingVertical: 10,
-    paddingHorizontal: 5
+    borderRadius: 8,    
+    paddingHorizontal: 16    
   },
   errorText: {
     backgroundColor: colorTomato,

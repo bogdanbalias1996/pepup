@@ -4,24 +4,23 @@ import {
   View,
   TouchableOpacity,
   Text,
-  ScrollView,
-  Linking
+  ScrollView
 } from 'react-native';
-import { Dispatch } from 'redux';
 import DeviceInfo from 'react-native-device-info';
 
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { goBack, navigate } from '../../navigationService';
+import { goBack, } from '../../navigationService';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { colorVioletStart, colorVioletEnd } from '../../variables';
+import { colorBorderGradEnd, colorBorderGradStart } from '../../variables';
 import { logoutUser, setDeveloperMode } from '../Login/actions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SuccessfulAlert } from '../../components/SuccessfulAlert/SuccessfulAlert';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { IGlobalState } from '../../coreTypes';
+import { openSettingsModal } from '../WebViewPage/actions';
+import WebViewPage from '../WebViewPage';
 
 const ListItem = ({
   title = '',
@@ -33,12 +32,12 @@ const ListItem = ({
     <LinearGradient
       start={[0, 0.5]}
       end={[1, 0.5]}
-      colors={[colorVioletStart, colorVioletEnd]}
+      colors={[colorBorderGradStart, colorBorderGradEnd]}
       style={styles.gradient}>
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.listItem, style]}
-        onPress={() => !!onPress && onPress()}>
+        onPress={onPress}>
         <Text style={[styles.listItemText, styleText]}>{title}</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -49,12 +48,9 @@ const mapStateToProps = (state: IGlobalState) => ({
   developerMode: state.LoginState.developerMode
 });
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logoutUser: () => dispatch(logoutUser() as any),
-  openAlert: (data: any) => dispatch(openAlert(data) as any),
-  closeAlert: () => dispatch(closeAlert() as any),
-  setDeveloperMode: (data: boolean) => dispatch(setDeveloperMode(data) as any)
-});
+const mapDispatchToProps = {
+  logoutUser, openAlert, closeAlert, setDeveloperMode, openSettingsModal
+}
 
 export class Component extends React.PureComponent<SettingsScreenProps> {
   static navigationOptions = ({ navigation }: any) => ({
@@ -79,13 +75,7 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
   };
 
   render() {
-    const {
-      logoutUser,
-      openAlert,
-      closeAlert,
-      setDeveloperMode,
-      developerMode
-    } = this.props;
+    const { logoutUser, openAlert, openSettingsModal } = this.props;
 
     return (
       <PepupBackground>
@@ -94,43 +84,23 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
             <View style={styles.listItemsWrap}>
               <ListItem
                 title="About Pepup"
-                onPress={() => Linking.openURL('https://facebook.github.io/')}
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Partners &amp; Charities"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Privacy Policy"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Terms of Service"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title="Provide Feedback"
-                onPress={() =>
-                  navigate({
-                    routeName: 'WebViewPage',
-                    params: { uri: 'https://facebook.github.io/' }
-                  })
-                }
+                onPress={() => openSettingsModal('https://github.com/facebook/react-native')}
               />
               <ListItem
                 title={`App Version - ${DeviceInfo.getVersion()}`}
@@ -139,13 +109,8 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
                   if (this.state.devIndicator === 6) {
                     openAlert({
                       title: 'Developer info',
-                      text: !developerMode
-                        ? 'Now you`re developer!'
-                        : 'Now you`re not developer.',
-                      onPress: () => {
-                        closeAlert();
-                        setDeveloperMode(!developerMode ? true : false);
-                      }
+                      text: 'Developer mode:',
+                      isDevAlert: true
                     });
                     this.setState({ devIndicator: 0 });
                   }
@@ -155,7 +120,7 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
             </View>
           </ScrollView>
         </View>
-        <SuccessfulAlert />
+        <WebViewPage />
       </PepupBackground>
     );
   }

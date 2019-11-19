@@ -56,6 +56,8 @@ export type UserRequest = {
   requestedOnDt: string;
 };
 
+export type NotificationItem = {};
+
 export type ProfileScreenStateProps = {
   navigation: NavigationScreenProp<any, any>;
   userId: string;
@@ -96,7 +98,7 @@ export type HistoryItemsProps = {
 export type ProfileScreenProps = ProfileScreenStateProps &
   ProfileScreenDispatchProps;
 
-export type ProfileTabType = 'myRequests' | 'funRequests' | 'notifications';
+export type ProfileTabType = 'myRequests' | 'fanRequests' | 'notifications';
 
 export type ProfileTabConfig = {
   title: string;

@@ -1,96 +1,106 @@
 import * as React from 'react';
 import AppIntroSlider from 'react-native-app-intro-slider';
-import { Text, View, Image } from 'react-native';
+import { Text, View } from 'react-native';
+import FastImage from 'react-native-fast-image';
 
 import styles from './Onboarding.styles';
 import { navigate } from '../../navigationService';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
-import { setLocalStorage } from '../../common/utils/session';
+
+import Storage from '../../common/utils/Storage';
+
+import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 
 export const IS_ONBOARDING_PASSED = 'OnboardingPassed';
 const slides = [
   {
     key: '1',
-    title: 'CONNECT',
-    description: 'Get up-close and personal with your favorite stars',
+    title: 'PEPUP',
+    description: 'yo life with personalized videos \n from people you love',
     imageSrc: require('../../../assets/onboarding/connect.png')
   },
   {
     key: '2',
-    title: 'MINGLE',
-    description: 'Attend exclusive events and party in style',
+    title: 'EVENTS',
+    description: 'Attend exclusive events and \n party in style',
     imageSrc: require('../../../assets/onboarding/mungle.png')
   },
   {
     key: '3',
-    title: 'DAZZLE',
-    description: 'Participate in a variety of contests and win prizes',
+    title: 'CONTESTS',
+    description: 'Participate in a variety of \n contests and win prizes',
     imageSrc: require('../../../assets/onboarding/dazzle.png')
   },
   {
     key: '4',
-    title: 'INDULGE',
-    description: 'Collect original celebrity apparel & merchandize',
+    title: 'STORE',
+    description: 'Shop and collect original \n celebrity apparel & merchandize',
     imageSrc: require('../../../assets/onboarding/indulge.png')
   }
 ];
 
 export class OnboardingScreen extends React.Component {
   state = {
-    lastSlide: false
+    lastSlide: false,
+    height: 0,
+    isLoaded: false
   };
 
-  _renderItem = (item: any) => {
+  componentDidMount() {
+    this.setState({ isLoaded: true });
+  }
+
+  _renderItem = ({ item }: any) => {
     return (
       <View style={styles.container}>
         <View style={styles.imageContainer}>
-          <Image
+          <FastImage
             style={styles.image}
-            source={item.item.imageSrc}
-            resizeMode="cover"
+            source={item.imageSrc}
+            resizeMode={FastImage.resizeMode.cover}
           />
+          <Text style={styles.title}>{item.title}</Text>
         </View>
-        <View style={styles.textContainer}>
-          <Text style={styles.title}>{item.item.title}</Text>
-          <Text style={styles.description}>{item.item.description}</Text>
+        <View style={styles.descriptionContainer}>
+          <Text style={styles.description}>{item.description}</Text>
+
+          {item.key === '4' && (
+            <ButtonStyled
+              style={styles.buttonStyle}
+              onPress={() => this._onDone()}
+              text={'Get Started'.toUpperCase()}
+              type="white"
+            />
+          )}
         </View>
-        {item.item.key === '4' && (
-          <ButtonStyled
-            style={styles.buttonStyle}
-            textBold={true}
-            onPress={() => this._onDone()}
-            text={'Get Started'.toUpperCase()}
-            type="white"
-          />
-        )}
       </View>
     );
   };
 
   _onDone = () => {
-    setLocalStorage(true, IS_ONBOARDING_PASSED);
+    Storage.setItem(IS_ONBOARDING_PASSED, true);
     navigate({ routeName: 'Auth' });
   };
 
   onChange = (index: number) => {
-    index === slides.length - 1
-      ? this.setState({ lastSlide: true })
-      : this.setState({ lastSlide: false });
+    this.setState({ lastSlide: index === slides.length - 1 });
   };
 
   render() {
     return (
-      <AppIntroSlider
-        renderItem={this._renderItem}
-        slides={slides}
-        showNextButton={false}
-        dotStyle={styles.dotStyle}
-        onSlideChange={this.onChange}
-        hidePagination={this.state.lastSlide}
-        activeDotStyle={styles.activeDotStyle}
-        paginationStyle={styles.paginationStyle}
-        doneLabel=""
-      />
+      <PepupBackground style={{ paddingTop: 0 }}>
+        <AppIntroSlider
+          renderItem={this._renderItem}
+          slides={slides}
+          showNextButton={false}
+          dotStyle={styles.dotStyle}
+          onSlideChange={this.onChange}
+          hidePagination={this.state.lastSlide}
+          activeDotStyle={styles.activeDotStyle}
+          paginationStyle={styles.paginationStyle as any}
+          doneLabel=""
+        />
+      </PepupBackground>
     );
   }
 }
