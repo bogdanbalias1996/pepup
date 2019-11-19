@@ -124,7 +124,7 @@ export const MainNavigator = createStackNavigator(
     Tabs: TabsNavigator,
     Settings: SettingsScreen,
     EditProfile: EditProfileScreen,
-    EditProfileCeleb: EditProfileCelebScreen    
+    EditProfileCeleb: EditProfileCelebScreen
   },
   {
     headerMode: 'screen',
