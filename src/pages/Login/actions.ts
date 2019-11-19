@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
-import { LoginScreenFromData, AuthResponse } from './';
+import { LoginScreenFromData, AuthResponse, DeviceResponse } from './';
 import { IAction } from '../../coreTypes';
 import { navigate } from '../../navigationService';
 import { openError } from '../ErrorModal/actions';
@@ -58,29 +58,58 @@ export const logoutUser = () => {
   };
 };
 
-export const REGISTER_DEVICE = 'REGISTER_DEVICE';
-const registerDevice = () => (dispatch: Dispatch) => {
-  const timezone = new Date().getTimezoneOffset() / 60;
-  const deviceType = DeviceInfo.getSystemName();
-  const os = DeviceInfo.getSystemVersion();
-  const appVersion = DeviceInfo.getVersion();
-  const token = getStore().getState().LoginState.accessToken;
+export const REQUEST_REGISTER_DEVICE = 'REQUEST_REGISTER_DEVICE';
+const requestRegisterDevice = (): IAction<undefined> => {
+  return {
+    type: REQUEST_REGISTER_DEVICE,
+    data: undefined
+  };
+};
 
-  request({
-    operation: ApiOperation.RegisterDevice,
-    variables: {
-      token,
-      timezone,
-      os,
-      appVersion,
-      deviceType
-    },
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    }
-  })
-    .then(res => console.log(res))
-    .catch(err => console.log(err));
+export const FAILURE_REGISTER_DEVICE = 'FAILURE_REGISTER_DEVICE';
+const failureRegisterDevice = (): IAction<undefined> => {
+  return {
+    type: FAILURE_REGISTER_DEVICE,
+    data: undefined
+  };
+};
+
+export const RECIEVE_REGISTER_DEVICE = 'RECIEVE_REGISTER_DEVICE';
+const recieveRegisterDevice = (
+  data: DeviceResponse
+): IAction<DeviceResponse> => {
+  return {
+    type: RECIEVE_REGISTER_DEVICE,
+    data
+  };
+};
+
+const registerDevice = () => {
+  return (dispatch: Dispatch) => {
+    const timezone = new Date().getTimezoneOffset() / 60;
+    const deviceType = DeviceInfo.getSystemName();
+    const os = DeviceInfo.getSystemVersion();
+    const appVersion = DeviceInfo.getVersion();
+    const token = getStore().getState().LoginState.accessToken;
+
+    dispatch(requestRegisterDevice());
+
+    request({
+      operation: ApiOperation.RegisterDevice,
+      variables: {
+        token,
+        timezone,
+        os,
+        appVersion,
+        deviceType
+      },
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then(res => dispatch(recieveRegisterDevice(res)))
+      .catch(err => dispatch(failureRegisterDevice()));
+  };
 };
 
 export const loginUser = (

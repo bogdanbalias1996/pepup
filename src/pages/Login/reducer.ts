@@ -8,7 +8,8 @@ import {
   SET_USER_ID,
   SET_HANDLE_NAME,
   SET_DEVELOPER_MODE,
-  SET_USER_NAME
+  SET_USER_NAME,
+  RECIEVE_REGISTER_DEVICE
 } from './actions';
 
 import {
@@ -38,6 +39,7 @@ export class LoginState {
   handle: string;
   developerMode: boolean;
   name: string;
+  deviceId: string;
 
   constructor() {
     this.accessToken = '';
@@ -46,6 +48,7 @@ export class LoginState {
     this.handle = '';
     this.developerMode = false;
     this.name = '';
+    this.deviceId = '';
   }
 }
 
@@ -81,6 +84,15 @@ export const LoginReducer = (
         ...state,
         isFetching: false
       };
+
+    case RECIEVE_REGISTER_DEVICE: {
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.deviceToken);
+
+      return {
+        ...state,
+        deviceId: action.data.deviceId
+      };
+    }
 
     case REMOVE_SESSION:
       Storage.clear([IS_ONBOARDING_PASSED]);
