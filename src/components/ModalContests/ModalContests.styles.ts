@@ -15,8 +15,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    flexGrow: 1,
-    // paddingHorizontal: 24
+    flexGrow: 1
   },
   modal: {
     marginTop: 40,
@@ -198,7 +197,7 @@ export default StyleSheet.create({
     height: 72,
     borderRadius: 8,
     marginRight: 16,
-    marginLeft: 4    
+    marginLeft: 4
   },
   contestImage: {
     width: '100%',
