@@ -29,7 +29,6 @@
     "expo-svg-uri": "^1.1.0",
     "expo-video-player": "^1.5.1",
     "formik": "^1.5.8",
-    "jetifier": "^1.6.4",
     "jwt-decode": "^2.2.0",
     "lodash.get": "^4.4.2",
     "memoize-one": "^5.1.1",
@@ -94,7 +93,8 @@
     "react-test-renderer": "16.9.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "jetifier": "^1.6.4"
   },
   "jest": {
     "preset": "react-native"
