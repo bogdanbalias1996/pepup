@@ -193,7 +193,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 text="SAY THANKS"
                 normalFont
                 style={styles.btnSend}
-                onPress={openPostReviewModal()}
+                onPress={openPostReviewModal}
                 loaderColor={colorLightOrange}
               />
             </View>
