@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import CameraRoll from '@react-native-community/cameraroll';
 import RNFetchBlob from 'rn-fetch-blob';
+import Share from 'react-native-share';
 import { Video } from 'expo-av';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../../coreTypes';
@@ -66,19 +67,26 @@ export class Component extends React.PureComponent<ModalVideoProps> {
         CameraRoll.saveToCameraRoll(res.path(), 'video');
         this.setState({ downloadProgress: 0 });
       })
-      .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
-      });
+      .catch(console.log);
   }
+
   async downloadTheVideo() {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
     );
-    
+
     if (Platform.OS === 'android' && granted === PermissionsAndroid.RESULTS.GRANTED || Platform.OS === 'ios') {
       this.saveFile()
     }
   }
+
+  handleShare = () => {
+    Share.open({title: 'Share via',
+    url: this.props.videoUrl,
+    showAppsToView: true
+})
+    .catch(console.log);
+};
 
   render() {
     const {
@@ -122,7 +130,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
           />
           <TouchableOpacity
             style={styles.closeBtn}
-            onPress={() => closeVideoModal()}>
+            onPress={closeVideoModal}>
             <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
 
@@ -167,7 +175,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
               <View style={styles.downloadShare}>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => this.downloadTheVideo()}>
+                  onPress={this.downloadTheVideo}>
                   {this.state.downloadProgress > 0 ? (
                     <ActivityIndicator size="small" color="white" />
                   ) : (
@@ -176,7 +184,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 </TouchableOpacity>
                 <TouchableOpacity
                   style={styles.icon}
-                  onPress={() => closeVideoModal()}>
+                  onPress={this.handleShare}>
                   <Icon name="share" />
                 </TouchableOpacity>
               </View>
@@ -185,7 +193,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 text="SAY THANKS"
                 normalFont
                 style={styles.btnSend}
-                onPress={() => openPostReviewModal()}
+                onPress={openPostReviewModal()}
                 loaderColor={colorLightOrange}
               />
             </View>

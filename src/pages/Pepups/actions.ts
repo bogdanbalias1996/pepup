@@ -4,12 +4,11 @@ import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
 import { RequestPepupScreenFromData } from '../../components/ModalPepupReq';
 import { getStore } from '../../configureStore';
-import { Review, Category, Celeb, CelebsResponseType } from '.';
+import { Review, Category, Celeb, CelebsResponseType } from './types';
 import { PostReviewFormProps } from '../../components/ModalReviewForm';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
-import { UserRequest } from '../Profile/types';
 
 export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
 export const openPepupModal = (): IAction<undefined> => {
@@ -512,59 +511,6 @@ export const closeNotifyModal = (): IAction<undefined> => {
   return {
     type: CLOSE_NOTIFY_MODAL,
     data: undefined
-  };
-};
-
-export const RECEIVE_PEPUP_NOTIFICATION = 'RECEIVE_PEPUP_NOTIFICATION';
-export const receivePepupNotification = (
-  data: UserRequest
-): IAction<UserRequest> => {
-  return {
-    type: RECEIVE_PEPUP_NOTIFICATION,
-    data
-  };
-};
-
-export const REQUEST_PEPUP_NOTIFICATION = 'REQUEST_PEPUP_NOTIFICATION';
-export const requestPepupNotification = (): IAction<undefined> => {
-  return {
-    type: REQUEST_PEPUP_NOTIFICATION,
-    data: undefined
-  };
-};
-
-export const FAILURE_PEPUP_NOTIFICATION = 'FAILURE_PEPUP_NOTIFICATION';
-export const failurePepupNotification = (): IAction<undefined> => {
-  return {
-    type: FAILURE_PEPUP_NOTIFICATION,
-    data: undefined
-  };
-};
-
-export const getPepupNotification = (pepupId: string) => {
-  return (dispatch: Dispatch) => {
-    dispatch(requestPepupNotification());
-    request({
-      operation: ApiOperation.GetPepupById,
-      params: {
-        pepupId
-      }
-    })
-      .then(res => {
-        dispatch(receivePepupNotification(res));
-      })
-      .catch(err => {
-        dispatch(failurePepupNotification());
-        dispatch(
-          openError({
-            type: 'unknown',
-            onPress: () => {
-              dispatch(closeError());
-              dispatch(getPepupNotification(pepupId) as any);
-            }
-          })
-        );
-      });
   };
 };
 

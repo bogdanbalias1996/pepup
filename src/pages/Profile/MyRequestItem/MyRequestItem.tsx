@@ -4,18 +4,18 @@ import { connect } from 'react-redux';
 import memoize from 'memoize-one';
 import get from 'lodash.get';
 
-import { openVideoModal, getPepupNotification } from '../../Pepups/actions';
+import { openVideoModal } from '../../Pepups/actions';
+import {getPepupNotification} from '../actions'
 
 import {
-  colorTextViolet,
   colorGreen,
   colorOrangeStatus,
   colorTextRed,
-  colorCompletedStatus
+  colorCompletedStatus,
+  colorBlack
 } from '../../../variables';
 
 import { capitalize } from '../../../helpers';
-
 import { MyRequestItemProps } from './types';
 import styles from './MyRequestItem.styles';
 
@@ -78,7 +78,7 @@ class MyRequestItem extends React.PureComponent<MyRequestItemProps> {
         return {
           status,
           msg: ``,
-          statusColor: colorTextViolet,
+          statusColor: colorBlack,
           onPress: undefined
         };
     }

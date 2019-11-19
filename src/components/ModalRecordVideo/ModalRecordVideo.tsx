@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { TouchableOpacity, View, Text, Modal } from 'react-native';
+import { TouchableOpacity, View, Modal } from 'react-native';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { SafeAreaView } from 'react-navigation';
@@ -20,7 +20,6 @@ import { Video } from 'expo-av';
 import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
 import styles from './ModalRecordVideo.styles';
 import { colorLightOrange } from '../../variables';
-import { AlertProps } from '../SuccessfulAlert';
 
 const minAcceptableVideoDuration = 30;
 const maxAcceptableVideoDuration = 60;

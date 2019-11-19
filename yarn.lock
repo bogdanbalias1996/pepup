@@ -1100,6 +1100,11 @@
     "@types/react" "*"
     "@types/react-native" "*"
 
+"@types/react-native-share@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@types/react-native-share/-/react-native-share-1.1.4.tgz#720c52cbdcd8bb639c36d5097c9752fe0d61392e"
+  integrity sha512-6fDO/TtkIu3DmI9B+OgRMG4hl1Y7XBakzzNjjtJxanODuXMF5ARhc9lwPSgccdM73N3AxSyz73YbJOrCxcVTxQ==
+
 "@types/react-native-star-rating@^1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/react-native-star-rating/-/react-native-star-rating-1.1.0.tgz#6794949f4a3279157c75eadf1c82b62e17938170"
@@ -5904,6 +5909,11 @@ react-native-safe-area-view@^0.14.1:
   integrity sha512-tOxHGQUN83MTmQB4ghoQkibqOdGiX4JQEmeyEv96MKWO/x8T2PJv84ECUos9hD3blPRQwVwSpAid1PPPhrVEaw==
   dependencies:
     debounce "^1.2.0"
+
+react-native-share@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-share/-/react-native-share-2.0.0.tgz#4543a746013e0d8fa9f765fb8937007cfbcffcf7"
+  integrity sha512-J8Xl3mq0L9KDFtSYtKsQDAnZWw/niZIpAD1PRiNfZFHo44Rc+oS2bEIhskNnoQXKEgBNdPzCl/DenMXYAHXRYg==
 
 react-native-splash-screen@^3.2.0:
   version "3.2.0"
