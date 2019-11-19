@@ -4,9 +4,8 @@ import {
   Text,
   View,
   ScrollView,
-  FlatList  
+  FlatList
 } from 'react-native';
-import FastImage from 'react-native-fast-image';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 
@@ -135,7 +134,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
         onRequestClose={() => closePepupModal()}
         heightContent={this.state.heightDescription}>
         {!!celebData && (
-          <View style={{ flex: 1, paddingTop: 55 }}>
+          <View style={{ flex: 1, paddingTop: 70 }}>
             <TouchableOpacity
               style={styles.btnCancel}
               onPress={() => closePepupModal()}>
@@ -157,7 +156,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                 <Text style={[styles.text, styles.subTitle]}>
                   {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}
                 </Text>
-              
+
                 <View style={styles.celebInfoBlock}>
                   <VideoCard
                     videoUrl={videoUrl}
@@ -204,7 +203,7 @@ export class Component extends React.PureComponent<ModalPepupProps> {
                     showsHorizontalScrollIndicator={false}
                   />
                 </View>
-                
+
                 {celebData.dataInfo.review && (
                   <View style={styles.reviews}>
                     <View style={styles.rewiewsHeader}>

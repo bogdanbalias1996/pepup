@@ -43,7 +43,7 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
           onRequestClose={() => closeReviewsModal()}
           heightContent={this.state.heightDescription}
         >
-          <View style={{ flex: 1, paddingTop: 52 }}>
+          <View style={{ flex: 1, paddingTop: 60 }}>
             <TouchableOpacity
               style={styles.btnCancel}
               onPress={() => closeReviewsModal()}>
@@ -52,10 +52,10 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
 
             <View style={{ marginHorizontal: 24 }}>
               <View style={[styles.headerReviews, { marginBottom: 29 }]}>
-                <Text style={styles.title}>{celebData.userInfo.name}</Text>                
+                <Text style={styles.title}>{celebData.userInfo.name}</Text>
                 <Text style={[styles.text, styles.subTitle, { color: colorBlack }]}>
-                  {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}                  
-                </Text>                
+                  {`${celebData.dataInfo.intro} • ${celebData.totalPepupsFulfilled} Pepups`}
+                </Text>
               </View>
               <View style={[styles.rewiewsNumber, { marginBottom: 15 }]}>
                 <Text style={[styles.text, styles.numberRewiewsText]}>
@@ -63,7 +63,7 @@ export class Component extends React.PureComponent<ModalReviewsProps> {
                 </Text>
               </View>
             </View>
-            
+
             <ScrollView>
               <View
                 style={styles.scrollContent}

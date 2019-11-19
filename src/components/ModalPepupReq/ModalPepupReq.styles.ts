@@ -113,19 +113,19 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     marginTop: 23,
-    marginBottom: 34    
+    marginBottom: 34
   },
   checkText: {
     flex: 1,
     marginLeft: 10,
     flexWrap: 'wrap',
     alignItems: 'flex-start',
-    paddingTop: 10    
+    paddingTop: 10
   },
   scrollContent: { paddingBottom: 90 },
   upperWrap: {
     paddingHorizontal: 24,
     flex: 1,
-    paddingTop: 55
+    paddingTop: 70
   }
 });

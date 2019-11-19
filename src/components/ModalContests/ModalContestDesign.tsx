@@ -170,7 +170,7 @@ export class Component extends React.Component<ModalContestQuizProps> {
         visible={isModalTestShown}
         onRequestClose={() => closeContestQuizModal()}
         heightContent={this.state.heightDescription}>
-        <View style={styles.upperWrap}>
+        <View style={[styles.upperWrap, {paddingHorizontal: 24}]}>
           <TouchableOpacity
             style={styles.btnCancel}
             onPress={() => closeContestQuizModal()}>
