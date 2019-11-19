@@ -67,10 +67,9 @@ export class Component extends React.PureComponent<ModalVideoProps> {
         CameraRoll.saveToCameraRoll(res.path(), 'video');
         this.setState({ downloadProgress: 0 });
       })
-      .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
-      });
+      .catch(console.log);
   }
+
   async downloadTheVideo() {
     const granted = await PermissionsAndroid.request(
       PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
@@ -86,8 +85,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
     url: this.props.videoUrl,
     showAppsToView: true
 })
-    .then((res) => { console.log(res) })
-    .catch((err) => { err && console.log(err); });
+    .catch(console.log);
 };
 
   render() {

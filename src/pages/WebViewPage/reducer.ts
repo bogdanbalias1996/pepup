@@ -3,12 +3,8 @@ import { IAction } from '../../coreTypes';
 import { OPEN_SETTINGS_MODAL, CLOSE_SETTINGS_MODAL } from './actions';
 
 export class SettingsState {
-    isSettingsModalOpen: boolean
+    isSettingsModalOpen = false;
     modalData: any;
-
-    constructor() {
-        this.isSettingsModalOpen = false;
-    }
 }
 
 export const initialState = new SettingsState();

@@ -1,15 +1,13 @@
 import * as React from 'react';
-import { WebViewPageScreenProps } from '.';
 import { WebView } from 'react-native-webview';
+import {WebViewPageScreenProps} from './types';
 import {
   SafeAreaView,
   StatusBar,
   View,
   TouchableOpacity,
-  ScrollView
 } from 'react-native';
 import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
 import { IGlobalState } from '../../coreTypes';
 import { closeSettingsModal } from './actions';
 import PepupModal from '../../components/PepupModal/PepupModal';
@@ -26,7 +24,7 @@ const mapDispatchToProps = {
   closeSettingsModal
 };
 
-class Component extends React.PureComponent<WebViewPageScreenProps> {
+class WebViewPage extends React.PureComponent<WebViewPageScreenProps> {
   state = {
     heightDescription: 0
   };
@@ -59,7 +57,7 @@ class Component extends React.PureComponent<WebViewPageScreenProps> {
   }
 }
 
-export const WebViewPageScreen = connect(
+export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(WebViewPage);

@@ -4,14 +4,12 @@ import {
   View,
   TouchableOpacity,
   Text,
-  ScrollView,
-  Linking
+  ScrollView
 } from 'react-native';
-import { Dispatch } from 'redux';
 import DeviceInfo from 'react-native-device-info';
 
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { goBack, navigate } from '../../navigationService';
+import { goBack, } from '../../navigationService';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
@@ -22,7 +20,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { IGlobalState } from '../../coreTypes';
 import { openSettingsModal } from '../WebViewPage/actions';
-import { WebViewPageScreen } from '../WebViewPage/WebViewPage';
+import WebViewPage from '../WebViewPage';
 
 const ListItem = ({
   title = '',
@@ -39,7 +37,7 @@ const ListItem = ({
       <TouchableOpacity
         activeOpacity={1}
         style={[styles.listItem, style]}
-        onPress={() => onPress()}>
+        onPress={onPress}>
         <Text style={[styles.listItemText, styleText]}>{title}</Text>
       </TouchableOpacity>
     </LinearGradient>
@@ -122,7 +120,7 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
             </View>
           </ScrollView>
         </View>
-        <WebViewPageScreen />
+        <WebViewPage />
       </PepupBackground>
     );
   }
