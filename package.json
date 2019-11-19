@@ -29,7 +29,6 @@
     "expo-svg-uri": "^1.1.0",
     "expo-video-player": "^1.5.1",
     "formik": "^1.5.8",
-    "jetifier": "^1.6.4",
     "jwt-decode": "^2.2.0",
     "lodash.get": "^4.4.2",
     "memoize-one": "^5.1.1",
@@ -49,7 +48,6 @@
     "react-native-keyboard-aware-scroll-view": "^0.9.1",
     "react-native-modal-datetime-picker": "^7.6.0",
     "react-native-modal-selector": "^1.1.1",
-    "react-native-modalbox": "^2.0.0",
     "react-native-push-notification-popup": "^1.4.0",
     "react-native-reanimated": "^1.4.0",
     "react-native-screens": "^1.0.0-alpha.23",
@@ -71,6 +69,7 @@
     "@babel/core": "^7.6.2",
     "@babel/runtime": "^7.6.2",
     "@react-native-community/eslint-config": "^0.0.5",
+    "@types/jest": "^24.0.18",
     "@types/jwt-decode": "^2.2.1",
     "@types/lodash": "^4.14.148",
     "@types/lodash.get": "^4.4.6",
@@ -81,10 +80,9 @@
     "@types/react-native-star-rating": "^1.1.0",
     "@types/react-navigation": "^3.0.5",
     "@types/react-redux": "^7.0.5",
+    "@types/react-test-renderer": "^16.9.0",
     "@types/superagent": "^4.1.1",
     "@types/yup": "^0.26.24",
-    "@types/jest": "^24.0.18",
-    "@types/react-test-renderer": "^16.9.0",
     "babel-jest": "^24.9.0",
     "eslint": "^6.5.1",
     "husky": "^3.0.9",
@@ -95,7 +93,8 @@
     "react-test-renderer": "16.9.0",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
-    "typescript": "^3.6.3"
+    "typescript": "^3.6.3",
+    "jetifier": "^1.6.4"
   },
   "jest": {
     "preset": "react-native"
