@@ -68,7 +68,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
         this.setState({ downloadProgress: 0 });
       })
       .catch(err => {
-        console.log(JSON.stringify(err, null, 2));
+        console.log();
       });
   }
   async downloadTheVideo() {
@@ -86,8 +86,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
     url: this.props.videoUrl,
     showAppsToView: true
 })
-    .then((res) => { console.log(res) })
-    .catch((err) => { err && console.log(err); });
+    .catch((err) => { console.log(); });
 };
 
   render() {
