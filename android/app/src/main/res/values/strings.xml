@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">pepup</string>
+    <string name="app_name">Pepup</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
     <string name="launch_screen">launch_screen</string>
 </resources>
