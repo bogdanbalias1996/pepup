@@ -15,8 +15,7 @@ export default StyleSheet.create({
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    flexGrow: 1,
-    paddingHorizontal: 24
+    flexGrow: 1
   },
   modal: {
     marginTop: 40,
@@ -111,7 +110,8 @@ export default StyleSheet.create({
     },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2
+    elevation: 2,
+    marginHorizontal: 24
   },
   conTitle: {
     flexDirection: 'row',
@@ -187,8 +187,7 @@ export default StyleSheet.create({
   },
   upperWrap: {
     flex: 1,
-    paddingHorizontal: 24,
-    paddingTop: 75
+    paddingTop: 70
   },
   gradient: {
     borderRadius: 8
@@ -198,7 +197,7 @@ export default StyleSheet.create({
     height: 72,
     borderRadius: 8,
     marginRight: 16,
-    marginLeft: 4    
+    marginLeft: 4
   },
   contestImage: {
     width: '100%',

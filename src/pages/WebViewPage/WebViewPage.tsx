@@ -1,12 +1,7 @@
 import * as React from 'react';
 import { WebView } from 'react-native-webview';
-import {WebViewPageScreenProps} from './types';
-import {
-  SafeAreaView,
-  StatusBar,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import { WebViewPageScreenProps } from './types';
+import { SafeAreaView, StatusBar, View, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { IGlobalState } from '../../coreTypes';
 import { closeSettingsModal } from './actions';
@@ -42,7 +37,12 @@ class WebViewPage extends React.PureComponent<WebViewPageScreenProps> {
         onRequestClose={closeSettingsModal}
         heightContent={this.state.heightDescription}>
         <SafeAreaView style={{ flex: 1 }}>
-          <View style={styles.wrapModalContent}>
+          <View
+            style={styles.wrapModalContent}
+            onLayout={event => {
+              const { height } = event.nativeEvent.layout;
+              this.setState({ heightDescription: height });
+            }}>
             <TouchableOpacity
               style={styles.btnCancel}
               onPress={closeSettingsModal}>
@@ -57,7 +57,4 @@ class WebViewPage extends React.PureComponent<WebViewPageScreenProps> {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WebViewPage);
+export default connect(mapStateToProps, mapDispatchToProps)(WebViewPage);

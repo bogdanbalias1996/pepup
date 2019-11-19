@@ -61,7 +61,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
       pepupData && (
         <PepupModal
           visible={isModalPostReviewShown}
-          onRequestClose={() => closePostReviewModal()}
+          onRequestClose={closePostReviewModal}
           heightContent={this.state.heightDescription}>
           {pepupData && Object.keys(pepupData).length !== 0 && (
             <View style={styles.wrapModalContent}>
@@ -79,7 +79,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                     <View style={styles.wrap}>
                       <TouchableOpacity
                         style={styles.btnCancel}
-                        onPress={() => closePostReviewModal()}>
+                        onPress={closePostReviewModal}>
                         <Icon size={20} name="cancel" color={colorBlack} />
                       </TouchableOpacity>
                       <ScrollView>
@@ -131,7 +131,7 @@ export class Component extends React.PureComponent<ModalPostReviewProps> {
                         <View style={styles.modalFooter}>
                           <ButtonStyled
                             style={styles.btnSubmit}
-                            onPress={() => handleSubmit()}
+                            onPress={handleSubmit}
                             text='SUBMIT'
                             loader={isFetching}
                           />

@@ -62,7 +62,7 @@ export class Component extends React.PureComponent<ModalContestsProps> {
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View style={styles.scrollContent}>
                   <View
-                    style={{paddingBottom: 60}}
+                    style={{ paddingBottom: 60 }}
                     onLayout={event => {
                       const { height } = event.nativeEvent.layout;
                       Object.keys(contestData).length !== 0 &&
@@ -81,37 +81,41 @@ export class Component extends React.PureComponent<ModalContestsProps> {
                         resizeMode={FastImage.resizeMode.contain}
                       />
                     </Card>
-                    <View style={{ flex: 1 }}>
-                      <Text style={styles.title}>{contestData.title}</Text>
-                    </View>
-                    <Text style={styles.descriptionTitle}>
-                      Contest details:
-                    </Text>
-                    <Text style={[styles.text, styles.infoText]}>
-                      {contestData.dataInfo.details}
-                    </Text>
-                    <Text style={styles.descriptionTitle}>Contest rules:</Text>
-                    <Text style={[styles.text, styles.infoText]}>
-                      {contestData.dataInfo.rules}
-                    </Text>
-                    <View style={styles.infoBlock}>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Prize</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.prize}
-                        </Text>
+                    <View style={{ paddingHorizontal: 24 }}>
+                      <View style={{ flex: 1 }}>
+                        <Text style={styles.title}>{contestData.title}</Text>
                       </View>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>Entries</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.entries}
-                        </Text>
-                      </View>
-                      <View style={styles.infoItem}>
-                        <Text style={styles.infoLabel}>End Date</Text>
-                        <Text style={styles.infoValue}>
-                          {contestData.endDt}
-                        </Text>
+                      <Text style={styles.descriptionTitle}>
+                        Contest details:
+                      </Text>
+                      <Text style={[styles.text, styles.infoText]}>
+                        {contestData.dataInfo.details}
+                      </Text>
+                      <Text style={styles.descriptionTitle}>
+                        Contest rules:
+                      </Text>
+                      <Text style={[styles.text, styles.infoText]}>
+                        {contestData.dataInfo.rules}
+                      </Text>
+                      <View style={styles.infoBlock}>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>Prize</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.prize}
+                          </Text>
+                        </View>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>Entries</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.entries}
+                          </Text>
+                        </View>
+                        <View style={styles.infoItem}>
+                          <Text style={styles.infoLabel}>End Date</Text>
+                          <Text style={styles.infoValue}>
+                            {contestData.endDt}
+                          </Text>
+                        </View>
                       </View>
                     </View>
                   </View>

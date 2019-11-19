@@ -15,13 +15,13 @@ import {
 export default StyleSheet.create({
   scrollView: {
     flex: 1,
-    marginBottom: 10    
+    marginBottom: 10
   },
   wrapModalContent: {
     flex: 1,
     paddingHorizontal: 24,
     position: 'relative',
-    paddingTop: 67
+    paddingTop: 70
   },
   modal: {
     zIndex: 100,
@@ -30,14 +30,14 @@ export default StyleSheet.create({
   },
   wrapTitle: {
     flex: 1,
-    flexDirection: 'row',    
+    flexDirection: 'row',
     alignItems: 'center',
     marginBottom: 13
   },
   imageLogo: {
     width: 72,
     height: '100%',
-    marginRight: 16    
+    marginRight: 16
   },
   title: {
     fontSize: 16,
@@ -48,7 +48,7 @@ export default StyleSheet.create({
   carousel: {
     marginTop: 0
   },
-  imageCarouselWrap: {    
+  imageCarouselWrap: {
     width: Dimensions.get('window').width - 64,
     marginHorizontal: 7,
     height: 170,
@@ -116,8 +116,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     position: 'absolute',
-    right: 10,
-    top: 16,
+    right: 17,
+    top: 23,
     zIndex: 999
   },
   infoText: {
