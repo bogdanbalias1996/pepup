@@ -99,7 +99,7 @@ export default StyleSheet.create({
     wrap: {
         flex: 1,
         position: 'relative',
-        paddingTop: 55
+        paddingTop: 60
     },
     checkboxWrap: {
         flexDirection: 'row',

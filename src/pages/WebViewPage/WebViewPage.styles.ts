@@ -10,7 +10,7 @@ export default StyleSheet.create({
     flex: 1,
     paddingHorizontal: 24,
     position: 'relative',
-    paddingTop: 65
+    paddingTop: 60
   },
   wrapContent: {
     backgroundColor: 'white',
