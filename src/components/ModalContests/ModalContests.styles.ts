@@ -197,7 +197,8 @@ export default StyleSheet.create({
     width: 72,
     height: 72,
     borderRadius: 8,
-    marginRight: 16
+    marginRight: 16,
+    marginLeft: 4    
   },
   contestImage: {
     width: '100%',

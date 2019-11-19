@@ -10,10 +10,9 @@ import {
 
 export default StyleSheet.create({
   container: {
-    paddingTop: 45,
     justifyContent: 'space-between',
     flexGrow: 1
-  },  
+  },
   wrapContent: {
     backgroundColor: 'white',
     borderTopLeftRadius: 32,
@@ -36,7 +35,7 @@ export default StyleSheet.create({
   },
   createAccountContainer: {
     marginTop: 24,
-    marginBottom: 40
+    marginBottom: 30
   },
   createAccountText: {
     color: colorTextGrey,
@@ -59,7 +58,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     flex: 1,
-    marginTop: 15    
+    marginTop: 15
   },
   formErrorContainer: {
     flexDirection: 'row',

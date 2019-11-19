@@ -219,7 +219,10 @@ export class Component extends React.Component<ModalContestQuizProps> {
                           <TextInputBorderStyled
                             name={`text${i}`}
                             label="Type your description here"
-                            inputStyle={{ height: 100 }}
+                            inputStyle={{ 
+                              height: 100,
+                              textAlignVertical: 'top'
+                            }}
                             multiline={true}
                             numberOfLines={3}
                             formProps={this.props}
@@ -275,10 +278,8 @@ export class Component extends React.Component<ModalContestQuizProps> {
             </ScrollView>
             <View style={styles.modalFooter}>
               <ButtonStyled
-                style={[
-                  styles.btnSubmit,
-                  { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
-                ]}
+                style={styles.btnSubmit}
+                type={this.isAllFieldsFilled(values) ? '' : 'grey'}
                 loader={isFetching}
                 onPress={() =>
                   this.isAllFieldsFilled(values) ? handleSubmit() : {}

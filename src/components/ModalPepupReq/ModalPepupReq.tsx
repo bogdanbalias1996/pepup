@@ -127,8 +127,9 @@ export class Component extends React.PureComponent<RequestPepupProps> {
                                 label={`Please be as specific as possible. If it’s a birthday or an anniversary wish, please specify dates and names.`}
                                 inputStyle={{
                                   height: 180,
-                                  marginVertical: 20,
-                                  lineHeight: 21
+                                  marginVertical: 10,
+                                  lineHeight: 21,
+                                  textAlignVertical: 'top'
                                 }}
                                 blurOnSubmit={true}
                                 returnKeyType="done"

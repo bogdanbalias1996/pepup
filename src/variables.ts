@@ -19,6 +19,7 @@ export const colorBlack = '#1b1c21';
 export const colorInput = '#f7f8ff';
 export const colorTextViolet = '#694ab9';
 export const colorTextGrey = '#9b9b9b';
+export const colorGrey2 = '#2a292e';
 export const colorModalTextGrey = '#727272';
 export const colorCancelButton = '#eae7f2';
 export const colorBorderGradEnd = '#ebde39';

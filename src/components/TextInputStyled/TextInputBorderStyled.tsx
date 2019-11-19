@@ -61,7 +61,7 @@ export class TextInputBorderStyled extends React.PureComponent<
             placeholder={label}
             multiline={multiline}
             numberOfLines={numberOfLines}
-            placeholderTextColor={colorTextGrey}
+            placeholderTextColor={'rgba(42, 41, 46, 0.28)'}
             value={value}
             onChangeText={handleChange(name)}
             onBlur={() => {

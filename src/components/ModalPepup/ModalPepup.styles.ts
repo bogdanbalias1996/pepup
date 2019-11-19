@@ -17,7 +17,7 @@ import {
 export default StyleSheet.create({       
   text: {
     fontSize: 14,
-    fontFamily: defaultFont
+    fontFamily: semiboldFont
   },  
   title: {
     fontSize: 24,
