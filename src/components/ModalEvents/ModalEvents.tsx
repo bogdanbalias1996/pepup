@@ -24,7 +24,7 @@ import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
 import { SuccessfulAlert } from '../SuccessfulAlert/SuccessfulAlert';
 import { ErrorModal } from '../ErrorState/ErrorState';
-import { Event } from '../../pages/Events';
+import { Event } from '../../pages/Events/types';
 import { PepupModal } from '../PepupModal/PepupModal';
 import { Card } from '../../components/Card/Card';
 import { CardGradient } from '../../components/CardGradient/CardGradient';

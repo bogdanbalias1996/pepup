@@ -4,13 +4,13 @@ import {
 } from 'react-navigation';
 
 export type SettingsScreenStateProps = {
-  navigation: NavigationScreenProp<any, any>;
   developerMode: boolean;
 };
 
 export type SettingsScreenDispatchProps = {
   logoutUser: () => any;
   openAlert: (data: any) => any;
+  openSettingsModal: (link: string) => void;
   closeAlert: () => any;
   setDeveloperMode: (data: boolean) => any;
 };

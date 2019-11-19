@@ -2,7 +2,6 @@ import { createStore, combineReducers, applyMiddleware, Store } from "redux";
 import { IGlobalState, IAction } from "./coreTypes";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from 'redux-devtools-extension';
-import {trackConnection} from '../src/middlewares/trackInternetConnection';
 
 import { FontReducer } from "./common/font.reducer";
 import { LoginReducer } from "./pages/Login/reducer";
@@ -15,6 +14,7 @@ import { AlertReducer } from './pages/Alert/reducer';
 import { ErrorReducer } from './pages/ErrorModal/reducer';
 import { ConnectionReducer } from "./utils/connectionCheck/reducer";
 import { RecordVideoReducer } from './pages/RecordVideo/reducer'
+import { SettingsReducer } from './pages/WebViewPage/reducer'
 
 const getReducerObject = () => ({
   FontState: FontReducer,
@@ -27,7 +27,9 @@ const getReducerObject = () => ({
   AlertState: AlertReducer,
   ErrorState: ErrorReducer,
   ConnectionState: ConnectionReducer,
-  RecordVideoState: RecordVideoReducer
+  RecordVideoState: RecordVideoReducer,
+  SettingsState: SettingsReducer
+  
 });
 
 const configureReducers = () =>
