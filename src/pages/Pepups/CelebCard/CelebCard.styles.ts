@@ -1,12 +1,5 @@
-import {
-  StyleSheet
-} from 'react-native';
-
-import {
-  colorLightGray,
-  boldFont,
-  semiboldFont
-} from '../../../variables';
+import { StyleSheet } from 'react-native';
+import { colorLightGray, boldFont, semiboldFont } from '../../../variables';
 
 export default StyleSheet.create({
   row: {
@@ -16,14 +9,14 @@ export default StyleSheet.create({
     flex: 0.5
   },
   card: {
-    marginVertical: 6,
+    marginVertical: 8,
     marginHorizontal: 6,
-    height: 220
+    height: 238
   },
   avatarWrapper: {
     height: '100%',
     width: '100%',
-    borderRadius: 20
+    borderRadius: 24
   },
   avatar: {
     width: '100%',
@@ -32,6 +25,7 @@ export default StyleSheet.create({
   },
   name: {
     fontSize: 16,
+    lineHeight: 24,
     fontFamily: boldFont,
     color: 'white',
     letterSpacing: 0.5,
@@ -40,9 +34,10 @@ export default StyleSheet.create({
   status: {
     fontSize: 12,
     fontFamily: semiboldFont,
-    color: colorLightGray,
+    color: 'white',
     marginBottom: 10,
-    marginLeft: 8
+    marginLeft: 8,
+    opacity: 0.7
   },
   celebsWrapper: {
     flex: 1,

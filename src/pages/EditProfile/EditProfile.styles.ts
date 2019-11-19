@@ -1,15 +1,15 @@
 import { StyleSheet } from 'react-native';
 import { deviceInfoCheck } from '../../helpers';
 import {
-  colorLightGray,
   colorTomato,
   semiboldFont,
   colorItalic,
+  colorCancelButton,
 } from '../../variables';
 
 export default StyleSheet.create({
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     paddingTop: 20,
@@ -51,7 +51,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,

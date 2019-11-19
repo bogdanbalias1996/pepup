@@ -1,9 +1,8 @@
-import { Celeb, Review } from "../../pages/Pepups";
-import { Profile } from "../../pages/Profile";
+import { Celeb, Review } from '../../pages/Pepups';
+import { Profile } from '../../pages/Profile/types';
 
 export type ModalPepupProps = {
-  closePepupModal: () => void;
-  openVideoModal: (videoUrl: string) => void;
+  closePepupModal: () => void;  
   isModalShown: boolean;
   isFetching?: boolean;
   userId: string;
@@ -24,7 +23,6 @@ export type ModalReviewsProps = {
 };
 
 export type RenderItemMedia = {
-  date: string,
-  title: string
-}
-
+  date: string;
+  title: string;
+};

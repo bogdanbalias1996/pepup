@@ -32,7 +32,7 @@ import {
   FAILURE_FEATURED_CELEBS
 } from './actions';
 import { Category, Celeb, Review } from '.';
-import { UserRequest } from '../Profile';
+import { UserRequest } from '../Profile/types';
 
 export class PepupState {
   isModalShown: boolean;
@@ -217,8 +217,7 @@ export const PepupReducer = (
     case RECEIVE_REVIEW:
       return {
         ...state,
-        isFetching: false,
-        isModalPostReviewShown: false
+        isFetching: false
       };
     case REQUEST_REVIEW:
       return {

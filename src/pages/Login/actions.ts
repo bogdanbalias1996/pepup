@@ -144,6 +144,14 @@ export const setHandleName = (data: string): IAction<string> => {
   };
 };
 
+export const SET_USER_NAME = 'SET_USER_NAME';
+export const setUserName = (data: string): IAction<string> => {
+  return {
+    type: SET_USER_NAME,
+    data
+  };
+};
+
 export const SET_DEVELOPER_MODE = 'SET_DEVELOPER_MODE';
 export const setDeveloperMode = (data: boolean) => {
   return {

@@ -7,14 +7,18 @@ import {
   Keyboard,
   ScrollView
 } from 'react-native';
+import DateTimePicker from 'react-native-modal-datetime-picker';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Dispatch } from 'redux';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import format from 'date-fns/format';
 
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
 import styles from './EditProfile.styles';
-import { Dispatch } from 'redux';
+
 import { IGlobalState } from '../../coreTypes';
-import { Formik } from 'formik';
-import * as Yup from 'yup';
 import { TextInputStyledForEdit } from '../../components/TextInputStyled/TextInputStyledForEdit';
 import { ButtonStyled } from '../../components/ButtonStyled/ButtonStyled';
 import {
@@ -23,12 +27,10 @@ import {
   EditProfileScreenFromFormik
 } from '.';
 import { editProfile } from './actions';
-import DateTimePicker from 'react-native-modal-datetime-picker';
-import { format } from 'date-fns';
+
 import { goBack } from '../../navigationService';
 import { Icon } from '../../components/Icon/Icon';
 import { TextInputPasswordForEdit } from '../../components/TextInputStyled/TextInputPasswordForEdit';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const mapStateToProps = (state: IGlobalState) => ({
   profileData: state.ProfileState.profileData,
@@ -227,9 +229,8 @@ export class Component extends React.PureComponent<EditProfileScreenProps> {
                     </View>
                     <View style={styles.footer}>
                       <ButtonStyled
-                        textBold={true}
                         style={styles.btnSubmit}
-                        onPress={() => handleSubmit()}
+                        onPress={handleSubmit}
                         text="SAVE"
                         loader={isFetching}
                       />

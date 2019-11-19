@@ -18,11 +18,12 @@ import {
   getFeaturedCelebs
 } from './actions';
 import { Loader } from '../../components/Loader/Loader';
+import { colorLightOrange } from '../../variables';
 import CategoryViewer from '../../components/CategoryViewer';
-import { colorBlueberry } from '../../variables';
 
 import CelebCard from './CelebCard';
 import { keyExtractorType } from '../../components/CategoryViewer/types';
+import { ErrorModal } from '../../components/ErrorState/ErrorState';
 
 export class Component extends PureComponent<
   PepupsScreenProps,
@@ -34,6 +35,10 @@ export class Component extends PureComponent<
     )
   });
 
+  static flatListProps = {
+    numColumns: 2
+  };
+
   state = {
     isModalVisible: false,
     activeTabIndex: 0
@@ -43,7 +48,6 @@ export class Component extends PureComponent<
     const { getAllActiveCategories } = this.props;
 
     getAllActiveCategories();
-    this.fetchCategories('Featured');
   }
 
   fetchCategories = (categoryId: string) => {
@@ -92,7 +96,7 @@ export class Component extends PureComponent<
         <View style={styles.wrapContent}>
           <Loader
             size="large"
-            color={colorBlueberry}
+            color={colorLightOrange}
             isDataLoaded={!isFetchingCat}>
             {isCategoriesLoaded && (
               <CategoryViewer
@@ -100,13 +104,13 @@ export class Component extends PureComponent<
                 data={celebs}
                 activeTabIndex={activeTabIndex}
                 onTabChange={this.handleChangeTab}
-                flatListStyle={styles.flatListStyle}
+                flatListProps={Component.flatListProps}
               />
             )}
           </Loader>
         </View>
         <ModalPepup />
-        {/* <ErrorModal /> */}
+        <ErrorModal />
       </PepupBackground>
     );
   }

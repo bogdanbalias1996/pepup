@@ -7,7 +7,8 @@ import {
   FAILURE_LOGIN_USER,
   SET_USER_ID,
   SET_HANDLE_NAME,
-  SET_DEVELOPER_MODE
+  SET_DEVELOPER_MODE,
+  SET_USER_NAME
 } from './actions';
 
 import {
@@ -23,11 +24,12 @@ import {
 } from '../ForgotPassword/actions';
 
 import {
-  setLocalStorage,
-  clearLocalStorage,
   ACCESS_TOKEN_NAME,
-  ACCESS_HANDLE_NAME
+  ACCESS_HANDLE_NAME,
+  ACCESS_USER_NAME
 } from '../../common/utils/session';
+
+import Storage from '../../common/utils/Storage';
 
 export class LoginState {
   accessToken: string;
@@ -35,6 +37,7 @@ export class LoginState {
   userId: string;
   handle: string;
   developerMode: boolean;
+  name: string;
 
   constructor() {
     this.accessToken = '';
@@ -42,6 +45,7 @@ export class LoginState {
     this.userId = '';
     this.handle = '';
     this.developerMode = false;
+    this.name = '';
   }
 }
 
@@ -53,13 +57,15 @@ export const LoginReducer = (
 ): LoginState => {
   switch (action.type) {
     case RECEIVE_LOGIN_USER:
-      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
+      Storage.setItem(ACCESS_USER_NAME, action.data.name);
 
       return {
         ...state,
         accessToken: action.data.accessToken,
         userId: action.data.id,
+        name: action.data.name,
         isFetching: false,
         handle: action.data.handle
       };
@@ -77,7 +83,7 @@ export const LoginReducer = (
       };
 
     case REMOVE_SESSION:
-      clearLocalStorage([IS_ONBOARDING_PASSED]);
+      Storage.clear([IS_ONBOARDING_PASSED]);
       return new LoginState();
 
     case REQUEST_SIGNUP_USER:
@@ -93,8 +99,8 @@ export const LoginReducer = (
       };
 
     case RECEIVE_SIGNUP_USER:
-      setLocalStorage(action.data.accessToken, ACCESS_TOKEN_NAME);
-      setLocalStorage(action.data.handle, ACCESS_HANDLE_NAME);
+      Storage.setItem(ACCESS_TOKEN_NAME, action.data.accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, action.data.handle);
 
       return {
         ...state,
@@ -132,8 +138,13 @@ export const LoginReducer = (
         ...state,
         handle: action.data
       };
+    case SET_USER_NAME:
+      return {
+        ...state,
+        name: action.data
+      };
     case SET_DEVELOPER_MODE:
-      setLocalStorage(action.data, 'developerMode');
+      Storage.setItem('developerMode', action.data);
 
       return {
         ...state,

@@ -1,46 +1,35 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorCoral,
-  colorLightGray,
+  colorTextGrey,
   colorTextViolet,
-  defaultFont
-} from "../../variables";
+  defaultFont,
+  boldFont,
+  colorTomato
+} from '../../variables';
 
 export default StyleSheet.create({
   background: { paddingTop: 0 },
   container: {
-    paddingTop: 45,
-    justifyContent: "space-between",
+    justifyContent: 'space-between',
     flex: 1
   },
-  imageWrapper: {
-    flexGrow: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-  logo: {
-    height: 110,
-    alignSelf: "center",
-    marginBottom: 30
-  },
   wrapContent: {
-    backgroundColor: colorLightGray,
+    backgroundColor: 'white',
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     padding: 24
   },
   title: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorBlack,
-    textAlign: "center",
+    textAlign: 'center',
     fontSize: 24
   },
   description: {
     fontSize: 14,
-    color: colorTextGray,
-    textAlign: "center",
+    color: colorTextGrey,
+    textAlign: 'center',
     marginTop: 25,
     fontFamily: defaultFont,
     lineHeight: 20
@@ -52,26 +41,26 @@ export default StyleSheet.create({
     marginTop: 24
   },
   createAccountContainer: {
-    marginTop: 50
+    marginTop: 25
   },
   createAccountText: {
     fontSize: 14,
-    textAlign: "center",
+    textAlign: 'center',
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginBottom: 30
   },
   resetText: {
     fontSize: 14,
     lineHeight: 20,
-    textAlign: "center",
+    textAlign: 'center',
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginHorizontal: 20,
     marginBottom: 15
   },
   createAccountLink: {
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   createAccountEmail: {
@@ -79,15 +68,15 @@ export default StyleSheet.create({
     color: colorBlack
   },
   formErrorContainer: {
-    backgroundColor: colorCoral,
+    backgroundColor: colorTomato,
     padding: 5,
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center"
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center'
   },
   formError: {
-    color: "white",
-    textAlign: "center",
+    color: 'white',
+    textAlign: 'center',
     padding: 5,
     fontSize: 14
   }

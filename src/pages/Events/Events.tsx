@@ -1,14 +1,12 @@
 import * as React from 'react';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 import { connect } from 'react-redux';
 
 import { getEventsByCategory } from './actions';
 import { ModalEvents } from '../../components/ModalEvents/ModalEvents';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
 import { EventsScreenProps } from './types';
-import { EventItems } from './EventItems';
 import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
 import CategoryViewer from '../../components/CategoryViewer';
 import styles from './Events.styles';
 import { IGlobalState } from '../../coreTypes';
@@ -24,38 +22,31 @@ class Component extends React.PureComponent<EventsScreenProps> {
 
   private static readonly tabsConfig = [
     {
-      title: 'Past',
-      component: EventCard
-    },
-    {
-      title: 'Today',
-      component: EventCard
-    },
-    {
       title: 'Featured',
       component: EventCard
     },
     {
-      title: 'Upcoming',
+      title: 'Active',
       component: EventCard
     },
     {
-      title: 'Hot',
+      title: 'Past',
       component: EventCard
-    }
+    },
+    // {
+    //   title: 'Upcoming',
+    //   component: EventCard
+    // },
+    // {
+    //   title: 'Hot',
+    //   component: EventCard
+    // }
   ];
 
   state = {
     isModalVisible: false,
     activeTabIndex: 0
   };
-
-  componentDidMount() {
-    const { getEventsByCategory } = this.props;
-    const initialCategory = Component.tabsConfig[0].title;
-
-    getEventsByCategory(initialCategory);
-  }
 
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });

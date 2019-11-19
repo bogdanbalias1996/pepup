@@ -1,5 +1,5 @@
-import React, { PureComponent, ComponentType } from 'react';
-import { View, StyleSheet, Dimensions, Text } from 'react-native';
+import React, { PureComponent, Fragment } from 'react';
+import { View, Text } from 'react-native';
 import memoize from 'memoize-one';
 import { TabView, TabBar } from 'react-native-tab-view';
 
@@ -11,25 +11,42 @@ import List from './List';
 
 class CategoryViewer extends PureComponent<CategoryViewerProps> {
   static defaultProps = {
-    style: {}
+    style: {},
+    header: null,
+    footer: null
   };
+
+  componentDidMount() {
+    const { onTabChange, activeTabIndex } = this.props;
+
+    onTabChange(activeTabIndex);
+  }
 
   generateRoutes = memoize((categories: ViewerCategory[]) =>
     categories.map((item: ViewerCategory) => ({
-      key: item.title,
+      key: item.key || item.title,
       title: item.title,
       component: item.component,
       keyExtractor: item.keyExtractor
     }))
   );
 
-  renderScene = ({ route }: { route: ViewerRoute }) => (
-    <List
-      route={route}
-      data={this.props.data}
-      flatListStyle={this.props.flatListStyle}
-    />
-  );
+  renderScene = ({ route }: { route: ViewerRoute }) => {
+    const { header, footer, flatListStyle, data, flatListProps } = this.props;
+
+    return (
+      <Fragment>
+        {header && header(route)}
+        <List
+          route={route}
+          data={data}
+          flatListStyle={flatListStyle}
+          flatListProps={flatListProps}
+        />
+        {footer && footer(route)}
+      </Fragment>
+    );
+  };
 
   renderLabel = ({
     route,
@@ -38,10 +55,10 @@ class CategoryViewer extends PureComponent<CategoryViewerProps> {
     route: { title: string };
     focused: boolean;
   }) => (
-    <Text style={focused ? styles.selectedLabel : styles.itemText}>
-      {route.title}
-    </Text>
-  );
+      <Text style={focused ? styles.selectedLabel : styles.itemText}>
+        {route.title}
+      </Text>
+    );
 
   renderTabBar = (props: any) => (
     <TabBar

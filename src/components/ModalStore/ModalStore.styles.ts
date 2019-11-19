@@ -1,13 +1,12 @@
 import { StyleSheet } from "react-native";
 import {
   colorBlack,
-  colorTextGray,
-  colorLightGray,
+  colorTextGrey,
   colorTextViolet,
   colorOrange,
-  colorSwipeLine,
   semiboldFont,
-  defaultFont
+  defaultFont,
+  colorCancelButton
 } from "../../variables";
 
 export default StyleSheet.create({
@@ -20,13 +19,6 @@ export default StyleSheet.create({
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
     flex: 1
-  },
-  swiperLine: {
-    width: 64,
-    height: 4,
-    backgroundColor: colorSwipeLine,
-    marginVertical: 20,
-    alignSelf: "center"
   },
   modal: {
     zIndex: 100,
@@ -65,7 +57,7 @@ export default StyleSheet.create({
   infoLabel: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorTextGrey,
     marginBottom: 8
   },
   infoValue: {
@@ -93,13 +85,13 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: colorCancelButton,
     justifyContent: "center",
     alignItems: "center",
     marginRight: 16
   },
   infoText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     lineHeight: 22
   },
   btnSubmit: {

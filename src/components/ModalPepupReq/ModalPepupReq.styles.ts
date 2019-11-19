@@ -1,13 +1,13 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorSwipeLine,
+  colorTextGrey,
   colorTomato,
-  semiboldFont,
-  defaultFont
+  defaultFont,
+  boldFont,
+  colorCancelButton,
+  semiboldFont
 } from '../../variables';
-import { wrap } from 'module';
 
 export default StyleSheet.create({
   wrapModalContent: {
@@ -30,18 +30,19 @@ export default StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontFamily: semiboldFont,
+    fontFamily: boldFont,
     color: colorBlack,
-    lineHeight: 25
+    lineHeight: 25,
+    textAlign: 'left'
   },
   subTitle: {
-    fontSize: 14,
-    fontFamily: semiboldFont,
+    fontSize: 16,
+    fontFamily: boldFont,
     color: colorBlack,
     marginBottom: 5
   },
   disclaimerText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     lineHeight: 22,
     alignSelf: 'flex-start',
     fontFamily: defaultFont
@@ -67,21 +68,26 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999,
+    flexGrow: 1
   },
   btnSubmit: {
     flex: 1
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont
+    fontFamily: semiboldFont,
+    lineHeight: 22,
+    color: colorBlack
   },
   reqTitle: {
-    justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'flex-start'
   },
   form: {
     flexGrow: 1,
@@ -107,20 +113,20 @@ export default StyleSheet.create({
   checkboxWrap: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginTop: 30,
-    marginBottom: 30
+    marginTop: 23,
+    marginBottom: 34    
   },
   checkText: {
     flex: 1,
     marginLeft: 10,
-    marginTop: 8,
     flexWrap: 'wrap',
-    alignItems: 'flex-start'
+    alignItems: 'flex-start',
+    paddingTop: 10    
   },
   scrollContent: { paddingBottom: 90 },
   upperWrap: {
     paddingHorizontal: 24,
     flex: 1,
-    paddingTop: 20
+    paddingTop: 55
   }
 });

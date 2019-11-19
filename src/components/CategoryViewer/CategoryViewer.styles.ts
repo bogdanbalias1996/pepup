@@ -1,7 +1,6 @@
 import { StyleSheet, Dimensions } from 'react-native';
 
 import {
-  colorVioletGrey,
   colorBlack,
   boldFont,
   semiboldFont
@@ -29,20 +28,20 @@ export default StyleSheet.create({
   selectedLabel: {
     paddingTop: 4,
     color: colorBlack,
-    fontSize: 16,
+    fontSize: 18,
     fontFamily: boldFont,
-    letterSpacing: 2,
+    letterSpacing: 0.5,
     alignSelf: 'center',
     textAlign: 'left',
-    overflow: 'visible'
+    overflow: 'visible'    
   },
   itemText: {
-    color: colorVioletGrey,
-    fontSize: 16,
+    color: colorBlack,
+    fontSize: 18,
     fontFamily: semiboldFont,
     alignSelf: 'center',
     textAlign: 'left',
-    letterSpacing: 2,
+    letterSpacing: 0.5,
     paddingTop: 4
   },
   initialLayout: {

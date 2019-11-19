@@ -1,60 +1,56 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorTextViolet,
-  colorVioletGrey,
+  colorTextGrey,
+  colorTextViolet,  
   colorGreen,
   colorTomato,
   semiboldFont,
   boldFont,
-  defaultFont,
-  colorTextGreyIntro,
+  defaultFont,  
+  colorModalTextGrey,
+  colorCancelButton,
+  colorInput,
+  colorEventLabel
 } from '../../variables';
 
-export default StyleSheet.create({
-  wrapModalContent: {
-    backgroundColor: 'white',
-    borderTopLeftRadius: 32,
-    borderTopRightRadius: 32,
-    flex: 1,
-    paddingHorizontal: 24
-  },
-  avatar: {
-    flex: 1,
-    width: '100%',
-    height: '100%',
-    borderRadius: 20,
-    position: 'relative'
-  },
-  avatarWrapper: {
-    marginHorizontal: 24,
-    height: 390,
-    marginVertical: 20
-  },
+export default StyleSheet.create({       
+  text: {
+    fontSize: 14,
+    fontFamily: semiboldFont
+  },  
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: boldFont,
-    color: colorBlack
+    lineHeight: 30,    
+    color: colorBlack,
+    letterSpacing: 0.5
   },
   subTitle: {
-    fontSize: 14,
-    color: colorTextGreyIntro,
+    fontSize: 12,
+    color: colorModalTextGrey,
     fontFamily: semiboldFont,
-    marginTop: 3,
-    fontWeight: 'bold'
+    paddingTop: 7
   },
-  nopepups: {
-    textAlign: 'center',
-    width: '100%',
-    marginVertical: 30,
-    fontSize: 16,
-    color: colorTomato,
-    fontFamily: defaultFont
-  },
+  celebInfoBlock: {
+    flexDirection: 'row', 
+    marginTop: 21,
+    marginBottom: 6
+  },  
   infoText: {
-    color: colorTextGreyIntro,
-    lineHeight: 22
+    flexShrink: 1, 
+    color: colorModalTextGrey,
+    lineHeight: 22,
+    marginLeft: 17
+  },
+  section: {
+    marginTop: 33
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontFamily: boldFont,
+    color: colorBlack,
+    marginBottom: 14
   },
   modal: {
     marginTop: 20,
@@ -78,59 +74,51 @@ export default StyleSheet.create({
   },
   carouselDate: {
     fontSize: 12,
-    color: colorTextGray
+    color: colorTextGrey
   },
   carousel: {
     margin: 24,
     alignSelf: 'center'
   },
   reviews: {
-    marginVertical: 10
+    marginTop: 32,
+    marginBottom: 15    
   },
   rewiewsHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 10
+    marginBottom: 9
   },
   numberRewiewsText: {
-    fontSize: 12,
-    color: colorTextGray
+    fontSize: 14,
+    color: colorEventLabel
   },
   allRewiewsButton: {
-    color: colorTextViolet
+    color: colorTextViolet,
+    fontFamily: boldFont,
+    fontSize: 15
   },
   commentCard: {
-    padding: 16,
-    backgroundColor: 'white',
-    borderRadius: 8
-  },
-  commentCardOnModal: {
-    marginVertical: 8
-  },
+    paddingVertical: 19,  
+    paddingHorizontal: 16,
+    backgroundColor: colorInput,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(198, 198, 202, 0.25)'
+  },  
   commentHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 5
+    marginBottom: 5    
   },
-  commentTitle: {
+  commentTitle: {    
+    fontFamily: boldFont,
     color: colorBlack
   },
   commentText: {
-    color: colorVioletGrey,
+    color: colorModalTextGrey,
     lineHeight: 22
-  },
-  modalFooter: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 15,
-    marginBottom: 30,
-    marginHorizontal: 24,
-    backgroundColor: 'transparent',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0
-  },
+  },  
   modalFooterReviews: {
     justifyContent: 'center'
   },
@@ -138,30 +126,24 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999
   },
   btnSubmit: {
-    flex: 1
+    flex: 1    
   },
   btnSubmitClose: {
     width: 120
+  },  
+  rate: { 
+    flexDirection: 'row', 
+    alignItems: 'center' 
   },
-  text: {
-    fontSize: 14,
-    fontFamily: defaultFont
-  },
-  wrapVideo: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    zIndex: 30
-  },
-  rate: { flexDirection: 'row', alignItems: 'center' },
   rateText: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -169,12 +151,12 @@ export default StyleSheet.create({
   },
   actualR: {
     fontSize: 12,
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont
   },
   generalR: {
     fontSize: 10,
-    color: colorTextGray,
+    color: colorTextGrey,
     fontFamily: defaultFont
   },
   rateImg: {
@@ -191,7 +173,7 @@ export default StyleSheet.create({
     color: colorGreen
   },
   regularText: {
-    color: colorTextGray
+    color: colorTextGrey
   },
   header: {
     flex: 1,
@@ -207,5 +189,17 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: 8
   },
-  scrollContent: { paddingBottom: 90, position: 'relative' }
+  scrollContent: { 
+    paddingBottom: 30, 
+    position: 'relative',
+    marginHorizontal: 24    
+  },  
+  nopepups: {
+    textAlign: 'center',
+    width: '100%',
+    marginVertical: 30,
+    fontSize: 16,
+    color: colorTomato,
+    fontFamily: defaultFont
+  }  
 });

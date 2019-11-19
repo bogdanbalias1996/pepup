@@ -1,7 +1,7 @@
 import * as React from "react";
 import { TextInputStyledProps } from "./index";
 import { TextInputStyledForEdit } from "./TextInputStyledForEdit";
-import { colorTextGray } from "../../variables";
+import { colorTextGrey } from "../../variables";
 
 export class TextInputPasswordForEdit extends React.PureComponent<
   TextInputStyledProps
@@ -21,7 +21,7 @@ export class TextInputPasswordForEdit extends React.PureComponent<
       <TextInputStyledForEdit
       {...this.props}
         handleIconClick={() => this.toggle()}
-        iconColor={colorTextGray}
+        iconColor={colorTextGrey}
         iconSize={30}
         iconNameClick={this.state.isTextVisible ? "show" : "hide"}
         secure={!this.state.isTextVisible}

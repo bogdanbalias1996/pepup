@@ -1,40 +1,62 @@
 import { Dispatch } from 'redux';
 import { ApiOperation } from '../../api/api';
 import { request } from '../../api/network';
-import { IAction } from '../../coreTypes';
+import { IAction, IGlobalState } from '../../coreTypes';
 import { openError, closeError } from '../ErrorModal/actions';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { closeVideoModal } from '../Pepups/actions';
 import { navigate } from '../../navigationService';
-import { videoRecordModalClose, videoRecordModalUpload } from '../RecordVideo/actions'
-import { Pepup, UserRequest } from '.';
+import {
+  videoRecordModalClose,
+  videoRecordModalUpload
+} from '../RecordVideo/actions';
+import { Pepup, UserRequest, NotificationItem } from './types';
 
 export const RECEIVE_USER_PROFILE = 'RECEIVE_USER_PROFILE';
-export const receiveUserProfile = (data: string): IAction<string> => {
-  return {
-    type: RECEIVE_USER_PROFILE,
-    data,
-  };
-};
+export const receiveUserProfile = (data: string): IAction<string> => ({
+  type: RECEIVE_USER_PROFILE,
+  data
+});
 
-export const getProfile = (handle: string) => {
-  return (dispatch: Dispatch) => {
-    request({
+export const initialLoadProfile = () => async (
+  dispatch: Dispatch,
+  getState: () => IGlobalState
+) => {
+  try {
+    const handle = getState().LoginState.handle;
+
+    const userProfile = await request({
       operation: ApiOperation.GetProfile,
       params: {
-        handle,
-      },
-    })
-      .then(res => {
-        dispatch(receiveUserProfile(res));
+        handle
+      }
+    });
+
+    dispatch(receiveUserProfile(userProfile));
+  } catch (err) {}
+};
+
+export const getProfile = (handle: string) => async (dispatch: Dispatch) => {
+  try {
+    const userProfile = await request({
+      operation: ApiOperation.GetProfile,
+      params: {
+        handle
+      }
+    });
+
+    dispatch(receiveUserProfile(userProfile));
+  } catch (err) {
+    dispatch(
+      openError({
+        type: 'unknown',
+        onPress: () => {
+          dispatch(closeError());
+          navigate({ routeName: 'Login' });
+        }
       })
-      .catch(err => {
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(closeError()); navigate({ routeName: 'Login' }) }
-        }))
-      });
-  };
+    );
+  }
 };
 
 export const fulfillPepupRequest = (entityId: string, video: any) => {
@@ -42,7 +64,7 @@ export const fulfillPepupRequest = (entityId: string, video: any) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
-    dispatch(videoRecordModalUpload(true))
+    dispatch(videoRecordModalUpload(true));
     request({
       operation: ApiOperation.FulfillRequestPepup,
       variables: {
@@ -59,25 +81,30 @@ export const fulfillPepupRequest = (entityId: string, video: any) => {
     })
       .then(res => {
         dispatch(videoRecordModalUpload(false));
-        dispatch(videoRecordModalClose())
-        dispatch(openAlert({
-          title: 'Pepup Sent',
-          text:
-            res.sharePublicly 
-            ? `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It will also be featured on your page.`
-            : `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It won't be featured on your page.`,
-          onPress: () => {
-            dispatch(closeAlert());
-            dispatch(closeVideoModal());
-          }
-        }));
+        dispatch(videoRecordModalClose());
+        dispatch(
+          openAlert({
+            title: 'Pepup Sent',
+            text: res.sharePublicly
+              ? `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It will also be featured on your page.`
+              : `This Pepup is now on it’s way to ${res.requestedByInfo.name}. It won't be featured on your page.`,
+            onPress: () => {
+              dispatch(closeAlert());
+              dispatch(closeVideoModal());
+            }
+          })
+        );
       })
-      .catch(err => {      
+      .catch(err => {
         dispatch(videoRecordModalUpload(false));
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(entityId, video) as any) }
-        }))        
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(fulfillPepupRequest(entityId, video) as any);
+            }
+          })
+        );
       });
   };
 };
@@ -87,7 +114,7 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
     const { uri, codec = 'mp4' } = video;
     const type = `video/${codec}`;
 
-    dispatch(videoRecordModalUpload(true))
+    dispatch(videoRecordModalUpload(true));
     request({
       operation: ApiOperation.UpdateCelebIntroVideo,
       variables: {
@@ -103,31 +130,39 @@ export const updateCelebIntroVideo = (celebId: string, video: any) => {
       }
     })
       .then(res => {
-        dispatch(videoRecordModalUpload(false))
-        dispatch(videoRecordModalClose())
-        dispatch(openAlert({
-          title: 'Changes saved',
-          text: 'Updates to your profile have been saved.',
-          onPress: () => {
-            dispatch(closeAlert());
-          }
-        }));
+        dispatch(videoRecordModalUpload(false));
+        dispatch(videoRecordModalClose());
+        dispatch(
+          openAlert({
+            title: 'Changes saved',
+            text: 'Updates to your profile have been saved.',
+            onPress: () => {
+              dispatch(closeAlert());
+            }
+          })
+        );
       })
       .catch(err => {
-        dispatch(videoRecordModalUpload(false))
-        dispatch(openError({
-          type: 'unknown',
-          onPress: () => { dispatch(fulfillPepupRequest(celebId, video) as any) }
-        }))
+        dispatch(videoRecordModalUpload(false));
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(fulfillPepupRequest(celebId, video) as any);
+            }
+          })
+        );
       });
   };
 };
 
 export const RECEIVE_USER_PEPUPS = 'RECEIVE_USER_PEPUPS';
-export const receiveUserPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
+export const receiveUserPepups = (
+  data: Array<Pepup>
+): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_USER_PEPUPS,
-    data,
+    data
   };
 };
 
@@ -135,7 +170,7 @@ export const REQUEST_USER_PEPUPS = 'REQUEST_USER_PEPUPS';
 export const requestUserPepups = (): IAction<undefined> => {
   return {
     type: REQUEST_USER_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -143,7 +178,7 @@ export const FAILURE_USER_PEPUPS = 'FAILURE_USER_PEPUPS';
 export const failureUserPepups = (): IAction<undefined> => {
   return {
     type: FAILURE_USER_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -153,8 +188,8 @@ export const getUserPepups = (userId: string) => {
     request({
       operation: ApiOperation.GetUserPepups,
       params: {
-        userId,
-      },
+        userId
+      }
     })
       .then(res => {
         dispatch(receiveUserPepups(res));
@@ -164,8 +199,8 @@ export const getUserPepups = (userId: string) => {
               type: 'noResults',
               onPress: () => {
                 dispatch(getAllPepups() as any);
-              },
-            }),
+              }
+            })
           );
         }
       })
@@ -176,18 +211,20 @@ export const getUserPepups = (userId: string) => {
             type: 'unknown',
             onPress: () => {
               dispatch(getUserPepups(userId) as any);
-            },
-          }),
+            }
+          })
         );
       });
   };
 };
 
 export const RECEIVE_CELEB_PEPUPS = 'RECEIVE_CELEB_PEPUPS';
-export const receiveCelebPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
+export const receiveCelebPepups = (
+  data: Array<Pepup>
+): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_CELEB_PEPUPS,
-    data,
+    data
   };
 };
 
@@ -195,7 +232,7 @@ export const REQUEST_CELEB_PEPUPS = 'REQUEST_CELEB_PEPUPS';
 export const requestCelebPepups = (): IAction<undefined> => {
   return {
     type: REQUEST_CELEB_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -203,7 +240,7 @@ export const FAILURE_CELEB_PEPUPS = 'FAILURE_CELEB_PEPUPS';
 export const failureCelebPepups = (): IAction<undefined> => {
   return {
     type: FAILURE_CELEB_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -213,8 +250,8 @@ export const getCelebPepups = (userId: string) => {
     request({
       operation: ApiOperation.GetCelebPepups,
       params: {
-        userId,
-      },
+        userId
+      }
     })
       .then(res => {
         dispatch(receiveCelebPepups(res));
@@ -224,8 +261,8 @@ export const getCelebPepups = (userId: string) => {
               type: 'noResults',
               onPress: () => {
                 dispatch(getAllPepups() as any);
-              },
-            }),
+              }
+            })
           );
         }
       })
@@ -236,8 +273,8 @@ export const getCelebPepups = (userId: string) => {
             type: 'unknown',
             onPress: () => {
               dispatch(getCelebPepups(userId) as any);
-            },
-          }),
+            }
+          })
         );
       });
   };
@@ -247,7 +284,7 @@ export const RECEIVE_ALL_PEPUPS = 'RECEIVE_ALL_PEPUPS';
 export const receiveAllPepups = (data: Array<Pepup>): IAction<Array<Pepup>> => {
   return {
     type: RECEIVE_ALL_PEPUPS,
-    data,
+    data
   };
 };
 
@@ -255,7 +292,7 @@ export const REQUEST_ALL_PEPUPS = 'REQUEST_ALL_PEPUPS';
 export const requestAllPepups = (): IAction<undefined> => {
   return {
     type: REQUEST_ALL_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -263,7 +300,7 @@ export const FAILURE_ALL_PEPUPS = 'FAILURE_ALL_PEPUPS';
 export const failureAllPepups = (): IAction<undefined> => {
   return {
     type: FAILURE_ALL_PEPUPS,
-    data: undefined,
+    data: undefined
   };
 };
 
@@ -271,7 +308,7 @@ export const getAllPepups = () => {
   return (dispatch: Dispatch) => {
     dispatch(requestAllPepups());
     request({
-      operation: ApiOperation.GetAllPepups,
+      operation: ApiOperation.GetAllPepups
     })
       .then(res => {
         dispatch(receiveAllPepups(res));
@@ -281,8 +318,8 @@ export const getAllPepups = () => {
               type: 'noResults',
               onPress: () => {
                 dispatch(getAllPepups() as any);
-              },
-            }),
+              }
+            })
           );
         }
       })
@@ -293,8 +330,8 @@ export const getAllPepups = () => {
             type: 'unknown',
             onPress: () => {
               dispatch(getAllPepups() as any);
-            },
-          }),
+            }
+          })
         );
       });
   };
@@ -338,14 +375,16 @@ export const acceptPepupRequest = (pepupId: string) => {
     })
       .then(res => {
         dispatch(receiveAccept(res));
-        dispatch(openAlert({
-          title: 'Request Accepted',
-          text: `Yay! ${res.requestedByInfo.name} will be happy to receive the Pepup.`,
-          onPress: () => {
-            dispatch(closeAlert());
-            dispatch(closeNotifyModal());
-          }
-        }));
+        dispatch(
+          openAlert({
+            title: 'Request Accepted',
+            text: `Yay! ${res.requestedByInfo.name} will be happy to receive the Pepup.`,
+            onPress: () => {
+              dispatch(closeAlert());
+              dispatch(closeNotifyModal());
+            }
+          })
+        );
       })
       .catch(err => {
         dispatch(failureAccept());
@@ -399,14 +438,16 @@ export const denyPepupRequest = (pepupId: string) => {
     })
       .then(res => {
         dispatch(receiveDeny(res));
-        dispatch(openAlert({
-          title: 'Request Rejected',
-          text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
-          onPress: () => {
-            dispatch(closeAlert());
-            dispatch(closeNotifyModal());
-          }
-        }))
+        dispatch(
+          openAlert({
+            title: 'Request Rejected',
+            text: `Sorry to hear this! ${res.requestedByInfo.name} will be sad to know you won’t be able to complete the Pepup.`,
+            onPress: () => {
+              dispatch(closeAlert());
+              dispatch(closeNotifyModal());
+            }
+          })
+        );
       })
       .catch(err => {
         dispatch(failureDeny());
@@ -438,7 +479,9 @@ export const closeNotifyModal = (): IAction<undefined> => {
 };
 
 export const RECEIVE_PEPUP_NOTIFICATION = 'RECEIVE_PEPUP_NOTIFICATION';
-export const receivePepupNotification = (data: UserRequest): IAction<UserRequest> => {
+export const receivePepupNotification = (
+  data: UserRequest
+): IAction<UserRequest> => {
   return {
     type: RECEIVE_PEPUP_NOTIFICATION,
     data
@@ -481,6 +524,55 @@ export const getPepupNotification = (pepupId: string) => {
             onPress: () => {
               dispatch(closeError());
               dispatch(getPepupNotification(pepupId) as any);
+            }
+          })
+        );
+      });
+  };
+};
+
+export const RECEIVE_NOTIFICATIONS = 'RECEIVE_NOTIFICATIONS';
+export const receiveNotifications = (
+  data: Array<NotificationItem>
+): IAction<Array<NotificationItem>> => {
+  return {
+    type: RECEIVE_NOTIFICATIONS,
+    data
+  };
+};
+
+export const REQUEST_NOTIFICATIONS = 'REQUEST_NOTIFICATIONS';
+export const requestNotifications = (): IAction<undefined> => {
+  return {
+    type: REQUEST_NOTIFICATIONS,
+    data: undefined
+  };
+};
+
+export const FAILURE_NOTIFICATIONS = 'FAILURE_NOTIFICATIONS';
+export const failureNotifications = (): IAction<undefined> => {
+  return {
+    type: FAILURE_NOTIFICATIONS,
+    data: undefined
+  };
+};
+
+export const getNotifications = () => {
+  return (dispatch: Dispatch) => {
+    dispatch(requestNotifications());
+    request({
+      operation: ApiOperation.GetNotifications
+    })
+      .then(res => {
+        dispatch(receiveNotifications(res));
+      })
+      .catch(err => {
+        dispatch(failureNotifications());
+        dispatch(
+          openError({
+            type: 'unknown',
+            onPress: () => {
+              dispatch(getNotifications() as any);
             }
           })
         );

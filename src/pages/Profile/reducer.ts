@@ -21,15 +21,25 @@ import {
   REQUEST_PEPUP_NOTIFICATION,
   FAILURE_PEPUP_NOTIFICATION,
   OPEN_NOTIFY_MODAL,
-  CLOSE_NOTIFY_MODAL
+  CLOSE_NOTIFY_MODAL,
+  RECEIVE_NOTIFICATIONS,
+  REQUEST_NOTIFICATIONS,
+  FAILURE_NOTIFICATIONS
 } from './actions';
-import { Profile, Pepup, UserRequest } from '.';
+import { Profile, Pepup, UserRequest, NotificationItem } from './types';
 import {
   RECEIVE_EDIT_USER,
   REQUEST_EDIT_USER,
   FAILURE_EDIT_USER
 } from '../EditProfile/actions';
 import { REMOVE_SESSION } from '../Login/actions';
+import {
+  ACCESS_TOKEN_NAME,
+  ACCESS_HANDLE_NAME,
+  ACCESS_USER_NAME
+} from '../../common/utils/session';
+
+import Storage from '../../common/utils/Storage';
 
 export class ProfileState {
   profileData: Profile | null;
@@ -43,6 +53,7 @@ export class ProfileState {
   recordedVideo: any;
   isModalNotifyShown: boolean;
   isFetchingNotifyD: boolean;
+  notifications: Array<NotificationItem>;
 
   constructor() {
     this.profileData = null;
@@ -56,6 +67,7 @@ export class ProfileState {
     this.pepupData = null;
     this.isModalNotifyShown = false;
     this.isFetchingNotifyD = false;
+    this.notifications = [];
   }
 }
 
@@ -72,9 +84,15 @@ export const ProfileReducer = (
         profileData: action.data
       };
     case RECEIVE_EDIT_USER:
+      const { accessToken, ...rest } = action.data;
+
+      Storage.setItem(ACCESS_TOKEN_NAME, accessToken);
+      Storage.setItem(ACCESS_HANDLE_NAME, rest.handle);
+      Storage.setItem(ACCESS_USER_NAME, rest.name);
+
       return {
         ...state,
-        profileData: action.data,
+        profileData: rest,
         isFetching: false
       };
 
@@ -144,11 +162,11 @@ export const ProfileReducer = (
         isFetching: false
       };
     case RECEIVE_ACCEPT:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
-        return item.id === action.data.id ? action.data : item;
-      });
       return {
         ...state,
+        celebPepups: state.celebPepups.map((item: any) =>
+          item.id === action.data.id ? action.data : item
+        ),
         isFetchingNotifyA: false,
         pepupData: action.data
       };
@@ -163,11 +181,11 @@ export const ProfileReducer = (
         isFetchingNotifyA: false
       };
     case RECEIVE_DENY:
-      state.celebPepups = state.celebPepups.map((item: UserRequest) => {
-        return item.id === action.data.id ? action.data : item;
-      });
       return {
         ...state,
+        celebPepups: state.celebPepups.map((item: any) =>
+          item.id === action.data.id ? action.data : item
+        ),
         isFetchingNotifyD: false,
         pepupData: action.data
       };
@@ -209,6 +227,22 @@ export const ProfileReducer = (
       };
     case REMOVE_SESSION:
       return new ProfileState();
+    case RECEIVE_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.data,
+        isFetching: false
+      };
+    case REQUEST_NOTIFICATIONS:
+      return {
+        ...state,
+        isFetching: true
+      };
+    case FAILURE_NOTIFICATIONS:
+      return {
+        ...state,
+        isFetching: false
+      };
     default:
       return state;
   }

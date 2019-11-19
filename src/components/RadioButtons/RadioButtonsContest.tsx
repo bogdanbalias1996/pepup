@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -7,8 +7,8 @@ import { RadioButtonsProps } from './';
 import {
   colorLightGradStart,
   colorLightGradEnd,
-  colorVioletStart,
-  colorVioletEnd,
+  colorBorderGradStart,
+  colorBorderGradEnd,
 } from '../../variables';
 
 export class RadioButtonsContest extends React.PureComponent<
@@ -16,8 +16,9 @@ export class RadioButtonsContest extends React.PureComponent<
 > {
   render() {
     const { options, value, onPress, question } = this.props;
+
     return (
-      <View style={{ marginBottom: 10 }}>
+      <View>
         <Text style={styles.qText}>{question}</Text>
         <View style={styles.wrapRadioButtonsC}>
           {options.map((item: any, i: number) => {
@@ -26,7 +27,7 @@ export class RadioButtonsContest extends React.PureComponent<
                 key={i}
                 start={[0, 0.5]}
                 end={[1, 0.5]}
-                colors={[colorVioletStart, colorVioletEnd]}
+                colors={[colorBorderGradStart, colorBorderGradEnd]}
                 style={[styles.btnGradientDark]}>
                 <LinearGradient
                   start={[0, 0.5]}

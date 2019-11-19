@@ -6,9 +6,9 @@ import {
 import { Image, View } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
   colorShadow,
-  semiboldFont
+  semiboldFont,
+  colorTextMainTabs
 } from '../variables';
 
 import { PepupsScreen } from '../pages/Pepups/Pepups';
@@ -88,7 +88,7 @@ export const TabsNavigator = createBottomTabNavigator(
         elevation: 7
       },
       activeTintColor: colorBlack,
-      inactiveTintColor: colorTextGray,
+      inactiveTintColor: colorTextMainTabs,
       labelStyle: {
         marginTop: 3,
         fontSize: 11,

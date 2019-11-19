@@ -16,16 +16,15 @@ import { PepupBackground } from '../../components/PepupBackground/PepupBackgroun
 import { SettingsScreenProps } from '.';
 import { Icon } from '../../components/Icon/Icon';
 import styles from './Settings.styles';
-import { colorVioletStart, colorVioletEnd } from '../../variables';
+import { colorBorderGradEnd, colorBorderGradStart } from '../../variables';
 import { logoutUser, setDeveloperMode } from '../Login/actions';
 import { LinearGradient } from 'expo-linear-gradient';
-import { SuccessfulAlert } from '../../components/SuccessfulAlert/SuccessfulAlert';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { IGlobalState } from '../../coreTypes';
 
 const ListItem = ({
   title = '',
-  onPress = () => {},
+  onPress = undefined,
   style = {},
   styleText = {}
 }) => {
@@ -33,7 +32,7 @@ const ListItem = ({
     <LinearGradient
       start={[0, 0.5]}
       end={[1, 0.5]}
-      colors={[colorVioletStart, colorVioletEnd]}
+      colors={[colorBorderGradStart, colorBorderGradEnd]}
       style={styles.gradient}>
       <TouchableOpacity
         activeOpacity={1}
@@ -79,13 +78,7 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
   };
 
   render() {
-    const {
-      logoutUser,
-      openAlert,
-      closeAlert,
-      setDeveloperMode,
-      developerMode
-    } = this.props;
+    const { logoutUser, openAlert } = this.props;
 
     return (
       <PepupBackground>
@@ -139,13 +132,8 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
                   if (this.state.devIndicator === 6) {
                     openAlert({
                       title: 'Developer info',
-                      text: !developerMode
-                        ? 'Now you`re developer!'
-                        : 'Now you`re not developer.',
-                      onPress: () => {
-                        closeAlert();
-                        setDeveloperMode(!developerMode ? true : false);
-                      }
+                      text: 'Developer mode:',
+                      isDevAlert: true
                     });
                     this.setState({ devIndicator: 0 });
                   }
@@ -155,7 +143,6 @@ export class Component extends React.PureComponent<SettingsScreenProps> {
             </View>
           </ScrollView>
         </View>
-        <SuccessfulAlert />
       </PepupBackground>
     );
   }

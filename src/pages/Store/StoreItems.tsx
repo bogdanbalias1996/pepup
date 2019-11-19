@@ -19,12 +19,11 @@ import { StoreItemsProps, Product } from './';
 import {
   colorBlack,
   colorTextRed,
-  colorTextGray,
+  colorTextGrey,
   colorOrange,
   defaultFont,
   semiboldFont,
-  colorBlueberry,
-  colorLightGray
+  colorLightOrange,
 } from '../../variables';
 import { RadioButtons } from '../../components/RadioButtons/RadioButtons';
 import { IGlobalState } from '../../coreTypes';
@@ -133,7 +132,7 @@ export class Component extends React.PureComponent<StoreItemsProps> {
           value={filterValue}
           onPress={val => setFilterValue(val)}
         /> */}
-        <Loader isDataLoaded={!isFetching} size="large" color={colorBlueberry}>
+        <Loader isDataLoaded={!isFetching} size="large" color={colorLightOrange}>
           <FlatList
             showsVerticalScrollIndicator={false}
             numColumns={2}
@@ -165,7 +164,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     backgroundColor: 'white',
     borderRadius: 24,
-    shadowColor: 'black',
+    shadowColor: colorBlack,
     shadowOffset: {
       width: 0,
       height: 3
@@ -181,7 +180,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 212,
     borderRadius: 16,
-    backgroundColor: colorLightGray
+    backgroundColor: 'white'
   },
   wrapInfo: {
     width: '100%',
@@ -211,7 +210,7 @@ const styles = StyleSheet.create({
     fontFamily: semiboldFont
   },
   priceText: {
-    color: colorTextGray,
+    color: colorTextGrey,
     fontSize: 14,
     paddingHorizontal: 5,
     fontFamily: defaultFont,

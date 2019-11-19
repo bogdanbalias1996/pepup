@@ -1,25 +1,27 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
-  colorLightGray,
   colorTextViolet,
   semiboldFont,
   defaultFont,
   boldFont,
-  colorDotGray
+  colorDotGray,
+  colorCancelButton,
+  colorModalTextGrey,
+  colorEventLabel,
+  colorPicker
 } from '../../variables';
 
 export default StyleSheet.create({
   scrollView: {
     flex: 1,
-    marginBottom: 10
+    marginBottom: 10    
   },
   wrapModalContent: {
     flex: 1,
     paddingHorizontal: 24,
     position: 'relative',
-    paddingTop: 20
+    paddingTop: 67
   },
   modal: {
     zIndex: 100,
@@ -28,29 +30,27 @@ export default StyleSheet.create({
   },
   wrapTitle: {
     flex: 1,
-    flexDirection: 'row',
-    marginVertical: 24,
-    alignItems: 'center'
+    flexDirection: 'row',    
+    alignItems: 'center',
+    marginBottom: 13
   },
   imageLogo: {
     width: 72,
     height: '100%',
-    marginRight: 16
+    marginRight: 16    
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: boldFont,
     color: colorBlack,
-    lineHeight: 24,
-    height: 24,
-    marginVertical: 16
+    lineHeight: 22
   },
   carousel: {
     marginTop: 0
   },
-  imageCarouselWrap: {
+  imageCarouselWrap: {    
     width: Dimensions.get('window').width - 64,
-    marginHorizontal: 10,
+    marginHorizontal: 7,
     height: 170,
     marginVertical: 10
   },
@@ -76,7 +76,7 @@ export default StyleSheet.create({
   infoLabel: {
     fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGray,
+    color: colorEventLabel,
     marginBottom: 8
   },
   infoLabelQnt: {
@@ -93,11 +93,13 @@ export default StyleSheet.create({
   },
   infoLocationValue: {
     fontSize: 16,
-    fontFamily: defaultFont,
+    fontFamily: boldFont,
     color: colorTextViolet
   },
   modalFooter: {
     flexDirection: 'row',
+    justifyContent: 'center',
+    flexShrink: 1,
     marginBottom: 30,
     marginHorizontal: 24,
     backgroundColor: 'transparent',
@@ -110,16 +112,20 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    position: 'absolute',
+    right: 10,
+    top: 16,
+    zIndex: 999
   },
   infoText: {
-    color: colorTextGray,
+    color: colorModalTextGrey,
     lineHeight: 22
   },
   btnSubmit: {
-    flex: 1
+    flex: 0.7
   },
   text: {
     fontSize: 14,
@@ -129,7 +135,6 @@ export default StyleSheet.create({
     flexDirection: 'row',
     flex: 1
   },
-  insidePadding: { position: 'relative' },
   modalCancelContainerStyle: {
     justifyContent: 'center',
     flexDirection: 'row',
@@ -139,7 +144,7 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: colorLightGray,
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -148,6 +153,14 @@ export default StyleSheet.create({
     padding: 10,
     paddingTop: 300,
     justifyContent: 'flex-end'
+  },
+  selector: {
+    borderRadius: 30,
+    width: 100,
+    padding: 5,
+    height: 44,
+    justifyContent: 'center',
+    borderColor: colorPicker
   },
   modalOptionStyle: {
     borderBottomColor: colorDotGray,
@@ -169,10 +182,9 @@ export default StyleSheet.create({
     fontFamily: semiboldFont
   },
   changeItem: {
-    flex: 1,
+    marginHorizontal: 10,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: 5,
     position: 'relative'
   },
   scrollContent: { paddingBottom: 90 }

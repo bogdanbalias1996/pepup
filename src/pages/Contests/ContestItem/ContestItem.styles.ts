@@ -1,20 +1,23 @@
 import { StyleSheet } from 'react-native';
 
 import {
-  colorBlack,
+  colorGrey2,
   defaultFont,
   boldFont,
-  colorTextGreyIntro
+  colorEventLabel
 } from '../../../variables';
 
 export default StyleSheet.create({
   card: {
-    padding: 24,
-    marginBottom: 24,
+    paddingHorizontal: 20,
+    paddingVertical: 23,
+    marginBottom: 18,
     marginHorizontal: 6,
     backgroundColor: 'white',
-    borderRadius: 24,
-    shadowColor: 'black',
+    borderRadius: 20,
+    shadowColor: 'rgba(139, 87, 42, 0.85)',
+    borderWidth:  1, 
+    borderColor: 'rgba(198, 198, 202, 0.25)',
     shadowOffset: {
       width: 0,
       height: 3
@@ -28,9 +31,9 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   text: {
-    fontSize: 14,
+    fontSize: 12,
     fontFamily: defaultFont,
-    color: colorTextGreyIntro
+    color: colorEventLabel
   },
   wrapTitle: {
     flex: 1,
@@ -40,16 +43,26 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   imageLogo: {
-    width: 72,
-    height: 72,
+    width: '100%',
+    height: '100%',
     marginRight: 16,
     borderRadius: 8
   },
+  gradient: {
+    borderRadius: 8
+  },
+  avatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    marginRight: 13
+  },
   title: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: boldFont,
-    color: colorBlack,
-    lineHeight: 24
+    color: colorGrey2,
+    lineHeight: 20,
+    opacity: 0.9
   }
 });

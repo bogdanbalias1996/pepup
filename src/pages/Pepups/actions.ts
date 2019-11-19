@@ -9,7 +9,7 @@ import { PostReviewFormProps } from '../../components/ModalReviewForm';
 import { openAlert, closeAlert } from '../Alert/actions';
 import { openError, closeError } from '../ErrorModal/actions';
 import { navigate } from '../../navigationService';
-import { UserRequest } from '../Profile';
+import { UserRequest } from '../Profile/types';
 
 export const OPEN_PEPUP_MODAL = 'OPEN_PEPUP_MODAL';
 export const openPepupModal = (): IAction<undefined> => {
@@ -89,7 +89,6 @@ export const getAllActiveCategories = () => async (dispatch: Dispatch) => {
       })
     );
   }
-
 };
 
 export const RECEIVE_CELEBS_BY_CATEGORY = 'RECEIVE_CELEBS_BY_CATEGORY';
@@ -251,7 +250,7 @@ export const sendRequestForPepup = (
   setErrors: any
 ) => {
   return (dispatch: Dispatch) => {
-    const { name, text, shareCheckbox } = payload;
+    const { name, text = '', shareCheckbox } = payload;
     const store = getStore().getState().PepupState;
     const { selectedCategory } = store;
     const userId = store.celebData && store.celebData.mappedUserId;
@@ -261,7 +260,7 @@ export const sendRequestForPepup = (
       operation: ApiOperation.RequestPepup,
       variables: {
         requestedFor: name,
-        request: text,
+        request: text.trim(),
         requestedOf: userId,
         category: selectedCategory,
         share: shareCheckbox
@@ -315,10 +314,11 @@ export const setCategory = (data: string): IAction<string> => {
 };
 
 export const OPEN_VIDEO_MODAL = 'OPEN_VIDEO_MODAL';
-export const openVideoModal = (data: string): IAction<string> => {
+export const openVideoModal = (data: any): IAction<any> => {
   return {
     type: OPEN_VIDEO_MODAL,
     data
+    
   };
 };
 
@@ -449,8 +449,8 @@ export const failureReview = (): IAction<undefined> => {
 export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
   return (dispatch: Dispatch, getState: () => IGlobalState) => {
     const { review, rating } = payload;
-    const store = getState().PepupState;
-    const userId = store.celebData && store.celebData.userInfo.id;
+    const store = getState().ProfileState;
+    const id = store.pepupData && store.pepupData.celebInfo.userInfo.id;
 
     dispatch(requestReview());
     request({
@@ -458,7 +458,7 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
       variables: {
         review,
         rating,
-        celebId: userId
+        celebId: id
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -474,6 +474,7 @@ export const postReview = (payload: PostReviewFormProps, setErrors: any) => {
             onPress: () => {
               dispatch(closeAlert());
               dispatch(closePostReviewModal());
+              dispatch(closeVideoModal());
             }
           })
         );

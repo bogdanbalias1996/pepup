@@ -1,11 +1,13 @@
 import { StyleSheet } from 'react-native';
 import {
   colorBlack,
-  colorTextGray,
   colorTomato,
   boldFont,
   semiboldFont,
-  defaultFont
+  defaultFont,
+  colorCancelButton,
+  colorModalTextGrey,
+  colorEventLabel
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -25,9 +27,8 @@ export default StyleSheet.create({
   },
   image: {
     width: '100%',
-    height: 170,
-    borderRadius: 8,
-    marginTop: 5
+    height: '100%',
+    borderRadius: 8
   },
   descriptionTitle: {
     fontSize: 14,
@@ -55,8 +56,8 @@ export default StyleSheet.create({
   },
   infoLabel: {
     fontSize: 14,
-    fontFamily: boldFont,
-    color: colorTextGray,
+    fontFamily: defaultFont,
+    color: colorEventLabel,
     marginBottom: 8
   },
   infoValue: {
@@ -79,13 +80,16 @@ export default StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 30,
-    backgroundColor: 'white',
+    backgroundColor: colorCancelButton,
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 16
+    position: 'absolute',
+    right: 17,
+    top: 23,
+    zIndex: 999
   },
   infoText: {
-    color: colorTextGray,
+    color: colorModalTextGrey,
     lineHeight: 22,
     marginBottom: 10
   },
@@ -97,10 +101,17 @@ export default StyleSheet.create({
     fontFamily: defaultFont
   },
   avatar: {
-    width: 76,
-    height: 76,
-    borderRadius: 15,
-    marginRight: 10
+    flex: 1,
+    height: 180,
+    borderRadius: 8,
+    shadowColor: colorBlack,
+    shadowOffset: {
+      width: 0,
+      height: 3
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2
   },
   conTitle: {
     flexDirection: 'row',
@@ -176,7 +187,22 @@ export default StyleSheet.create({
   },
   upperWrap: {
     flex: 1,
-    paddingHorizontal: 24, 
-    paddingTop: 20
+    paddingHorizontal: 24,
+    paddingTop: 75
+  },
+  gradient: {
+    borderRadius: 8
+  },
+  cardAvatar: {
+    width: 72,
+    height: 72,
+    borderRadius: 8,
+    marginRight: 16,
+    marginLeft: 4    
+  },
+  contestImage: {
+    width: '100%',
+    height: '100%',
+    borderRadius: 8
   }
 });

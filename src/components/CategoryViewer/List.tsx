@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
-
-import { colorBlueberry } from '../../variables';
+import isEqualWith from 'lodash/isEqualWith';
 
 import { Loader } from '../../components/Loader/Loader';
 
 import { ListProps, ViewerData } from './types';
 import styles from './List.styles';
+import { colorLightOrange } from '../../variables';
 
 class List extends Component<ListProps> {
   static defaultKeyExtractor = (item: { id: string }) => item.id;
@@ -21,7 +21,13 @@ class List extends Component<ListProps> {
       nextProps.route.key
     );
 
-    return newData.length !== oldData.length;
+    const areEqual = isEqualWith(
+      newData,
+      oldData,
+      (newItem, oldItem) => newItem === oldItem
+    );
+
+    return !areEqual;
   }
 
   extractDataByCategory(data: ViewerData, category: string): Object[] {
@@ -37,25 +43,25 @@ class List extends Component<ListProps> {
   };
 
   render() {
-    const { data, route, flatListStyle } = this.props;
+    const { data, route, flatListStyle, flatListProps = {} } = this.props;
     const dataArr = this.extractDataByCategory(data, route.key);
 
     return (
       <View style={styles.wrapper}>
         <Loader
           isDataLoaded={Boolean(dataArr.length)}
-          color={colorBlueberry}
+          color={colorLightOrange}
           size="large">
           <FlatList
             showsVerticalScrollIndicator={false}
-            numColumns={2}
             horizontal={false}
-            columnWrapperStyle={flatListStyle || styles.flatList}
+            style={flatListStyle || styles.flatList}
             data={dataArr as any}
             renderItem={this.renderItem}
             keyExtractor={
               route.keyExtractor || (List.defaultKeyExtractor as any)
             }
+            {...flatListProps}
           />
         </Loader>
       </View>

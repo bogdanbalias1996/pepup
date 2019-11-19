@@ -1,92 +1,92 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { View, Image, Text, TouchableOpacity } from 'react-native';
-import { Dispatch } from 'redux';
-import FastImage from 'react-native-fast-image';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { createSelector } from 'reselect';
+import memoize from 'memoize-one';
 
-import { IGlobalState } from '../../coreTypes';
 import { ModalPepup } from '../../components/ModalPepup/ModalPepup';
 import { ModalRecordVideo } from '../../components/ModalRecordVideo/ModalRecordVideo';
 import { PepupBackground } from '../../components/PepupBackground/PepupBackground';
-import { Icon } from '../../components/Icon/Icon';
-import { Tabs, defaultTabsStyles } from '../../components/Tabs/Tabs';
-import { HeaderRounded } from '../../components/HeaderRounded/HeaderRounded';
-import { navigate } from '../../navigationService';
-import { Card } from '../../components/Card/Card';
-import { CardGradient } from '../../components/CardGradient/CardGradient';
-
-import styles from './Profile.styles';
-import { getProfile, getUserPepups } from './actions';
-import { ProfileScreenProps } from '.';
-import { MyRequests } from './MyRequests';
-import { History } from './History';
-import { FanRequests } from './FanRequests';
-import { openPepupModal, getCeleb } from '../Pepups/actions';
 import { Loader } from '../../components/Loader/Loader';
 import { ModalPepupNotification } from '../../components/ModalPepupNotification/ModalPepupNotification';
 import { ModalPostReview } from '../../components/ModalReviewForm/ModalPostReview';
-import { Notifications } from './Notifications';
+import { ModalVideo } from '../../components/ModalVideo/ModalVideo';
+import EditProfileButton from './EditProfileButton';
+import UserBlock from './UserBlock';
+import ProfileHeader from './ProfileHeader';
 
-const mapStateToProps = (state: IGlobalState) => ({
-  userId: state.LoginState.userId,
-  handle: state.LoginState.handle,
-  profileData: state.ProfileState.profileData
-});
+import { isUserCelebritySelector } from '../../selectors';
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getProfile: (handle: string) => dispatch(getProfile(handle) as any),
-  openPepupModal: () => dispatch(openPepupModal()),
-  getCeleb: (val: string) => dispatch(getCeleb(val) as any),
-  getUserPepups: (id: string) => dispatch(getUserPepups(id) as any)
-});
+import { getProfile, getUserPepups, getCelebPepups } from './actions';
 
-const ROLE_CELEB = 'REGULAR,CELEBRITY';
+import { IGlobalState } from '../../coreTypes';
+import {
+  ProfileScreenProps,
+  ProfileScreenState,
+  ProfileTabType,
+  ProfileTabConfig
+} from './types';
 
-const celebTabs: { [key: string]: number } = {
-  funRequests: 0,
-  myRequests: 1,
-  notifications: 2
-};
+import styles from './Profile.styles';
 
-const userTabs: { [key: string]: number } = {
-  myRequests: 0,
-  notifications: 1
-};
+import CategoryViewer from '../../components/CategoryViewer';
+import {
+  ViewerCategory,
+  ViewerRoute
+} from '../../components/CategoryViewer/types';
 
-export class Component extends React.Component<ProfileScreenProps> {
-  static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    const {
-      profileData,
-      navigation,
-      getProfile,
-      getUserPepups,
-      handle,
-      userId
-    } = nextProps;
-    const { params } = nextProps.navigation.state;
-    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
+import FanRequestsItem from './FanRequestItem';
+import MyRequestsItem from './MyRequestItem';
+import NotificationItem from './NotificationItem';
 
-    handle && !profileData && getProfile(handle);
-    userId && !profileData && getUserPepups(userId);
+export class Component extends React.Component<
+  ProfileScreenProps,
+  ProfileScreenState
+> {
+  static navigationOptions = () => ({
+    header: (navigationProps: any) => <ProfileHeader {...navigationProps} />
+  });
 
-    if (params && profileData) {
-      if (
-        isCelebrity &&
-        params.activeTab &&
-        celebTabs[params.activeTab] !== prevState.activeTabIndex
-      ) {
-        const activeTabIndex = celebTabs[params.activeTab];
-        navigation.setParams({ activeTab: null });
-        return { activeTabIndex };
-      } else if (
-        !isCelebrity &&
-        params.activeTab &&
-        userTabs[params.activeTab] !== prevState.activeTabIndex
-      ) {
-        const activeTabIndex = userTabs[params.activeTab];
-        navigation.setParams({ activeTab: null });
-        return { activeTabIndex };
+  static getTabsConfig = memoize((isCelebrity: boolean): ProfileTabConfig[] => {
+    const tabsConfig: ProfileTabConfig[] = [
+      {
+        title: 'My Requests',
+        key: 'myRequests',
+        component: MyRequestsItem
+      },
+      {
+        title: 'Notifications',
+        key: 'notifications',
+        component: NotificationItem
       }
+    ];
+
+    const tabsConfigCeleb: ProfileTabConfig[] = [
+      {
+        title: 'Fan Requests',
+        key: 'fanRequests',
+        component: FanRequestsItem
+      },
+      ...tabsConfig
+    ];
+
+    return isCelebrity ? tabsConfigCeleb : tabsConfig;
+  });
+
+  static getDerivedStateFromProps(
+    nextProps: ProfileScreenProps,
+    prevState: ProfileScreenState
+  ) {
+    const { profileData, navigation, isCelebrity } = nextProps;
+    const { params } = navigation.state;
+
+    const activeTab = profileData && params && params.activeTab;
+    const tabsConfig = Component.getTabsConfig(isCelebrity);
+
+    const targetTabIndex = tabsConfig.findIndex(el => el.key === activeTab);
+
+    if (![-1, prevState.activeTabIndex].includes(targetTabIndex)) {
+      return { activeTabIndex: targetTabIndex };
     }
 
     return null;
@@ -96,150 +96,119 @@ export class Component extends React.Component<ProfileScreenProps> {
     activeTabIndex: 0
   };
 
-  static navigationOptions = () => ({
-    header: (props: any) => (
-      <HeaderRounded
-        {...props}
-        title={'Profile'.toUpperCase()}
-        getRightComponent={() => {
-          return (
-            <TouchableOpacity
-              onPress={() => navigate({ routeName: 'Settings' })}>
-              <Icon name="nut-icon" />
-            </TouchableOpacity>
-          );
-        }}
-      />
-    )
-  });
-
-  tabsConfig = [
-    {
-      title: 'My Requests',
-      component: () => <MyRequests />
-    },
-    {
-      title: 'Notifications',
-      component: () => <Notifications />
-    }
-  ];
-
-  tabsConfigCeleb = [
-    {
-      title: 'Fan Requests',
-      component: () => <FanRequests />
-    },
-    {
-      title: 'My Requests',
-      component: () => <MyRequests />
-    },
-    {
-      title: 'Notifications',
-      component: () => <Notifications />
-    }
-    // {
-    //   title: 'History',
-    //   component: () => <History />,
-    // },
-  ];
-
-  componentDidMount = () => {
+  componentDidMount() {
     const { handle, getProfile } = this.props;
 
-    handle && getProfile(handle);
+    if (handle) getProfile(handle);
+  }
+
+  handleChangeTab = (index: number) => {
+    const { isCelebrity, getUserPepups, getCelebPepups, userId } = this.props;
+
+    const tabs = Component.getTabsConfig(isCelebrity);
+
+    const tabName = tabs[index].key;
+
+    const callbacksMap: { [key in ProfileTabType]: () => void } = {
+      myRequests: () => {
+        userId && getUserPepups(userId);
+      },
+      fanRequests: () => {
+        userId && getCelebPepups(userId);
+      },
+      notifications: () => {
+        console.log('fetching notifications');
+      }
+    };
+
+    if (callbacksMap[tabName]) {
+      callbacksMap[tabName]();
+    }
+
+    this.setState({ activeTabIndex: index });
+  };
+
+  renderHeader = (route: ViewerRoute) => {
+    if (route.title === 'Notifications') {
+      return (
+        <TouchableOpacity style={styles.allReadWrap} activeOpacity={1}>
+          <Text style={styles.allReadText}>Mark All as Read</Text>
+        </TouchableOpacity>
+      );
+    }
+
+    return null;
   };
 
   render() {
-    const { profileData, openPepupModal, getCeleb } = this.props;
-    const isCelebrity = profileData && profileData.role === ROLE_CELEB;
+    const { profileData, isCelebrity, data } = this.props;
+    const { activeTabIndex } = this.state;
 
-    const getModal = () => {
-      openPepupModal();
-      profileData && getCeleb(profileData.id);
-    };
+    if (!profileData) {
+      return null;
+    }
+
+    const tabsConfig = Component.getTabsConfig(isCelebrity) as ViewerCategory[];
 
     return (
-      profileData && (
-        <PepupBackground>
-          <View style={styles.avatarsWrap}>
-            {profileData && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <FastImage
-                  style={styles.image}
-                  source={
-                    profileData.icon
-                      ? {
-                          uri: profileData.icon,
-                          priority: FastImage.priority.normal
-                        }
-                      : require('../../../assets/avatarPlaceholder.png')
-                  }
-                  resizeMode={FastImage.resizeMode.cover}
-                />
-              </Card>
-            )}
-            {isCelebrity && (
-              <Card style={styles.avatar} radius={6}>
-                <CardGradient style={{ borderRadius: 6 }} />
-                <TouchableOpacity activeOpacity={1} onPress={getModal}>
-                  <Image
-                    style={[styles.image, styles.avatarCeleb]}
-                    source={require('../../../assets/celebAvatar.png')}
-                    resizeMode="cover"
-                  />
-                </TouchableOpacity>
-              </Card>
-            )}
-          </View>
+      <PepupBackground>
+        <UserBlock />
+        <EditProfileButton />
 
-          <View style={styles.titleWrap}>
-            <Text style={styles.title}>
-              {(profileData && profileData.name) || ' '}
-            </Text>
-            <TouchableOpacity
-              onPress={() =>
-                navigate({
-                  routeName: isCelebrity ? 'EditProfileCeleb' : 'EditProfile'
-                })
-              }>
-              <Icon name="edit" />
-            </TouchableOpacity>
-          </View>
-          <View style={styles.wrapContent}>
-            <Loader isDataLoaded={!!profileData}>
-              {!!profileData && (
-                <Tabs
-                  config={
-                    profileData.role === ROLE_CELEB
-                      ? this.tabsConfigCeleb
-                      : this.tabsConfig
-                  }
-                  changeIndex={(index: number) =>
-                    this.setState({ activeTabIndex: index })
-                  }
-                  style={{ flex: 1 }}
-                  stylesItem={defaultTabsStyles.roundedTabs}
-                  activeTabIndex={this.state.activeTabIndex}
-                  stylesTabsContainer={{
-                    backgroundColor: 'transparent',
-                    marginBottom: 10
-                  }}
-                />
-              )}
-            </Loader>
-          </View>
-          <ModalRecordVideo />
-          <ModalPepup />
-          <ModalPostReview />
-          <ModalPepupNotification />
-        </PepupBackground>
-      )
+        <View style={styles.wrapContent}>
+          <Loader isDataLoaded={!!profileData}>
+            <CategoryViewer
+              categories={tabsConfig}
+              data={data}
+              activeTabIndex={activeTabIndex}
+              onTabChange={this.handleChangeTab}
+              flatListStyle={styles.flatListStyle}
+              header={this.renderHeader}
+            />
+          </Loader>
+        </View>
+        <ModalRecordVideo />
+        <ModalPepup />
+        <ModalPostReview />
+        <ModalVideo isPepup />
+        <ModalPepupNotification />
+      </PepupBackground>
     );
   }
 }
 
+const mapStateToProps = createSelector(
+  isUserCelebritySelector,
+  (
+    state: IGlobalState
+  ): {
+    [key in ProfileTabType]: Array<any>;
+  } => ({
+    myRequests: state.ProfileState.userPepups,
+    fanRequests: state.ProfileState.celebPepups,
+    notifications: require('./mocks').notifications
+  }),
+  (state: IGlobalState) => ({
+    userId: state.LoginState.userId,
+    handle: state.LoginState.handle,
+    profileData: state.ProfileState.profileData
+  }),
+  (isCelebrity: boolean, data, otherProps) => {
+    return {
+      isCelebrity,
+      data,
+      ...otherProps
+    };
+  }
+);
+
+const mapDispatchToProps = {
+  getProfile,
+  getUserPepups,
+  getCelebPepups
+};
+
 export const ProfileScreen = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Component);
+)(Component as any);

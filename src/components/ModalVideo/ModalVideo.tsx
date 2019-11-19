@@ -1,15 +1,30 @@
 import * as React from 'react';
-import { TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
+import {
+  TouchableOpacity,
+  View,
+  Image,
+  ActivityIndicator,
+  PermissionsAndroid,
+  Platform
+} from 'react-native';
+import CameraRoll from '@react-native-community/cameraroll';
+import RNFetchBlob from 'rn-fetch-blob';
 import { Video } from 'expo-av';
 import { connect } from 'react-redux';
-import Modal from 'react-native-modalbox';
 import { IGlobalState } from '../../coreTypes';
 import { Dispatch } from 'redux';
+import { PepupModal } from '../PepupModal/PepupModal';
 
-import { closeVideoModal } from '../../pages/Pepups/actions';
+import {
+  closeVideoModal,
+  openPostReviewModal
+} from '../../pages/Pepups/actions';
 import { Icon } from '../../components/Icon/Icon';
 import { ModalVideoProps } from '.';
 import styles from './ModalVideo.styles';
+import { ButtonStyled } from '../ButtonStyled/ButtonStyled';
+import { colorLightOrange, colorBlack } from '../../variables';
+import { ModalPostReview } from '../ModalReviewForm/ModalPostReview';
 
 const mapStateToProps = (state: IGlobalState) => ({
   isVideoModalShown: state.PepupState.isVideoModalShown,
@@ -17,7 +32,8 @@ const mapStateToProps = (state: IGlobalState) => ({
 });
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  closeVideoModal: () => dispatch(closeVideoModal())
+  closeVideoModal: () => dispatch(closeVideoModal()),
+  openPostReviewModal: () => dispatch(openPostReviewModal())
 });
 
 export class Component extends React.PureComponent<ModalVideoProps> {
@@ -30,29 +46,59 @@ export class Component extends React.PureComponent<ModalVideoProps> {
   state = {
     isLoaded: false,
     isPlaying: false,
-    isEnd: false
+    isEnd: false,
+    path: '',
+    downloadProgress: 0
   };
 
+  saveFile = () => {
+    RNFetchBlob.config({
+      fileCache: true,
+      appendExt: 'mp4'
+    })
+      .fetch('GET', this.props.videoUrl)
+      .progress({ interval: 250 }, (received, total) => {
+        this.setState({
+          downloadProgress: (received / total) * 100
+        });
+      })
+      .then(res => {
+        CameraRoll.saveToCameraRoll(res.path(), 'video');
+        this.setState({ downloadProgress: 0 });
+      })
+      .catch(err => {
+        console.log(JSON.stringify(err, null, 2));
+      });
+  }
+  async downloadTheVideo() {
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE
+    );
+    
+    if (Platform.OS === 'android' && granted === PermissionsAndroid.RESULTS.GRANTED || Platform.OS === 'ios') {
+      this.saveFile()
+    }
+  }
+
   render() {
-    const { closeVideoModal, isVideoModalShown, videoUrl } = this.props;
+    const {
+      closeVideoModal,
+      isVideoModalShown,
+      videoUrl,
+      isPepup,
+      openPostReviewModal
+    } = this.props;
     const { isPlaying, isLoaded, isEnd } = this.state;
 
     return (
-      <Modal
-        isOpen={isVideoModalShown}
-        swipeToClose={true}
-        coverScreen={true}
-        useNativeDriver={true}
-        onClosed={() => closeVideoModal()}
-      >
+      <PepupModal visible={isVideoModalShown} onRequestClose={closeVideoModal}>
         <View
           style={{
             position: 'relative',
             alignItems: 'center',
             justifyContent: 'center',
             backgroundColor: 'black'
-          }}
-        >
+          }}>
           <Video
             ref={this.videoRef}
             source={{ uri: videoUrl }}
@@ -75,11 +121,11 @@ export class Component extends React.PureComponent<ModalVideoProps> {
             style={{ width: '100%', height: '100%' }}
           />
           <TouchableOpacity
-            style={{ position: 'absolute', top: 50, left: 24, zIndex: 40 }}
-            onPress={() => closeVideoModal()}
-          >
-            <Icon name="left" />
+            style={styles.closeBtn}
+            onPress={() => closeVideoModal()}>
+            <Icon size={20} name="cancel" color={colorBlack} />
           </TouchableOpacity>
+
           {!isLoaded ? (
             <ActivityIndicator
               size="small"
@@ -97,8 +143,7 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                   this.videoRef.current.playAsync();
                 }
               }}
-              style={styles.wrapVideo}
-            >
+              style={styles.wrapVideo}>
               <Image
                 style={{ width: 60, height: 60 }}
                 source={require('../../../assets/play.png')}
@@ -115,10 +160,39 @@ export class Component extends React.PureComponent<ModalVideoProps> {
                 position: 'absolute',
                 marginTop: 100
               }}
-            ></TouchableOpacity>
+            />
           ) : null}
+          {isPepup && (
+            <View style={styles.bottomControlsWrap}>
+              <View style={styles.downloadShare}>
+                <TouchableOpacity
+                  style={styles.icon}
+                  onPress={() => this.downloadTheVideo()}>
+                  {this.state.downloadProgress > 0 ? (
+                    <ActivityIndicator size="small" color="white" />
+                  ) : (
+                    <Icon name="download" />
+                  )}
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.icon}
+                  onPress={() => closeVideoModal()}>
+                  <Icon name="share" />
+                </TouchableOpacity>
+              </View>
+              <ButtonStyled
+                type="border"
+                text="SAY THANKS"
+                normalFont
+                style={styles.btnSend}
+                onPress={() => openPostReviewModal()}
+                loaderColor={colorLightOrange}
+              />
+            </View>
+          )}
         </View>
-      </Modal>
+        <ModalPostReview />
+      </PepupModal>
     );
   }
 }

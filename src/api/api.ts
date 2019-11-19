@@ -41,7 +41,8 @@ export enum ApiOperation {
   GetPepupById,
   AcceptRequest,
   DenyRequest,
-  RegisterDevice
+  RegisterDevice,
+  GetNotifications
 }
 
 export interface INetwork<C> {
@@ -205,7 +206,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.PostReview:
         return `${host}/pepup/celeb/post-review`;
       case ApiOperation.FulfillRequestPepup:
-        return `${host}/pepup/celeb/fulfill-pepup-request`;
+        return `${host}/pepup/fulfill-pepup-request`;
       case ApiOperation.SubmitEntryContest:
         return `${host}/pepup/contest/submit-entry/${contestId}`;
       case ApiOperation.GetUserPepups:
@@ -232,6 +233,8 @@ export class CitiznApi implements IApi<ApiOperation> {
         return `${host}/pepup/deny-request/${pepupId}`;
       case ApiOperation.RegisterDevice:
         return `${host}/user/register-device`;
+      case ApiOperation.GetNotifications:
+        return `${host}/notifications/list`;
       default:
         return '';
     }
@@ -284,6 +287,7 @@ export class CitiznApi implements IApi<ApiOperation> {
       case ApiOperation.AcceptRequest:
       case ApiOperation.DenyRequest:
       case ApiOperation.RegisterDevice:
+      case ApiOperation.GetNotifications:
         return true;
 
       default:
