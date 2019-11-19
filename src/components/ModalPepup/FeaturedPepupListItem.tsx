@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import VideoCard from '../VideoCard';
-import { semiboldFont, colorEventLabel } from '../../variables';
+import { semiboldFont, colorEventLabel, colorGrey2 } from '../../variables';
 
 const FeaturedPepupListItem = ({ item }: any) => {
     return (
@@ -21,7 +21,7 @@ const FeaturedPepupListItem = ({ item }: any) => {
 
 const styles = StyleSheet.create({
   title: {
-    color: '#2a292e',
+    color: colorGrey2,
     marginTop: 9,
     fontFamily: semiboldFont,
     fontSize: 14,

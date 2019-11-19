@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 
 import {
-  colorBlack,
+  colorGrey2,
   defaultFont,
   boldFont,
   colorEventLabel
@@ -61,7 +61,7 @@ export default StyleSheet.create({
     flex: 1,
     fontSize: 16,
     fontFamily: boldFont,
-    color: '#2a292e',
+    color: colorGrey2,
     lineHeight: 20,
     opacity: 0.9
   }

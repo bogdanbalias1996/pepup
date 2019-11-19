@@ -78,6 +78,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
               onPress={() => closeContestQuizModal()}>
               <Icon size={20} name="cancel" color={colorBlack} />
             </TouchableOpacity>
+
             <View style={styles.wrap}>
               <ScrollView showsVerticalScrollIndicator={false}>
                 <View
@@ -103,6 +104,7 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                     </Card>
                     <Text style={styles.title}>{contestData.title}</Text>
                   </View>
+                  
                   <View style={styles.form}>
                     <View style={{ justifyContent: 'space-between' }}>
                       <View style={styles.itemWrap}>
@@ -134,10 +136,8 @@ export class Component extends React.PureComponent<ModalContestQuizProps> {
                   </View>
                   <View style={[styles.modalFooter, { position: 'relative' }]}>
                     <ButtonStyled
-                      style={[
-                        styles.btnSubmit,
-                        { opacity: this.isAllFieldsFilled(values) ? 1 : 0.5 }
-                      ]}
+                      style={styles.btnSubmit}
+                      type={ this.isAllFieldsFilled(values) ? '' : 'grey' } 
                       loader={isFetching}
                       onPress={() =>
                         this.isAllFieldsFilled(values) ? handleSubmit() : {}
