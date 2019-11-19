@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FlatList, View } from 'react-native';
+import isEqualWith from 'lodash/isEqualWith';
 
 import { Loader } from '../../components/Loader/Loader';
 
@@ -10,18 +11,24 @@ import { colorLightOrange } from '../../variables';
 class List extends Component<ListProps> {
   static defaultKeyExtractor = (item: { id: string }) => item.id;
 
-  // shouldComponentUpdate(nextProps: ListProps) {
-  //   const oldData = this.extractDataByCategory(
-  //     this.props.data,
-  //     this.props.route.key
-  //   );
-  //   const newData = this.extractDataByCategory(
-  //     nextProps.data,
-  //     nextProps.route.key
-  //   );
+  shouldComponentUpdate(nextProps: ListProps) {
+    const oldData = this.extractDataByCategory(
+      this.props.data,
+      this.props.route.key
+    );
+    const newData = this.extractDataByCategory(
+      nextProps.data,
+      nextProps.route.key
+    );
 
-  //   return newData.length !== oldData.length;
-  // }
+    const areEqual = isEqualWith(
+      newData,
+      oldData,
+      (newItem, oldItem) => newItem === oldItem
+    );
+
+    return !areEqual;
+  }
 
   extractDataByCategory(data: ViewerData, category: string): Object[] {
     const categoryCelebs = data[category] || data[category.toLowerCase()] || [];

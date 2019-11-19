@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
@@ -16,8 +16,9 @@ export class RadioButtonsContest extends React.PureComponent<
 > {
   render() {
     const { options, value, onPress, question } = this.props;
+
     return (
-      <View style={{ marginBottom: 10 }}>
+      <View>
         <Text style={styles.qText}>{question}</Text>
         <View style={styles.wrapRadioButtonsC}>
           {options.map((item: any, i: number) => {
