@@ -5,7 +5,8 @@ import {
   colorTomato,
   defaultFont,
   boldFont,
-  colorCancelButton
+  colorCancelButton,
+  semiboldFont
 } from '../../variables';
 
 export default StyleSheet.create({
@@ -81,7 +82,7 @@ export default StyleSheet.create({
   },
   text: {
     fontSize: 14,
-    fontFamily: defaultFont,
+    fontFamily: semiboldFont,
     lineHeight: 22,
     color: colorBlack
   },
